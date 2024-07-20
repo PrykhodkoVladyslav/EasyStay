@@ -285,6 +285,7 @@ package-lock.json
 
 # Development appsettings.json
 /Booking/appsettings.Development.json
+/Booking.WebApi/appsettings.Development.json
 
 # API data
 /Booking/Data/

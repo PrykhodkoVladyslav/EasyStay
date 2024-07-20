@@ -1,3 +1,4 @@
+using Booking.Persistence;
 using Notes.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,5 +22,10 @@ if (app.Environment.IsDevelopment()) {
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+	var serviceProvider = scope.ServiceProvider;
+	DbInitializer.Inicialize(serviceProvider.GetRequiredService<BookingDbContext>());
+}
 
 app.Run();

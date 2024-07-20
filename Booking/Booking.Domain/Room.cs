@@ -18,5 +18,5 @@ public class Room {
 
 	public ICollection<RoomConvenience> Conveniences { get; set; } = null!;
 
-	public ICollection<Booking> Bookings { get; set; } = null!;
+	public ICollection<RoomBooking> Bookings { get; set; } = null!;
 }

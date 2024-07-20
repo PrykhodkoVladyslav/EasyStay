@@ -2,7 +2,7 @@
 
 namespace Booking.Domain;
 
-public class Booking {
+public class RoomBooking {
 	public long Id { get; set; }
 
 	public DateTime From { get; set; }

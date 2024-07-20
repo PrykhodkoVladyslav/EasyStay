@@ -13,7 +13,7 @@ public class HotelReview {
 	public User User { get; set; } = null!;
 
 	public long BookingId { get; set; }
-	public Booking Booking { get; set; } = null!;
+	public RoomBooking Booking { get; set; } = null!;
 
 	public ICollection<HotelReviewPhoto> Photos { get; set; } = null!;
 }

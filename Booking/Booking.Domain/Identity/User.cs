@@ -15,5 +15,5 @@ public class User : IdentityUser<long> {
 
 	public ICollection<HotelReview> HotelReviews { get; set; } = null!;
 
-	public ICollection<Booking> Bookings { get; set; } = null!;
+	public ICollection<RoomBooking> Bookings { get; set; } = null!;
 }

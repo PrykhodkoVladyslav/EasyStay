@@ -19,6 +19,11 @@
   <ItemGroup>
     <Folder Include="Common\Exceptions\" />
     <Folder Include="Common\Mappings\" />
+    <Folder Include="MediatR\Countries\Commands\Create\" />
+    <Folder Include="MediatR\Countries\Commands\Delete\" />
+    <Folder Include="MediatR\Countries\Commands\Update\" />
+    <Folder Include="MediatR\Countries\Queries\GetDetails\" />
+    <Folder Include="MediatR\Countries\Queries\GetPage\" />
   </ItemGroup>
 
 </Project>

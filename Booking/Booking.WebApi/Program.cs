@@ -1,5 +1,6 @@
 using Booking.Application;
 using Booking.Persistence;
+using Booking.WebApi.Middleware;
 using Notes.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ if (app.Environment.IsDevelopment()) {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseCustomExceptionHandler();
 
 app.UseAuthorization();
 

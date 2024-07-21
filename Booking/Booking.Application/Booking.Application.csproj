@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
     <Folder Include="Common\Mappings\" />
     <Folder Include="MediatR\Countries\Commands\Create\" />
     <Folder Include="MediatR\Countries\Commands\Delete\" />

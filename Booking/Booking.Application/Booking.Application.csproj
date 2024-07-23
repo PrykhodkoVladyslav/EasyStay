@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="MediatR\Countries\Commands\Delete\" />
     <Folder Include="MediatR\Countries\Commands\Update\" />
-    <Folder Include="MediatR\Countries\Queries\GetPage\" />
   </ItemGroup>
 
 </Project>

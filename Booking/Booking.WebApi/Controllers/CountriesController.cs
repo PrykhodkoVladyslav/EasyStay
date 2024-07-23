@@ -1,13 +1,13 @@
 ﻿using Booking.Application.MediatR.Countries.Commands.Create;
 using Booking.Application.MediatR.Countries.Queries.GetAll;
 using Booking.Application.MediatR.Countries.Queries.GetDetails;
+using Booking.Application.MediatR.Countries.Queries.GetPage;
 using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.Controllers;
 
-public class CountriesController() : BaseApiController {
-
+public class CountriesController : BaseApiController {
 	[HttpGet]
 	public async Task<IActionResult> GetAll() {
 		var items = await Mediator.Send(new GetAllCountriesQuery());
@@ -16,9 +16,10 @@ public class CountriesController() : BaseApiController {
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetPage() {
+	public async Task<IActionResult> GetPage([FromQuery] GetCountriesPageQuery filter) {
+		var page = await Mediator.Send(filter);
 
-		return Ok();
+		return Ok(page);
 	}
 
 	[HttpGet("{id}")]

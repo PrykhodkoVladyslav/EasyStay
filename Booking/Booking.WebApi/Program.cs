@@ -2,9 +2,13 @@ using AutoMapper;
 using Booking.Application;
 using Booking.Application.Common.Mappings;
 using Booking.Application.Interfaces;
+using Booking.Application.MediatR.Countries.Queries.GetPage;
+using Booking.Application.MediatR.Countries.Queries.Shared;
+using Booking.Domain;
 using Booking.Persistence;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
+using Booking.WebApi.Services.PaginationServices;
 using Microsoft.Extensions.FileProviders;
 using Notes.Persistence;
 using System.Reflection;
@@ -31,7 +35,10 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
-builder.Services.AddTransient<IExistingEntityCheckerService, ExistingEntityCheckerService>();
+builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
+
+builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
+
 
 var app = builder.Build();
 

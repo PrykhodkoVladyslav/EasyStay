@@ -6,6 +6,7 @@ using Booking.Application.MediatR.Countries.Queries.GetPage;
 using Booking.Application.MediatR.Countries.Queries.Shared;
 using Booking.Domain;
 using Booking.Persistence;
+using Booking.Persistence.Seeding;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
 using Booking.WebApi.Services.PaginationServices;
@@ -75,6 +76,12 @@ app.MapControllers();
 using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
 	var serviceProvider = scope.ServiceProvider;
 	DbInitializer.Inicialize(serviceProvider.GetRequiredService<BookingDbContext>());
+
+	if (app.Configuration.GetValue<bool>("SeedClearData")) {
+		var context = serviceProvider.GetRequiredService<IBookingDbContext>();
+		var imageService = serviceProvider.GetRequiredService<IImageService>();
+		ClearDataSeeder.Seed(context, imageService);
+	}
 }
 
 app.Run();

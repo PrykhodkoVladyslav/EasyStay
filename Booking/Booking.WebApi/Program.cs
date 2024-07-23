@@ -4,6 +4,8 @@ using Booking.Application.Common.Mappings;
 using Booking.Application.Interfaces;
 using Booking.Persistence;
 using Booking.WebApi.Middleware;
+using Booking.WebApi.Services;
+using Microsoft.Extensions.FileProviders;
 using Notes.Persistence;
 using System.Reflection;
 
@@ -25,6 +27,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSingleton<IImageService, ImageService>();
+builder.Services.AddSingleton<IImageValidator, ImageValidator>();
+builder.Services.AddTransient<IExistingEntityCheckerService, ExistingEntityCheckerService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +42,24 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseCustomExceptionHandler();
+
+app.UseCors(
+	configuration => configuration
+		.AllowAnyOrigin()
+		.AllowAnyHeader()
+		.AllowAnyMethod()
+);
+
+string imagesDirPath = app.Services.GetRequiredService<IImageService>().ImagesDir;
+
+if (!Directory.Exists(imagesDirPath)) {
+	Directory.CreateDirectory(imagesDirPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions {
+	FileProvider = new PhysicalFileProvider(imagesDirPath),
+	RequestPath = "/images"
+});
 
 app.UseAuthorization();
 

@@ -1,11 +1,10 @@
 ﻿using Booking.Application.MediatR.Countries.Commands.Create;
+using Booking.Application.MediatR.Countries.Queries.GetDetails;
 using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.Controllers;
 
-[Route("api/[controller]/[action]")]
-[ApiController]
 public class CountriesController() : BaseApiController {
 
 	[HttpGet]
@@ -22,8 +21,9 @@ public class CountriesController() : BaseApiController {
 
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetById(long id) {
+		var entity = await Mediator.Send(new GetCountryDetailsQuery() { Id = id });
 
-		return Ok();
+		return Ok(entity);
 	}
 
 	[HttpPost]

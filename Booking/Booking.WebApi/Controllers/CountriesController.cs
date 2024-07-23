@@ -1,4 +1,5 @@
 ﻿using Booking.Application.MediatR.Countries.Commands.Create;
+using Booking.Application.MediatR.Countries.Commands.Delete;
 using Booking.Application.MediatR.Countries.Commands.Update;
 using Booking.Application.MediatR.Countries.Queries.GetAll;
 using Booking.Application.MediatR.Countries.Queries.GetDetails;
@@ -46,6 +47,7 @@ public class CountriesController : BaseApiController {
 
 	[HttpDelete("{id}")]
 	public async Task<IActionResult> Delete(long id) {
+		await Mediator.Send(new DeleteCountryCommand { Id = id });
 
 		return NoContent();
 	}

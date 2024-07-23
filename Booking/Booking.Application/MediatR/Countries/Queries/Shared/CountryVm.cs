@@ -2,9 +2,9 @@
 using Booking.Application.Common.Mappings;
 using Booking.Domain;
 
-namespace Booking.Application.MediatR.Countries.Queries.GetDetails;
+namespace Booking.Application.MediatR.Countries.Queries.Shared;
 
-public class CountryDetailsVm : IMapWith<Country> {
+public class CountryVm : IMapWith<Country> {
 	public long Id { get; set; }
 
 	public string Name { get; set; } = null!;
@@ -14,6 +14,6 @@ public class CountryDetailsVm : IMapWith<Country> {
 
 
 	public void Mapping(Profile profile) {
-		profile.CreateMap<Country, CountryDetailsVm>();
+		profile.CreateMap<Country, CountryVm>();
 	}
 }

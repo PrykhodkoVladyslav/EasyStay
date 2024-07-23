@@ -1,4 +1,5 @@
 ﻿using Booking.Application.MediatR.Countries.Commands.Create;
+using Booking.Application.MediatR.Countries.Queries.GetAll;
 using Booking.Application.MediatR.Countries.Queries.GetDetails;
 using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,9 @@ public class CountriesController() : BaseApiController {
 
 	[HttpGet]
 	public async Task<IActionResult> GetAll() {
+		var items = await Mediator.Send(new GetAllCountriesQuery());
 
-		return Ok();
+		return Ok(items);
 	}
 
 	[HttpGet]

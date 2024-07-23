@@ -1,4 +1,5 @@
 ﻿using Booking.Application.MediatR.Countries.Commands.Create;
+using Booking.Application.MediatR.Countries.Commands.Update;
 using Booking.Application.MediatR.Countries.Queries.GetAll;
 using Booking.Application.MediatR.Countries.Queries.GetDetails;
 using Booking.Application.MediatR.Countries.Queries.GetPage;
@@ -37,14 +38,15 @@ public class CountriesController : BaseApiController {
 	}
 
 	[HttpPut]
-	public async Task<IActionResult> Update() {
+	public async Task<IActionResult> Update([FromForm] UpdateCountryCommand command) {
+		await Mediator.Send(command);
 
-		return Ok();
+		return NoContent();
 	}
 
 	[HttpDelete("{id}")]
 	public async Task<IActionResult> Delete(long id) {
 
-		return Ok();
+		return NoContent();
 	}
 }

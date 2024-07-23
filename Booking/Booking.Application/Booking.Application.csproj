@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="MediatR\Countries\Commands\Delete\" />
-    <Folder Include="MediatR\Countries\Commands\Update\" />
   </ItemGroup>
 
 </Project>

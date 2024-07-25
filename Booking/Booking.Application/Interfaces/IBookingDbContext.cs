@@ -5,6 +5,7 @@ namespace Booking.Application.Interfaces;
 
 public interface IBookingDbContext {
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+	int SaveChanges();
 
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }

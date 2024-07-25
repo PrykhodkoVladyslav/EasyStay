@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Booking.Application.Common.Exceptions;
 using Booking.Application.Interfaces;
 using Booking.Application.MediatR.Cities.Queries.Shared;
 using Booking.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Application.MediatR.Cities.Queries.GetDetails;
 
@@ -13,10 +15,11 @@ public class GetCityDetailsQueryHandler(
 ) : IRequestHandler<GetCityDetailsQuery, CityVm> {
 
 	public async Task<CityVm> Handle(GetCityDetailsQuery request, CancellationToken cancellationToken) {
-		var entity = await context.Cities.FindAsync([request.Id], cancellationToken)
+		var vm = await context.Cities
+			.ProjectTo<CityVm>(mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken)
 			?? throw new NotFoundException(nameof(City), request.Id);
 
-		var vm = mapper.Map<CityVm>(entity);
 		return vm;
 	}
 }

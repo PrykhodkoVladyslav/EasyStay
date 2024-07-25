@@ -1,10 +1,10 @@
-using AutoMapper;
 using Booking.Application;
 using Booking.Application.Common.Mappings;
 using Booking.Application.Interfaces;
+using Booking.Application.MediatR.Cities.Queries.GetPage;
+using Booking.Application.MediatR.Cities.Queries.Shared;
 using Booking.Application.MediatR.Countries.Queries.GetPage;
 using Booking.Application.MediatR.Countries.Queries.Shared;
-using Booking.Domain;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
 using Booking.WebApi.Middleware;
@@ -39,6 +39,7 @@ builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
+builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
 
 
 var app = builder.Build();

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Booking.Application.Interfaces;
+﻿using Booking.Application.Interfaces;
 using Booking.Domain;
 using MediatR;
 
@@ -11,21 +10,21 @@ public class CreateCountryCommandHandler(
 ) : IRequestHandler<CreateCountryCommand, long> {
 
 	public async Task<long> Handle(CreateCountryCommand request, CancellationToken cancellationToken) {
-		var country = new Country {
+		var entity = new Country {
 			Name = request.Name,
 			Image = await imageService.SaveImageAsync(request.Image)
 		};
 
-		await context.Countries.AddAsync(country, cancellationToken);
+		await context.Countries.AddAsync(entity, cancellationToken);
 
 		try {
 			await context.SaveChangesAsync(cancellationToken);
 		}
 		catch (Exception) {
-			imageService.DeleteImageIfExists(country.Image);
+			imageService.DeleteImageIfExists(entity.Image);
 			throw;
 		}
 
-		return country.Id;
+		return entity.Id;
 	}
 }

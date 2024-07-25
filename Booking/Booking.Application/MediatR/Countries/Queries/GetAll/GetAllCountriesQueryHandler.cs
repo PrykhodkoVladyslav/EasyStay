@@ -15,7 +15,7 @@ public class GetAllCountriesQueryHandler(
 	public async Task<IEnumerable<CountryVm>> Handle(GetAllCountriesQuery request, CancellationToken cancellationToken) {
 		var items = await context.Countries
 			.ProjectTo<CountryVm>(mapper.ConfigurationProvider)
-			.ToArrayAsync();
+			.ToArrayAsync(cancellationToken);
 
 		return items;
 	}

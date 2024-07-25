@@ -5,7 +5,7 @@ using Booking.Application.Interfaces;
 using Booking.Application.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.WebApi.Services;
+namespace Booking.WebApi.Services.PaginationServices;
 
 public abstract class BasePaginationService<EntityType, EntityVmType, PaginationVmType>(
 	IMapper mapper

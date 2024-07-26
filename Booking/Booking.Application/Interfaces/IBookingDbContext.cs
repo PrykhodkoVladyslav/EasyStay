@@ -1,11 +1,15 @@
 ﻿using Booking.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 
 namespace Booking.Application.Interfaces;
 
 public interface IBookingDbContext {
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 	int SaveChanges();
+
+	Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken);
 
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }

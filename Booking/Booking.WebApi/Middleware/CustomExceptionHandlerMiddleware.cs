@@ -33,6 +33,9 @@ public class CustomExceptionHandlerMiddleware(
 			case NotFoundException:
 				code = HttpStatusCode.NotFound;
 				break;
+			case UnauthorizedException:
+				code = HttpStatusCode.Unauthorized;
+				break;
 		}
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = (int)code;

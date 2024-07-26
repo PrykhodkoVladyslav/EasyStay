@@ -7,6 +7,7 @@ using Booking.Application.MediatR.Countries.Queries.GetPage;
 using Booking.Application.MediatR.Countries.Queries.Shared;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
+using Booking.Services;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
 using Booking.WebApi.Services.PaginationServices;
@@ -55,6 +56,7 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();

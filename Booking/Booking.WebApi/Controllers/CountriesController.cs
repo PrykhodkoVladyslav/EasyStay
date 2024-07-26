@@ -18,8 +18,8 @@ public class CountriesController : BaseApiController {
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetPage([FromQuery] GetCountriesPageQuery filter) {
-		var page = await Mediator.Send(filter);
+	public async Task<IActionResult> GetPage([FromQuery] GetCountriesPageQuery command) {
+		var page = await Mediator.Send(command);
 
 		return Ok(page);
 	}

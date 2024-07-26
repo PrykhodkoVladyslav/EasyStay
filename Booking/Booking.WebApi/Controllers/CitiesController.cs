@@ -18,8 +18,8 @@ public class CitiesController : BaseApiController {
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetPage([FromQuery] GetCitiesPageQuery filter) {
-		var page = await Mediator.Send(filter);
+	public async Task<IActionResult> GetPage([FromQuery] GetCitiesPageQuery command) {
+		var page = await Mediator.Send(command);
 
 		return Ok(page);
 	}

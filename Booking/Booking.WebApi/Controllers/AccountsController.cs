@@ -1,4 +1,5 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.Registration;
+﻿using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
+using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
 using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,13 @@ public class AccountsController : BaseApiController {
 
 	[HttpPost]
 	public async Task<IActionResult> Registration([FromForm] RegistrationCommand command) {
+		var token = await Mediator.Send(command);
+
+		return Ok(token);
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> GoogleSignIn([FromForm] GoogleSignInCommand command) {
 		var token = await Mediator.Send(command);
 
 		return Ok(token);

@@ -57,6 +57,7 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>(); // TO-DO: Треба переробити даний тимчасовий сервіс
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Booking.Domain.Identity;
 using Booking.Domain;
 using Booking.Application.Interfaces;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Booking.Persistence;
 
@@ -57,5 +58,9 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 		//new ConvenienceEntityTypeConfiguration().Configure(modelBuilder.Entity<Convenience>());
 		//new RoomConvenienceEntityTypeConfiguration().Configure(modelBuilder.Entity<RoomConvenience>());
 		//new RoomBookingEntityTypeConfiguration().Configure(modelBuilder.Entity<RoomBooking>());
+	}
+
+	public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken) {
+		return Database.BeginTransactionAsync(cancellationToken);
 	}
 }

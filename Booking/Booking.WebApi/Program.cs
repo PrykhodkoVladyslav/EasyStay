@@ -5,12 +5,14 @@ using Booking.Application.MediatR.Cities.Queries.GetPage;
 using Booking.Application.MediatR.Cities.Queries.Shared;
 using Booking.Application.MediatR.Countries.Queries.GetPage;
 using Booking.Application.MediatR.Countries.Queries.Shared;
+using Booking.Domain.Identity;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
 using Booking.Services;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
 using Booking.WebApi.Services.PaginationServices;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Notes.Persistence;
@@ -100,11 +102,16 @@ app.MapControllers();
 
 using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
 	var serviceProvider = scope.ServiceProvider;
-	DbInitializer.Inicialize(serviceProvider.GetRequiredService<BookingDbContext>());
+	var context = serviceProvider.GetRequiredService<BookingDbContext>();
+	var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+	var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
+	var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+	var imageService = serviceProvider.GetRequiredService<IImageService>();
+
+	DbInitializer.Inicialize(context);
+	DbInitializer.SeedIdentity(context, userManager, roleManager, configuration, imageService);
 
 	if (app.Configuration.GetValue<bool>("SeedClearData")) {
-		var context = serviceProvider.GetRequiredService<IBookingDbContext>();
-		var imageService = serviceProvider.GetRequiredService<IImageService>();
 		ClearDataSeeder.Seed(context, imageService);
 	}
 }

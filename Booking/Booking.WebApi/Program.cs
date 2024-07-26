@@ -11,6 +11,7 @@ using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
 using Booking.WebApi.Services.PaginationServices;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
 using Notes.Persistence;
 using System.Reflection;
 
@@ -30,7 +31,27 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => {
+	options.AddSecurityDefinition(
+		"Bearer",
+		new OpenApiSecurityScheme {
+			Description = "Jwt Auth header using the Bearer scheme",
+			Type = SecuritySchemeType.Http,
+			Scheme = "bearer"
+		}
+	);
+	options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+		{
+			new OpenApiSecurityScheme {
+				Reference = new OpenApiReference {
+					Id = "Bearer",
+					Type = ReferenceType.SecurityScheme
+				}
+			},
+			new List<string>()
+		}
+	});
+});
 
 builder.Services.AddHttpContextAccessor();
 

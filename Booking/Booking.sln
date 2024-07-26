@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{AAC9A677-F62A-4B01-B250-B1C853A035EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Application", "Booking.Application\Booking.Application.csproj", "{9599B3B8-0A88-461E-9B72-B88A8F6EDF2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Application", "Booking.Application\Booking.Application.csproj", "{9599B3B8-0A88-461E-9B72-B88A8F6EDF2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Domain", "Booking.Domain\Booking.Domain.csproj", "{6FA754C4-BBA7-4E9B-96D2-DEF4433B5FD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Domain", "Booking.Domain\Booking.Domain.csproj", "{6FA754C4-BBA7-4E9B-96D2-DEF4433B5FD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Persistence", "Booking.Persistence\Booking.Persistence.csproj", "{C8081998-DDBB-4EAA-84E2-7F5B6EC94E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Persistence", "Booking.Persistence\Booking.Persistence.csproj", "{C8081998-DDBB-4EAA-84E2-7F5B6EC94E93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.WebApi", "Booking.WebApi\Booking.WebApi.csproj", "{7D101622-C0D4-47A0-AF6C-4CB7B1764294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.WebApi", "Booking.WebApi\Booking.WebApi.csproj", "{7D101622-C0D4-47A0-AF6C-4CB7B1764294}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,17 +1,14 @@
-﻿using AutoMapper;
-using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
+﻿using Booking.Application.Interfaces;
 using Booking.Application.MediatR.Accounts.Commands.Shared;
 using Booking.Domain.Identity;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace Booking.Application.MediatR.Accounts.Commands.Registration;
 
 public class RegistrationCommandHandler(
 	IJwtTokenService jwtTokenService,
 	IImageService imageService,
-	IRegistrationService registrationService
+	IAuthService registrationService
 ) : IRequestHandler<RegistrationCommand, JwtTokenVm> {
 
 	public async Task<JwtTokenVm> Handle(RegistrationCommand request, CancellationToken cancellationToken) {

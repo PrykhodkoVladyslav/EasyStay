@@ -7,11 +7,11 @@ namespace Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 
 public class GoogleSignInCommandHandler(
 	IJwtTokenService jwtTokenService,
-	IRegistrationService registrationService
+	IAuthService registrationService
 ) : IRequestHandler<GoogleSignInCommand, JwtTokenVm> {
 
 	public async Task<JwtTokenVm> Handle(GoogleSignInCommand request, CancellationToken cancellationToken) {
-		User user = await registrationService.GoogleSignInAsync(request);
+		User user = await registrationService.GoogleSignInAsync(request.Credential);
 
 		return new JwtTokenVm {
 			Token = await jwtTokenService.CreateTokenAsync(user)

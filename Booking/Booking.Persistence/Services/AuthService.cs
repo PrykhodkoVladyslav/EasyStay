@@ -1,20 +1,20 @@
 ﻿using Booking.Application.Common.Exceptions;
 using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Domain.Constants;
 using Booking.Domain.Identity;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace Booking.WebApi.Services;
 
-public class RegistrationService(
+public class AuthService(
 	IBookingDbContext context,
 	UserManager<User> userManager,
 	IConfiguration configuration,
 	IImageService imageService
-) : IRegistrationService {
+) : IAuthService {
 
 	public async Task CreateUserAsync(User user, string? password = null, CancellationToken cancellationToken = default) {
 		using var transaction = await context.BeginTransactionAsync(cancellationToken);
@@ -36,12 +36,12 @@ public class RegistrationService(
 		}
 	}
 
-	public async Task<User> GoogleSignInAsync(GoogleSignInCommand command) {
-		Payload payload = await GetPayloadAsync(command.Credential);
+	public async Task<User> GoogleSignInAsync(string credential, CancellationToken cancellationToken = default) {
+		Payload payload = await GetPayloadAsync(credential);
 
 		User? user = await userManager.FindByEmailAsync(payload.Email);
 
-		user ??= await CreateGoogleUserAsync(payload);
+		user ??= await CreateGoogleUserAsync(payload, cancellationToken);
 
 		return user;
 	}
@@ -60,13 +60,13 @@ public class RegistrationService(
 		}
 	}
 
-	private async Task<User> CreateGoogleUserAsync(Payload payload) {
+	private async Task<User> CreateGoogleUserAsync(Payload payload, CancellationToken cancellationToken = default) {
 		using var httpClient = new HttpClient();
 
 		string photo;
 
 		try {
-			var bytes = await httpClient.GetByteArrayAsync(payload.Picture);
+			var bytes = await httpClient.GetByteArrayAsync(payload.Picture, cancellationToken);
 			photo = await imageService.SaveImageAsync(bytes);
 		}
 		catch {
@@ -83,7 +83,7 @@ public class RegistrationService(
 		};
 
 		try {
-			await CreateUserAsync(user);
+			await CreateUserAsync(user, cancellationToken: cancellationToken);
 		}
 		catch {
 			imageService.DeleteImageIfExists(user.Photo);
@@ -93,10 +93,8 @@ public class RegistrationService(
 		return user;
 	}
 
-	private async Task<IdentityResult> CreateUserInDatabaseAsync(User user, string? password) {
-		if (password is null)
-			return await userManager.CreateAsync(user);
-
-		return await userManager.CreateAsync(user, password);
-	}
+	private Task<IdentityResult> CreateUserInDatabaseAsync(User user, string? password) =>
+		string.IsNullOrEmpty(password)
+			? userManager.CreateAsync(user)
+			: userManager.CreateAsync(user, password);
 }

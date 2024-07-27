@@ -46,6 +46,12 @@ public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 				.WithMessage("Image is not selected")
 			.MustAsync(imageValidator.IsValidImageAsync)
 				.WithMessage("Image is not valid");
+
+		RuleFor(r => r.Password)
+			.NotEmpty()
+				.WithMessage("Password is empty or null")
+			.MinimumLength(8)
+				.WithMessage("Password is too short");
 	}
 
 	private async Task<bool> IsNewEmail(string email, CancellationToken _) {

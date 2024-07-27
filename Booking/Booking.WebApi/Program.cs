@@ -5,6 +5,8 @@ using Booking.Application.MediatR.Cities.Queries.GetPage;
 using Booking.Application.MediatR.Cities.Queries.Shared;
 using Booking.Application.MediatR.Countries.Queries.GetPage;
 using Booking.Application.MediatR.Countries.Queries.Shared;
+using Booking.Application.MediatR.HotelTypes.Queries.GetPage;
+using Booking.Application.MediatR.HotelTypes.Queries.Shared;
 using Booking.Domain.Identity;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
@@ -66,6 +68,7 @@ builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerS
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
+builder.Services.AddScoped<IPaginationService<HotelTypeVm, GetHotelTypesPageQuery>, HotelTypePaginationService>();
 
 
 var app = builder.Build();

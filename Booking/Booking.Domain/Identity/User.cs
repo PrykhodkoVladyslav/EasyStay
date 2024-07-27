@@ -11,7 +11,7 @@ public class User : IdentityUser<long> {
 
 	public virtual ICollection<UserRole> UserRoles { get; set; } = null!;
 
-	//public ICollection<Hotel> Hotels { get; set; } = null!;
+	public ICollection<Hotel> Hotels { get; set; } = null!;
 
 	//public ICollection<HotelReview> HotelReviews { get; set; } = null!;
 

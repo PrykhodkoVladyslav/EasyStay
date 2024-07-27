@@ -14,9 +14,9 @@ public interface IBookingDbContext {
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }
 	DbSet<Address> Addresses { get; set; }
-	//DbSet<Hotel> Hotels { get; set; }
-	//DbSet<HotelType> HotelTypes { get; set; }
-	//DbSet<HotelPhoto> HotelPhotos { get; set; }
+	DbSet<Hotel> Hotels { get; set; }
+	DbSet<HotelType> HotelTypes { get; set; }
+	DbSet<HotelPhoto> HotelPhotos { get; set; }
 	//DbSet<HotelReview> HotelReviews { get; set; }
 	//DbSet<HotelReviewPhoto> HotelReviewPhotos { get; set; }
 	//DbSet<FavoriteHotel> FavoriteHotels { get; set; }

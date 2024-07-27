@@ -17,4 +17,10 @@
     <ProjectReference Include="..\Booking.Domain\Booking.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediatR\HotelTypes\Queries\GetAll\" />
+    <Folder Include="MediatR\HotelTypes\Queries\GetDetails\" />
+    <Folder Include="MediatR\HotelTypes\Queries\GetPage\" />
+  </ItemGroup>
+
 </Project>

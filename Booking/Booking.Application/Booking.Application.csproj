@@ -18,12 +18,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="MediatR\Addresses\Commands\Delete\" />
+    <Folder Include="MediatR\Addresses\Commands\Update\" />
     <Folder Include="MediatR\Hotels\Commands\Delete\" />
     <Folder Include="MediatR\Hotels\Commands\Update\" />
-    <Folder Include="MediatR\Hotels\Queries\GetAll\" />
     <Folder Include="MediatR\Hotels\Queries\GetDetails\" />
     <Folder Include="MediatR\Hotels\Queries\GetPage\" />
-    <Folder Include="MediatR\Hotels\Queries\Shared\" />
+    <Folder Include="MediatR\Template\Commands\Create\" />
+    <Folder Include="MediatR\Template\Commands\Delete\" />
+    <Folder Include="MediatR\Template\Commands\Update\" />
+    <Folder Include="MediatR\Template\Queries\GetAll\" />
+    <Folder Include="MediatR\Template\Queries\GetDetails\" />
+    <Folder Include="MediatR\Template\Queries\GetPage\" />
+    <Folder Include="MediatR\Template\Queries\Shared\" />
   </ItemGroup>
 
 </Project>

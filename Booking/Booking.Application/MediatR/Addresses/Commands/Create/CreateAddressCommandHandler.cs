@@ -1,9 +1,8 @@
 ﻿using Booking.Application.Interfaces;
 using Booking.Domain;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Create;
+namespace Booking.Application.MediatR.Addresses.Commands.Create;
 
 public class CreateAddressCommandHandler(
 	IBookingDbContext context,

@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Create;
+namespace Booking.Application.MediatR.Addresses.Commands.Create;
 
 public class CreateAddressCommand : IRequest<long> {
 	public string Street { get; set; } = null!;

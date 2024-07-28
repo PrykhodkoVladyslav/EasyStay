@@ -1,4 +1,5 @@
 ﻿using Booking.Application.Interfaces;
+using Booking.Application.MediatR.Addresses.Commands.Create;
 using FluentValidation;
 
 namespace Booking.Application.MediatR.Hotels.Commands.Create;

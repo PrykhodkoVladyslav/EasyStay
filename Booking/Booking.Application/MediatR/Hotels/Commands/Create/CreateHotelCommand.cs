@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Booking.Application.MediatR.Addresses.Commands.Create;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 
 namespace Booking.Application.MediatR.Hotels.Commands.Create;

@@ -4,10 +4,9 @@ using Booking.Application.MediatR.HotelTypes.Commands.Update;
 using Booking.Application.MediatR.HotelTypes.Queries.GetAll;
 using Booking.Application.MediatR.HotelTypes.Queries.GetDetails;
 using Booking.Application.MediatR.HotelTypes.Queries.GetPage;
-using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.Controllers;
+namespace Booking.WebApi.Controllers;
 
 public class HotelTypesController : BaseApiController {
 	[HttpGet]

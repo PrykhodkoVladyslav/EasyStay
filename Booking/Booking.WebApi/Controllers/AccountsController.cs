@@ -1,10 +1,9 @@
 ﻿using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
-using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.Controllers;
+namespace Booking.WebApi.Controllers;
 
 public class AccountsController : BaseApiController {
 

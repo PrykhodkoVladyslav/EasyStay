@@ -17,4 +17,13 @@
     <ProjectReference Include="..\Booking.Domain\Booking.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediatR\Hotels\Commands\Delete\" />
+    <Folder Include="MediatR\Hotels\Commands\Update\" />
+    <Folder Include="MediatR\Hotels\Queries\GetAll\" />
+    <Folder Include="MediatR\Hotels\Queries\GetDetails\" />
+    <Folder Include="MediatR\Hotels\Queries\GetPage\" />
+    <Folder Include="MediatR\Hotels\Queries\Shared\" />
+  </ItemGroup>
+
 </Project>

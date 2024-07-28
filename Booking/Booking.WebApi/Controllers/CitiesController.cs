@@ -4,10 +4,9 @@ using Booking.Application.MediatR.Cities.Commands.Update;
 using Booking.Application.MediatR.Cities.Queries.GetAll;
 using Booking.Application.MediatR.Cities.Queries.GetDetails;
 using Booking.Application.MediatR.Cities.Queries.GetPage;
-using Booking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.Controllers;
+namespace Booking.WebApi.Controllers;
 
 public class CitiesController : BaseApiController {
 	[HttpGet]

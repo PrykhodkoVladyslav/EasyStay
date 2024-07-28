@@ -1,11 +1,10 @@
 ﻿using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Addresses.Commands.Create;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Create;
+namespace Booking.Application.MediatR.Hotels.Commands.Update;
 
-public class CreateHotelValidator : AbstractValidator<CreateHotelCommand> {
-	public CreateHotelValidator(IImageValidator imageValidator,
+public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
+	public UpdateHotelValidator(IImageValidator imageValidator,
 		IExistingEntityCheckerService existingEntityCheckerService) {
 		RuleFor(h => h.Name)
 			.NotEmpty()

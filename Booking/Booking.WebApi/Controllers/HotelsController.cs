@@ -1,4 +1,5 @@
 using Booking.Application.MediatR.Hotels.Commands.Create;
+using Booking.Application.MediatR.Hotels.Commands.Update;
 using Booking.Application.MediatR.Hotels.Queries.GetAll;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +20,13 @@ public class HotelsController : BaseApiController {
 		var id = await Mediator.Send(command);
 
 		return Ok(id);
+	}
+
+	[HttpPut]
+	[Authorize(Roles = "Admin,Realtor")]
+	public async Task<IActionResult> Update([FromForm] UpdateHotelCommand command) {
+		await Mediator.Send(command);
+
+		return NoContent();
 	}
 }

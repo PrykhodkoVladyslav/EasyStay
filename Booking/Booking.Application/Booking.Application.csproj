@@ -19,9 +19,7 @@
 
   <ItemGroup>
     <Folder Include="MediatR\Addresses\Commands\Delete\" />
-    <Folder Include="MediatR\Addresses\Commands\Update\" />
     <Folder Include="MediatR\Hotels\Commands\Delete\" />
-    <Folder Include="MediatR\Hotels\Commands\Update\" />
     <Folder Include="MediatR\Hotels\Queries\GetDetails\" />
     <Folder Include="MediatR\Hotels\Queries\GetPage\" />
     <Folder Include="MediatR\Template\Commands\Create\" />

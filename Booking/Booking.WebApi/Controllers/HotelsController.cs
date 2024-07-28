@@ -2,6 +2,8 @@ using Booking.Application.MediatR.Hotels.Commands.Create;
 using Booking.Application.MediatR.Hotels.Commands.Delete;
 using Booking.Application.MediatR.Hotels.Commands.Update;
 using Booking.Application.MediatR.Hotels.Queries.GetAll;
+using Booking.Application.MediatR.Hotels.Queries.GetDetails;
+using Booking.Application.MediatR.Hotels.Queries.GetPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +15,20 @@ public class HotelsController : BaseApiController {
 		var items = await Mediator.Send(new GetAllHotelsQuery());
 
 		return Ok(items);
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> GetPage([FromQuery] GetHotelsPageQuery command) {
+		var page = await Mediator.Send(command);
+
+		return Ok(page);
+	}
+
+	[HttpGet("{id}")]
+	public async Task<IActionResult> GetById(long id) {
+		var entity = await Mediator.Send(new GetHotelDetailsQuery() { Id = id });
+
+		return Ok(entity);
 	}
 
 	[HttpPost]

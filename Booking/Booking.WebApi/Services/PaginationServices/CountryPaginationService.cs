@@ -13,9 +13,9 @@ public class CountryPaginationService(
 
 	protected override IQueryable<Country> GetQuery() => context.Countries.OrderBy(c => c.Id);
 
-	protected override IQueryable<Country> FilterQuery(IQueryable<Country> query, GetCountriesPageQuery paginationVm) {
-		if (paginationVm.Name is not null)
-			query = query.Where(c => c.Name.ToLower().Contains(paginationVm.Name.ToLower()));
+	protected override IQueryable<Country> FilterQuery(IQueryable<Country> query, GetCountriesPageQuery filter) {
+		if (filter.Name is not null)
+			query = query.Where(c => c.Name.ToLower().Contains(filter.Name.ToLower()));
 
 		return query;
 	}

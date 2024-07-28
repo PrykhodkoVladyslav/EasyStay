@@ -13,9 +13,9 @@ public class HotelTypePaginationService(
 
 	protected override IQueryable<HotelType> GetQuery() => context.HotelTypes.OrderBy(c => c.Id);
 
-	protected override IQueryable<HotelType> FilterQuery(IQueryable<HotelType> query, GetHotelTypesPageQuery paginationVm) {
-		if (paginationVm.Name is not null)
-			query = query.Where(ht => ht.Name.ToLower().Contains(paginationVm.Name.ToLower()));
+	protected override IQueryable<HotelType> FilterQuery(IQueryable<HotelType> query, GetHotelTypesPageQuery filter) {
+		if (filter.Name is not null)
+			query = query.Where(ht => ht.Name.ToLower().Contains(filter.Name.ToLower()));
 
 		return query;
 	}

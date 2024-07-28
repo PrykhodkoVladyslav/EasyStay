@@ -19,6 +19,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Notes.Persistence;
 using System.Reflection;
+using Booking.Application.MediatR.Hotels.Queries.GetPage;
+using Booking.Application.MediatR.Hotels.Queries.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +72,7 @@ builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerS
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelTypeVm, GetHotelTypesPageQuery>, HotelTypePaginationService>();
+builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
 
 
 var app = builder.Build();

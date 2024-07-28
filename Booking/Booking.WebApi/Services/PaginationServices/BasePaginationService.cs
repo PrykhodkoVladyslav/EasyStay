@@ -51,7 +51,7 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 
 	protected abstract IQueryable<EntityType> GetQuery();
 
-	protected abstract IQueryable<EntityType> FilterQuery(IQueryable<EntityType> query, PaginationVmType paginationVm);
+	protected abstract IQueryable<EntityType> FilterQuery(IQueryable<EntityType> query, PaginationVmType filter);
 
 	protected virtual async Task<IEnumerable<EntityVmType>> MapAsync(IQueryable<EntityType> query) {
 		return await query

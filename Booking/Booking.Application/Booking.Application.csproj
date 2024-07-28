@@ -18,8 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MediatR\Hotels\Queries\GetDetails\" />
-    <Folder Include="MediatR\Hotels\Queries\GetPage\" />
     <Folder Include="MediatR\Template\Commands\Create\" />
     <Folder Include="MediatR\Template\Commands\Delete\" />
     <Folder Include="MediatR\Template\Commands\Update\" />

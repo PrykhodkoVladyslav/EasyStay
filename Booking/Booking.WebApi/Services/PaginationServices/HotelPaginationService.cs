@@ -1,0 +1,108 @@
+using AutoMapper;
+using Booking.Application.Interfaces;
+using Booking.Application.MediatR.Hotels.Queries.GetPage;
+using Booking.Application.MediatR.Hotels.Queries.Shared;
+using Booking.Domain;
+
+namespace Booking.WebApi.Services.PaginationServices;
+
+public class HotelPaginationService(
+	IBookingDbContext context,
+	IMapper mapper
+) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
+	protected override IQueryable<Hotel> GetQuery() => context.Hotels.OrderBy(h => h.Id);
+
+	protected override IQueryable<Hotel> FilterQuery(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
+		if (filter.IsRandomItems == true) {
+			query = query.OrderBy(h => Guid.NewGuid());
+		}
+		else {
+			query = query.OrderBy(h => h.Id);
+		}
+
+		if (filter.Name is not null)
+			query = query.Where(h => h.Name.ToLower().Contains(filter.Name.ToLower()));
+
+		if (filter.Description is not null)
+			query = query.Where(h => h.Name.ToLower().Contains(filter.Description.ToLower()));
+
+		// if (vm.Rating is not null)
+		// 	query = query.Where(
+		// 		h => h.Rooms
+		// 			.SelectMany(
+		// 				r => r.Bookings.SelectMany(b => b.Reviews)
+		// 			)
+		// 			.Average(r => r.Score)
+		// 			.GetValueOrDefault(0) == vm.Rating
+		// 	);
+		//
+		// if (vm.MinRating is not null)
+		// 	query = query.Where(
+		// 		h => h.Rooms
+		// 			.SelectMany(
+		// 				r => r.Bookings.SelectMany(b => b.Reviews)
+		// 			)
+		// 			.Average(r => r.Score)
+		// 			.GetValueOrDefault(0) >= vm.MinRating
+		// 	);
+		// if (vm.MaxRating is not null)
+		// 	query = query.Where(
+		// 		h => h.Rooms
+		// 			.SelectMany(
+		// 				r => r.Bookings.SelectMany(b => b.Reviews)
+		// 			)
+		// 			.Average(r => r.Score)
+		// 			.GetValueOrDefault(0) <= vm.MaxRating
+		// 	);
+
+		if (filter.UserId is not null)
+			query = query.Where(h => h.UserId == filter.UserId);
+
+		if (filter.Address is not null) {
+			var address = filter.Address;
+
+			if (address.Id is not null)
+				query = query.Where(h => h.AddressId == address.Id);
+
+			if (address.Street is not null)
+				query = query.Where(h => h.Address.Street.ToLower().Contains(address.Street));
+
+			if (address.HouseNumber is not null)
+				query = query.Where(h => h.Address.HouseNumber.ToLower().Contains(address.HouseNumber));
+
+			if (address.City is not null) {
+				var city = address.City;
+
+				if (city.Id is not null)
+					query = query.Where(h => h.Address.CityId == city.Id);
+
+				if (city.Name is not null)
+					query = query.Where(h => h.Address.City.Name.ToLower().Contains(city.Name.ToLower()));
+
+				if (city.Longitude is not null)
+					query = query.Where(h => h.Address.City.Longitude == city.Longitude);
+
+				if (city.Latitude is not null)
+					query = query.Where(h => h.Address.City.Latitude == city.Latitude);
+
+				if (city.MinLongitude is not null)
+					query = query.Where(h => h.Address.City.Longitude >= city.MinLongitude);
+				if (city.MaxLongitude is not null)
+					query = query.Where(h => h.Address.City.Longitude <= city.MaxLongitude);
+
+				if (city.MinLatitude is not null)
+					query = query.Where(h => h.Address.City.Latitude >= city.MinLatitude);
+				if (city.MaxLatitude is not null)
+					query = query.Where(h => h.Address.City.Latitude <= city.MaxLatitude);
+
+				if (city.CountryId is not null)
+					query = query.Where(h => h.Address.City.CountryId == city.CountryId);
+			}
+		}
+
+		if (filter.TypeId is not null)
+			query = query.Where(h => h.TypeId == filter.TypeId);
+
+		return query;
+	}
+}

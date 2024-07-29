@@ -119,7 +119,7 @@ using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().Creat
 	DbInitializer.SeedIdentity(context, userManager, roleManager, configuration, imageService);
 
 	if (app.Configuration.GetValue<bool>("SeedClearData")) {
-		ClearDataSeeder.Seed(context, imageService);
+		ClearDataSeeder.Seed(context, imageService, userManager);
 	}
 }
 

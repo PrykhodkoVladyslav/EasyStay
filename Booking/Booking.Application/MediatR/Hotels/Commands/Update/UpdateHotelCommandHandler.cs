@@ -16,13 +16,15 @@ public class UpdateHotelCommandHandler(
 	IMapper mapper,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<UpdateHotelCommand> {
+
 	public async Task Handle(UpdateHotelCommand request, CancellationToken cancellationToken) {
 		var entity = await context.Hotels
-			             .Include(h => h.Photos)
-			             .FirstOrDefaultAsync(
-				             h => h.Id == request.Id && h.UserId == currentUserService.GetRequiredUserId(),
-				             cancellationToken)
-		             ?? throw new NotFoundException(nameof(Hotel), request.Id);
+			.Include(h => h.Photos)
+			.FirstOrDefaultAsync(
+				h => h.Id == request.Id && h.UserId == currentUserService.GetRequiredUserId(),
+				cancellationToken
+			)
+			?? throw new NotFoundException(nameof(Hotel), request.Id);
 
 		var addressCommand = mapper.Map<UpdateAddressCommand>(request.Address);
 		addressCommand.Id = entity.AddressId;
@@ -34,6 +36,9 @@ public class UpdateHotelCommandHandler(
 
 		entity.Name = request.Name;
 		entity.Description = request.Description;
+		entity.Area = request.Area;
+		entity.NumberOfRooms = request.NumberOfRooms;
+		entity.IsArchived = request.IsArchived;
 		entity.TypeId = request.TypeId;
 
 		entity.Photos.Clear();

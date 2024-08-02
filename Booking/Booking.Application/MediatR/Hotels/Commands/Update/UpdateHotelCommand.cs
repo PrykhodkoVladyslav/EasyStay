@@ -11,6 +11,12 @@ public class UpdateHotelCommand : IRequest {
 
 	public string Description { get; set; } = null!;
 
+	public double Area { get; set; }
+
+	public int NumberOfRooms { get; set; }
+
+	public bool IsArchived { get; set; }
+
 	public UpdateAddressDto Address { get; set; } = null!;
 
 	public long TypeId { get; set; }

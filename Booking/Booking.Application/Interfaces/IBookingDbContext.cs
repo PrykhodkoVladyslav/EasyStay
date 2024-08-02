@@ -1,4 +1,5 @@
 ﻿using Booking.Domain;
+using Booking.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
@@ -11,6 +12,7 @@ public interface IBookingDbContext {
 
 	Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken);
 
+	DbSet<User> Users { get; set; }
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }
 	DbSet<Address> Addresses { get; set; }

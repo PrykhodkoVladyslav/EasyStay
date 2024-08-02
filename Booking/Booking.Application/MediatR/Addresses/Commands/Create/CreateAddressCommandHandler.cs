@@ -5,11 +5,9 @@ using MediatR;
 namespace Booking.Application.MediatR.Addresses.Commands.Create;
 
 public class CreateAddressCommandHandler(
-	IBookingDbContext context,
-	IImageService imageService,
-	IMediator mediator,
-	ICurrentUserService currentUserService
+	IBookingDbContext context
 ) : IRequestHandler<CreateAddressCommand, long> {
+
 	public async Task<long> Handle(CreateAddressCommand request, CancellationToken cancellationToken) {
 		var entity = new Address {
 			Street = request.Street,

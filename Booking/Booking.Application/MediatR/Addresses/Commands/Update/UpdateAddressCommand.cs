@@ -19,6 +19,7 @@ public class UpdateAddressCommand : IRequest, IMapWith<UpdateAddressDto> {
 	public long CityId { get; set; }
 
 
+
 	public void Mapping(Profile profile) {
 		profile.CreateMap<UpdateAddressDto, UpdateAddressCommand>();
 	}

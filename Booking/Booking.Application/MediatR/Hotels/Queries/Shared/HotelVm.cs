@@ -13,9 +13,11 @@ public class HotelVm : IMapWith<Hotel> {
 
 	public string Description { get; set; } = null!;
 
-	public double Rating { get; set; }
+	public double Area { get; set; }
 
-	public int Reviews { get; set; }
+	public int NumberOfRooms { get; set; }
+
+	public bool IsArchived { get; set; }
 
 	public long UserId { get; set; }
 
@@ -26,28 +28,8 @@ public class HotelVm : IMapWith<Hotel> {
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
 
 
+
 	public void Mapping(Profile profile) {
 		profile.CreateMap<Hotel, HotelVm>();
-		// .ForMember(
-		// 	h => h.Rating,
-		// 	opt => opt.MapFrom(
-		// 		h => h.Rooms
-		// 			.SelectMany(
-		// 				r => r.Bookings.SelectMany(b => b.Reviews)
-		// 			)
-		// 			.Average(r => r.Score)
-		// 			.GetValueOrDefault(0)
-		// 	)
-		// )
-		// .ForMember(
-		// 	h => h.Reviews,
-		// 	opt => opt.MapFrom(
-		// 		h => h.Rooms
-		// 			.SelectMany(
-		// 				r => r.Bookings.SelectMany(b => b.Reviews)
-		// 			)
-		// 			.Count()
-		// 	)
-		// );
 	}
 }

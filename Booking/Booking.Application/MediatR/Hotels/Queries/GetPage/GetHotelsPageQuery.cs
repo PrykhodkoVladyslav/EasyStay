@@ -1,5 +1,4 @@
 ﻿using Booking.Application.MediatR.Hotels.Queries.Shared;
-using Booking.Application.Models.Address;
 using Booking.Application.Models.Hotel;
 using Booking.Application.Models.Pagination;
 using MediatR;
@@ -11,10 +10,15 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public string? Description { get; set; }
 
-	public double? Rating { get; set; }
+	public double? Area { get; set; }
+	public double? MinArea { get; set; }
+	public double? MaxArea { get; set; }
 
-	public double? MinRating { get; set; }
-	public double? MaxRating { get; set; }
+	public int? NumberOfRooms { get; set; }
+	public int? MinNumberOfRooms { get; set; }
+	public int? MaxNumberOfRooms { get; set; }
+
+	public bool? IsArchived { get; set; }
 
 	public long? UserId { get; set; }
 

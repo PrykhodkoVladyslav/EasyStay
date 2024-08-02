@@ -118,9 +118,11 @@ using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().Creat
 	DbInitializer.Inicialize(context);
 	DbInitializer.SeedIdentity(context, userManager, roleManager, configuration, imageService);
 
-	if (app.Configuration.GetValue<bool>("SeedClearData")) {
-		ClearDataSeeder.Seed(context, imageService, userManager);
-	}
+	if (app.Configuration.GetValue<bool>("SeedCleanData"))
+		CleanDataSeeder.Seed(context, imageService, userManager);
+
+	if (app.Configuration.GetValue<bool>("SeedGeneratedData"))
+		GeneratedDataSeeder.Seed(context, imageService);
 }
 
 app.Run();

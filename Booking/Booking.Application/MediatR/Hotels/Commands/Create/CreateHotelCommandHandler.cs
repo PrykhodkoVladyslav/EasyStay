@@ -11,10 +11,14 @@ public class CreateHotelCommandHandler(
 	IMediator mediator,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<CreateHotelCommand, long> {
+
 	public async Task<long> Handle(CreateHotelCommand request, CancellationToken cancellationToken) {
 		var entity = new Hotel {
 			Name = request.Name,
 			Description = request.Description,
+			Area = request.Area,
+			NumberOfRooms = request.NumberOfRooms,
+			IsArchived = request.IsArchived ?? false,
 			TypeId = request.TypeId,
 			UserId = currentUserService.GetRequiredUserId(),
 		};

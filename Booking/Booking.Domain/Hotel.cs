@@ -9,6 +9,12 @@ public class Hotel {
 
 	public string Description { get; set; } = null!;
 
+	public double Area { get; set; }
+
+	public int NumberOfRooms { get; set; }
+
+	public bool IsArchived { get; set; }
+
 	public long AddressId { get; set; }
 	public Address Address { get; set; } = null!;
 
@@ -19,6 +25,4 @@ public class Hotel {
 	public User User { get; set; } = null!;
 
 	public ICollection<HotelPhoto> Photos { get; set; } = null!;
-
-	//public ICollection<Room> Rooms { get; set; } = null!;
 }

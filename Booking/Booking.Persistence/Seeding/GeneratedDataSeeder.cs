@@ -71,11 +71,18 @@ public static class GeneratedDataSeeder {
 		var userIds = context.Users.Select(u => u.Id).ToArray();
 
 		foreach (var address in addressesId) {
-			context.Hotels.Add(
+            int numberOfRooms = random.Next(1, 21);
+            double areaPerRoom = Math.Round(5 + (random.NextDouble() * 45), 2);
+            double area = Math.Round(numberOfRooms * areaPerRoom, 2);
+
+            context.Hotels.Add(
 				new() {
 					Name = faker.Company.CompanyName(),
 					Description = faker.Lorem.Sentences(5),
-					AddressId = address,
+                    Area = area,
+                    NumberOfRooms = numberOfRooms,
+                    IsArchived = random.Next(0, 2) == 1,
+                    AddressId = address,
 					CategoryId = faker.PickRandom(categoryIds),
 					UserId = faker.PickRandom(userIds)
 				}

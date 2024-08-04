@@ -25,9 +25,9 @@ public class CreateHotelValidator : AbstractValidator<CreateHotelCommand> {
 			.GreaterThan(0)
 				.WithMessage("Number of rooms cannot be negative or equal to 0");
 
-		RuleFor(h => h.TypeId)
-			.MustAsync(existingEntityCheckerService.IsCorrectHotelTypeId)
-				.WithMessage("HotelType with this id is not exists");
+		RuleFor(h => h.CategoryId)
+			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryId)
+				.WithMessage("HotelCategory with this id is not exists");
 
 		RuleFor(h => h.Photos)
 			.MustAsync(imageValidator.IsValidImagesAsync)

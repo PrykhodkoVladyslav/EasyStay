@@ -18,8 +18,8 @@ public class Hotel {
 	public long AddressId { get; set; }
 	public Address Address { get; set; } = null!;
 
-	public long TypeId { get; set; }
-	public HotelType Type { get; set; } = null!;
+	public long CategoryId { get; set; }
+	public HotelCategory Category { get; set; } = null!;
 
 	public long UserId { get; set; }
 	public User User { get; set; } = null!;

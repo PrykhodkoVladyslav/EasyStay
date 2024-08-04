@@ -89,8 +89,8 @@ public class HotelPaginationService(
 			}
 		}
 
-		if (filter.TypeId is not null)
-			query = query.Where(h => h.TypeId == filter.TypeId);
+		if (filter.CategoryId is not null)
+			query = query.Where(h => h.CategoryId == filter.CategoryId);
 
 		return query;
 	}

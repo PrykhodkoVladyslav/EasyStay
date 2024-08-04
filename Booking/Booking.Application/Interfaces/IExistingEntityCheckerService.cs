@@ -5,7 +5,7 @@ public interface IExistingEntityCheckerService {
 	Task<bool> IsCorrectCityId(long id, CancellationToken cancellationToken);
 	Task<bool> IsCorrectHotelId(long id, CancellationToken cancellationToken);
 	Task<bool> IsCorrectHotelIdOfCurrentUser(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelTypeId(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelCategoryId(long id, CancellationToken cancellationToken);
 	//Task<bool> IsCorrectHotelReviewId(long id, CancellationToken cancellationToken);
 	//Task<bool> IsCorrectHotelReviewIdOfCurrentUser(long id, CancellationToken cancellationToken);
 	//Task<bool> IsCorrectHotelReviewByBookingIdAndUserId(long bookingId, CancellationToken cancellationToken);

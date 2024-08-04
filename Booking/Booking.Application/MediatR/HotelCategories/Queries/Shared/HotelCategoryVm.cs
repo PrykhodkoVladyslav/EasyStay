@@ -2,9 +2,9 @@
 using Booking.Application.Common.Mappings;
 using Booking.Domain;
 
-namespace Booking.Application.MediatR.HotelTypes.Queries.Shared;
+namespace Booking.Application.MediatR.HotelCategories.Queries.Shared;
 
-public class HotelTypeVm : IMapWith<HotelType> {
+public class HotelCategoryVm : IMapWith<HotelCategory> {
 	public long Id { get; set; }
 
 	public string Name { get; set; } = null!;
@@ -12,6 +12,6 @@ public class HotelTypeVm : IMapWith<HotelType> {
 
 
 	public void Mapping(Profile profile) {
-		profile.CreateMap<HotelType, HotelTypeVm>();
+		profile.CreateMap<HotelCategory, HotelCategoryVm>();
 	}
 }

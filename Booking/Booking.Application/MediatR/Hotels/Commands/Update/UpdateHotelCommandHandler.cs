@@ -39,7 +39,7 @@ public class UpdateHotelCommandHandler(
 		entity.Area = request.Area;
 		entity.NumberOfRooms = request.NumberOfRooms;
 		entity.IsArchived = request.IsArchived;
-		entity.TypeId = request.TypeId;
+		entity.CategoryId = request.CategoryId;
 
 		entity.Photos.Clear();
 		foreach (var photo in await SaveAndPrioritizePhotosAsync(request.Photos, entity))

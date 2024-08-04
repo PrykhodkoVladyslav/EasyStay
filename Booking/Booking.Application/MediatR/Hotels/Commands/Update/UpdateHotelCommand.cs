@@ -19,7 +19,7 @@ public class UpdateHotelCommand : IRequest {
 
 	public UpdateAddressDto Address { get; set; } = null!;
 
-	public long TypeId { get; set; }
+	public long CategoryId { get; set; }
 
 	public IEnumerable<IFormFile> Photos { get; set; } = null!;
 }

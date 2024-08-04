@@ -19,7 +19,7 @@ public class CreateHotelCommandHandler(
 			Area = request.Area,
 			NumberOfRooms = request.NumberOfRooms,
 			IsArchived = request.IsArchived ?? false,
-			TypeId = request.TypeId,
+			CategoryId = request.CategoryId,
 			UserId = currentUserService.GetRequiredUserId(),
 		};
 		entity.Photos = await SaveAndPrioritizePhotosAsync(request.Photos, entity);

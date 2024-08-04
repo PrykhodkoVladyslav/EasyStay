@@ -1,6 +1,6 @@
 ﻿namespace Booking.Domain;
 
-public class HotelType {
+public class HotelCategory {
 	public long Id { get; set; }
 
 	public string Name { get; set; } = null!;

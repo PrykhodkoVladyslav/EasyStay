@@ -27,7 +27,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	public DbSet<City> Cities { get; set; }
 	public DbSet<Address> Addresses { get; set; }
 	public DbSet<Hotel> Hotels { get; set; }
-	public DbSet<HotelType> HotelTypes { get; set; }
+	public DbSet<HotelCategory> HotelCategories { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -40,7 +40,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 		new CityEntityTypeConfiguration().Configure(modelBuilder.Entity<City>());
 		new AddressEntityTypeConfiguration().Configure(modelBuilder.Entity<Address>());
 		new HotelEntityTypeConfiguration().Configure(modelBuilder.Entity<Hotel>());
-		new HotelTypeEntityTypeConfiguration().Configure(modelBuilder.Entity<HotelType>());
+		new HotelCategoryEntityTypeConfiguration().Configure(modelBuilder.Entity<HotelCategory>());
 		new HotelPhotoEntityTypeConfiguration().Configure(modelBuilder.Entity<HotelPhoto>());
 	}
 

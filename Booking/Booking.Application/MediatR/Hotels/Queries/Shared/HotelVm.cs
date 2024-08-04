@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Booking.Application.Common.Mappings;
 using Booking.Application.MediatR.Addresses.Queries.Shared;
-using Booking.Application.MediatR.HotelTypes.Queries.Shared;
+using Booking.Application.MediatR.HotelCategories.Queries.Shared;
 using Booking.Domain;
 
 namespace Booking.Application.MediatR.Hotels.Queries.Shared;
@@ -23,7 +23,7 @@ public class HotelVm : IMapWith<Hotel> {
 
 	public AddressVm Address { get; set; } = null!;
 
-	public HotelTypeVm Type { get; set; } = null!;
+	public HotelCategoryVm Category { get; set; } = null!;
 
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
 

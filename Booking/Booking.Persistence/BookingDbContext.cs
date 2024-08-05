@@ -33,15 +33,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);
 
-		new UserEntityTypeConfiguration().Configure(modelBuilder.Entity<User>());
-		new UserRoleEntityTypeConfiguration().Configure(modelBuilder.Entity<UserRole>());
-
-		new CountryEntityTypeConfiguration().Configure(modelBuilder.Entity<Country>());
-		new CityEntityTypeConfiguration().Configure(modelBuilder.Entity<City>());
-		new AddressEntityTypeConfiguration().Configure(modelBuilder.Entity<Address>());
-		new HotelEntityTypeConfiguration().Configure(modelBuilder.Entity<Hotel>());
-		new HotelCategoryEntityTypeConfiguration().Configure(modelBuilder.Entity<HotelCategory>());
-		new HotelPhotoEntityTypeConfiguration().Configure(modelBuilder.Entity<HotelPhoto>());
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookingDbContext).Assembly);
 	}
 
 	public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken) {

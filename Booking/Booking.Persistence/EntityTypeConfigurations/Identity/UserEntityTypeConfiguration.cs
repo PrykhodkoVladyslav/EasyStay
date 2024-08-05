@@ -6,6 +6,8 @@ namespace Booking.Persistence.EntityTypeConfigurations.Identity;
 
 internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User> {
 	public void Configure(EntityTypeBuilder<User> builder) {
+		builder.UseTptMappingStrategy();
+
 		builder.Property(u => u.FirstName)
 			.IsRequired()
 			.HasMaxLength(100);

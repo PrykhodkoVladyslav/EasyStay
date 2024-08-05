@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Booking.WebApi.Controllers;
 
 public class AccountsController : BaseApiController {
-
 	[HttpPost]
 	public async Task<IActionResult> SignIn([FromForm] SignInCommand command) {
 		var token = await Mediator.Send(command);

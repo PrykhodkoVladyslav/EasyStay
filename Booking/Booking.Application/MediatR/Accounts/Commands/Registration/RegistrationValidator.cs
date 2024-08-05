@@ -1,7 +1,9 @@
 ﻿using Booking.Application.Interfaces;
+using Booking.Domain.Constants;
 using Booking.Domain.Identity;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using System.Text;
 
 namespace Booking.Application.MediatR.Accounts.Commands.Registration;
 
@@ -52,6 +54,10 @@ public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 				.WithMessage("Password is empty or null")
 			.MinimumLength(8)
 				.WithMessage("Password is too short");
+
+		RuleFor(r => r.Type)
+			.Must(t => Enum.TryParse(t, out RegistrationUserType _))
+				.WithMessage(BuildTypeError());
 	}
 
 	private async Task<bool> IsNewEmail(string email, CancellationToken _) {
@@ -60,5 +66,25 @@ public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 
 	private async Task<bool> IsNewUserName(string userName, CancellationToken _) {
 		return await _userManager.FindByNameAsync(userName) is null;
+	}
+
+	private static string BuildTypeError() {
+		var errorBuilder = new StringBuilder();
+
+		errorBuilder.Append("Type is not valid. Valid types: [ ");
+
+		bool isNotFirst = false;
+		foreach (var typeName in Enum.GetNames(typeof(RegistrationUserType))) {
+			if (isNotFirst)
+				errorBuilder.Append(", ");
+
+			errorBuilder.Append(typeName);
+
+			isNotFirst = true;
+		}
+
+		errorBuilder.Append(" ]");
+
+		return errorBuilder.ToString();
 	}
 }

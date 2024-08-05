@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
+﻿using Booking.Application.Common.Mappings;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Microsoft.AspNetCore.Http;
 

@@ -10,11 +10,19 @@ namespace Booking.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
-                name: "RealtorId",
+            migrationBuilder.DropForeignKey(
+                name: "FK_Hotels_AspNetUsers_UserId",
+                table: "Hotels");
+
+            migrationBuilder.RenameColumn(
+                name: "UserId",
                 table: "Hotels",
-                type: "bigint",
-                nullable: true);
+                newName: "RealtorId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Hotels_UserId",
+                table: "Hotels",
+                newName: "IX_Hotels_RealtorId");
 
             migrationBuilder.CreateTable(
                 name: "Admins",
@@ -67,17 +75,13 @@ namespace Booking.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Hotels_RealtorId",
-                table: "Hotels",
-                column: "RealtorId");
-
             migrationBuilder.AddForeignKey(
                 name: "FK_Hotels_Realtors_RealtorId",
                 table: "Hotels",
                 column: "RealtorId",
                 principalTable: "Realtors",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
@@ -96,13 +100,23 @@ namespace Booking.Persistence.Migrations
             migrationBuilder.DropTable(
                 name: "Realtors");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Hotels_RealtorId",
-                table: "Hotels");
-
-            migrationBuilder.DropColumn(
+            migrationBuilder.RenameColumn(
                 name: "RealtorId",
-                table: "Hotels");
+                table: "Hotels",
+                newName: "UserId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Hotels_RealtorId",
+                table: "Hotels",
+                newName: "IX_Hotels_UserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Hotels_AspNetUsers_UserId",
+                table: "Hotels",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

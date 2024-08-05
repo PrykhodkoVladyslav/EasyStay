@@ -21,7 +21,7 @@ public class UpdateHotelCommandHandler(
 		var entity = await context.Hotels
 			.Include(h => h.Photos)
 			.FirstOrDefaultAsync(
-				h => h.Id == request.Id && h.UserId == currentUserService.GetRequiredUserId(),
+				h => h.Id == request.Id && h.RealtorId == currentUserService.GetRequiredUserId(),
 				cancellationToken
 			)
 			?? throw new NotFoundException(nameof(Hotel), request.Id);

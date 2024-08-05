@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Booking.Persistence.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20240805090845_applied_TPT_to_users")]
+    [Migration("20240805132629_applied_TPT_to_users")]
     partial class applied_TPT_to_users
     {
         /// <inheritdoc />
@@ -149,10 +149,7 @@ namespace Booking.Persistence.Migrations
                     b.Property<int>("NumberOfRooms")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("RealtorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserId")
+                    b.Property<long>("RealtorId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -162,8 +159,6 @@ namespace Booking.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("RealtorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Hotels", (string)null);
                 });
@@ -489,13 +484,9 @@ namespace Booking.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Booking.Domain.Identity.Realtor", null)
+                    b.HasOne("Booking.Domain.Identity.Realtor", "Realtor")
                         .WithMany("Hotels")
-                        .HasForeignKey("RealtorId");
-
-                    b.HasOne("Booking.Domain.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("RealtorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -503,7 +494,7 @@ namespace Booking.Persistence.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("User");
+                    b.Navigation("Realtor");
                 });
 
             modelBuilder.Entity("Booking.Domain.HotelPhoto", b =>

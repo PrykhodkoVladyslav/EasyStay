@@ -488,7 +488,7 @@ public static class CleanDataSeeder {
 	}
 
 	private static void SeedUsers(UserManager<User> userManager, IImageService imageService) {
-		var users = new List<User> {
+		var users = new List<Realtor> {
 			new()
 			{
 				FirstName = "Andrew",

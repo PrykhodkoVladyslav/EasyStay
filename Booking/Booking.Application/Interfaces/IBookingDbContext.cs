@@ -12,6 +12,11 @@ public interface IBookingDbContext {
 	Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken);
 
 	DbSet<User> Users { get; set; }
+	DbSet<Customer> Customers { get; set; }
+	DbSet<Realtor> Realtors { get; set; }
+	DbSet<Admin> Admins { get; set; }
+	DbSet<Role> Roles { get; set; }
+
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }
 	DbSet<Address> Addresses { get; set; }

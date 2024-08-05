@@ -68,7 +68,7 @@ public static class GeneratedDataSeeder {
 
 		var addressesId = context.Addresses.Select(c => c.Id).ToList();
 		var categoryIds = context.HotelCategories.Select(hc => hc.Id).ToArray();
-		var userIds = context.Users.Select(u => u.Id).ToArray();
+		var userIds = context.Realtors.Select(u => u.Id).ToArray();
 
 		foreach (var address in addressesId) {
             int numberOfRooms = random.Next(1, 21);
@@ -84,7 +84,7 @@ public static class GeneratedDataSeeder {
                     IsArchived = random.Next(0, 2) == 1,
                     AddressId = address,
 					CategoryId = faker.PickRandom(categoryIds),
-					UserId = faker.PickRandom(userIds)
+					RealtorId = faker.PickRandom(userIds)
 				}
 			);
 		}

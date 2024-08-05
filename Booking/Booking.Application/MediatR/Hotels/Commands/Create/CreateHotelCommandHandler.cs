@@ -20,7 +20,7 @@ public class CreateHotelCommandHandler(
 			NumberOfRooms = request.NumberOfRooms,
 			IsArchived = request.IsArchived ?? false,
 			CategoryId = request.CategoryId,
-			UserId = currentUserService.GetRequiredUserId(),
+			RealtorId = currentUserService.GetRequiredUserId(),
 		};
 		entity.Photos = await SaveAndPrioritizePhotosAsync(request.Photos, entity);
 		entity.AddressId = await mediator.Send(request.Address, cancellationToken);

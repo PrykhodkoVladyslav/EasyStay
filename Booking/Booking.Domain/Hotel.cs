@@ -21,8 +21,8 @@ public class Hotel {
 	public long CategoryId { get; set; }
 	public HotelCategory Category { get; set; } = null!;
 
-	public long UserId { get; set; }
-	public User User { get; set; } = null!;
+	public long RealtorId { get; set; }
+	public Realtor Realtor { get; set; } = null!;
 
 	public ICollection<HotelPhoto> Photos { get; set; } = null!;
 }

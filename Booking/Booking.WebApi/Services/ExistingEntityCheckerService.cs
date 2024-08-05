@@ -18,7 +18,7 @@ public class ExistingEntityCheckerService(
 		await context.Hotels.AnyAsync(h => h.Id == id, cancellationToken);
 
 	public async Task<bool> IsCorrectHotelIdOfCurrentUser(long id, CancellationToken cancellationToken) =>
-		await context.Hotels.AnyAsync(h => h.Id == id && h.UserId == currentUserService.GetRequiredUserId(),
+		await context.Hotels.AnyAsync(h => h.Id == id && h.RealtorId == currentUserService.GetRequiredUserId(),
 			cancellationToken);
 
 	public async Task<bool> IsCorrectHotelCategoryId(long id, CancellationToken cancellationToken) =>

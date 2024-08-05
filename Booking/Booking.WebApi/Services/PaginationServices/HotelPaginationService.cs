@@ -44,8 +44,8 @@ public class HotelPaginationService(
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);
 
-		if (filter.UserId is not null)
-			query = query.Where(h => h.UserId == filter.UserId);
+		if (filter.RealtorId is not null)
+			query = query.Where(h => h.RealtorId == filter.RealtorId);
 
 		if (filter.Address is not null) {
 			var address = filter.Address;

@@ -21,6 +21,7 @@ using Notes.Persistence;
 using System.Reflection;
 using Booking.Application.MediatR.Hotels.Queries.GetPage;
 using Booking.Application.MediatR.Hotels.Queries.Shared;
+using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,6 +73,7 @@ builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>,
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelCategoryVm, GetHotelCategoriesPageQuery>, HotelCategoryPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
+builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomersPaginationService>();
 
 
 var app = builder.Build();

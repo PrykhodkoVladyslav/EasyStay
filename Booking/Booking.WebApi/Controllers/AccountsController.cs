@@ -1,6 +1,9 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
+﻿using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
+using Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
+using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.WebApi.Controllers;
@@ -25,5 +28,21 @@ public class AccountsController : BaseApiController {
 		var token = await Mediator.Send(command);
 
 		return Ok(token);
+	}
+
+	[HttpGet]
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> GetCustomerPage([FromQuery] GetCustomerPageCommand command) {
+		var customers = await Mediator.Send(command);
+
+		return Ok(customers);
+	}
+
+	[HttpGet]
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> GetRealtorPage([FromQuery] GetRealtorPageCommand command) {
+		var realtors = await Mediator.Send(command);
+
+		return Ok(realtors);
 	}
 }

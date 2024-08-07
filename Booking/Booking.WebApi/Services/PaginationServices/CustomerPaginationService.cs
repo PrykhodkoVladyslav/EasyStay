@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Booking.WebApi.Services.PaginationServices;
 
-public class CustomersPaginationService(
+public class CustomerPaginationService(
 	UserManager<User> customerManager,
 	IMapper mapper
 ) : BasePaginationService<Customer, CustomerItemVm, GetCustomerPageCommand>(mapper) {

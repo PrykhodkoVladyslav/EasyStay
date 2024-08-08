@@ -1,13 +1,11 @@
 ﻿using Booking.Application.Interfaces;
-using Booking.Domain.Constants;
 using FluentValidation;
-using System.Text;
 
-namespace Booking.Application.MediatR.Accounts.Commands.Registration;
+namespace Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
 
-public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
-	public RegistrationValidator(IIdentityValidator identityValidator, IImageValidator imageValidator) {
-		RuleFor(r => r.Email)
+public class CreateAdminValidator : AbstractValidator<CreateAdminCommand> {
+	public CreateAdminValidator(IIdentityValidator identityValidator, IImageValidator imageValidator) {
+		RuleFor(a => a.Email)
 			.NotEmpty()
 				.WithMessage("Email is empty or null")
 			.MaximumLength(100)
@@ -17,7 +15,7 @@ public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 			.MustAsync(identityValidator.IsNewEmailAsync)
 				.WithMessage("There is already a user with this email");
 
-		RuleFor(r => r.UserName)
+		RuleFor(a => a.UserName)
 			.NotEmpty()
 				.WithMessage("Username is empty or null")
 			.MaximumLength(100)
@@ -25,52 +23,28 @@ public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 			.MustAsync(identityValidator.IsNewUserNameAsync)
 				.WithMessage("There is already a user with this username");
 
-		RuleFor(r => r.FirstName)
+		RuleFor(a => a.FirstName)
 			.NotEmpty()
 				.WithMessage("FirstName is empty or null")
 			.MaximumLength(100)
 				.WithMessage("FirstName is too long");
 
-		RuleFor(r => r.LastName)
+		RuleFor(a => a.LastName)
 			.NotEmpty()
 				.WithMessage("LastName is empty or null")
 			.MaximumLength(100)
 				.WithMessage("LastName is too long");
 
-		RuleFor(r => r.Image)
+		RuleFor(a => a.Image)
 			.NotNull()
 				.WithMessage("Image is not selected")
 			.MustAsync(imageValidator.IsValidImageAsync)
 				.WithMessage("Image is not valid");
 
-		RuleFor(r => r.Password)
+		RuleFor(a => a.Password)
 			.NotEmpty()
 				.WithMessage("Password is empty or null")
 			.MinimumLength(8)
 				.WithMessage("Password is too short");
-
-		RuleFor(r => r.Type)
-			.Must(t => Enum.TryParse(t, out RegistrationUserType _))
-				.WithMessage(BuildTypeError());
-	}
-
-	private static string BuildTypeError() {
-		var errorBuilder = new StringBuilder();
-
-		errorBuilder.Append("Type is not valid. Valid types: [ ");
-
-		bool isNotFirst = false;
-		foreach (var typeName in Enum.GetNames(typeof(RegistrationUserType))) {
-			if (isNotFirst)
-				errorBuilder.Append(", ");
-
-			errorBuilder.Append(typeName);
-
-			isNotFirst = true;
-		}
-
-		errorBuilder.Append(" ]");
-
-		return errorBuilder.ToString();
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
+﻿using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
+using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
 using Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
 using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
@@ -21,6 +22,14 @@ public class AccountsController : BaseApiController {
 		var token = await Mediator.Send(command);
 
 		return Ok(token);
+	}
+
+	[HttpPost]
+	[Authorize(Roles = "Admin")]
+	public async Task<long> CreateAdminAsync([FromForm] CreateAdminCommand command) {
+		var id = await Mediator.Send(command);
+
+		return id;
 	}
 
 	[HttpPost]

@@ -1,0 +1,64 @@
+// import { City } from "interfaces/city";
+// import { HotelCategories } from "interfaces/hotelCategories";
+// import { PaginationOptions } from "interfaces/index.ts";
+// import { Photo } from "interfaces/photo";
+
+// export interface Address {
+//     id: number;
+//     street: string;
+//     houseNumber: string;
+//     latitude: number;
+//     longitude: number;
+//     city: City;
+// }
+export interface Hotel {
+    id: number;
+    name: string;
+    description: string;
+    // rating: number;
+    // reviews: number;
+    // address: Address;
+    // category: HotelCategories;
+    // photos: Photo[];
+}
+
+// export interface HotelAddressCity {
+//     id?: number;
+//     name?: string;
+//     longitude?: number;
+//     latitude?: number;
+//     minLongitude?: number;
+//     maxLongitude?: number;
+//     minLatitude?: number;
+//     maxLatitude?: number;
+//     countryId?: number;
+// }
+
+// export interface HotelAddress {
+//     id?: number;
+//     street?: string;
+//     houseNumber?: string;
+//     city?: HotelAddressCity;
+//     latitude?: string;
+//     longitude?: string;
+// }
+//
+// export interface GetHotelPageRequest extends PaginationOptions {
+//     userId?: number;
+//     name?: string;
+//     description?: string;
+//     rating?: number;
+//     minRating?: number;
+//     maxRating?: number;
+//     typeId?: number;
+//     address?: HotelAddress;
+// }
+//
+// export interface CreateHotel {
+//     name: string;
+//     cityId: number;
+//     typeId: string;
+//     description: string;
+//     address: HotelAddress;
+//     photos: File[];
+// }

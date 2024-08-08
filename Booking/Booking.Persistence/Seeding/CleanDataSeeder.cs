@@ -13,7 +13,7 @@ public static class CleanDataSeeder {
 		if (!context.Cities.Any())
 			SeedCities(context, imageService);
 
-		if (context.Users.Count() == 1)
+		if (context.Users.Count() <= 1)
 			SeedUsers(userManager, imageService);
 	}
 

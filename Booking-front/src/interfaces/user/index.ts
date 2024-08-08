@@ -13,12 +13,12 @@ export interface User {
 //     longitude: number;
 // }
 
-// export interface UserState {
-//     location: ILocation | null;
-//     user: User | null;
-//     token: string | null;
-//     favoriteHotels: Hotel[];
-// }
+export interface UserState {
+    // location: ILocation | null;
+    user: User | null;
+    token: string | null;
+    // favoriteHotels: Hotel[];
+}
 
 export interface LoginResponse {
     token: string;

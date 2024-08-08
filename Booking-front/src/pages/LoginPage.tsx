@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const [googleLogin, { isLoading: isLoadingGoogleLogin }] = useGoogleLoginMutation();
+    // const [googleLogin, { isLoading: isLoadingGoogleLogin }] = useGoogleLoginMutation();
     const [emailLogin, { isLoading: isLoadingEmailLogin }] = useLoginMutation();
 
     const login = async (e: React.FormEvent) => {
@@ -110,21 +110,21 @@ const LoginPage: React.FC = () => {
                     </Button>
                 </form>
 
-                <div className="flex items-center mb-6">
-                    <div className="flex-grow border-t text-gray/20"></div>
-                    <span className="mx-4 text-sm">або вибрати один із цих варіантів</span>
-                    <div className="flex-grow border-t text-gray/20"></div>
-                </div>
+                {/*<div className="flex items-center mb-6">*/}
+                {/*    <div className="flex-grow border-t text-gray/20"></div>*/}
+                {/*    <span className="mx-4 text-sm">або вибрати один із цих варіантів</span>*/}
+                {/*    <div className="flex-grow border-t text-gray/20"></div>*/}
+                {/*</div>*/}
 
-                <div className="flex justify-center items-center">
-                    <GoogleLogin
-                        useOneTap
-                        locale="uk"
-                        size="large"
-                        onSuccess={authSuccess}
-                        onError={authError}
-                    />
-                </div>
+                {/*<div className="flex justify-center items-center">*/}
+                {/*    <GoogleLogin*/}
+                {/*        useOneTap*/}
+                {/*        locale="uk"*/}
+                {/*        size="large"*/}
+                {/*        onSuccess={authSuccess}*/}
+                {/*        onError={authError}*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 <div className="border-t text-gray/20 mt-8"></div>
             </div>

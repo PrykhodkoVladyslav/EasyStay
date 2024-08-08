@@ -1,32 +1,28 @@
-import './App.css'
+import AccountLayout from "components/layout/AccountLayout.tsx";
 import {Route, Routes} from "react-router-dom";
+
+import LoginPage from "pages/LoginPage.tsx";
+import RegisterPage from "pages/RegisterPage.tsx";
+
+import AdminLayout from "components/layout/AdminLayout";
+import AdminLogin from "pages/AdminLogin.tsx";
+import AdminPanelPage from "pages/AdminPanelPage.tsx";
 
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<Layout/>}>
-                <Route index element={<HomePage/>}/>
-                <Route path="*" element={<NotFoundPage/>}/>
+
+            <Route path="/admin/" element={<AdminLayout/>}>
+                <Route path="login" element={<AdminLogin />}/>
+                <Route path="panel" element={<AdminPanelPage />}/>
             </Route>
 
-            <Route path="/admin" element={<AccountLayout/>}>
-
-            </Route>
-
-            <Route path="/Rieltor" element={<AccountLayout/>}>
-
-            </Route>
-
-            <Route path="/user" element={<AccountLayout/>}>
-
-            </Route>
-
-            <Route path="/auth/" element={<AccountLayout/>}>
-                <Route path="login" element={<LoginPage/>}/>
-                <Route path="register" element={<RegisterPage/>}/>
-            </Route>
+            {/*<Route path="/auth/" element={<AccountLayout />}>*/}
+            {/*    <Route path="login" element={<LoginPage />}/>*/}
+            {/*    <Route path="register" element={<RegisterPage />}/>*/}
+            {/*</Route>*/}
         </Routes>
     )
 }
 
-export default App
+export default App;

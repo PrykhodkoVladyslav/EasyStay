@@ -55,4 +55,12 @@ public class AccountsController : BaseApiController {
 
 		return Ok(realtors);
 	}
+
+	[HttpPost]
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> BlockUserByIdAsync([FromBody] BlockUserByIdCommand command) {
+		await Mediator.Send(command);
+
+		return Ok();
+	}
 }

@@ -1,9 +1,10 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
-using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
-using Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
+﻿using Booking.Application.MediatR.Accounts.Commands.BlockUserById;
+using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
 using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
+using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
+using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

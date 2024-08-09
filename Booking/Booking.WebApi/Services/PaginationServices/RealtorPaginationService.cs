@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
+using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Booking.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 

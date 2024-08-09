@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
+using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using Booking.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 

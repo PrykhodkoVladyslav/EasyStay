@@ -1,9 +1,9 @@
 ﻿using Booking.Application.Common.Mappings;
 using Booking.Domain.Identity;
 
-namespace Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
+namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 
-public class CustomerItemVm : IMapWith<Customer> {
+public class RealtorItemVm : IMapWith<Realtor> {
 	public long Id { get; set; }
 
 	public string Email { get; set; } = null!;

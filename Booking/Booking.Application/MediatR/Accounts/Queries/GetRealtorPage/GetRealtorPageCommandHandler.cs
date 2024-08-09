@@ -2,7 +2,7 @@
 using Booking.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
+namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 
 public class GetRealtorPageCommandHandler(
 	IPaginationService<RealtorItemVm, GetRealtorPageCommand> paginationService

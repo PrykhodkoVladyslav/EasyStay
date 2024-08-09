@@ -6,9 +6,10 @@ namespace Booking.WebApi.Services;
 public class CurrentUserService(
 	IHttpContextAccessor httpContextAccessor
 ) : ICurrentUserService {
+
 	public long GetRequiredUserId() {
 		var id = httpContextAccessor.HttpContext?.User?
-			.FindFirstValue("Id");
+			.FindFirstValue(ClaimTypes.NameIdentifier);
 
 		return string.IsNullOrEmpty(id)
 			? throw new Exception("User is not authorized")

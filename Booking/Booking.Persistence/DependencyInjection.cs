@@ -58,6 +58,20 @@ public static class DependencyInjection {
 					ValidateIssuerSigningKey = true,
 					ClockSkew = TimeSpan.Zero
 				};
+
+				options.Events = new JwtBearerEvents {
+					OnTokenValidated = async context => {
+						if (context.Principal is null)
+							return;
+
+						var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
+						var user = await userManager.GetUserAsync(context.Principal);
+
+						if (user is null || user.LockoutEnd > DateTimeOffset.UtcNow) {
+							context.Fail("This account is locked.");
+						}
+					}
+				};
 			});
 
 		return services;

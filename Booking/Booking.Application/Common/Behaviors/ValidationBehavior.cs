@@ -5,7 +5,7 @@ namespace Booking.Application.Common.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>(
 	IEnumerable<IValidator<TRequest>> validators
-) : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> {
+) : IPipelineBehavior<TRequest, TResponse> where TRequest : IBaseRequest {
 
 	public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken) {
 		var context = new ValidationContext<TRequest>(request);

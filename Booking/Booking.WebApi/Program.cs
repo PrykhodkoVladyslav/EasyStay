@@ -1,8 +1,8 @@
 using Booking.Application;
 using Booking.Application.Common.Mappings;
 using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
-using Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
+using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
+using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Booking.Application.MediatR.Cities.Queries.GetPage;
 using Booking.Application.MediatR.Cities.Queries.Shared;
 using Booking.Application.MediatR.Countries.Queries.GetPage;

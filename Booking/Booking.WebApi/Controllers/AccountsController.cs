@@ -1,11 +1,14 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
-using Booking.Application.MediatR.Accounts.Commands.GetCustomerPage;
-using Booking.Application.MediatR.Accounts.Commands.GetRealtorPage;
+﻿using Booking.Application.MediatR.Accounts.Commands.BlockUserById;
+using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
 using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
+using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
+using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
+using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Booking.WebApi.Controllers;
 
@@ -53,5 +56,21 @@ public class AccountsController : BaseApiController {
 		var realtors = await Mediator.Send(command);
 
 		return Ok(realtors);
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> BlockUserByIdAsync([FromBody] BlockUserByIdCommand command) {
+		await Mediator.Send(command);
+
+		return Ok();
+	}
+
+	[HttpPatch("{id}")]
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> UnlockUserByIdAsync([FromRoute] long id) {
+		await Mediator.Send(new UnlockUserByIdCommand { Id = id });
+
+		return Ok();
 	}
 }

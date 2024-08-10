@@ -1,4 +1,5 @@
 ﻿using Booking.Application.MediatR.RealtorReviews.Commands.Create;
+using Booking.Application.MediatR.RealtorReviews.Commands.Delete;
 using Booking.Application.MediatR.RealtorReviews.Commands.Update;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetDetails;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
@@ -34,6 +35,14 @@ public class RealtorReviewsController : BaseApiController {
 	[Authorize(Roles = "Customer")]
 	public async Task<IActionResult> Update([FromForm] UpdateRealtorReviewCommand command) {
 		await Mediator.Send(command);
+
+		return NoContent();
+	}
+
+	[HttpDelete("{id}")]
+	[Authorize(Roles = "Customer")]
+	public async Task<IActionResult> Delete(long id) {
+		await Mediator.Send(new DeleteRealtorReviewCommand { Id = id });
 
 		return NoContent();
 	}

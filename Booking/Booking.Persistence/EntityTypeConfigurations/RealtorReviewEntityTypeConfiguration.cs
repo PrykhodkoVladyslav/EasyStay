@@ -15,6 +15,9 @@ internal class RealtorReviewEntityTypeConfiguration : IEntityTypeConfiguration<R
 		builder.Property(rr => rr.Score)
 			.IsRequired(false);
 
+		builder.Property(rr => rr.UpdatedAtUtc)
+			.IsRequired(false);
+
 		builder.HasOne(rr => rr.Author)
 			.WithMany(c => c.RealtorReviews)
 			.HasForeignKey(r => r.AuthorId)

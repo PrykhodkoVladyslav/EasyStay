@@ -11,6 +11,8 @@ using Booking.Application.MediatR.HotelCategories.Queries.GetPage;
 using Booking.Application.MediatR.HotelCategories.Queries.Shared;
 using Booking.Application.MediatR.Hotels.Queries.GetPage;
 using Booking.Application.MediatR.Hotels.Queries.Shared;
+using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
+using Booking.Application.MediatR.RealtorReviews.Queries.Shared;
 using Booking.Domain.Identity;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
@@ -76,6 +78,7 @@ builder.Services.AddScoped<IPaginationService<HotelCategoryVm, GetHotelCategorie
 builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
 builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageCommand>, RealtorPaginationService>();
+builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
 
 
 var app = builder.Build();

@@ -9,6 +9,10 @@ public class RealtorReview {
 
 	public double? Score { get; set; }
 
+	public DateTime CreatedAtUtc { get; set; }
+
+	public DateTime? UpdatedAtUtc { get; set; }
+
 	public long AuthorId;
 	public Customer Author { get; set; } = null!;
 

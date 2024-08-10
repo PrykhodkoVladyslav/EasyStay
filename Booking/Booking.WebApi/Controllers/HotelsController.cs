@@ -4,6 +4,7 @@ using Booking.Application.MediatR.Hotels.Commands.Update;
 using Booking.Application.MediatR.Hotels.Queries.GetAll;
 using Booking.Application.MediatR.Hotels.Queries.GetDetails;
 using Booking.Application.MediatR.Hotels.Queries.GetPage;
+using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

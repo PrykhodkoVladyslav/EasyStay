@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="MediatR\RealtorReviews\Commands\" />
-    <Folder Include="MediatR\RealtorReviews\Queries\GetPage\" />
   </ItemGroup>
 
 </Project>

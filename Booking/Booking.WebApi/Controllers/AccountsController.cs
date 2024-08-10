@@ -8,7 +8,6 @@ using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Booking.WebApi.Controllers;
 

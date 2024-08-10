@@ -117,13 +117,13 @@ public class AuthService(
 			photo = await imageService.SaveImageAsync(base64Image);
 		}
 
-		var user = new User {
-			FirstName = payload.GivenName,
-			LastName = payload.FamilyName,
-			Email = payload.Email,
-			UserName = payload.Email,
-			Photo = photo
-		};
+		var user = CreateUserInstanceByType(type);
+
+		user.FirstName = payload.GivenName;
+		user.LastName = payload.FamilyName;
+		user.Email = payload.Email;
+		user.UserName = payload.Email;
+		user.Photo = photo;
 
 		try {
 			await CreateUserAsync(user, type, cancellationToken: cancellationToken);

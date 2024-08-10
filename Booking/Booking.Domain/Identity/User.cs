@@ -2,7 +2,7 @@
 
 namespace Booking.Domain.Identity;
 
-public class User : IdentityUser<long> {
+public abstract class User : IdentityUser<long> {
 	public string FirstName { get; set; } = null!;
 
 	public string LastName { get; set; } = null!;

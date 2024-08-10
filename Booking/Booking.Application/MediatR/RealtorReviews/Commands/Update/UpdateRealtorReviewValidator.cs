@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Create;
+namespace Booking.Application.MediatR.RealtorReviews.Commands.Update;
 
-public class CreateRealtorReviewValidator : AbstractValidator<CreateRealtorReviewCommand> {
-	public CreateRealtorReviewValidator() {
+public class UpdateRealtorReviewValidator : AbstractValidator<UpdateRealtorReviewCommand> {
+	public UpdateRealtorReviewValidator() {
 		RuleFor(r => r.Description)
 			.NotEmpty()
 				.WithMessage("Description is empty or null")
@@ -13,9 +13,5 @@ public class CreateRealtorReviewValidator : AbstractValidator<CreateRealtorRevie
 		RuleFor(r => r.Score)
 			.InclusiveBetween(0, 5)
 				.WithMessage("Score must be in the range from 0 to 5");
-
-		RuleFor(r => r.RealtorId)
-			.NotEqual(0)
-				.WithMessage("RealtorId cannot be equal to 0");
 	}
 }

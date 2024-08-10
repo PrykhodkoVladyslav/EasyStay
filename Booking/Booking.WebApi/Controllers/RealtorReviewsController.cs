@@ -1,4 +1,5 @@
 ﻿using Booking.Application.MediatR.RealtorReviews.Commands.Create;
+using Booking.Application.MediatR.RealtorReviews.Commands.Update;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetDetails;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
 using Microsoft.AspNetCore.Authorization;
@@ -27,5 +28,13 @@ public class RealtorReviewsController : BaseApiController {
 		var id = await Mediator.Send(command);
 
 		return Ok(id);
+	}
+
+	[HttpPut]
+	[Authorize(Roles = "Customer")]
+	public async Task<IActionResult> Update([FromForm] UpdateRealtorReviewCommand command) {
+		await Mediator.Send(command);
+
+		return NoContent();
 	}
 }

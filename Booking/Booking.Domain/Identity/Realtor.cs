@@ -3,5 +3,5 @@
 public class Realtor : User {
 	public ICollection<Hotel> Hotels { get; set; } = null!;
 
-	// ToDo: Reviews
+	public ICollection<RealtorReview> Reviews { get; set; } = null!;
 }

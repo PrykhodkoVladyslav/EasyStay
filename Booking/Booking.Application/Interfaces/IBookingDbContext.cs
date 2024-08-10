@@ -23,4 +23,5 @@ public interface IBookingDbContext {
 	DbSet<Hotel> Hotels { get; set; }
 	DbSet<HotelCategory> HotelCategories { get; set; }
 	DbSet<HotelPhoto> HotelPhotos { get; set; }
+	DbSet<RealtorReview> RealtorReviews { get; set; }
 }

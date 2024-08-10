@@ -1,11 +1,9 @@
-﻿using Booking.Persistence.EntityTypeConfigurations.Identity;
-using Booking.Persistence.EntityTypeConfigurations;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Booking.Domain.Identity;
+﻿using Booking.Application.Interfaces;
 using Booking.Domain;
-using Booking.Application.Interfaces;
+using Booking.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Booking.Persistence;
@@ -33,6 +31,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	public DbSet<Hotel> Hotels { get; set; }
 	public DbSet<HotelCategory> HotelCategories { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
+	public DbSet<RealtorReview> RealtorReviews { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);

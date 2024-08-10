@@ -23,4 +23,9 @@
     <ProjectReference Include="..\Booking.Domain\Booking.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediatR\RealtorReviews\Commands\" />
+    <Folder Include="MediatR\RealtorReviews\Queries\GetPage\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,7 @@
-﻿using Booking.Application.MediatR.RealtorReviews.Queries.GetDetails;
+﻿using Booking.Application.MediatR.RealtorReviews.Commands.Create;
+using Booking.Application.MediatR.RealtorReviews.Queries.GetDetails;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.WebApi.Controllers;
@@ -17,5 +19,13 @@ public class RealtorReviewsController : BaseApiController {
 		var entity = await Mediator.Send(new GetRealtorReviewDetalisQuery() { Id = id });
 
 		return Ok(entity);
+	}
+
+	[HttpPost]
+	[Authorize(Roles = "Customer")]
+	public async Task<IActionResult> Create([FromForm] CreateRealtorReviewCommand command) {
+		var id = await Mediator.Send(command);
+
+		return Ok(id);
 	}
 }

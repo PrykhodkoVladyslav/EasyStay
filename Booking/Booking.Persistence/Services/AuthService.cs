@@ -1,5 +1,6 @@
 ﻿using Booking.Application.Common.Exceptions;
 using Booking.Application.Interfaces;
+using Booking.Application.Models.Accounts;
 using Booking.Domain.Constants;
 using Booking.Domain.Identity;
 using Google.Apis.Auth;
@@ -16,7 +17,43 @@ public class AuthService(
 	IImageService imageService
 ) : IAuthService {
 
-	public async Task CreateUserAsync(User user, string? password = null, CancellationToken cancellationToken = default) {
+	public async Task<User> CreateUserAsync(UserDto userDto, CreateUserType type, CancellationToken cancellationToken = default) {
+		var user = await CreateAndInicializeUserInstanceAsync(userDto, type);
+
+		try {
+			await CreateUserAsync(user, type, userDto.Password, cancellationToken);
+		}
+		catch {
+			imageService.DeleteImageIfExists(user.Photo);
+			throw;
+		}
+
+		return user;
+	}
+
+	public async Task<User> GoogleSignInAsync(string credential, CreateUserType type, CancellationToken cancellationToken = default) {
+		Payload payload = await GetPayloadAsync(credential);
+
+		User? user = await userManager.FindByEmailAsync(payload.Email);
+
+		user ??= await CreateGoogleUserAsync(payload, type, cancellationToken);
+
+		return user;
+	}
+
+	private async Task<User> CreateAndInicializeUserInstanceAsync(UserDto userDto, CreateUserType type) {
+		var user = CreateUserInstanceByType(type);
+
+		user.FirstName = userDto.FirstName;
+		user.LastName = userDto.LastName;
+		user.Email = userDto.Email;
+		user.UserName = userDto.UserName;
+		user.Photo = await imageService.SaveImageAsync(userDto.Image);
+
+		return user;
+	}
+
+	private async Task CreateUserAsync(User user, CreateUserType type, string? password = null, CancellationToken cancellationToken = default) {
 		using var transaction = await context.BeginTransactionAsync(cancellationToken);
 
 		try {
@@ -24,7 +61,7 @@ public class AuthService(
 			if (!identityResult.Succeeded)
 				throw new IdentityException(identityResult, "User creating error");
 
-			identityResult = await userManager.AddToRoleAsync(user, Roles.User);
+			identityResult = await userManager.AddToRoleAsync(user, GetRoleByCreateUserType(type));
 			if (!identityResult.Succeeded)
 				throw new IdentityException(identityResult, "Role assignment error");
 
@@ -36,15 +73,21 @@ public class AuthService(
 		}
 	}
 
-	public async Task<User> GoogleSignInAsync(string credential, CancellationToken cancellationToken = default) {
-		Payload payload = await GetPayloadAsync(credential);
+	private static User CreateUserInstanceByType(CreateUserType type) =>
+		type switch {
+			CreateUserType.Customer => new Customer(),
+			CreateUserType.Realtor => new Realtor(),
+			CreateUserType.Admin => new Admin(),
+			_ => throw new Exception("Invalid option"),
+		};
 
-		User? user = await userManager.FindByEmailAsync(payload.Email);
-
-		user ??= await CreateGoogleUserAsync(payload, cancellationToken);
-
-		return user;
-	}
+	private static string GetRoleByCreateUserType(CreateUserType type) =>
+		type switch {
+			CreateUserType.Customer => Roles.Customer,
+			CreateUserType.Realtor => Roles.Realtor,
+			CreateUserType.Admin => Roles.Admin,
+			_ => throw new Exception("Invalid type")
+		};
 
 	private async Task<Payload> GetPayloadAsync(string credential) {
 		try {
@@ -60,7 +103,7 @@ public class AuthService(
 		}
 	}
 
-	private async Task<User> CreateGoogleUserAsync(Payload payload, CancellationToken cancellationToken = default) {
+	private async Task<User> CreateGoogleUserAsync(Payload payload, CreateUserType type, CancellationToken cancellationToken = default) {
 		using var httpClient = new HttpClient();
 
 		string photo;
@@ -74,16 +117,16 @@ public class AuthService(
 			photo = await imageService.SaveImageAsync(base64Image);
 		}
 
-		var user = new User {
-			FirstName = payload.GivenName,
-			LastName = payload.FamilyName,
-			Email = payload.Email,
-			UserName = payload.Email,
-			Photo = photo
-		};
+		var user = CreateUserInstanceByType(type);
+
+		user.FirstName = payload.GivenName;
+		user.LastName = payload.FamilyName;
+		user.Email = payload.Email;
+		user.UserName = payload.Email;
+		user.Photo = photo;
 
 		try {
-			await CreateUserAsync(user, cancellationToken: cancellationToken);
+			await CreateUserAsync(user, type, cancellationToken: cancellationToken);
 		}
 		catch {
 			imageService.DeleteImageIfExists(user.Photo);

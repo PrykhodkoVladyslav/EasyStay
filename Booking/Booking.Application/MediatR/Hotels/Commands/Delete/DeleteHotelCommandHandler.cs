@@ -12,13 +12,15 @@ public class DeleteHotelCommandHandler(
 	IMediator mediator,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<DeleteHotelCommand> {
+
 	public async Task Handle(DeleteHotelCommand request, CancellationToken cancellationToken) {
 		var entity = await context.Hotels
-			             .Include(h => h.Photos)
-			             .FirstOrDefaultAsync(
-				             h => h.Id == request.Id && h.UserId == currentUserService.GetRequiredUserId(),
-				             cancellationToken)
-		             ?? throw new NotFoundException(nameof(Hotels), request.Id);
+			.Include(h => h.Photos)
+			.FirstOrDefaultAsync(
+				h => h.Id == request.Id && h.RealtorId == currentUserService.GetRequiredUserId(),
+				cancellationToken
+			)
+			?? throw new NotFoundException(nameof(Hotels), request.Id);
 
 		context.Hotels.Remove(entity);
 		await context.SaveChangesAsync(cancellationToken);

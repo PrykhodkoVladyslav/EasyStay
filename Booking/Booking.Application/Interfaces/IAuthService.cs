@@ -1,8 +1,10 @@
-﻿using Booking.Domain.Identity;
+﻿using Booking.Application.Models.Accounts;
+using Booking.Domain.Constants;
+using Booking.Domain.Identity;
 
 namespace Booking.Application.Interfaces;
 
 public interface IAuthService {
-	Task CreateUserAsync(User user, string? password = null, CancellationToken cancellationToken = default);
-	Task<User> GoogleSignInAsync(string credential, CancellationToken cancellationToken = default);
+	Task<User> CreateUserAsync(UserDto userDto, CreateUserType type, CancellationToken cancellationToken = default);
+	Task<User> GoogleSignInAsync(string credential, CreateUserType type, CancellationToken cancellationToken = default);
 }

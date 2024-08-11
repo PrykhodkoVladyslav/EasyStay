@@ -32,7 +32,7 @@ public class HotelsController : BaseApiController {
 	}
 
 	[HttpPost]
-	[Authorize(Roles = "Admin,Realtor")]
+	[Authorize(Roles = "Realtor")]
 	public async Task<IActionResult> Create([FromForm] CreateHotelCommand command) {
 		var id = await Mediator.Send(command);
 
@@ -40,7 +40,7 @@ public class HotelsController : BaseApiController {
 	}
 
 	[HttpPut]
-	[Authorize(Roles = "Admin,Realtor")]
+	[Authorize(Roles = "Realtor")]
 	public async Task<IActionResult> Update([FromForm] UpdateHotelCommand command) {
 		await Mediator.Send(command);
 
@@ -48,7 +48,7 @@ public class HotelsController : BaseApiController {
 	}
 
 	[HttpDelete("{id}")]
-	[Authorize(Roles = "Admin,Realtor")]
+	[Authorize(Roles = "Realtor")]
 	public async Task<IActionResult> Delete(long id) {
 		await Mediator.Send(new DeleteHotelCommand { Id = id });
 

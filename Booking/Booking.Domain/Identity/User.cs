@@ -2,7 +2,7 @@
 
 namespace Booking.Domain.Identity;
 
-public class User : IdentityUser<long> {
+public abstract class User : IdentityUser<long> {
 	public string FirstName { get; set; } = null!;
 
 	public string LastName { get; set; } = null!;
@@ -10,10 +10,4 @@ public class User : IdentityUser<long> {
 	public string Photo { get; set; } = null!;
 
 	public virtual ICollection<UserRole> UserRoles { get; set; } = null!;
-
-	public ICollection<Hotel> Hotels { get; set; } = null!;
-
-	//public ICollection<HotelReview> HotelReviews { get; set; } = null!;
-
-	//public ICollection<RoomBooking> Bookings { get; set; } = null!;
 }

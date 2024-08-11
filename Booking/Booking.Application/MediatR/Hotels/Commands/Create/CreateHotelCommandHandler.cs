@@ -11,12 +11,16 @@ public class CreateHotelCommandHandler(
 	IMediator mediator,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<CreateHotelCommand, long> {
+
 	public async Task<long> Handle(CreateHotelCommand request, CancellationToken cancellationToken) {
 		var entity = new Hotel {
 			Name = request.Name,
 			Description = request.Description,
-			TypeId = request.TypeId,
-			UserId = currentUserService.GetRequiredUserId(),
+			Area = request.Area,
+			NumberOfRooms = request.NumberOfRooms,
+			IsArchived = request.IsArchived ?? false,
+			CategoryId = request.CategoryId,
+			RealtorId = currentUserService.GetRequiredUserId(),
 		};
 		entity.Photos = await SaveAndPrioritizePhotosAsync(request.Photos, entity);
 		entity.AddressId = await mediator.Send(request.Address, cancellationToken);

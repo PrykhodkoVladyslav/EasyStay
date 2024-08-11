@@ -124,31 +124,58 @@ namespace Booking.Persistence.Migrations
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
+                    b.Property<double>("Area")
+                        .HasColumnType("double precision");
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("NumberOfRooms")
+                        .HasColumnType("integer");
 
-                    b.Property<long>("UserId")
+                    b.Property<long>("RealtorId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("RealtorId");
 
                     b.ToTable("Hotels", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.HotelCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HotelCategories", (string)null);
                 });
 
             modelBuilder.Entity("Booking.Domain.HotelPhoto", b =>
@@ -175,24 +202,6 @@ namespace Booking.Persistence.Migrations
                     b.HasIndex("HotelId");
 
                     b.ToTable("HotelPhotos", (string)null);
-                });
-
-            modelBuilder.Entity("Booking.Domain.HotelType", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HotelTypes", (string)null);
                 });
 
             modelBuilder.Entity("Booking.Domain.Identity.Role", b =>
@@ -304,6 +313,8 @@ namespace Booking.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Booking.Domain.Identity.UserRole", b =>
@@ -319,6 +330,43 @@ namespace Booking.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.RealtorReview", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<long>("RealtorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("Score")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("RealtorId");
+
+                    b.ToTable("RealtorReviews", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -413,6 +461,27 @@ namespace Booking.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Booking.Domain.Identity.Admin", b =>
+                {
+                    b.HasBaseType("Booking.Domain.Identity.User");
+
+                    b.ToTable("Admins", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.Identity.Customer", b =>
+                {
+                    b.HasBaseType("Booking.Domain.Identity.User");
+
+                    b.ToTable("Customers", (string)null);
+                });
+
+            modelBuilder.Entity("Booking.Domain.Identity.Realtor", b =>
+                {
+                    b.HasBaseType("Booking.Domain.Identity.User");
+
+                    b.ToTable("Realtors", (string)null);
+                });
+
             modelBuilder.Entity("Booking.Domain.Address", b =>
                 {
                     b.HasOne("Booking.Domain.City", "City")
@@ -443,23 +512,23 @@ namespace Booking.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Booking.Domain.HotelType", "Type")
+                    b.HasOne("Booking.Domain.HotelCategory", "Category")
                         .WithMany("Hotels")
-                        .HasForeignKey("TypeId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Booking.Domain.Identity.User", "User")
+                    b.HasOne("Booking.Domain.Identity.Realtor", "Realtor")
                         .WithMany("Hotels")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("RealtorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
 
-                    b.Navigation("Type");
+                    b.Navigation("Category");
 
-                    b.Navigation("User");
+                    b.Navigation("Realtor");
                 });
 
             modelBuilder.Entity("Booking.Domain.HotelPhoto", b =>
@@ -490,6 +559,25 @@ namespace Booking.Persistence.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Booking.Domain.RealtorReview", b =>
+                {
+                    b.HasOne("Booking.Domain.Identity.Customer", "Author")
+                        .WithMany("RealtorReviews")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Booking.Domain.Identity.Realtor", "Realtor")
+                        .WithMany("Reviews")
+                        .HasForeignKey("RealtorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Realtor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -528,6 +616,33 @@ namespace Booking.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Booking.Domain.Identity.Admin", b =>
+                {
+                    b.HasOne("Booking.Domain.Identity.User", null)
+                        .WithOne()
+                        .HasForeignKey("Booking.Domain.Identity.Admin", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Booking.Domain.Identity.Customer", b =>
+                {
+                    b.HasOne("Booking.Domain.Identity.User", null)
+                        .WithOne()
+                        .HasForeignKey("Booking.Domain.Identity.Customer", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Booking.Domain.Identity.Realtor", b =>
+                {
+                    b.HasOne("Booking.Domain.Identity.User", null)
+                        .WithOne()
+                        .HasForeignKey("Booking.Domain.Identity.Realtor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Booking.Domain.City", b =>
                 {
                     b.Navigation("Addresses");
@@ -543,7 +658,7 @@ namespace Booking.Persistence.Migrations
                     b.Navigation("Photos");
                 });
 
-            modelBuilder.Entity("Booking.Domain.HotelType", b =>
+            modelBuilder.Entity("Booking.Domain.HotelCategory", b =>
                 {
                     b.Navigation("Hotels");
                 });
@@ -555,9 +670,19 @@ namespace Booking.Persistence.Migrations
 
             modelBuilder.Entity("Booking.Domain.Identity.User", b =>
                 {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Booking.Domain.Identity.Customer", b =>
+                {
+                    b.Navigation("RealtorReviews");
+                });
+
+            modelBuilder.Entity("Booking.Domain.Identity.Realtor", b =>
+                {
                     b.Navigation("Hotels");
 
-                    b.Navigation("UserRoles");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

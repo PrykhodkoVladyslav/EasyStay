@@ -6,12 +6,13 @@ using MediatR;
 namespace Booking.Application.MediatR.Addresses.Commands.Update;
 
 public class UpdateAddressCommandHandler(
-	IBookingDbContext context,
-	IImageService imageService
+	IBookingDbContext context
 ) : IRequestHandler<UpdateAddressCommand> {
+
 	public async Task Handle(UpdateAddressCommand request, CancellationToken cancellationToken) {
-		var entity = await context.Addresses.FindAsync([request.Id], cancellationToken)
-		             ?? throw new NotFoundException(nameof(Address), request.Id);
+		var entity = await context.Addresses
+			.FindAsync([request.Id], cancellationToken)
+			?? throw new NotFoundException(nameof(Address), request.Id);
 
 		entity.Street = request.Street;
 		entity.HouseNumber = request.HouseNumber;

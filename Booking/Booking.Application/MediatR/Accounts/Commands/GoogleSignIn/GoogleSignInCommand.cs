@@ -5,4 +5,5 @@ namespace Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 
 public class GoogleSignInCommand : IRequest<JwtTokenVm> {
 	public string Credential { get; set; } = null!;
+	public string Type { get; set; } = null!;
 }

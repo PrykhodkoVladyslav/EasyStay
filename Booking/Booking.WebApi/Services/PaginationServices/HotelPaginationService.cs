@@ -10,6 +10,7 @@ public class HotelPaginationService(
 	IBookingDbContext context,
 	IMapper mapper
 ) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
+
 	protected override IQueryable<Hotel> GetQuery() => context.Hotels.OrderBy(h => h.Id);
 
 	protected override IQueryable<Hotel> FilterQuery(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
@@ -26,37 +27,25 @@ public class HotelPaginationService(
 		if (filter.Description is not null)
 			query = query.Where(h => h.Name.ToLower().Contains(filter.Description.ToLower()));
 
-		// if (vm.Rating is not null)
-		// 	query = query.Where(
-		// 		h => h.Rooms
-		// 			.SelectMany(
-		// 				r => r.Bookings.SelectMany(b => b.Reviews)
-		// 			)
-		// 			.Average(r => r.Score)
-		// 			.GetValueOrDefault(0) == vm.Rating
-		// 	);
-		//
-		// if (vm.MinRating is not null)
-		// 	query = query.Where(
-		// 		h => h.Rooms
-		// 			.SelectMany(
-		// 				r => r.Bookings.SelectMany(b => b.Reviews)
-		// 			)
-		// 			.Average(r => r.Score)
-		// 			.GetValueOrDefault(0) >= vm.MinRating
-		// 	);
-		// if (vm.MaxRating is not null)
-		// 	query = query.Where(
-		// 		h => h.Rooms
-		// 			.SelectMany(
-		// 				r => r.Bookings.SelectMany(b => b.Reviews)
-		// 			)
-		// 			.Average(r => r.Score)
-		// 			.GetValueOrDefault(0) <= vm.MaxRating
-		// 	);
+		if (filter.Area is not null)
+			query = query.Where(h => h.Area == filter.Area);
+		if (filter.MinArea is not null)
+			query = query.Where(h => h.Area >= filter.MinArea);
+		if (filter.MaxArea is not null)
+			query = query.Where(h => h.Area <= filter.MaxArea);
 
-		if (filter.UserId is not null)
-			query = query.Where(h => h.UserId == filter.UserId);
+		if (filter.NumberOfRooms is not null)
+			query = query.Where(h => h.NumberOfRooms == filter.NumberOfRooms);
+		if (filter.MinNumberOfRooms is not null)
+			query = query.Where(h => h.NumberOfRooms >= filter.MinNumberOfRooms);
+		if (filter.MaxNumberOfRooms is not null)
+			query = query.Where(h => h.NumberOfRooms <= filter.MaxNumberOfRooms);
+
+		if (filter.IsArchived is not null)
+			query = query.Where(h => h.IsArchived == filter.IsArchived);
+
+		if (filter.RealtorId is not null)
+			query = query.Where(h => h.RealtorId == filter.RealtorId);
 
 		if (filter.Address is not null) {
 			var address = filter.Address;
@@ -100,8 +89,8 @@ public class HotelPaginationService(
 			}
 		}
 
-		if (filter.TypeId is not null)
-			query = query.Where(h => h.TypeId == filter.TypeId);
+		if (filter.CategoryId is not null)
+			query = query.Where(h => h.CategoryId == filter.CategoryId);
 
 		return query;
 	}

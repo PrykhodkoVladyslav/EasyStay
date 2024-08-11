@@ -1,32 +1,30 @@
-﻿using Booking.Application.Interfaces;
+﻿using AutoMapper;
+using Booking.Application.Interfaces;
 using Booking.Application.MediatR.Accounts.Commands.Shared;
-using Booking.Domain.Identity;
+using Booking.Application.Models.Accounts;
+using Booking.Domain.Constants;
 using MediatR;
 
 namespace Booking.Application.MediatR.Accounts.Commands.Registration;
 
 public class RegistrationCommandHandler(
 	IJwtTokenService jwtTokenService,
-	IImageService imageService,
-	IAuthService registrationService
+	IAuthService registrationService,
+	IMapper mapper
 ) : IRequestHandler<RegistrationCommand, JwtTokenVm> {
 
 	public async Task<JwtTokenVm> Handle(RegistrationCommand request, CancellationToken cancellationToken) {
-		var user = new User {
-			FirstName = request.FirstName,
-			LastName = request.LastName,
-			Email = request.Email,
-			UserName = request.UserName,
-			Photo = await imageService.SaveImageAsync(request.Image)
+		var dto = mapper.Map<UserDto>(request);
+
+		var type = Enum.Parse<RegistrationUserType>(request.Type);
+
+		var createType = type switch {
+			RegistrationUserType.Customer => CreateUserType.Customer,
+			RegistrationUserType.Realtor => CreateUserType.Realtor,
+			_ => throw new Exception("Invalid create type")
 		};
 
-		try {
-			await registrationService.CreateUserAsync(user, request.Password, cancellationToken);
-		}
-		catch {
-			imageService.DeleteImageIfExists(user.Photo);
-			throw;
-		}
+		var user = await registrationService.CreateUserAsync(dto, createType, cancellationToken);
 
 		return new JwtTokenVm {
 			Token = await jwtTokenService.CreateTokenAsync(user)

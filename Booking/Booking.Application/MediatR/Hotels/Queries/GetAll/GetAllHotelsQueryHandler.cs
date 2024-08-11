@@ -11,6 +11,7 @@ public class GetAllHotelsQueryHandler(
 	IBookingDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetAllHotelsQuery, IEnumerable<HotelVm>> {
+
 	public async Task<IEnumerable<HotelVm>> Handle(GetAllHotelsQuery request, CancellationToken cancellationToken) {
 		var items = await context.Hotels
 			.ProjectTo<HotelVm>(mapper.ConfigurationProvider)

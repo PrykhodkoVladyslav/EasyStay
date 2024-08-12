@@ -30,23 +30,25 @@ const LoginPage: React.FC = () => {
         if (res && "data" in res && res.data) {
             setUser(res.data.token);
             showToast(`Авторизація успішна!`, "success");
+            console.log(`Авторизація успішна!`, "success");
+            console.log(res.data.token);
         } else {
             showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
         }
     };
 
-    const authSuccess = async (credentialResponse: CredentialResponse) => {
-        const res = await googleLogin({
-            credential: credentialResponse.credential || "",
-        });
-
-        if (res && "data" in res && res.data) {
-            setUser(res.data.token);
-            showToast(`Авторизація успішна!`, "success");
-        } else {
-            showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
-        }
-    };
+    // const authSuccess = async (credentialResponse: CredentialResponse) => {
+    //     const res = await googleLogin({
+    //         credential: credentialResponse.credential || "",
+    //     });
+    //
+    //     if (res && "data" in res && res.data) {
+    //         setUser(res.data.token);
+    //         showToast(`Авторизація успішна!`, "success");
+    //     } else {
+    //         showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
+    //     }
+    // };
 
     const setUser = (token: string) => {
         localStorage.setItem("authToken", token);
@@ -101,7 +103,7 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <Button
-                        disabled={isLoadingGoogleLogin || isLoadingEmailLogin}
+                        disabled={/*isLoadingGoogleLogin ||*/ isLoadingEmailLogin}
                         type="submit"
                         variant="primary"
                         className="w-full mb-6 disabled:opacity-50"
@@ -126,7 +128,7 @@ const LoginPage: React.FC = () => {
                 {/*    />*/}
                 {/*</div>*/}
 
-                <div className="border-t text-gray/20 mt-8"></div>
+                {/*<div className="border-t text-gray/20 mt-8"></div>*/}
             </div>
         </div>
     );

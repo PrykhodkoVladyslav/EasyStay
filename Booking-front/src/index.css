@@ -5,13 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-}
+/*@layer base {*/
+/*  input[type="number"]::-webkit-inner-spin-button,*/
+/*  input[type="number"]::-webkit-outer-spin-button {*/
+/*    -webkit-appearance: none;*/
+/*    margin: 0;*/
+/*  }*/
+/*}*/
 
 /*.swiper-button-next{*/
 /*    color: transparent;*/
@@ -25,11 +25,11 @@
 
 /*}*/
 
-.swiper-button-prev,
-.swiper-button-next {
-  display: none;
-}
+/*.swiper-button-prev,*/
+/*.swiper-button-next {*/
+/*  display: none;*/
+/*}*/
 
-svg.star-svg {
-  display: inline;
-}
+/*svg.star-svg {*/
+/*  display: inline;*/
+/*}*/

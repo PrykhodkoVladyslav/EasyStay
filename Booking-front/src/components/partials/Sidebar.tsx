@@ -119,33 +119,33 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                             <ul className="mt-3">
                                 {/* Головна */}
                                 <SidebarLink
-                                    to="/"
+                                    to="/admin"
                                     icon={IconHome}
                                     label="Головна"
                                     activeCondition={(pathname) => pathname === "/admin"}
                                 />
 
                                 {/* Товари */}
-                                <SidebarLinkGroup activecondition={pathname.includes("/admin/hotels")}>
+                                <SidebarLinkGroup activecondition={pathname.includes("/hotels")}>
                                     {(handleClick, open) => (
                                         <>
                                             <SidebarLinkGroupTitle
                                                 href="#"
                                                 icon={IconTemplate}
-                                                isActive={pathname.includes("/admin/hotels")}
+                                                isActive={pathname.includes("/hotels")}
                                                 handleClick={(e) => {
                                                     e.preventDefault();
                                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                                                 }}
                                             >
-                                                Товари
+                                                Готелі
                                                 <SidebarChevronDown open={open} />
                                             </SidebarLinkGroupTitle>
                                             <SidebarLinkGroupMenu
                                                 open={open}
                                                 links={[
-                                                    { to: "admin/hotels/list", label: "Список" },
-                                                    { to: "admin/hotels/create", label: "Створити" },
+                                                    { to: "hotels/list", label: "Список" },
+                                                    { to: "hotels/create", label: "Створити" },
                                                 ]}
                                             />
                                         </>
@@ -288,7 +288,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 Авторизація
                                                 <SidebarChevronDown open={open} />
                                             </SidebarLinkGroupTitle>
-                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/auth/sign-in", label: "Вхід" }]} />
+                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/auth/login", label: "Вхід" }]} />
                                             <SidebarLinkGroupMenu
                                                 open={open}
                                                 links={[{ to: "/auth/register", label: "Реєстрація" }]}

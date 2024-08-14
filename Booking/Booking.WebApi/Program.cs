@@ -17,6 +17,7 @@ using Booking.Domain.Identity;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
 using Booking.Services;
+using Booking.WebApi.Hubs;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
 using Booking.WebApi.Services.PaginationServices;
@@ -38,6 +39,8 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
@@ -109,7 +112,10 @@ app.UseStaticFiles(new StaticFileOptions {
 	RequestPath = "/images"
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chat");
 
 app.MapControllers();
 

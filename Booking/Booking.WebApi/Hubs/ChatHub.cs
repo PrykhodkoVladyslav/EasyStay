@@ -35,6 +35,8 @@ public class ChatHub(
 
 		if (chat is null) {
 			chat = new Chat {
+				CustomerId = customerId,
+				RealtorId = realtorId,
 				Messages = []
 			};
 

@@ -14,18 +14,9 @@ import { useGetAllHotelCategoriesQuery } from "services/hotelCategories.ts";
 import showToast from "utils/toastShow.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import {hotelCategoriesApi} from "../services/hotelCategories";
+// import {hotelCategoriesApi} from "../services/hotelCategories";
 
 const HotelCreatePage: React.FC = () => {
-    const navigate = useNavigate();
-    const [files, setFiles] = useState<File[]>([]);
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    const [create, { isLoading }] = useAddHotelMutation();
-
-    // const { data: citiesData } = useGetAllCitiesQuery();
-    const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
-
     const {
         register,
         handleSubmit,
@@ -35,7 +26,16 @@ const HotelCreatePage: React.FC = () => {
         formState: { errors },
     } = useForm<HotelCreateSchemaType>({ resolver: zodResolver(HotelCreateSchema) });
 
-    // const sortedCities = citiesData ? [...citiesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
+    const navigate = useNavigate();
+    const [files, setFiles] = useState<File[]>([]);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [create, { isLoading }] = useAddHotelMutation();
+
+    const { data: citiesData } = useGetAllCitiesQuery();
+    const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
+
+    const sortedCities = citiesData ? [...citiesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
     const selectedCityId = watch("address.cityId");
 
     useEffect(() => {
@@ -51,32 +51,32 @@ const HotelCreatePage: React.FC = () => {
         reset();
     }, [reset]);
 
-    // useEffect(() => {
-    //     if (selectedCityId) {
-    //         const selectedCity = citiesData?.find((city) => city.id === parseInt(selectedCityId));
-    //         if (selectedCity) {
-    //             const minLatitude = selectedCity.latitude - 0.2;
-    //             const maxLatitude = selectedCity.latitude + 0.2;
-    //             const minLongitude = selectedCity.longitude - 0.2;
-    //             const maxLongitude = selectedCity.longitude + 0.2;
-    //
-    //             setValue("address.latitude", selectedCity.latitude.toString());
-    //             setValue("address.longitude", selectedCity.longitude.toString());
-    //
-    //             const latitudeInput = document.getElementById("latitude");
-    //             const longitudeInput = document.getElementById("longitude");
-    //
-    //             if (latitudeInput) {
-    //                 latitudeInput.setAttribute("min", minLatitude.toString());
-    //                 latitudeInput.setAttribute("max", maxLatitude.toString());
-    //             }
-    //             if (longitudeInput) {
-    //                 longitudeInput.setAttribute("min", minLongitude.toString());
-    //                 longitudeInput.setAttribute("max", maxLongitude.toString());
-    //             }
-    //         }
-    //     }
-    // }, [selectedCityId, citiesData, setValue]);
+    useEffect(() => {
+        if (selectedCityId) {
+            const selectedCity = citiesData?.find((city) => city.id === parseInt(selectedCityId));
+            if (selectedCity) {
+                const minLatitude = selectedCity.latitude - 0.2;
+                const maxLatitude = selectedCity.latitude + 0.2;
+                const minLongitude = selectedCity.longitude - 0.2;
+                const maxLongitude = selectedCity.longitude + 0.2;
+
+                setValue("address.latitude", selectedCity.latitude.toString());
+                setValue("address.longitude", selectedCity.longitude.toString());
+
+                const latitudeInput = document.getElementById("latitude");
+                const longitudeInput = document.getElementById("longitude");
+
+                if (latitudeInput) {
+                    latitudeInput.setAttribute("min", minLatitude.toString());
+                    latitudeInput.setAttribute("max", maxLatitude.toString());
+                }
+                if (longitudeInput) {
+                    longitudeInput.setAttribute("min", minLongitude.toString());
+                    longitudeInput.setAttribute("max", maxLongitude.toString());
+                }
+            }
+        }
+    }, [selectedCityId, citiesData, setValue]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -106,6 +106,7 @@ const HotelCreatePage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
+            console.log("Данні: ", data);
             await create({
                 ...data,
                 photos: data.photos as File[],
@@ -113,10 +114,10 @@ const HotelCreatePage: React.FC = () => {
             }).unwrap();
 
             const cityId = data.address.cityId;
-            // const cityName = citiesData?.find((c) => c.id === Number(cityId))?.name;
+            const cityName = citiesData?.find((c) => c.id === Number(cityId))?.name;
             showToast(`Успішно створено новий готель!`, "success");
 
-            // navigate(`/search-results?cityId=${data.address.cityId}&destination=${cityName}`);
+            navigate(`/search-results?cityId=${data.address.cityId}&destination=${cityName}`);
         } catch (err) {
             showToast(`Помилка при створенні нового готелю!`, "error");
         }
@@ -134,16 +135,16 @@ const HotelCreatePage: React.FC = () => {
                     <div>
                         <Label htmlFor="name">Назва:</Label>
 
-                        <Input {...register("name")} id="name" placeholder="Name..." className="w-full" />
+                        <Input {...register("name")} id="name" placeholder="Name..." className="w-full"/>
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
                         )}
                     </div>
 
                     <div>
                         <Label htmlFor="categoryId">Категорія готелю:</Label>
                         <select
-                            {...register("categoryId", { required: "Category is required" })}
+                            {...register("categoryId", {required: "Category is required"})}
                             id="categoryId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm "
@@ -219,27 +220,27 @@ const HotelCreatePage: React.FC = () => {
                     <div>
                         <Label htmlFor="cityId">Місто:</Label>
 
-                        {/*<select*/}
-                        {/*    {...register("address.cityId", { required: "City is required" })}*/}
-                        {/*    id="cityId"*/}
-                        {/*    defaultValue=""*/}
-                        {/*    className="w-full text-md border px-3 py-1 rounded-sm"*/}
-                        {/*>*/}
-                        {/*    <option disabled value="">*/}
-                        {/*        Select city*/}
-                        {/*    </option>*/}
-                        {/*    {sortedCities.map((city) => (*/}
-                        {/*        <option key={city.id} value={city.id}>*/}
-                        {/*            {city.name}*/}
-                        {/*        </option>*/}
-                        {/*    ))}*/}
-                        {/*</select>*/}
-                        {/*{errors?.address?.cityId && (*/}
-                        {/*    <FormError*/}
-                        {/*        className="text-red"*/}
-                        {/*        errorMessage={errors?.address?.cityId?.message as string}*/}
-                        {/*    />*/}
-                        {/*)}*/}
+                        <select
+                            {...register("address.cityId", {required: "City is required"})}
+                            id="cityId"
+                            defaultValue=""
+                            className="w-full text-md border px-3 py-1 rounded-sm"
+                        >
+                            <option disabled value="">
+                                Select city
+                            </option>
+                            {sortedCities.map((city) => (
+                                <option key={city.id} value={city.id}>
+                                    {city.name}
+                                </option>
+                            ))}
+                        </select>
+                        {errors?.address?.cityId && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.address?.cityId?.message as string}
+                            />
+                        )}
                     </div>
 
                     <div>
@@ -249,7 +250,7 @@ const HotelCreatePage: React.FC = () => {
                             {...register("address.latitude")}
                             id="latitude"
                             type="number"
-                            step={0.0000000000000001}
+                            step={0.0001}
                             placeholder="Latitude..."
                             className="w-full"
                         />
@@ -268,7 +269,7 @@ const HotelCreatePage: React.FC = () => {
                             {...register("address.longitude")}
                             id="longitude"
                             type="number"
-                            step={0.0000000000000001}
+                            step={0.0001}
                             placeholder="Longitude..."
                             className="w-full"
                         />
@@ -281,35 +282,36 @@ const HotelCreatePage: React.FC = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="longitude">Фото:</Label>
+                        <Label>Фото:</Label>
 
-                        {/*<ImageUpload setFiles={setFiles} remove={removeImage} files={files}>*/}
-                        {/*    <Input*/}
-                        {/*        {...register("photos")}*/}
-                        {/*        onChange={handleFileChange}*/}
-                        {/*        multiple*/}
-                        {/*        ref={inputRef}*/}
-                        {/*        id="photos"*/}
-                        {/*        type="file"*/}
-                        {/*        className="w-full"*/}
-                        {/*    />*/}
-                        {/*</ImageUpload>*/}
-                        {/*{errors?.photos && (*/}
-                        {/*    <FormError*/}
-                        {/*        className="text-red"*/}
-                        {/*        errorMessage={errors?.photos?.message as string}*/}
-                        {/*    />*/}
-                        {/*)}*/}
+                        <ImageUpload setFiles={setFiles} remove={removeImage} files={files}>
+                            <Input
+                                {...register("photos")}
+                                onChange={handleFileChange}
+                                multiple
+                                ref={inputRef}
+                                id="photos"
+                                type="file"
+                                className="w-full"
+                            />
+                        </ImageUpload>
+                        {errors?.photos && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.photos?.message as string}
+                            />
+                        )}
                     </div>
 
-                    <div className=" text-white flex w-full items-center justify-center gap-5">
+                    <div className=" flex w-full items-center justify-center gap-5">
+                        {/*<div className=" text-white flex w-full items-center justify-center gap-5">*/}
                         <Button
                             disabled={isLoading}
                             size="lg"
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus />
+                            <IconCirclePlus/>
                             Create
                         </Button>
                         <Button
@@ -319,7 +321,7 @@ const HotelCreatePage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX />
+                            <IconCircleX/>
                             Reset
                         </Button>
                     </div>

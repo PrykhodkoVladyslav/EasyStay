@@ -55,14 +55,14 @@ function App() {
                 <Route path="hotel/:id" element={<HotelPage />} />
                 <Route path="way-to-hotel/:id" element={<MapWayToHotelPage />} />
 
-                <Route element={<ProtectedRoute />}>
+                {/*<Route element={<ProtectedRoute />}>*/}
                     <Route path="my-hotels" element={<MyHotelsPage />} />
                     <Route path="my-bookings" element={<MyBookingsPage />} />
                     <Route path="my-saved" element={<MySavedPage />} />
                     <Route path="booking/:id" element={<BookingPage />} />
                     <Route path="hotel/create" element={<HotelCreatePage />} />
                     <Route path="room/create/:hotelId" element={<RoomCreatePage />} />
-                </Route>
+                {/*</Route>*/}
             </Route>
 
             <Route path="/auth/" element={<AccountLayout />}>

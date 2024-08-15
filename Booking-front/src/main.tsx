@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "store/index.ts";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import ThemeProvider from "utils/contexts/ThemeContext.tsx";
 
 import App from './App.tsx'
@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <BrowserRouter>
                 <ThemeProvider>
                     <App />
-                    {/*<ToastContainer />*/}
+                    <ToastContainer />
                 </ThemeProvider>
             </BrowserRouter>
         </Provider>

@@ -2,9 +2,9 @@
 using Booking.Application.Common.Mappings;
 using Booking.Domain.Identity;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorById;
+namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 
-public class RealtorVm : IMapWith<Realtor> {
+public class RealtorDatailsVm : IMapWith<Realtor> {
 	public long Id { get; set; }
 
 	public string UserName { get; set; } = null!;
@@ -20,7 +20,7 @@ public class RealtorVm : IMapWith<Realtor> {
 
 
 	public void Mapping(Profile profile) {
-		profile.CreateMap<Realtor, RealtorVm>()
+		profile.CreateMap<Realtor, RealtorDatailsVm>()
 			.ForMember(
 				dest => dest.Rating,
 				opt => opt.MapFrom(

@@ -6,17 +6,17 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorById;
+namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 
-public class GetRealtorByIdCommandHandler(
+public class GetRealtorDatailsCommandHandler(
 	UserManager<User> userManager,
 	IMapper mapper
-) : IRequestHandler<GetRealtorByIdCommand, RealtorVm> {
+) : IRequestHandler<GetRealtorDatailsCommand, RealtorDatailsVm> {
 
-	public async Task<RealtorVm> Handle(GetRealtorByIdCommand request, CancellationToken cancellationToken) {
+	public async Task<RealtorDatailsVm> Handle(GetRealtorDatailsCommand request, CancellationToken cancellationToken) {
 		return await userManager.Users
 			.OfType<Realtor>()
-			.ProjectTo<RealtorVm>(mapper.ConfigurationProvider)
+			.ProjectTo<RealtorDatailsVm>(mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(r => r.Id == request.Id, cancellationToken)
 			?? throw new NotFoundException(nameof(Realtor), request.Id);
 	}

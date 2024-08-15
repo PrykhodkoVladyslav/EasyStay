@@ -5,7 +5,7 @@ using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
 using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
 using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
-using Booking.Application.MediatR.Accounts.Queries.GetRealtorById;
+using Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -75,8 +75,8 @@ public class AccountsController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetRealtorById([FromRoute] long id) {
-		var realtor = await Mediator.Send(new GetRealtorByIdCommand { Id = id });
+	public async Task<IActionResult> GetRealtorDatails([FromRoute] long id) {
+		var realtor = await Mediator.Send(new GetRealtorDatailsCommand { Id = id });
 
 		return Ok(realtor);
 	}

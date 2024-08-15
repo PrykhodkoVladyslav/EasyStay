@@ -1,5 +1,6 @@
 using Booking.Application.MediatR.Hotels.Commands.Create;
 using Booking.Application.MediatR.Hotels.Commands.Delete;
+using Booking.Application.MediatR.Hotels.Commands.SetArchiveStatus;
 using Booking.Application.MediatR.Hotels.Commands.Update;
 using Booking.Application.MediatR.Hotels.Queries.GetAll;
 using Booking.Application.MediatR.Hotels.Queries.GetDetails;
@@ -25,7 +26,7 @@ public class HotelsController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetById(long id) {
+	public async Task<IActionResult> GetById([FromRoute] long id) {
 		var entity = await Mediator.Send(new GetHotelDetailsQuery() { Id = id });
 
 		return Ok(entity);
@@ -49,8 +50,16 @@ public class HotelsController : BaseApiController {
 
 	[HttpDelete("{id}")]
 	[Authorize(Roles = "Realtor")]
-	public async Task<IActionResult> Delete(long id) {
+	public async Task<IActionResult> Delete([FromRoute] long id) {
 		await Mediator.Send(new DeleteHotelCommand { Id = id });
+
+		return NoContent();
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Realtor")]
+	public async Task<IActionResult> SetArchiveStatus([FromBody] SetArchiveStatusHotelCommand command) {
+		await Mediator.Send(command);
 
 		return NoContent();
 	}

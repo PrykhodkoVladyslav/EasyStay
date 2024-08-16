@@ -1,2 +1,4 @@
 .github
 
+# Docker volumes
+/volumes/

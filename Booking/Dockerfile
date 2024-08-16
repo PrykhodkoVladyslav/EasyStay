@@ -4,21 +4,32 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 # copy csproj and restore as distinct layers
 WORKDIR /src
 COPY Booking.sln ./
+
 COPY Booking/*.csproj ./Booking/
 COPY Model/*.csproj ./Model/
+
+COPY Booking.Domain/*.csproj ./Booking.Domain/
+COPY Booking.Application/*.csproj ./Booking.Application/
+COPY Booking.Persistence/*.csproj ./Booking.Persistence/
+COPY Booking.WebApi/*.csproj ./Booking.WebApi/
 RUN dotnet restore
 
 # copy everything else and build app
 COPY . .
 
-WORKDIR /src/Model
-RUN dotnet publish -o /app
-
-WORKDIR /src/Booking
-RUN dotnet publish -o /app
+WORKDIR /src/Booking.WebApi
+RUN dotnet publish "Booking.WebApi.csproj" -c Release -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "Booking.dll"]
+
+# information
+EXPOSE 8080
+
+# environments
+ENV ASPNETCORE_ENVIRONMENT=Docker
+
+# run
+ENTRYPOINT ["dotnet", "Booking.WebApi.dll"]

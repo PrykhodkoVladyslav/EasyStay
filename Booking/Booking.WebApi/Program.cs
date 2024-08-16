@@ -17,6 +17,7 @@ using Booking.Domain.Identity;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
 using Booking.Services;
+using Booking.WebApi.Extensions;
 using Booking.WebApi.Hubs;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
@@ -24,7 +25,6 @@ using Booking.WebApi.Services.PaginationServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
-using Notes.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,7 +87,7 @@ builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviews
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment() || app.Environment.IsDocker()) {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }

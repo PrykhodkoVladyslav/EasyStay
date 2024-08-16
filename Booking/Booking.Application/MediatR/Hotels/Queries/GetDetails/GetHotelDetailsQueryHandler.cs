@@ -2,7 +2,6 @@
 using AutoMapper.QueryableExtensions;
 using Booking.Application.Common.Exceptions;
 using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Hotels.Queries.Shared;
 using Booking.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +11,11 @@ namespace Booking.Application.MediatR.Hotels.Queries.GetDetails;
 public class GetHotelDetailsQueryHandler(
 	IBookingDbContext context,
 	IMapper mapper
-) : IRequestHandler<GetHotelDetailsQuery, HotelVm> {
+) : IRequestHandler<GetHotelDetailsQuery, HotelDetailsVm> {
 
-	public async Task<HotelVm> Handle(GetHotelDetailsQuery request, CancellationToken cancellationToken) {
+	public async Task<HotelDetailsVm> Handle(GetHotelDetailsQuery request, CancellationToken cancellationToken) {
 		var vm = await context.Hotels
-			.ProjectTo<HotelVm>(mapper.ConfigurationProvider)
+			.ProjectTo<HotelDetailsVm>(mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(h => h.Id == request.Id, cancellationToken)
 			?? throw new NotFoundException(nameof(Hotel), request.Id);
 

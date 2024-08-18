@@ -1,22 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-// import { bookingApi } from "services/booking.ts";
+import { userApi } from "services/user.ts";
 import { cityApi } from "services/city.ts";
-// import { favoriteHotelsApi } from "services/favoriteHotels.ts";
 import { hotelApi } from "services/hotel.ts";
 import { hotelCategoriesApi } from "services/hotelCategories.ts";
+// import { bookingApi } from "services/booking.ts";
+// import { favoriteHotelsApi } from "services/favoriteHotels.ts";
 // import { reviewApi } from "services/review.ts";
 // import { roomApi } from "services/rooms.ts";
-import { userApi } from "services/user.ts";
 import userReducer from "store/slice/userSlice.ts";
 import {convenienceApi} from "services/convenience.ts";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        [cityApi.reducerPath]: cityApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
+        [cityApi.reducerPath]: cityApi.reducer,
         [hotelApi.reducerPath]: hotelApi.reducer,
         [hotelCategoriesApi.reducerPath]: hotelCategoriesApi.reducer,
         // [roomApi.reducerPath]: roomApi.reducer,
@@ -27,8 +27,8 @@ export const store = configureStore({
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
-            cityApi.middleware,
             userApi.middleware,
+            cityApi.middleware,
             hotelApi.middleware,
             hotelCategoriesApi.middleware,
             // reviewApi.middleware,

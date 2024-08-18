@@ -31,6 +31,8 @@ export const hotelApi = createApi({
                 const hotelFormData = new FormData();
                 hotelFormData.append("Name", hotel.name);
                 hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("Area", hotel.area || "0");
+                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms || "0");
                 hotelFormData.append("Address.Street", hotel.address.street || "Default");
                 hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber || "Default");
                 hotelFormData.append("Address.Latitude", hotel.address.latitude || "0");
@@ -41,6 +43,8 @@ export const hotelApi = createApi({
                 if (hotel.photos) {
                     Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
                 }
+
+                // hotelFormData.append("RealtorId", hotel.realtorId || "0");
 
                 return {
                     url: "create",

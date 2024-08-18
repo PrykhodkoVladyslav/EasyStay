@@ -184,6 +184,44 @@ const HotelCreatePage: React.FC = () => {
                     </div>
 
                     <div>
+                        <Label htmlFor="area">Площа:</Label>
+
+                        <Input
+                            {...register("area")}
+                            id="area"
+                            type="number"
+                            // step={0.01}
+                            placeholder="Area..."
+                            className="w-full"
+                        />
+                        {errors?.area && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.area?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
+                        <Label htmlFor="numberOfRooms">Кількість кімнат:</Label>
+
+                        <Input
+                            {...register("numberOfRooms")}
+                            id="numberOfRooms"
+                            type="number"
+                            // step={1}
+                            placeholder="Number of rooms..."
+                            className="w-full"
+                        />
+                        {errors?.numberOfRooms && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.numberOfRooms?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
                         <Label htmlFor="address.street">Вулиця:</Label>
 
                         <Input
@@ -250,7 +288,7 @@ const HotelCreatePage: React.FC = () => {
                             {...register("address.latitude")}
                             id="latitude"
                             type="number"
-                            step={0.0001}
+                            // step={0.0001}
                             placeholder="Latitude..."
                             className="w-full"
                         />
@@ -269,7 +307,7 @@ const HotelCreatePage: React.FC = () => {
                             {...register("address.longitude")}
                             id="longitude"
                             type="number"
-                            step={0.0001}
+                            // step={0.0001}
                             placeholder="Longitude..."
                             className="w-full"
                         />
@@ -302,6 +340,24 @@ const HotelCreatePage: React.FC = () => {
                             />
                         )}
                     </div>
+
+                    {/*<div>*/}
+                    {/*    <Label htmlFor="realtorId">ID Реєстратора:</Label>*/}
+
+                    {/*    <input*/}
+                    {/*        {...register("realtorId")}*/}
+                    {/*        id="realtorId"*/}
+                    {/*        type="number"*/}
+                    {/*        placeholder="RealtorID..."*/}
+                    {/*        className="w-full"*/}
+                    {/*    />*/}
+                    {/*    {errors?.realtorId && (*/}
+                    {/*        <FormError*/}
+                    {/*            className="text-red"*/}
+                    {/*            errorMessage={errors?.realtorId?.message as string}*/}
+                    {/*        />*/}
+                    {/*    )}*/}
+                    {/*</div>*/}
 
                     <div className=" flex w-full items-center justify-center gap-5">
                         {/*<div className=" text-white flex w-full items-center justify-center gap-5">*/}

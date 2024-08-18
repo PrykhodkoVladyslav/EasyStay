@@ -26,7 +26,9 @@ export const AddressSchema = z.object({
 export const HotelCreateSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
-    typeId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
+    area: z.string().refine((val) => val > 0, "Area must be greater than 0"),
+    numberOfRooms: z.string().refine((val) => val > 0, "Number of rooms must be greater than 0"),
+    categoryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
         message: "Type is required",
     }),
     address: AddressSchema,
@@ -44,6 +46,7 @@ export const HotelCreateSchema = z.object({
                 files.length === 0 || files.every((file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)),
             "Only .jpg, .jpeg, .png and .webp files are accepted.",
         ),
+    // realtorId: z.string().refine((val) => val > 0, "Realtor is required"),
 });
 
 export type HotelCreateSchemaType = z.infer<typeof HotelCreateSchema>;

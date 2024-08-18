@@ -1,38 +1,45 @@
-// import { City } from "interfaces/city";
-// import { HotelCategories } from "interfaces/hotelCategories";
+import { City } from "interfaces/city";
+import { HotelCategories } from "interfaces/hotelCategories";
 // import { PaginationOptions } from "interfaces/index.ts";
-// import { Photo } from "interfaces/photo";
+import { Photo } from "interfaces/photo";
 
-// export interface Address {
-//     id: number;
-//     street: string;
-//     houseNumber: string;
-//     latitude: number;
-//     longitude: number;
-//     city: City;
-// }
+export interface Address {
+    id: number;
+    street: string;
+    houseNumber: string;
+    longitude: number;
+    latitude: number;
+    city: City;
+}
 export interface Hotel {
     id: number;
     name: string;
     description: string;
     // rating: number;
     // reviews: number;
-    // address: Address;
-    // category: HotelCategories;
-    // photos: Photo[];
+    area: number;
+    numberOfRooms: number;
+    address: Address;
+    category: HotelCategories;
+    realtor: Realtor;
+    photos: Photo[];
 }
 
-// export interface HotelAddressCity {
-//     id?: number;
-//     name?: string;
-//     longitude?: number;
-//     latitude?: number;
-//     minLongitude?: number;
-//     maxLongitude?: number;
-//     minLatitude?: number;
-//     maxLatitude?: number;
-//     countryId?: number;
-// }
+export interface Realtor {
+    id: number;
+}
+
+export interface HotelAddressCity {
+    id?: number;
+    name?: string;
+    longitude?: number;
+    latitude?: number;
+    minLongitude?: number;
+    maxLongitude?: number;
+    minLatitude?: number;
+    maxLatitude?: number;
+    countryId?: number;
+}
 
 // export interface HotelAddress {
 //     id?: number;
@@ -54,11 +61,11 @@ export interface Hotel {
 //     address?: HotelAddress;
 // }
 //
-// export interface CreateHotel {
-//     name: string;
-//     cityId: number;
-//     typeId: string;
-//     description: string;
-//     address: HotelAddress;
-//     photos: File[];
-// }
+export interface CreateHotel {
+    name: string;
+    cityId: number;
+    categoryId: string;
+    description: string;
+    address: HotelAddress;
+    photos: File[];
+}

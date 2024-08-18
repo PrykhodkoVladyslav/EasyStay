@@ -2,14 +2,14 @@
 // import AuthHeader from "components/blocks/AuthHeader.tsx";
 import { Outlet } from "react-router-dom";
 
-const AdminLayout = () => {
+const AccountLayout = () => {
     return (
         <>
-            {/*<AdminHeader />*/}
+            {/*<AuthHeader />*/}
             <Outlet />
-            {/*<AdminFooter />*/}
+            {/*<AuthFooter />*/}
         </>
     );
 };
 
-export default AdminLayout;
+export default AccountLayout;

@@ -27,7 +27,7 @@
       "components/*": ["components/*"],
       "constants/*": ["constants/*"],
       "assets/*": ["assets/*"],
-      "hooks/*": ["hooks/*"],
+//      "hooks/*": ["hooks/*"],
 //      "data/*": ["data/*"],
       "pages/*": ["pages/*"],
 //      "motion/*": ["motion/*"],

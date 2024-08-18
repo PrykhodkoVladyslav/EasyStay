@@ -1,8 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { CreateHotel, GetHotelPageRequest, Hotel } from "interfaces/hotel";
+import { CreateHotel, Hotel } from "interfaces/hotel";
+// import { GetHotelPageRequest } from "interfaces/hotel";
 // import { GetPageResponse } from "interfaces/index.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import { createQueryString } from "utils/createQueryString.ts";
+// import { createQueryString } from "utils/createQueryString.ts";
 
 export const hotelApi = createApi({
     reducerPath: "hotelApi",
@@ -30,16 +31,20 @@ export const hotelApi = createApi({
                 const hotelFormData = new FormData();
                 hotelFormData.append("Name", hotel.name);
                 hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("Area", hotel.area || "0");
+                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms || "0");
                 hotelFormData.append("Address.Street", hotel.address.street || "Default");
                 hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber || "Default");
                 hotelFormData.append("Address.Latitude", hotel.address.latitude || "0");
                 hotelFormData.append("Address.Longitude", hotel.address.longitude || "0");
                 hotelFormData.append("Address.CityId", hotel.cityId?.toString() || "0");
-                hotelFormData.append("TypeId", hotel.typeId?.toString() || "0");
+                hotelFormData.append("CategoryId", hotel.categoryId?.toString() || "0");
 
                 if (hotel.photos) {
                     Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
                 }
+
+                // hotelFormData.append("RealtorId", hotel.realtorId || "0");
 
                 return {
                     url: "create",

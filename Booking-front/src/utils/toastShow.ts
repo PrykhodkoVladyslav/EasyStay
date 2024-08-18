@@ -1,4 +1,5 @@
 import { Slide, ToastOptions, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ToastType = "success" | "error" | "info" | "warning";
 

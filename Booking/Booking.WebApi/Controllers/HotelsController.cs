@@ -32,7 +32,7 @@ public class HotelsController : BaseApiController {
 	}
 
 	[HttpPost]
-	//[Authorize(Roles = "Realtor")]
+	[Authorize(Roles = "Realtor")]
 	public async Task<IActionResult> Create([FromForm] CreateHotelCommand command) {
 		var id = await Mediator.Send(command);
 

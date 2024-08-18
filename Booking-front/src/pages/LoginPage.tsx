@@ -59,7 +59,7 @@ const LoginPage: React.FC = () => {
                 token: token,
             }),
         );
-        const { from } = location.state || { from: { pathname: "/" } };
+        const { from } = location.state || { from: { pathname: "/admin" } };
         navigate(from);
     };
 
@@ -70,7 +70,7 @@ const LoginPage: React.FC = () => {
     return (
         <div className="flex flex-col items-center justify-center ">
             <div className="bg-white p-8 rounded w-full max-w-md font-main">
-                <h1 className="text-2xl font-main mb-6 font-extrabold ">Увійдіть або створіть акаунт</h1>
+                {/*<h1 className="text-2xl font-main mb-6 font-extrabold ">Увійдіть або створіть акаунт</h1>*/}
 
                 <form className="flex flex-col gap-4" onSubmit={login}>
                     <div>
@@ -108,7 +108,7 @@ const LoginPage: React.FC = () => {
                         variant="primary"
                         className="w-full mb-6 disabled:opacity-50"
                     >
-                        Продовжити з електронною поштою
+                        Ввійти
                     </Button>
                 </form>
 

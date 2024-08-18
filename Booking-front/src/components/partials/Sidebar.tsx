@@ -5,7 +5,7 @@ import {
     IconRosetteDiscount,
     IconTemplate,
     IconUserScan,
-    IconUsers,
+    IconUsers, IconSquareRoot,
 } from "@tabler/icons-react";
 // import logo from "assets/ans-icon-144x144.png";
 import SidebarChevronDown from "components/partials/sidebar/SidebarChevronDown.tsx";
@@ -108,13 +108,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         {/* Pages group */}
                         <div>
                             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-                                <span
-                                    className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                                    aria-hidden="true"
-                                >
-                                    •••
-                                </span>
-                                <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Сторінки</span>
+                                {/*<span*/}
+                                {/*    className="hidden lg:block. lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"*/}
+                                {/*    aria-hidden="true"*/}
+                                {/*>*/}
+                                {/*    •••*/}
+                                {/*</span>*/}
+                                {/*<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Головна</span>*/}
                             </h3>
                             <ul className="mt-3">
                                 {/* Головна */}
@@ -252,7 +252,10 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                             </SidebarLinkGroupTitle>
                                             <SidebarLinkGroupMenu
                                                 open={open}
-                                                links={[{ to: "admin/users/list", label: "Список" }]}
+                                                links={[
+                                                    { to: "admin/users/list", label: "Список" },
+                                                    { to: "admin/create", label: "Створити Адміна"}
+                                                ]}
                                             />
                                         </>
                                     )}
@@ -263,13 +266,14 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         {/* More group */}
                         <div>
                             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-                                <span
-                                    className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                                    aria-hidden="true"
-                                >
-                                    •••
-                                </span>
-                                <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Більше</span>
+                                {/*<span*/}
+                                {/*    className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"*/}
+                                {/*    aria-hidden="true"*/}
+                                {/*>*/}
+                                {/*    •••*/}
+                                {/*</span>*/}
+                                {/*<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Додатково</span>*/}
+                                <hr className={"lg:hidden lg:sidebar-expanded:block 2xl:block"}/>
                             </h3>
                             <ul className="mt-3">
                                 {/* Authentication */}

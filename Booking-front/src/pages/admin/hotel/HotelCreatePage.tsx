@@ -55,10 +55,10 @@ const HotelCreatePage: React.FC = () => {
         if (selectedCityId) {
             const selectedCity = citiesData?.find((city) => city.id === parseInt(selectedCityId));
             if (selectedCity) {
-                const minLatitude = selectedCity.latitude - 0.2;
-                const maxLatitude = selectedCity.latitude + 0.2;
-                const minLongitude = selectedCity.longitude - 0.2;
-                const maxLongitude = selectedCity.longitude + 0.2;
+                const minLatitude = selectedCity.latitude - 0.3;
+                const maxLatitude = selectedCity.latitude + 0.3;
+                const minLongitude = selectedCity.longitude - 0.3;
+                const maxLongitude = selectedCity.longitude + 0.3;
 
                 setValue("address.latitude", selectedCity.latitude.toString());
                 setValue("address.longitude", selectedCity.longitude.toString());

@@ -7,8 +7,8 @@ export interface Address {
     id: number;
     street: string;
     houseNumber: string;
-    longitude: number;
     latitude: number;
+    longitude: number;
     city: City;
 }
 export interface Hotel {

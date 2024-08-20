@@ -2,19 +2,20 @@
 // import Footer from "components/blocks/Footer.tsx";
 // import Header from "components/blocks/Header.tsx";
 // import Subscribe from "components/blocks/Subscribe.tsx";
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 const Layout = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [hasRedirected, setHasRedirected] = useState(false);
 
     useEffect(() => {
-        if (!hasRedirected) {
-            navigate("/auth/login");
+        if (location.pathname === "/" && !hasRedirected) {
+            navigate("/adminAuth/login");
             setHasRedirected(true);
         }
-    }, [hasRedirected, navigate]);
+    }, [location.pathname, hasRedirected, navigate]);
 
     return (
         <>

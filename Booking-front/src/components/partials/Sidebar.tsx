@@ -235,13 +235,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                 {/*</SidebarLinkGroup>*/}
 
                                 {/* Юзери */}
-                                <SidebarLinkGroup activecondition={pathname.includes("users")}>
+                                <SidebarLinkGroup activecondition={pathname.includes("user")}>
                                     {(handleClick, open) => (
                                         <>
                                             <SidebarLinkGroupTitle
                                                 href="#"
                                                 icon={IconUsers}
-                                                isActive={pathname.includes("users")}
+                                                isActive={pathname.includes("user")}
                                                 handleClick={(e) => {
                                                     e.preventDefault();
                                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -253,8 +253,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                             <SidebarLinkGroupMenu
                                                 open={open}
                                                 links={[
-                                                    { to: "admin/users/list", label: "Список" },
-                                                    { to: "admin/create", label: "Створити Адміна"}
+                                                    { to: "/admin/users/list", label: "Список" },
+                                                    { to: "/admin/createAdmin", label: "Створити Адміна" }
                                                 ]}
                                             />
                                         </>
@@ -292,11 +292,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 Авторизація
                                                 <SidebarChevronDown open={open} />
                                             </SidebarLinkGroupTitle>
-                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/auth/login", label: "Вхід" }]} />
-                                            <SidebarLinkGroupMenu
-                                                open={open}
-                                                links={[{ to: "/auth/register", label: "Реєстрація" }]}
-                                            />
+                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/adminAuth/login", label: "Вхід" }]} />
                                         </>
                                     )}
                                 </SidebarLinkGroup>

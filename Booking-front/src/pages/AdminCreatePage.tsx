@@ -10,8 +10,8 @@ import showToast from "utils/toastShow.ts";
 
 import React, { useState } from "react";
 
-const RegisterPage: React.FC = () => {
-    const navigate = useNavigate();
+const AdminCreatePage: React.FC = () => {
+    // const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [register, { isLoading }] = useRegisterMutation();
 
@@ -48,13 +48,13 @@ const RegisterPage: React.FC = () => {
                 token: token,
             }),
         );
-        navigate("/");
+        // navigate("/");
     };
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className="bg-white p-8 rounded w-full max-w-md font-main">
-                <h1 className="text-2xl font-main mb-6 font-extrabold">Створіть акаунт</h1>
+            <div className="bg-white rounded w-full max-w-md font-main">
+                <h1 className="text-1xl text-center font-main mb-6 font-extrabold">Створення нового Адміна | Ріелтора</h1>
 
                 <form className="flex flex-col gap-4">
                     <div>
@@ -66,7 +66,7 @@ const RegisterPage: React.FC = () => {
                             onChange={(e) => setFirstName(e.target.value)}
                             id="firstName"
                             type="text"
-                            placeholder="Введіть своє ім'я"
+                            placeholder="Введіть ім'я"
                         />
                     </div>
                     <div>
@@ -78,7 +78,7 @@ const RegisterPage: React.FC = () => {
                             onChange={(e) => setLastName(e.target.value)}
                             id="lastName"
                             type="text"
-                            placeholder="Введіть своє прізвище"
+                            placeholder="Введіть прізвище"
                         />
                     </div>
                     <div>
@@ -102,7 +102,7 @@ const RegisterPage: React.FC = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             id="email"
                             type="email"
-                            placeholder="Введіть свою електронну адресу"
+                            placeholder="Введіть електронну адресу"
                         />
                     </div>
                     <div>
@@ -114,7 +114,7 @@ const RegisterPage: React.FC = () => {
                             onChange={(e) => setUsername(e.target.value)}
                             id="username"
                             type="text"
-                            placeholder="Введіть своє ім'я користувача"
+                            placeholder="Введіть ім'я користувача"
                         />
                     </div>
                     <div>
@@ -126,7 +126,7 @@ const RegisterPage: React.FC = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             id="password"
                             type="password"
-                            placeholder="Введіть свій пароль"
+                            placeholder="Введіть пароль"
                         />
                     </div>
 
@@ -137,7 +137,7 @@ const RegisterPage: React.FC = () => {
                         variant="primary"
                         className="w-full mb-6 disabled:cursor-not-allowed"
                     >
-                        Зареєструватися
+                        Зареєструвати
                     </Button>
                 </form>
             </div>
@@ -145,4 +145,4 @@ const RegisterPage: React.FC = () => {
     );
 };
 
-export default RegisterPage;
+export default AdminCreatePage;

@@ -55,25 +55,8 @@ const HotelCreatePage: React.FC = () => {
         if (selectedCityId) {
             const selectedCity = citiesData?.find((city) => city.id === parseInt(selectedCityId));
             if (selectedCity) {
-                const minLatitude = selectedCity.latitude - 0.3;
-                const maxLatitude = selectedCity.latitude + 0.3;
-                const minLongitude = selectedCity.longitude - 0.3;
-                const maxLongitude = selectedCity.longitude + 0.3;
-
-                setValue("address.latitude", selectedCity.latitude.toString());
-                setValue("address.longitude", selectedCity.longitude.toString());
-
-                const latitudeInput = document.getElementById("latitude");
-                const longitudeInput = document.getElementById("longitude");
-
-                if (latitudeInput) {
-                    latitudeInput.setAttribute("min", minLatitude.toString());
-                    latitudeInput.setAttribute("max", maxLatitude.toString());
-                }
-                if (longitudeInput) {
-                    longitudeInput.setAttribute("min", minLongitude.toString());
-                    longitudeInput.setAttribute("max", maxLongitude.toString());
-                }
+                setValue("address.latitude", selectedCity.latitude.toString().replace('.', ','));
+                setValue("address.longitude", selectedCity.longitude.toString().replace('.', ','));
             }
         }
     }, [selectedCityId, citiesData, setValue]);
@@ -117,7 +100,8 @@ const HotelCreatePage: React.FC = () => {
             const cityName = citiesData?.find((c) => c.id === Number(cityId))?.name;
             showToast(`Успішно створено новий готель!`, "success");
 
-            navigate(`/search-results?cityId=${data.address.cityId}&destination=${cityName}`);
+            // navigate(`/search-results?cityId=${data.address.cityId}&destination=${cityName}`);
+            onReset();
         } catch (err) {
             showToast(`Помилка при створенні нового готелю!`, "error");
         }
@@ -125,6 +109,7 @@ const HotelCreatePage: React.FC = () => {
 
     const onReset = () => {
         reset();
+        setFiles([]);
     };
 
     return (
@@ -193,6 +178,7 @@ const HotelCreatePage: React.FC = () => {
                             // step={0.01}
                             placeholder="Area..."
                             className="w-full"
+                            onWheel={(e) => e.currentTarget.blur()}
                         />
                         {errors?.area && (
                             <FormError
@@ -212,6 +198,7 @@ const HotelCreatePage: React.FC = () => {
                             // step={1}
                             placeholder="Number of rooms..."
                             className="w-full"
+                            onWheel={(e) => e.currentTarget.blur()}
                         />
                         {errors?.numberOfRooms && (
                             <FormError
@@ -244,8 +231,10 @@ const HotelCreatePage: React.FC = () => {
                         <Input
                             {...register("address.houseNumber")}
                             id="address.houseNumber"
+                            type="number"
                             placeholder="House Number..."
                             className="w-full"
+                            onWheel={(e) => e.currentTarget.blur()}
                         />
                         {errors?.address?.houseNumber && (
                             <FormError
@@ -287,7 +276,7 @@ const HotelCreatePage: React.FC = () => {
                         <Input
                             {...register("address.latitude")}
                             id="latitude"
-                            type="number"
+                            type="double"
                             // step={0.0001}
                             placeholder="Latitude..."
                             className="w-full"
@@ -306,7 +295,7 @@ const HotelCreatePage: React.FC = () => {
                         <Input
                             {...register("address.longitude")}
                             id="longitude"
-                            type="number"
+                            type="double"
                             // step={0.0001}
                             placeholder="Longitude..."
                             className="w-full"
@@ -340,24 +329,6 @@ const HotelCreatePage: React.FC = () => {
                             />
                         )}
                     </div>
-
-                    {/*<div>*/}
-                    {/*    <Label htmlFor="realtorId">ID Реєстратора:</Label>*/}
-
-                    {/*    <input*/}
-                    {/*        {...register("realtorId")}*/}
-                    {/*        id="realtorId"*/}
-                    {/*        type="number"*/}
-                    {/*        placeholder="RealtorID..."*/}
-                    {/*        className="w-full"*/}
-                    {/*    />*/}
-                    {/*    {errors?.realtorId && (*/}
-                    {/*        <FormError*/}
-                    {/*            className="text-red"*/}
-                    {/*            errorMessage={errors?.realtorId?.message as string}*/}
-                    {/*        />*/}
-                    {/*    )}*/}
-                    {/*</div>*/}
 
                     <div className=" flex w-full items-center justify-center gap-5">
                         {/*<div className=" text-white flex w-full items-center justify-center gap-5">*/}

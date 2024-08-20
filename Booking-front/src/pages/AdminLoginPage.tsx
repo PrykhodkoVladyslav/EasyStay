@@ -11,7 +11,7 @@ import showToast from "utils/toastShow.ts";
 
 import React from "react";
 
-const LoginPage: React.FC = () => {
+const AdminLoginPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -134,4 +134,4 @@ const LoginPage: React.FC = () => {
     );
 };
 
-export default LoginPage;
+export default AdminLoginPage;

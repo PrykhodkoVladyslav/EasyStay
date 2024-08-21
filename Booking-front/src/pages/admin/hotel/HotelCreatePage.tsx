@@ -231,10 +231,8 @@ const HotelCreatePage: React.FC = () => {
                         <Input
                             {...register("address.houseNumber")}
                             id="address.houseNumber"
-                            type="number"
                             placeholder="House Number..."
                             className="w-full"
-                            onWheel={(e) => e.currentTarget.blur()}
                         />
                         {errors?.address?.houseNumber && (
                             <FormError

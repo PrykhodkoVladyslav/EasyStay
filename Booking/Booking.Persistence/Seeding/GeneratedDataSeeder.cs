@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Booking.Application.Interfaces;
+using Booking.Domain;
 
 namespace Booking.Persistence.Seeding;
 
@@ -16,7 +17,8 @@ public static class GeneratedDataSeeder {
 
 		if (!context.HotelPhotos.Any())
 			SeedHotelPhotos(context, imageService);
-	}
+
+    }
 
 	private static void SeedAddresses(IBookingDbContext context) {
 		Faker faker = new Faker();
@@ -119,7 +121,9 @@ public static class GeneratedDataSeeder {
 		}
 	}
 
-	private static string GetImageAsBase64(HttpClient httpClient, string imageUrl) {
+
+
+    private static string GetImageAsBase64(HttpClient httpClient, string imageUrl) {
 		var imageBytes = httpClient.GetByteArrayAsync(imageUrl).Result;
 		return Convert.ToBase64String(imageBytes);
 	}

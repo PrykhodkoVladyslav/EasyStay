@@ -45,7 +45,7 @@ export interface HotelAddressCity {
 //     id?: number;
 //     street?: string;
 //     houseNumber?: string;
-//     city?: HotelAddressCity;
+//     country?: HotelAddressCity;
 //     latitude?: string;
 //     longitude?: string;
 // }

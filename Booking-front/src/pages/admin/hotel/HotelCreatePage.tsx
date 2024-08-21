@@ -26,7 +26,6 @@ const HotelCreatePage: React.FC = () => {
         formState: { errors },
     } = useForm<HotelCreateSchemaType>({ resolver: zodResolver(HotelCreateSchema) });
 
-    const navigate = useNavigate();
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -89,7 +88,7 @@ const HotelCreatePage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            console.log("Данні: ", data);
+            // console.log("Data: ", data);
             await create({
                 ...data,
                 photos: data.photos as File[],
@@ -115,12 +114,17 @@ const HotelCreatePage: React.FC = () => {
     return (
         <div className="container mx-auto flex justify-center mt-5">
             <div className="w-full ">
-                <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Add New Hotel</h1>
+                <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Готелю</h1>
                 <form className="flex flex-col gap-5" onSubmit={onSubmit}>
                     <div>
                         <Label htmlFor="name">Назва:</Label>
 
-                        <Input {...register("name")} id="name" placeholder="Name..." className="w-full"/>
+                        <Input
+                            {...register("name")}
+                            id="name"
+                            placeholder="Назва..."
+                            className="w-full"
+                        />
                         {errors?.name && (
                             <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
                         )}
@@ -129,13 +133,13 @@ const HotelCreatePage: React.FC = () => {
                     <div>
                         <Label htmlFor="categoryId">Категорія готелю:</Label>
                         <select
-                            {...register("categoryId", {required: "Category is required"})}
+                            {...register("categoryId", {required: "Категорія обов'язкова"})}
                             id="categoryId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm "
                         >
                             <option disabled value="">
-                                Select Category
+                                Виберіть категорію
                             </option>
                             {hotelCategoriesData?.map((hotelCategory) => (
                                 <option key={hotelCategory.id} value={hotelCategory.id}>
@@ -157,7 +161,7 @@ const HotelCreatePage: React.FC = () => {
                         <textarea
                             {...register("description")}
                             id="description"
-                            placeholder="Description..."
+                            placeholder="Опис..."
                             className="p-3 border-gray-300 font-normal w-full text-sm placeholder:text-lightgray h-full rounded-md outline-none border"
                         />
                         {errors?.description && (
@@ -176,7 +180,7 @@ const HotelCreatePage: React.FC = () => {
                             id="area"
                             type="number"
                             // step={0.01}
-                            placeholder="Area..."
+                            placeholder="Площа..."
                             className="w-full"
                             onWheel={(e) => e.currentTarget.blur()}
                         />
@@ -196,7 +200,7 @@ const HotelCreatePage: React.FC = () => {
                             id="numberOfRooms"
                             type="number"
                             // step={1}
-                            placeholder="Number of rooms..."
+                            placeholder="Кількість кімнат..."
                             className="w-full"
                             onWheel={(e) => e.currentTarget.blur()}
                         />
@@ -214,7 +218,7 @@ const HotelCreatePage: React.FC = () => {
                         <Input
                             {...register("address.street")}
                             id="address.street"
-                            placeholder="Street..."
+                            placeholder="Вулиця..."
                             className="w-full"
                         />
                         {errors?.address?.street && (
@@ -226,12 +230,12 @@ const HotelCreatePage: React.FC = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="address.houseNumber">№ будинку:</Label>
+                        <Label htmlFor="address.houseNumber">Номер будинку:</Label>
 
                         <Input
                             {...register("address.houseNumber")}
                             id="address.houseNumber"
-                            placeholder="House Number..."
+                            placeholder="№..."
                             className="w-full"
                         />
                         {errors?.address?.houseNumber && (
@@ -252,7 +256,7 @@ const HotelCreatePage: React.FC = () => {
                             className="w-full text-md border px-3 py-1 rounded-sm"
                         >
                             <option disabled value="">
-                                Select city
+                                Виберіть місто
                             </option>
                             {sortedCities.map((city) => (
                                 <option key={city.id} value={city.id}>
@@ -275,8 +279,7 @@ const HotelCreatePage: React.FC = () => {
                             {...register("address.latitude")}
                             id="latitude"
                             type="double"
-                            // step={0.0001}
-                            placeholder="Latitude..."
+                            placeholder="Широта..."
                             className="w-full"
                         />
                         {errors?.address?.latitude && (
@@ -294,8 +297,7 @@ const HotelCreatePage: React.FC = () => {
                             {...register("address.longitude")}
                             id="longitude"
                             type="double"
-                            // step={0.0001}
-                            placeholder="Longitude..."
+                            placeholder="Довгота..."
                             className="w-full"
                         />
                         {errors?.address?.longitude && (
@@ -337,7 +339,7 @@ const HotelCreatePage: React.FC = () => {
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <IconCirclePlus/>
-                            Create
+                            Створити
                         </Button>
                         <Button
                             disabled={isLoading}
@@ -347,7 +349,7 @@ const HotelCreatePage: React.FC = () => {
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
                             <IconCircleX/>
-                            Reset
+                            Скинути
                         </Button>
                     </div>
                 </form>

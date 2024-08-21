@@ -44,14 +44,48 @@ export const hotelApi = createApi({
                     Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
                 }
 
-                // hotelFormData.append("RealtorId", hotel.realtorId || "0");
-
                 return {
                     url: "create",
                     method: "POST",
                     body: hotelFormData,
                 };
             },
+            invalidatesTags: ["Hotels"],
+        }),
+
+        updateHotel: builder.mutation({
+            query: (hotel: Hotel) => {
+                const hotelFormData = new FormData();
+                hotelFormData.append("Id", hotel.id.toString());
+                hotelFormData.append("Name", hotel.name);
+                hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("Area", hotel.area || "0");
+                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms || "0");
+                hotelFormData.append("Address.Street", hotel.address.street || "Default");
+                hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber || "Default");
+                hotelFormData.append("Address.Latitude", hotel.address.latitude || "0");
+                hotelFormData.append("Address.Longitude", hotel.address.longitude || "0");
+                hotelFormData.append("Address.CityId", hotel.address.cityId?.toString() || "0");
+                hotelFormData.append("CategoryId", hotel.categoryId?.toString() || "0");
+
+                if (hotel.photos) {
+                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
+                }
+
+                return {
+                    url: `update/${hotel.id}`,
+                    method: "PUT",
+                    body: hotelFormData,
+                };
+            },
+            invalidatesTags: ["Hotels"],
+        }),
+
+        deleteHotel: builder.mutation({
+            query: (id: string) => ({
+                url: `delete/${id}`,
+                method: "DELETE",
+            }),
             invalidatesTags: ["Hotels"],
         }),
     }),

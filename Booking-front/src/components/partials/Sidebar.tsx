@@ -1,9 +1,7 @@
 import {
-    IconCategoryFilled,
-    IconFilter,
     IconHome,
-    IconRosetteDiscount,
-    IconTemplate,
+    IconBuilding,
+    IconGlobe,
     IconUserScan,
     IconUsers, IconSquareRoot,
 } from "@tabler/icons-react";
@@ -125,13 +123,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                     activeCondition={(pathname) => pathname === "/admin"}
                                 />
 
-                                {/* Товари */}
+                                {/* Готелі */}
                                 <SidebarLinkGroup activecondition={pathname.includes("/hotels")}>
                                     {(handleClick, open) => (
                                         <>
                                             <SidebarLinkGroupTitle
                                                 href="#"
-                                                icon={IconTemplate}
+                                                icon={IconBuilding}
                                                 isActive={pathname.includes("/hotels")}
                                                 handleClick={(e) => {
                                                     e.preventDefault();
@@ -146,6 +144,33 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 links={[
                                                     { to: "hotels/list", label: "Список" },
                                                     { to: "hotels/create", label: "Створити" },
+                                                ]}
+                                            />
+                                        </>
+                                    )}
+                                </SidebarLinkGroup>
+
+                                {/* Країни */}
+                                <SidebarLinkGroup activecondition={pathname.includes("/countries")}>
+                                    {(handleClick, open) => (
+                                        <>
+                                            <SidebarLinkGroupTitle
+                                                href="#"
+                                                icon={IconGlobe}
+                                                isActive={pathname.includes("/countries")}
+                                                handleClick={(e) => {
+                                                    e.preventDefault();
+                                                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                                                }}
+                                            >
+                                                Країни
+                                                <SidebarChevronDown open={open} />
+                                            </SidebarLinkGroupTitle>
+                                            <SidebarLinkGroupMenu
+                                                open={open}
+                                                links={[
+                                                    { to: "countries/list", label: "Список" },
+                                                    { to: "countries/create", label: "Створити" },
                                                 ]}
                                             />
                                         </>

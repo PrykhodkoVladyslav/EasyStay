@@ -18,6 +18,8 @@ public static class GeneratedDataSeeder {
 		if (!context.HotelPhotos.Any())
 			SeedHotelPhotos(context, imageService);
 
+        if (!context.RealtorReviews.Any())
+            SeedRealtorReviews(context);
     }
 
 	private static void SeedAddresses(IBookingDbContext context) {
@@ -121,7 +123,33 @@ public static class GeneratedDataSeeder {
 		}
 	}
 
+    private static void SeedRealtorReviews(IBookingDbContext context)
+    {
+        Faker faker = new Faker();
+        Random random = new Random();
 
+        var realtorsIds = context.Realtors.Select(r => r.Id).ToArray();
+        var customersIds = context.Customers.Select(c => c.Id).ToArray();
+
+        if (realtorsIds.Any() && customersIds.Any())
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                context.RealtorReviews.Add(
+                    new RealtorReview
+                    {
+                        Description = faker.Lorem.Sentences(3),
+                        Score = faker.Random.Int(1, 10),
+                        CreatedAtUtc = DateTime.UtcNow,
+                        RealtorId = faker.PickRandom(realtorsIds),
+                        AuthorId = faker.PickRandom(customersIds)
+                    }
+                );
+            }
+
+            context.SaveChanges();
+        }
+    }
 
     private static string GetImageAsBase64(HttpClient httpClient, string imageUrl) {
 		var imageBytes = httpClient.GetByteArrayAsync(imageUrl).Result;

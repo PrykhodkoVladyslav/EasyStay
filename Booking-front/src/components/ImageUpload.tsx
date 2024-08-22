@@ -49,10 +49,10 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
                     <IconPhoto className="h-28 w-28" />
                     <div className=" gap-2 flex flex-col text-sm leading-6 items-center text-gray-600">
                         <label className="relative cursor-pointer font-semibold text-indigo-600 outline-none">
-                            <span>Upload a file</span>
+                            <span>Завантажити файл</span>
                             {children}
                         </label>
-                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF до 10MB</p>
                     </div>
                 </div>
 

@@ -139,7 +139,7 @@ public static class GeneratedDataSeeder {
                     new RealtorReview
                     {
                         Description = faker.Lorem.Sentences(3),
-                        Score = faker.Random.Int(1, 10),
+                        Score = faker.Random.Int(1, 5),
                         CreatedAtUtc = DateTime.UtcNow,
                         RealtorId = faker.PickRandom(realtorsIds),
                         AuthorId = faker.PickRandom(customersIds)

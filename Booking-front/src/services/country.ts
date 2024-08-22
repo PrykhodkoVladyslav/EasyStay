@@ -1,19 +1,19 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import { Country, GetCountryPageRequest } from "interfaces/country";
 import { Country } from "interfaces/Country";
-// import { GetPageResponse } from "interfaces/index.ts";
+// import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import {hotelApi} from "services/hotel.ts";
 // import { createQueryString } from "utils/createQueryString.ts";
 
 export const countryApi = createApi({
     reducerPath: "countryApi",
-    baseQuery: createBaseQuery("Countries"),
+    baseQuery: createBaseQuery("countries"),
     tagTypes: ["Countries"],
 
     endpoints: (builder) => ({
         getAllCountries: builder.query<Country[], void>({
             query: () => "getAll",
+            // providesTags: ["Countries"],
         }),
 
         // getPageCountries: builder.query<GetPageResponse<City>, GetCountryPageRequest>({
@@ -40,32 +40,38 @@ export const countryApi = createApi({
             invalidatesTags: ["Countries"],
         }),
 
-        // updateCountry: builder.mutation({
-        //     query: (country: Country) => {
-        //         const countryFormData = new FormData();
-        //         countryFormData.append("Id", country.id.toString());
-        //         countryFormData.append("Name", country.name);
-        //         if (country.image) {
-        //             countryFormData.append("Image", country.image);
-        //         }
+        updateCountry: builder.mutation({
+            query: (country: Country) => {
+                const countryFormData = new FormData();
+                countryFormData.append("Id", country.id.toString());
+                countryFormData.append("Name", country.name);
+                if (country.image) {
+                    countryFormData.append("Image", country.image);
+                }
 
-        //         return {
-        //             url: `update/${country.id}`,
-        //             method: "PUT",
-        //             body: countryFormData,
-        //         };
-        //     },
-        //     invalidatesTags: ["Countries"],
-        // }),
+                return {
+                    url: `update/${country.id}`,
+                    method: "PUT",
+                    body: countryFormData,
+                };
+            },
+            invalidatesTags: ["Countries"],
+        }),
 
-        // deleteCountry: builder.mutation({
-        //     query: (id: number) => ({
-        //         url: `delete/${id}`,
-        //         method: "DELETE",
-        //     }),
-        //     invalidatesTags: ["Countries"],
-        // }),
+        deleteCountry: builder.mutation({
+            query: (id: number) => ({
+                url: `delete/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Countries"],
+        }),
     }),
 });
 
-export const { useAddCountryMutation, useGetAllCountriesQuery, useGetCountryQuery, useGetPageCountriesQuery } = countryApi;
+export const {
+    useAddCountryMutation,
+    useUpdateCountryMutation,
+    useGetAllCountriesQuery,
+    useGetCountryQuery,
+    useGetPageCountriesQuery
+} = countryApi;

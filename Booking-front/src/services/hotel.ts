@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { CreateHotel, Hotel } from "interfaces/hotel";
 // import { GetHotelPageRequest } from "interfaces/hotel";
-// import { GetPageResponse } from "interfaces/index.ts";
+// import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
 // import { createQueryString } from "utils/createQueryString.ts";
 

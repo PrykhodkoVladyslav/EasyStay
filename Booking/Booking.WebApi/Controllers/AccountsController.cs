@@ -2,6 +2,7 @@
 using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
 using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
+using Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
 using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
 using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
@@ -79,5 +80,12 @@ public class AccountsController : BaseApiController {
 		var realtor = await Mediator.Send(new GetRealtorDatailsCommand { Id = id });
 
 		return Ok(realtor);
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> SendResetPasswordEmailAsync([FromBody] SendResetPasswordEmailCommand command) {
+		await Mediator.Send(command);
+
+		return NoContent();
 	}
 }

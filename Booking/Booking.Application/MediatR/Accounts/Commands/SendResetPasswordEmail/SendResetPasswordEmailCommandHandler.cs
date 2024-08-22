@@ -24,7 +24,7 @@ public class SendResetPasswordEmailCommandHandler(
 
 		var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-		var resetPasswordUrl = resetPasswordUrlPattern.Replace("{}", token);
+		var resetPasswordUrl = string.Format(resetPasswordUrlPattern, user.Email, token);
 
 		var email = new EmailDto {
 			Receivers = [

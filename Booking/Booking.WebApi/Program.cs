@@ -14,6 +14,8 @@ using Booking.Application.MediatR.Hotels.Queries.Shared;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
 using Booking.Application.MediatR.RealtorReviews.Queries.Shared;
 using Booking.Domain.Identity;
+using Booking.Infrastructure.Options;
+using Booking.Infrastructure.Services;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
 using Booking.Services;
@@ -74,6 +76,7 @@ builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddScoped<IIdentityValidator, IdentityValidator>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
+builder.Services.AddSingleton<IEmailService, GmailEmailService>();
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
@@ -82,6 +85,9 @@ builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, Hote
 builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageCommand>, RealtorPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
+
+
+builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));
 
 
 var app = builder.Build();

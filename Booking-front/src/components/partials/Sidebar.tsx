@@ -142,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                             <SidebarLinkGroupMenu
                                                 open={open}
                                                 links={[
-                                                    { to: "hotels/list", label: "Список" },
+                                                    // { to: "hotels/list", label: "Список" },
                                                     { to: "hotels/create", label: "Створити" },
                                                 ]}
                                             />
@@ -260,31 +260,31 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                 {/*</SidebarLinkGroup>*/}
 
                                 {/* Юзери */}
-                                <SidebarLinkGroup activecondition={pathname.includes("user")}>
-                                    {(handleClick, open) => (
-                                        <>
-                                            <SidebarLinkGroupTitle
-                                                href="#"
-                                                icon={IconUsers}
-                                                isActive={pathname.includes("user")}
-                                                handleClick={(e) => {
-                                                    e.preventDefault();
-                                                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);
-                                                }}
-                                            >
-                                                Користувачі
-                                                <SidebarChevronDown open={open} />
-                                            </SidebarLinkGroupTitle>
-                                            <SidebarLinkGroupMenu
-                                                open={open}
-                                                links={[
-                                                    { to: "/admin/users/list", label: "Список" },
-                                                    { to: "/admin/createAdmin", label: "Створити Адміна" }
-                                                ]}
-                                            />
-                                        </>
-                                    )}
-                                </SidebarLinkGroup>
+                                {/*<SidebarLinkGroup activecondition={pathname.includes("user")}>*/}
+                                {/*    {(handleClick, open) => (*/}
+                                {/*        <>*/}
+                                {/*            <SidebarLinkGroupTitle*/}
+                                {/*                href="#"*/}
+                                {/*                icon={IconUsers}*/}
+                                {/*                isActive={pathname.includes("user")}*/}
+                                {/*                handleClick={(e) => {*/}
+                                {/*                    e.preventDefault();*/}
+                                {/*                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);*/}
+                                {/*                }}*/}
+                                {/*            >*/}
+                                {/*                Користувачі*/}
+                                {/*                <SidebarChevronDown open={open} />*/}
+                                {/*            </SidebarLinkGroupTitle>*/}
+                                {/*            <SidebarLinkGroupMenu*/}
+                                {/*                open={open}*/}
+                                {/*                links={[*/}
+                                {/*                    { to: "/admin/users/list", label: "Список" },*/}
+                                {/*                    { to: "/admin/createAdmin", label: "Створити Адміна" }*/}
+                                {/*                ]}*/}
+                                {/*            />*/}
+                                {/*        </>*/}
+                                {/*    )}*/}
+                                {/*</SidebarLinkGroup>*/}
                             </ul>
                         </div>
 

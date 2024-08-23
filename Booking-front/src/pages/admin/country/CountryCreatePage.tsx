@@ -7,7 +7,6 @@ import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
 import { CountryCreateSchema, CountryCreateSchemaType } from "interfaces/zod/country.ts";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useAddCountryMutation } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 

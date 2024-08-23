@@ -13,7 +13,6 @@ export const countryApi = createApi({
     endpoints: (builder) => ({
         getAllCountries: builder.query<Country[], void>({
             query: () => "getAll",
-            // providesTags: ["Countries"],
         }),
 
         // getPageCountries: builder.query<GetPageResponse<City>, GetCountryPageRequest>({
@@ -43,14 +42,14 @@ export const countryApi = createApi({
         updateCountry: builder.mutation({
             query: (country: Country) => {
                 const countryFormData = new FormData();
-                countryFormData.append("Id", country.id.toString());
+                countryFormData.append("Id", country.id);
                 countryFormData.append("Name", country.name);
                 if (country.image) {
                     countryFormData.append("Image", country.image);
                 }
 
                 return {
-                    url: `update/${country.id}`,
+                    url: `update`,
                     method: "PUT",
                     body: countryFormData,
                 };
@@ -72,6 +71,7 @@ export const {
     useAddCountryMutation,
     useUpdateCountryMutation,
     useGetAllCountriesQuery,
+    useDeleteCountryMutation,
     useGetCountryQuery,
     useGetPageCountriesQuery
 } = countryApi;

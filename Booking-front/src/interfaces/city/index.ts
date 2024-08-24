@@ -1,5 +1,5 @@
 import { Country } from "interfaces/country";
-// import { PaginationOptions } from "interfaces/index.ts";
+// import { PaginationOptions } from "interfaces/hotel.ts";
 
 export interface City {
     id: number;

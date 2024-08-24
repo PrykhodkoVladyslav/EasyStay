@@ -42,6 +42,7 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
 
         setFiles(newFiles);
     };
+
     return (
         <>
             <div className="mt-2 flex flex-col items-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -63,7 +64,11 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
                             strategy={horizontalListSortingStrategy}
                         >
                             {files.map((file: File) => (
-                                <ImageSortableContainer remove={remove} key={file.name} file={file} />
+                                <ImageSortableContainer
+                                    remove={remove}
+                                    key={file.name}
+                                    file={file}
+                                />
                             ))}
                         </SortableContext>
                     </DndContext>

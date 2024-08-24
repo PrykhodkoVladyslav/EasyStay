@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import { City, GetCityPageRequest } from "interfaces/country";
 import { City } from "interfaces/city";
-// import { GetPageResponse } from "interfaces/index.ts";
+// import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
 // import { createQueryString } from "utils/createQueryString.ts";
 

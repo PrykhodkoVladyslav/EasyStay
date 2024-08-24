@@ -5,7 +5,7 @@ import { Button } from "components/ui/Button.tsx";
 import FormError from "components/ui/FormError.tsx";
 import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
-import { HotelCreateSchema, HotelCreateSchemaType } from "interfaces/zod";
+import { HotelCreateSchema, HotelCreateSchemaType } from "interfaces/zod/hotel.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGetAllCitiesQuery } from "services/city.ts";

@@ -14,6 +14,7 @@ const showToast = (message: string, type: ToastType = "info") => {
         progress: undefined,
         closeButton: false,
         theme: "light",
+        // theme: "colored",
         transition: Slide,
     };
 

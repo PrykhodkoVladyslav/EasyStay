@@ -28,7 +28,11 @@ const ImageSortableContainer = (props: ImageSortableProps) => {
                 >
                     <IconTrash />
                 </button>
-                <img className="h-28 w-28 object-contain" alt={file.name} src={URL.createObjectURL(file)} />
+                <img
+                    className="h-28 w-28 object-contain"
+                    alt={file.name}
+                    src={URL.createObjectURL(file)}
+                />
             </div>
         </div>
     );

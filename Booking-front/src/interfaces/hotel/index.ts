@@ -1,6 +1,6 @@
 import { City } from "interfaces/city";
 import { HotelCategories } from "interfaces/hotelCategories";
-// import { PaginationOptions } from "interfaces/index.ts";
+// import { PaginationOptions } from "interfaces/hotel.ts";
 import { Photo } from "interfaces/photo";
 
 export interface Address {

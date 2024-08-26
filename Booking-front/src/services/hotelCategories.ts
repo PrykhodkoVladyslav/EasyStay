@@ -24,5 +24,7 @@ export const hotelCategoriesApi = createApi({
     }),
 });
 
-// export const { useGetAllHotelCategoriesQuery, useGetPageHotelCategoriesQuery } = hotelCategoriesApi;
-export const { useGetAllHotelCategoriesQuery } = hotelCategoriesApi;
+export const {
+    useGetAllHotelCategoriesQuery,
+    useGetPageHotelCategoriesQuery
+} = hotelCategoriesApi;

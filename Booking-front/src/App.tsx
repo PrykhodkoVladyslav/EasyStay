@@ -8,6 +8,7 @@ import AdminLoginPage from "pages/AdminLoginPage.tsx";
 import AdminLayout from "components/layouts/AdminLayout";
 import HotelsPage from "pages/admin/hotel/HotelsPage";
 import HotelCreatePage from "pages/admin/hotel/HotelCreatePage";
+import HotelArchivePage from "pages/admin/hotel/HotelArchivePage";
 import HotelEditPage from "pages/admin/hotel/HotelEditPage";
 import CountryPage from "pages/admin/country/CountryPage.tsx";
 import CountryCreatePage from "pages/admin/country/CountryCreatePage.tsx";
@@ -28,6 +29,7 @@ function App() {
                         <Route path="hotels">
                             <Route path="list" element={<HotelsPage />} />
                             <Route path="create" element={<HotelCreatePage />} />
+                            <Route path="archive" element={<HotelArchivePage />} />
                             <Route path="edit/:id" element={<HotelEditPage />} />
                         </Route>
                         <Route path="countries">

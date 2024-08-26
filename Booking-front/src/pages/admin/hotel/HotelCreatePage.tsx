@@ -14,7 +14,6 @@ import { useGetAllHotelCategoriesQuery } from "services/hotelCategories.ts";
 import showToast from "utils/toastShow.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-// import {hotelCategoriesApi} from "../services/hotelCategories";
 
 const HotelCreatePage: React.FC = () => {
     const {
@@ -95,11 +94,7 @@ const HotelCreatePage: React.FC = () => {
                 cityId: Number(data.address.cityId),
             }).unwrap();
 
-            const cityId = data.address.cityId;
-            const cityName = citiesData?.find((c) => c.id === Number(cityId))?.name;
             showToast(`Успішно створено новий готель!`, "success");
-
-            // navigate(`/search-results?cityId=${data.address.cityId}&destination=${cityName}`);
             onReset();
         } catch (err) {
             showToast(`Помилка при створенні нового готелю!`, "error");
@@ -331,7 +326,6 @@ const HotelCreatePage: React.FC = () => {
                     </div>
 
                     <div className=" flex w-full items-center justify-center gap-5">
-                        {/*<div className=" text-white flex w-full items-center justify-center gap-5">*/}
                         <Button
                             disabled={isLoading}
                             size="lg"

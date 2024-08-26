@@ -11,9 +11,9 @@ export const hotelApi = createApi({
     tagTypes: ["Hotels"],
 
     endpoints: (builder) => ({
-        getHotel: builder.query<Hotel, string>({
-            query: (id) => `getById/${id}`,
-        }),
+        // getHotel: builder.query<Hotel, string>({
+        //     query: (id) => `getById/${id}`,
+        // }),
 
         getAllHotels: builder.query<Hotel[], void>({
             query: () => "getAll",
@@ -91,5 +91,11 @@ export const hotelApi = createApi({
     }),
 });
 
-export const { useAddHotelMutation, useGetAllHotelsQuery, useGetHotelQuery, useGetPageHotelsQuery } =
-    hotelApi;
+export const {
+    useAddHotelMutation,
+    useGetAllHotelsQuery,
+    useUpdateHotelMutation,
+    useDeleteHotelMutation,
+    useGetHotelQuery,
+    useGetPageHotelsQuery,
+} = hotelApi;

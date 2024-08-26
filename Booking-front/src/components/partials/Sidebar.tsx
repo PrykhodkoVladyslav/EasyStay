@@ -142,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                             <SidebarLinkGroupMenu
                                                 open={open}
                                                 links={[
-                                                    // { to: "hotels/list", label: "Список" },
+                                                    { to: "hotels/list", label: "Список" },
                                                     { to: "hotels/create", label: "Створити" },
                                                 ]}
                                             />

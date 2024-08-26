@@ -2,4 +2,5 @@
 
 public interface ICurrentUserService {
 	long GetRequiredUserId();
+	string GetRequiredUserEmail();
 }

@@ -15,4 +15,13 @@ public class CurrentUserService(
 			? throw new Exception("User is not authorized")
 			: Convert.ToInt64(id);
 	}
+
+	public string GetRequiredUserEmail() {
+		var email = httpContextAccessor.HttpContext?.User?
+			.FindFirstValue(ClaimTypes.Email);
+
+		return string.IsNullOrEmpty(email)
+			? throw new Exception("User is not authorized")
+			: email;
+	}
 }

@@ -6,6 +6,7 @@ using Booking.Application.MediatR.Accounts.Commands.ResetPassword;
 using Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
 using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
+using Booking.Application.MediatR.Accounts.Commands.Update;
 using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
@@ -95,5 +96,13 @@ public class AccountsController : BaseApiController {
 		await Mediator.Send(command);
 
 		return NoContent();
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Customer,Realtor,Admin")]
+	public async Task<IActionResult> UpdateInfo([FromForm] UpdateCommand command) {
+		var token = await Mediator.Send(command);
+
+		return Ok(token);
 	}
 }

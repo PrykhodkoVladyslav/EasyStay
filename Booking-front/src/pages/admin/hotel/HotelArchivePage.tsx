@@ -33,8 +33,8 @@ const ArchivedHotelsPage: React.FC = () => {
                 Архівовані Готелі
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/archive")}>
-                    Архівовані готелі
+                <Button onClick={() => navigate("/admin/hotels/list")}>
+                    Перейти назад
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">

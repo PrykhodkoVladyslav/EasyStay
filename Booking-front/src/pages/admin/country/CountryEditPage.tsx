@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllCountriesQuery, useUpdateCountryMutation } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {API_URL} from "utils/getEnvData.ts";
+// import {API_URL} from "utils/getEnvData.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
@@ -18,12 +18,12 @@ const CountryEditPage: React.FC = () => {
     const { id } = useParams();
     const { data: countriesData, refetch } = useGetAllCountriesQuery();
     const [updateCountry, { isLoading } ] = useUpdateCountryMutation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const country = countriesData?.find(c => c.id === Number(id));
 
     const [files, setFiles] = useState<File[]>([]);
-    const [imagePreview, setImagePreview] = useState<string | null>(null); // New state for image preview
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const {
@@ -72,7 +72,7 @@ const CountryEditPage: React.FC = () => {
                 for (let i = 0; i < file.length; i++) {
                     const validImageTypes = ["image/jpeg", "image/webp", "image/png"];
                     if (validImageTypes.includes(file[i].type)) {
-                        updatedFiles[0] = file[i]; // Replace the existing image
+                        updatedFiles[0] = file[i];
                     }
                 }
                 return updatedFiles.slice(0, 1);
@@ -82,7 +82,7 @@ const CountryEditPage: React.FC = () => {
 
     const removeImage = (file: string) => {
         setFiles([]);
-        setImagePreview(null); // Remove preview if no image
+        setImagePreview(null);
     };
 
     const onSubmit = handleSubmit(async (data) => {
@@ -96,7 +96,7 @@ const CountryEditPage: React.FC = () => {
             showToast(`Країну успішно оновлено!`, "success");
 
             refetch();
-            navigate("/admin/countries/list");
+            // navigate("/admin/countries/list");
         } catch (err) {
             showToast(`Помилка при оновленні країни!`, "error");
         }

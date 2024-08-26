@@ -13,6 +13,7 @@ export const countryApi = createApi({
     endpoints: (builder) => ({
         getAllCountries: builder.query<Country[], void>({
             query: () => "getAll",
+            providesTags: ["Countries"],
         }),
 
         // getPageCountries: builder.query<GetPageResponse<City>, GetCountryPageRequest>({

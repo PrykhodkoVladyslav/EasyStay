@@ -3,6 +3,7 @@ import { Button } from "components/ui/Button.tsx";
 import { useDeleteHotelMutation, useGetAllHotelsQuery } from "services/hotel.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
+import showToast from "utils/toastShow.ts";
 
 const HotelsPage: React.FC = () => {
     const { data: hotelsData, isLoading, error, refetch } = useGetAllHotelsQuery();
@@ -28,11 +29,11 @@ const HotelsPage: React.FC = () => {
         if (confirm("Ви впевнені, що хочете архівувати цей готель?")) {
             try {
                 await archiveHotel(id.toString()).unwrap();
-                toast.success("Готель архівовано.");
+                showToast(`Готель архівовано.`, "success");
                 refetch();
             } catch (err) {
                 console.error("Помилка при архівуванні готелю:", err);
-                toast.error("Не вдалося архівувати готель.");
+                showToast(`Готель не було архівовано.`, "error");
             }
         }
     };
@@ -43,10 +44,10 @@ const HotelsPage: React.FC = () => {
                 Список Готелів
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/create")}>
+                <Button onClick={() => navigate("/admin/hotels/create")} className="border">
                     Додати новий готель
                 </Button>
-                <Button onClick={() => navigate("/admin/hotels/archive")}>
+                <Button onClick={() => navigate("/admin/hotels/archive")} className="border">
                     Архівовані готелі
                 </Button>
             </div>

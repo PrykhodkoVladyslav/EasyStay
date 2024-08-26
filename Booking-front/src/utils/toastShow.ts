@@ -13,8 +13,8 @@ const showToast = (message: string, type: ToastType = "info") => {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        theme: "light",
-        // theme: "colored",
+        // theme: "light",
+        theme: "colored",
         transition: Slide,
     };
 

@@ -2,6 +2,7 @@ import {
     IconHome,
     IconBuilding,
     IconGlobe,
+    IconBuildingSkyscraper,
     IconUserScan,
     IconUsers, IconSquareRoot,
 } from "@tabler/icons-react";
@@ -177,87 +178,32 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                     )}
                                 </SidebarLinkGroup>
 
-                                {/* Категорії */}
-                                {/*<SidebarLinkGroup activecondition={pathname.includes("categories")}>*/}
-                                {/*    {(handleClick, open) => (*/}
-                                {/*        <>*/}
-                                {/*            <SidebarLinkGroupTitle*/}
-                                {/*                href="#"*/}
-                                {/*                icon={IconCategoryFilled}*/}
-                                {/*                isActive={pathname.includes("categories")}*/}
-                                {/*                handleClick={(e) => {*/}
-                                {/*                    e.preventDefault();*/}
-                                {/*                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);*/}
-                                {/*                }}*/}
-                                {/*            >*/}
-                                {/*                Категорії*/}
-                                {/*                <SidebarChevronDown open={open} />*/}
-                                {/*            </SidebarLinkGroupTitle>*/}
-                                {/*            <SidebarLinkGroupMenu*/}
-                                {/*                open={open}*/}
-                                {/*                links={[*/}
-                                {/*                    { to: "admin/categories/list", label: "Список" },*/}
-                                {/*                    { to: "admin/categories/create", label: "Створити" },*/}
-                                {/*                ]}*/}
-                                {/*            />*/}
-                                {/*        </>*/}
-                                {/*    )}*/}
-                                {/*</SidebarLinkGroup>*/}
-
-                                {/* Знижки */}
-                                {/*<SidebarLinkGroup activecondition={pathname.includes("discounts")}>*/}
-                                {/*    {(handleClick, open) => (*/}
-                                {/*        <>*/}
-                                {/*            <SidebarLinkGroupTitle*/}
-                                {/*                href="#"*/}
-                                {/*                icon={IconRosetteDiscount}*/}
-                                {/*                isActive={pathname.includes("discounts")}*/}
-                                {/*                handleClick={(e) => {*/}
-                                {/*                    e.preventDefault();*/}
-                                {/*                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);*/}
-                                {/*                }}*/}
-                                {/*            >*/}
-                                {/*                Знижки*/}
-                                {/*                <SidebarChevronDown open={open} />*/}
-                                {/*            </SidebarLinkGroupTitle>*/}
-                                {/*            <SidebarLinkGroupMenu*/}
-                                {/*                open={open}*/}
-                                {/*                links={[*/}
-                                {/*                    { to: "admin/discounts/list", label: "Список" },*/}
-                                {/*                    { to: "admin/discounts/create", label: "Створити" },*/}
-                                {/*                ]}*/}
-                                {/*            />*/}
-                                {/*        </>*/}
-                                {/*    )}*/}
-                                {/*</SidebarLinkGroup>*/}
-
-                                {/*/!* Фільтри *!/*/}
-                                {/*<SidebarLinkGroup activecondition={pathname.includes("filters")}>*/}
-                                {/*    {(handleClick, open) => (*/}
-                                {/*        <>*/}
-                                {/*            <SidebarLinkGroupTitle*/}
-                                {/*                href="#"*/}
-                                {/*                icon={IconFilter}*/}
-                                {/*                isActive={pathname.includes("filters")}*/}
-                                {/*                handleClick={(e) => {*/}
-                                {/*                    e.preventDefault();*/}
-                                {/*                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);*/}
-                                {/*                }}*/}
-                                {/*            >*/}
-                                {/*                Фільтри*/}
-                                {/*                <SidebarChevronDown open={open} />*/}
-                                {/*            </SidebarLinkGroupTitle>*/}
-                                {/*            <SidebarLinkGroupMenu*/}
-                                {/*                open={open}*/}
-                                {/*                links={[{ to: "admin/filters/List", label: "Список" }]}*/}
-                                {/*            />*/}
-                                {/*            <SidebarLinkGroupMenu*/}
-                                {/*                open={open}*/}
-                                {/*                links={[{ to: "admin/filters/create", label: "Створити" }]}*/}
-                                {/*            />*/}
-                                {/*        </>*/}
-                                {/*    )}*/}
-                                {/*</SidebarLinkGroup>*/}
+                                {/* Міста */}
+                                <SidebarLinkGroup activecondition={pathname.includes("/cities")}>
+                                    {(handleClick, open) => (
+                                        <>
+                                            <SidebarLinkGroupTitle
+                                                href="#"
+                                                icon={IconBuildingSkyscraper}
+                                                isActive={pathname.includes("/cities")}
+                                                handleClick={(e) => {
+                                                    e.preventDefault();
+                                                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                                                }}
+                                            >
+                                                Країни
+                                                <SidebarChevronDown open={open} />
+                                            </SidebarLinkGroupTitle>
+                                            <SidebarLinkGroupMenu
+                                                open={open}
+                                                links={[
+                                                    { to: "cities/list", label: "Список" },
+                                                    { to: "cities/create", label: "Створити" },
+                                                ]}
+                                            />
+                                        </>
+                                    )}
+                                </SidebarLinkGroup>
 
                                 {/* Юзери */}
                                 {/*<SidebarLinkGroup activecondition={pathname.includes("user")}>*/}

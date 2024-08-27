@@ -30,9 +30,9 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
             userApi.middleware,
-            cityApi.middleware,
             hotelApi.middleware,
             hotelCategoriesApi.middleware,
+            cityApi.middleware,
             countryApi.middleware,
             // reviewApi.middleware,
             // roomApi.middleware,

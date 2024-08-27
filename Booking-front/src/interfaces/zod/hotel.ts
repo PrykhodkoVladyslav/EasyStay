@@ -53,8 +53,8 @@ export type HotelCreateSchemaType = z.infer<typeof HotelCreateSchema>;
 export const HotelEditSchema = z.object({
     name: z.string().min(1, "Назва є обов'язковою"),
     description: z.string().min(1, "Опис є обов'язковим"),
-    area: z.string().refine((val) => val > 0, "Площа повинна бути більше 0"),
-    numberOfRooms: z.string().refine((val) => val > 0, "Кількість кімнат повинна бути більше 0"),
+    area: z.string().refine((val) => parseFloat(val) > 0, "Площа повинна бути більше 0"),
+    numberOfRooms: z.string().refine((val) => parseInt(val) > 0, "Кількість кімнат повинна бути більше 0"),
     categoryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
         message: "Тип є обов'язковим",
     }),

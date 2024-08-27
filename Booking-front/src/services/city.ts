@@ -22,10 +22,28 @@ export const cityApi = createApi({
         //         return `getPage?${queryString}`;
         //     },
         // }),
+
+        updateCity: builder.mutation<City, Partial<City>>({
+            query: ({ id, ...patch }) => ({
+                url: `update`,
+                method: "PUT",
+                body: patch,
+            }),
+            invalidatesTags: ["Cities"],
+        }),
+
+        deleteCity: builder.mutation({
+            query: (id: number) => ({
+                url: `delete/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Cities"],
+        }),
     }),
 });
 
 export const {
     useGetAllCitiesQuery,
+    useDeleteCityMutation,
     useGetPageCitiesQuery
 } = cityApi;

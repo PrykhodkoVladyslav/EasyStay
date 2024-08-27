@@ -4,7 +4,7 @@ import {useDeleteCountryMutation, useGetAllCountriesQuery} from "services/countr
 import {API_URL} from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 
-const CountryPage: React.FC = () => {
+const CountriesPage: React.FC = () => {
     const { data: countriesData, isLoading, error, refetch } = useGetAllCountriesQuery();
     const [deleteCountry] = useDeleteCountryMutation();
     const navigate = useNavigate();
@@ -87,4 +87,4 @@ const CountryPage: React.FC = () => {
     );
 }
 
-export default CountryPage;
+export default CountriesPage;

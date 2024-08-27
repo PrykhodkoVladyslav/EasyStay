@@ -37,20 +37,20 @@ const HotelEditPage: React.FC = () => {
 
     useEffect(() => {
         if (hotelData) {
-            setValue("name", hotelData.name);
-            setValue("description", hotelData.description);
-            setValue("area", hotelData.area);
-            setValue("numberOfRooms", hotelData.numberOfRooms);
-            setValue("address.street", hotelData.address.street);
-            setValue("address.houseNumber", hotelData.address.houseNumber);
-            setValue("address.cityId", String(hotelData.address.city.id));
-            setValue("address.latitude", hotelData.address.latitude.toString().replace('.', ','));
-            setValue("address.longitude", hotelData.address.longitude.toString().replace('.', ','));
-            setValue("categoryId", hotelData.category.id);
-
+            setValue("name", hotelData.name || '');
+            setValue("description", hotelData.description || '');
+            setValue("area", hotelData.area?.toString().replace('.', ',') || '');
+            setValue("numberOfRooms", String(hotelData.numberOfRooms || ''));
+            setValue("address.street", hotelData.address.street || '');
+            setValue("address.houseNumber", hotelData.address.houseNumber || '');
+            setValue("address.cityId", String(hotelData.address.city?.id || ''));
+            setValue("address.latitude", hotelData.address.latitude?.toString().replace('.', ',') || '');
+            setValue("address.longitude", hotelData.address.longitude?.toString().replace('.', ',') || '');
+            setValue("categoryId", String(hotelData.category?.id || ''));
             setFiles([]); // Optionally set initial files if there's an existing image
         }
     }, [hotelData, setValue]);
+
 
     useEffect(() => {
         if (inputRef.current) {
@@ -89,6 +89,7 @@ const HotelEditPage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
+            console.log("Data: ", data);
             await updateHotel({
                 ...data,
                 photos: data.photos as File[],
@@ -176,7 +177,7 @@ const HotelEditPage: React.FC = () => {
                         <Input
                             {...register("area")}
                             id="area"
-                            type="number"
+                            type="double"
                             placeholder="Площа..."
                             className="w-full"
                             onWheel={(e) => e.currentTarget.blur()}
@@ -302,82 +303,82 @@ const HotelEditPage: React.FC = () => {
                         )}
                     </div>
 
-                    <div>
-                        <Label>Завантажте фото</Label>
-                        <input
-                            type="file"
-                            id="photos"
-                            className="hidden"
-                            multiple
-                            ref={inputRef}
-                            accept="image/*"
-                            {...register("photos")}
-                            onChange={handleFileChange}
-                        />
-
-                        <div className="flex gap-5 items-center mt-2">
-                            <Button
-                                className="font-medium w-fit text-black bg-brightorange rounded-3xl text-sm py-2.5 px-5"
-                                type="button"
-                                onClick={() => inputRef.current?.click()}
-                            >
-                                Додати фото
-                            </Button>
-                            {files.length > 0 && (
-                                <div className="flex flex-col gap-3 text-left">
-                                    {files.map((file) => (
-                                        <div
-                                            className="flex gap-5 items-center text-darkgray"
-                                            key={file.name}
-                                        >
-                                            <span className="text-darkgray text-base">
-                                                {file.name}
-                                            </span>
-
-                                            <IconCircleX
-                                                size={20}
-                                                className="cursor-pointer"
-                                                onClick={() => removeImage(file.name)}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
                     {/*<div>*/}
-                    {/*    <Label>Фото:</Label>*/}
-                    {/*    <div className="relative">*/}
-                    {/*        {imagePreview && (*/}
-                    {/*            <img*/}
-                    {/*                src={imagePreview}*/}
-                    {/*                alt="Current Preview"*/}
-                    {/*                className="h-20 w-20 object-cover mb-2"*/}
-                    {/*            />*/}
+                    {/*    <Label>Завантажте фото</Label>*/}
+                    {/*    <input*/}
+                    {/*        type="file"*/}
+                    {/*        id="photos"*/}
+                    {/*        className="hidden"*/}
+                    {/*        multiple*/}
+                    {/*        ref={inputRef}*/}
+                    {/*        accept="image/*"*/}
+                    {/*        {...register("photos")}*/}
+                    {/*        onChange={handleFileChange}*/}
+                    {/*    />*/}
+
+                    {/*    <div className="flex gap-5 items-center mt-2">*/}
+                    {/*        <Button*/}
+                    {/*            className="font-medium w-fit text-black bg-brightorange rounded-3xl text-sm py-2.5 px-5"*/}
+                    {/*            type="button"*/}
+                    {/*            onClick={() => inputRef.current?.click()}*/}
+                    {/*        >*/}
+                    {/*            Додати фото*/}
+                    {/*        </Button>*/}
+                    {/*        {files.length > 0 && (*/}
+                    {/*            <div className="flex flex-col gap-3 text-left">*/}
+                    {/*                {files.map((file) => (*/}
+                    {/*                    <div*/}
+                    {/*                        className="flex gap-5 items-center text-darkgray"*/}
+                    {/*                        key={file.name}*/}
+                    {/*                    >*/}
+                    {/*                        <span className="text-darkgray text-base">*/}
+                    {/*                            {file.name}*/}
+                    {/*                        </span>*/}
+
+                    {/*                        <IconCircleX*/}
+                    {/*                            size={20}*/}
+                    {/*                            className="cursor-pointer"*/}
+                    {/*                            onClick={() => removeImage(file.name)}*/}
+                    {/*                        />*/}
+                    {/*                    </div>*/}
+                    {/*                ))}*/}
+                    {/*            </div>*/}
                     {/*        )}*/}
-                    {/*        <ImageUpload*/}
-                    {/*            setFiles={setFiles}*/}
-                    {/*            remove={removeImage}*/}
-                    {/*            files={files}>*/}
-                    {/*            <Input*/}
-                    {/*                {...register("image")}*/}
-                    {/*                onChange={handleFileChange}*/}
-                    {/*                multiple*/}
-                    {/*                ref={inputRef}*/}
-                    {/*                id="image"*/}
-                    {/*                type="file"*/}
-                    {/*                className="w-full"*/}
-                    {/*            />*/}
-                    {/*        </ImageUpload>*/}
                     {/*    </div>*/}
-                    {/*    {errors?.image && (*/}
-                    {/*        <FormError*/}
-                    {/*            className="text-red"*/}
-                    {/*            errorMessage={errors?.image?.message as string}*/}
-                    {/*        />*/}
-                    {/*    )}*/}
                     {/*</div>*/}
+
+                    <div>
+                        <Label>Фото:</Label>
+                        <div className="relative">
+                            {/*{imagePreview && (*/}
+                            {/*    <img*/}
+                            {/*        src={imagePreview}*/}
+                            {/*        alt="Current Preview"*/}
+                            {/*        className="h-20 w-20 object-cover mb-2"*/}
+                            {/*    />*/}
+                            {/*)}*/}
+                            <ImageUpload
+                                setFiles={setFiles}
+                                remove={removeImage}
+                                files={files}>
+                                <Input
+                                    {...register("photos")}
+                                    onChange={handleFileChange}
+                                    multiple
+                                    ref={inputRef}
+                                    id="image"
+                                    type="file"
+                                    className="w-full"
+                                />
+                            </ImageUpload>
+                        </div>
+                        {errors?.photos && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.photos?.message as string}
+                            />
+                        )}
+                    </div>
 
                     <div className="flex w-full items-center justify-center gap-5">
                         <Button

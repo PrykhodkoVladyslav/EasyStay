@@ -4,6 +4,7 @@ using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
 using Booking.Application.MediatR.Accounts.Commands.ResetPassword;
 using Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
+using Booking.Application.MediatR.Accounts.Commands.SetPhoto;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
 using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
 using Booking.Application.MediatR.Accounts.Commands.Update;
@@ -101,6 +102,14 @@ public class AccountsController : BaseApiController {
 	[HttpPatch]
 	[Authorize(Roles = "Customer,Realtor,Admin")]
 	public async Task<IActionResult> UpdateInfo([FromForm] UpdateCommand command) {
+		var token = await Mediator.Send(command);
+
+		return Ok(token);
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Customer,Realtor,Admin")]
+	public async Task<IActionResult> SetPhoto([FromForm] SetPhotoCommand command) {
 		var token = await Mediator.Send(command);
 
 		return Ok(token);

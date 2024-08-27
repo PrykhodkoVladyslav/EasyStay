@@ -63,7 +63,9 @@ public static class DependencyInjection {
 						if (context.Principal is null)
 							return;
 
-						var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
+						var userManager = context.HttpContext
+							.RequestServices
+							.GetRequiredService<UserManager<User>>();
 						var user = await userManager.GetUserAsync(context.Principal);
 
 						if (user is null || user.LockoutEnd > DateTimeOffset.UtcNow) {

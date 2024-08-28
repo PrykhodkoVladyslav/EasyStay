@@ -1,7 +1,7 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
-import {useDeleteCountryMutation, useGetAllCountriesQuery} from "services/country.ts";
-import {API_URL} from "utils/getEnvData.ts";
+import { useDeleteCountryMutation, useGetAllCountriesQuery } from "services/country.ts";
+import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 
 const CountriesPage: React.FC = () => {
@@ -30,8 +30,8 @@ const CountriesPage: React.FC = () => {
                 Список Країн
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/countries/create")}>
-                    Додати нову країну
+                <Button onClick={() => navigate("/admin/countries/create")} className="border">
+                    Додати нову Країну
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">

@@ -7,10 +7,12 @@ import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
 import { CityCreateSchema, CityCreateSchemaType } from "interfaces/zod/city.ts";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAddCityMutation } from "services/city.ts";
 import showToast from "utils/toastShow.ts";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useGetAllCountriesQuery } from "services/country.ts";
+
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 const CityCreatePage: React.FC = () => {
     const {
@@ -23,6 +25,7 @@ const CityCreatePage: React.FC = () => {
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const [addCity, { isLoading }] = useAddCityMutation();
     const { data: countriesData } = useGetAllCountriesQuery();
@@ -83,6 +86,11 @@ const CityCreatePage: React.FC = () => {
         <div className="container mx-auto flex justify-center mt-5">
             <div className="w-full">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Міста</h1>
+                <div className="flex justify-end mb-4">
+                    <Button onClick={() => navigate("/admin/cities/list")} className="border">
+                        Список Міст
+                    </Button>
+                </div>
                 <form className="flex flex-col gap-5" onSubmit={onSubmit}>
                     <div>
                         <Label htmlFor="name">Назва:</Label>
@@ -93,7 +101,7 @@ const CityCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
                         )}
                     </div>
 
@@ -106,7 +114,7 @@ const CityCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.latitude && (
-                            <FormError className="text-red" errorMessage={errors?.latitude?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.latitude?.message as string}/>
                         )}
                     </div>
 
@@ -119,14 +127,14 @@ const CityCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.longitude && (
-                            <FormError className="text-red" errorMessage={errors?.longitude?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.longitude?.message as string}/>
                         )}
                     </div>
 
                     <div>
                         <Label htmlFor="countryId">Країна:</Label>
                         <select
-                            {...register("countryId", { required: "Country is required" })}
+                            {...register("countryId", {required: "Country is required"})}
                             id="countryId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm"
@@ -141,7 +149,7 @@ const CityCreatePage: React.FC = () => {
                             ))}
                         </select>
                         {errors?.countryId && (
-                            <FormError className="text-red" errorMessage={errors?.countryId?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.countryId?.message as string}/>
                         )}
                     </div>
 
@@ -159,7 +167,7 @@ const CityCreatePage: React.FC = () => {
                             />
                         </ImageUpload>
                         {errors?.image && (
-                            <FormError className="text-red" errorMessage={errors?.image?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.image?.message as string}/>
                         )}
                     </div>
 
@@ -170,7 +178,7 @@ const CityCreatePage: React.FC = () => {
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus />
+                            <IconCirclePlus/>
                             Створити
                         </Button>
                         <Button
@@ -180,7 +188,7 @@ const CityCreatePage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX />
+                            <IconCircleX/>
                             Скинути
                         </Button>
                     </div>

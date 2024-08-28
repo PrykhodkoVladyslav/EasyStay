@@ -7,6 +7,7 @@ import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
 import { CountryCreateSchema, CountryCreateSchemaType } from "interfaces/zod/country.ts";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAddCountryMutation } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 
@@ -23,6 +24,7 @@ const CountryCreatePage: React.FC = () => {
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const [create, { isLoading }] = useAddCountryMutation();
 
@@ -85,6 +87,11 @@ const CountryCreatePage: React.FC = () => {
         <div className="container mx-auto flex justify-center mt-5">
             <div className="w-full ">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Країни</h1>
+                <div className="flex justify-end mb-4">
+                    <Button onClick={() => navigate("/admin/countries/list")} className="border">
+                        Список Країн
+                    </Button>
+                </div>
                 <form className="flex flex-col gap-5" onSubmit={onSubmit}>
                     <div>
                         <Label htmlFor="name">Назва:</Label>

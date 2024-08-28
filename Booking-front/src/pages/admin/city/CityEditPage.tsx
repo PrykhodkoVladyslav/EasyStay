@@ -6,13 +6,13 @@ import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
 import { CityEditSchema, CityEditSchemaType } from "interfaces/zod/city.ts";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetCityQuery, useUpdateCityMutation } from "services/city.ts";
 import { useGetAllCountriesQuery } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
 import ImageUpload from "components/ImageUpload.tsx";
-import { useNavigate } from "react-router-dom";
+
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 const CityEditPage: React.FC = () => {
     const { id } = useParams();
@@ -104,6 +104,11 @@ const CityEditPage: React.FC = () => {
         <div className="container mx-auto flex justify-center mt-5">
             <div className="w-full">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Редагування Міста</h1>
+                <div className="flex justify-end mb-4">
+                    <Button onClick={() => navigate("/admin/cities/list")} className="border">
+                        Назад назад до списку Міст
+                    </Button>
+                </div>
                 <form className="flex flex-col gap-5" onSubmit={onSubmit}>
                     <div>
                         <Label htmlFor="name">Назва:</Label>
@@ -114,7 +119,7 @@ const CityEditPage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
                         )}
                     </div>
 
@@ -153,7 +158,7 @@ const CityEditPage: React.FC = () => {
                     <div>
                         <Label htmlFor="countryId">Країна:</Label>
                         <select
-                            {...register("countryId", { required: "Country is required" })}
+                            {...register("countryId", {required: "Country is required"})}
                             id="countryId"
                             className="w-full text-md border px-3 py-1 rounded-sm"
                         >
@@ -214,7 +219,7 @@ const CityEditPage: React.FC = () => {
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus />
+                            <IconCirclePlus/>
                             Оновити
                         </Button>
                         <Button
@@ -224,7 +229,7 @@ const CityEditPage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX />
+                            <IconCircleX/>
                             Скинути
                         </Button>
                     </div>

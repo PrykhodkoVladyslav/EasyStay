@@ -30,8 +30,8 @@ const CitiesPage: React.FC = () => {
                 Список Міст
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/cities/create")}>
-                    Додати нове місто
+                <Button onClick={() => navigate("/admin/cities/create")} className="border">
+                    Додати нове Місто
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">

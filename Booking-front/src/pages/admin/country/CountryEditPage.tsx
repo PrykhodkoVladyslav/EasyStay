@@ -18,7 +18,7 @@ const CountryEditPage: React.FC = () => {
     const { id } = useParams();
     const { data: countriesData, refetch } = useGetAllCountriesQuery();
     const [updateCountry, { isLoading } ] = useUpdateCountryMutation();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const country = countriesData?.find(c => c.id === Number(id));
 
@@ -82,7 +82,6 @@ const CountryEditPage: React.FC = () => {
 
     const removeImage = (file: string) => {
         setFiles([]);
-        setImagePreview(null);
     };
 
     const onSubmit = handleSubmit(async (data) => {
@@ -96,7 +95,7 @@ const CountryEditPage: React.FC = () => {
             showToast(`Країну успішно оновлено!`, "success");
 
             refetch();
-            // navigate("/admin/countries/list");
+            navigate("/admin/countries/list");
         } catch (err) {
             showToast(`Помилка при оновленні країни!`, "error");
         }
@@ -105,7 +104,6 @@ const CountryEditPage: React.FC = () => {
     const onReset = () => {
         reset();
         setFiles([]);
-        setImagePreview(null); // Reset preview
     };
 
     if (!country) return <p>Країна не знайдена</p>;

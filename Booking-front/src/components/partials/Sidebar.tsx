@@ -191,7 +191,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                                                 }}
                                             >
-                                                Країни
+                                                Міста
                                                 <SidebarChevronDown open={open} />
                                             </SidebarLinkGroupTitle>
                                             <SidebarLinkGroupMenu

@@ -1,8 +1,25 @@
 import { ACCEPTED_IMAGE_MIME_TYPES, MAX_FILE_SIZE } from "constants/index.ts";
 import { z } from "zod";
 
-export const CountryCreateSchema = z.object({
+export const CityCreateSchema = z.object({
     name: z.string().min(1, "Назва є обов'язковою"),
+    longitude: z.string().refine(
+        (val) => {
+            const num = parseFloat(val);
+            return !isNaN(num) && num >= -180 && num <= 180;
+        },
+        { message: "Довгота повинна бути між -180 і 180" },
+    ),
+    latitude: z.string().refine(
+        (val) => {
+            const num = parseFloat(val);
+            return !isNaN(num) && num >= -90 && num <= 90;
+        },
+        { message: "Широта повинна бути між -90 і 90" },
+    ),
+    countryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
+        message: "Країна є обов'язковою",
+    }),
     image: z
         .any()
         .transform((files) => (files ? Array.from(files) : []))
@@ -19,10 +36,27 @@ export const CountryCreateSchema = z.object({
         ),
 });
 
-export type CountryCreateSchemaType = z.infer<typeof CountryCreateSchema>;
+export type CityCreateSchemaType = z.infer<typeof CityCreateSchema>;
 
-export const CountryEditSchema = z.object({
+export const CityEditSchema = z.object({
     name: z.string().min(1, "Назва є обов'язковою"),
+    longitude: z.string().refine(
+        (val) => {
+            const num = parseFloat(val);
+            return !isNaN(num) && num >= -180 && num <= 180;
+        },
+        { message: "Довгота повинна бути між -180 і 180" },
+    ),
+    latitude: z.string().refine(
+        (val) => {
+            const num = parseFloat(val);
+            return !isNaN(num) && num >= -90 && num <= 90;
+        },
+        { message: "Широта повинна бути між -90 і 90" },
+    ),
+    countryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
+        message: "Країна є обов'язковою",
+    }),
     image: z
         .any()
         .transform((files) => (files ? Array.from(files) : []))
@@ -40,4 +74,4 @@ export const CountryEditSchema = z.object({
         ),
 });
 
-export type CountryEditSchemaType = z.infer<typeof CountryEditSchema>;
+export type CityEditSchemaType = z.infer<typeof CityEditSchema>;

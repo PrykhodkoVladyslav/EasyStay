@@ -66,7 +66,7 @@ export const hotelApi = createApi({
                 hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
                 hotelFormData.append("Address.Latitude", hotel.address.latitude);
                 hotelFormData.append("Address.Longitude", hotel.address.longitude);
-                hotelFormData.append("Address.CityId", hotel.address.cityId?.toString());
+                hotelFormData.append("Address.CityId", hotel.cityId?.toString());
                 hotelFormData.append("CategoryId", hotel.categoryId?.toString());
 
                 if (hotel.photos) {

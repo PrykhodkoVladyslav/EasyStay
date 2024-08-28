@@ -28,6 +28,26 @@ export const cityApi = createApi({
         //     },
         // }),
 
+        addCity: builder.mutation({
+            query: (city: { name: string; image: File }) => {
+                const cityFormData = new FormData();
+                cityFormData.append("Name", city.name);
+                cityFormData.append("Longitude", city.longitude);
+                cityFormData.append("Latitude", city.latitude);
+                cityFormData.append("CountryId", city.countryId?.toString());
+                if (city.image) {
+                    cityFormData.append("Image", city.image);
+                }
+
+                return {
+                    url: "create",
+                    method: "POST",
+                    body: cityFormData,
+                };
+            },
+            invalidatesTags: ["Сities"],
+        }),
+
         updateCity: builder.mutation({
             query: (city: City) => {
                 const cityFormData = new FormData();
@@ -36,7 +56,6 @@ export const cityApi = createApi({
                 cityFormData.append("Longitude", city.longitude);
                 cityFormData.append("Latitude", city.latitude);
                 cityFormData.append("CountryId", city.countryId?.toString());
-
                 if (city.image) {
                     cityFormData.append("Image", city.image);
                 }
@@ -63,6 +82,7 @@ export const cityApi = createApi({
 export const {
     useGetAllCitiesQuery,
     useGetCityQuery,
+    useAddCityMutation,
     useDeleteCityMutation,
     useUpdateCityMutation,
     useGetPageCitiesQuery

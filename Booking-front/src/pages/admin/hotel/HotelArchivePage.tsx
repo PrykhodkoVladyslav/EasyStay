@@ -1,39 +1,28 @@
-import { IconEdit, IconTrash, IconArchive } from "@tabler/icons-react";
+import { IconArchiveOff } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
-import { useDeleteHotelMutation, useGetAllHotelsQuery } from "services/hotel.ts";
+// import { useUnarchiveHotelMutation, useGetArchivedHotelsQuery } from "services/hotel.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
-import showToast from "utils/toastShow.ts";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {useGetAllHotelsQuery} from "services/hotel.ts";
 
-const HotelsPage: React.FC = () => {
+const ArchivedHotelsPage: React.FC = () => {
     const { data: hotelsData, isLoading, error, refetch } = useGetAllHotelsQuery();
-    const [deleteHotel] = useDeleteHotelMutation();
     const navigate = useNavigate();
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
 
-    const handleDelete = async (id: number) => {
-        if (confirm("Ви впевнені, що хочете видалити цей готель?")) {
+    const handleUnarchive = async (id: number) => {
+        if (confirm("Ви впевнені, що хочете розархівувати цей готель?")) {
             try {
-                await deleteHotel(id.toString()).unwrap();
+                await unarchiveHotel(id.toString()).unwrap();
+                toast.success("Готель розархівовано.");
                 refetch();
             } catch (err) {
-                console.error("Помилка при видаленні готелю:", err);
-                alert("Не вдалося видалити готель.");
-            }
-        }
-    };
-
-    const handleArchive = async (id: number) => {
-        if (confirm("Ви впевнені, що хочете архівувати цей готель?")) {
-            try {
-                await archiveHotel(id.toString()).unwrap();
-                showToast(`Готель архівовано.`, "success");
-                refetch();
-            } catch (err) {
-                console.error("Помилка при архівуванні готелю:", err);
-                showToast(`Готель не було архівовано.`, "error");
+                console.error("Помилка при розархівуванні готелю:", err);
+                toast.error("Не вдалося розархівувати готель.");
             }
         }
     };
@@ -41,14 +30,11 @@ const HotelsPage: React.FC = () => {
     return (
         <div className="container mx-auto mt-5">
             <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">
-                Список Готелів
+                Архівовані Готелі
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/create")} className="border">
-                    Додати новий готель
-                </Button>
-                <Button onClick={() => navigate("/admin/hotels/archive")} className="border">
-                    Архівовані готелі
+                <Button onClick={() => navigate("/admin/hotels/list")} className="border">
+                    Назад до списку Готелів
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">
@@ -59,11 +45,11 @@ const HotelsPage: React.FC = () => {
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
-                        <th className="px-6 py-3" colSpan="3"></th>
+                        <th className="px-6 py-3" colSpan="2"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {hotelsData?.filter(hotel => !hotel.isArchived).map((hotel) => (
+                    {hotelsData?.filter(hotel => hotel.isArchived).map((hotel) => (
                         <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{hotel.id}</td>
                             <td className="px-6 py-4">{hotel.name}</td>
@@ -85,32 +71,12 @@ const HotelsPage: React.FC = () => {
                             <td className="px-6 py-4">{hotel.category.name}</td>
                             <td className="px-6 py-3 text-center">
                                 <Button
-                                    onClick={() => navigate(`/admin/hotels/edit/${hotel.id}`)}
+                                    onClick={() => handleUnarchive(hotel.id)}
                                     variant="icon"
                                     size="iconmd"
-                                    title="Редагувати"
+                                    title="Розархівувати"
                                 >
-                                    <IconEdit className="text-blue-500"/>
-                                </Button>
-                            </td>
-                            <td className="px-6 py-3 text-center text-red-800">
-                                <Button
-                                    onClick={() => handleDelete(hotel.id)}
-                                    variant="icon"
-                                    size="iconmd"
-                                    title="Видалити"
-                                >
-                                    <IconTrash className="text-red-500"/>
-                                </Button>
-                            </td>
-                            <td className="px-6 py-3 text-center text-yellow-500">
-                                <Button
-                                    onClick={() => handleArchive(hotel.id)}
-                                    variant="icon"
-                                    size="iconmd"
-                                    title="Архівувати"
-                                >
-                                    <IconArchive/>
+                                    <IconArchiveOff className="text-green-500"/>
                                 </Button>
                             </td>
                         </tr>
@@ -122,4 +88,4 @@ const HotelsPage: React.FC = () => {
     );
 };
 
-export default HotelsPage;
+export default ArchivedHotelsPage;

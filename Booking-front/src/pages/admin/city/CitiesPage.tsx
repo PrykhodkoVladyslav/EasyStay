@@ -1,25 +1,25 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
-import {useDeleteCountryMutation, useGetAllCountriesQuery} from "services/country.ts";
-import {API_URL} from "utils/getEnvData.ts";
+import { useGetAllCitiesQuery, useDeleteCityMutation } from "services/city.ts";
+import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 
-const CountryPage: React.FC = () => {
-    const { data: countriesData, isLoading, error, refetch } = useGetAllCountriesQuery();
-    const [deleteCountry] = useDeleteCountryMutation();
+const CitiesPage: React.FC = () => {
+    const { data: citiesData, isLoading, error, refetch } = useGetAllCitiesQuery();
+    const [deleteCity] = useDeleteCityMutation();
     const navigate = useNavigate();
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
 
     const handleDelete = async (id: number) => {
-        if (confirm("Ви впевнені, що хочете видалити цю країну?")) {
+        if (confirm("Ви впевнені, що хочете видалити це місто?")) {
             try {
-                await deleteCountry(id).unwrap();
+                await deleteCity(id).unwrap();
                 refetch();
             } catch (err) {
-                console.error("Помилка при видаленні країни:", err);
-                alert("Не вдалося видалити країну.");
+                console.error("Помилка при видаленні міста:", err);
+                alert("Не вдалося видалити місто.");
             }
         }
     };
@@ -27,11 +27,11 @@ const CountryPage: React.FC = () => {
     return (
         <div className="container mx-auto mt-5">
             <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">
-                Список Країн
+                Список Міст
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/countries/create")}>
-                    Додати нову країну
+                <Button onClick={() => navigate("/admin/cities/create")} className="border">
+                    Додати нове Місто
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">
@@ -41,26 +41,28 @@ const CountryPage: React.FC = () => {
                         <th className="px-6 py-3">id</th>
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
+                        <th className="px-6 py-3">Країна</th>
                         <th className="px-6 py-3" colSpan="2"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {countriesData?.map((country) => (
-                        <tr key={country.id} className="bg-white border-b hover:bg-gray-50 ">
-                            <td className="px-6 py-4">{country.id}</td>
-                            <td className="px-6 py-4">{country.name}</td>
+                    {citiesData?.map((city) => (
+                        <tr key={city.id} className="bg-white border-b hover:bg-gray-50">
+                            <td className="px-6 py-4">{city.id}</td>
+                            <td className="px-6 py-4">{city.name}</td>
                             <td className="px-6 py-4">
-                                {country.image && (
+                                {city.image && (
                                     <img
-                                        src={API_URL + `/images/800_${country.image}`}
-                                        alt={country.name}
+                                        src={API_URL + `/images/800_${city.image}`}
+                                        alt={city.name}
                                         className="h-20 w-20 object-cover"
                                     />
                                 )}
                             </td>
+                            <td className="px-6 py-4">{city.country.name}</td>
                             <td className="px-6 py-3 text-center">
                                 <Button
-                                    onClick={() => navigate(`/admin/countries/edit/${country.id}`)}
+                                    onClick={() => navigate(`/admin/cities/edit/${city.id}`)}
                                     variant="icon"
                                     size="iconmd"
                                     title="Редагувати"
@@ -70,7 +72,7 @@ const CountryPage: React.FC = () => {
                             </td>
                             <td className="px-6 py-3 text-center text-red-800">
                                 <Button
-                                    onClick={() => handleDelete(country.id)}
+                                    onClick={() => handleDelete(city.id)}
                                     variant="icon"
                                     size="iconmd"
                                     title="Видалити"
@@ -87,4 +89,4 @@ const CountryPage: React.FC = () => {
     );
 }
 
-export default CountryPage;
+export default CitiesPage;

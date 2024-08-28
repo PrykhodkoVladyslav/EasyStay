@@ -14,7 +14,6 @@ import { useGetAllHotelCategoriesQuery } from "services/hotelCategories.ts";
 import showToast from "utils/toastShow.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-// import {hotelCategoriesApi} from "../services/hotelCategories";
 
 const HotelCreatePage: React.FC = () => {
     const {
@@ -28,6 +27,7 @@ const HotelCreatePage: React.FC = () => {
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const [create, { isLoading }] = useAddHotelMutation();
 
@@ -95,11 +95,7 @@ const HotelCreatePage: React.FC = () => {
                 cityId: Number(data.address.cityId),
             }).unwrap();
 
-            const cityId = data.address.cityId;
-            const cityName = citiesData?.find((c) => c.id === Number(cityId))?.name;
             showToast(`Успішно створено новий готель!`, "success");
-
-            // navigate(`/search-results?cityId=${data.address.cityId}&destination=${cityName}`);
             onReset();
         } catch (err) {
             showToast(`Помилка при створенні нового готелю!`, "error");
@@ -115,6 +111,11 @@ const HotelCreatePage: React.FC = () => {
         <div className="container mx-auto flex justify-center mt-5">
             <div className="w-full ">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Готелю</h1>
+                <div className="flex justify-end mb-4">
+                    <Button onClick={() => navigate("/admin/hotels/list")} className="border">
+                        Список Готелів
+                    </Button>
+                </div>
                 <form className="flex flex-col gap-5" onSubmit={onSubmit}>
                     <div>
                         <Label htmlFor="name">Назва:</Label>
@@ -331,7 +332,6 @@ const HotelCreatePage: React.FC = () => {
                     </div>
 
                     <div className=" flex w-full items-center justify-center gap-5">
-                        {/*<div className=" text-white flex w-full items-center justify-center gap-5">*/}
                         <Button
                             disabled={isLoading}
                             size="lg"

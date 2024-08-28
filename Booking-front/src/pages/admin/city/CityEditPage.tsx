@@ -1,29 +1,27 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { IconCirclePlus, IconCircleX } from "@tabler/icons-react";
-import ImageUpload from "components/ImageUpload.tsx";
 import { Button } from "components/ui/Button.tsx";
 import FormError from "components/ui/FormError.tsx";
 import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
-import { CountryEditSchema, CountryEditSchemaType } from "interfaces/zod/country.ts";
+import { CityEditSchema, CityEditSchemaType } from "interfaces/zod/city.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetAllCountriesQuery, useUpdateCountryMutation } from "services/country.ts";
+import { useGetCityQuery, useUpdateCityMutation } from "services/city.ts";
+import { useGetAllCountriesQuery } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
-import { zodResolver } from "@hookform/resolvers/zod";
-// import {API_URL} from "utils/getEnvData.ts";
+import ImageUpload from "components/ImageUpload.tsx";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-const CountryEditPage: React.FC = () => {
+const CityEditPage: React.FC = () => {
     const { id } = useParams();
-    const { data: countriesData, refetch } = useGetAllCountriesQuery();
-    const [updateCountry, { isLoading } ] = useUpdateCountryMutation();
+    const { data: cityData, refetch } = useGetCityQuery(Number(id));
+    const { data: countriesData } = useGetAllCountriesQuery();
+    const [updateCity, { isLoading }] = useUpdateCityMutation();
     const navigate = useNavigate();
 
-    const country = countriesData?.find(c => c.id === Number(id));
-
     const [files, setFiles] = useState<File[]>([]);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const {
@@ -32,27 +30,19 @@ const CountryEditPage: React.FC = () => {
         setValue,
         reset,
         formState: { errors },
-    } = useForm<CountryEditSchemaType>({
-        resolver: zodResolver(CountryEditSchema),
+    } = useForm<CityEditSchemaType>({
+        resolver: zodResolver(CityEditSchema),
     });
 
     useEffect(() => {
-        if (country) {
-            setValue("name", country.name);
-            setFiles([]);
-            // if (country.image) {
-            //     const imageUrl = API_URL + `/images/800_${country.image}`;
-            //     setImagePreview(imageUrl);
-            //
-            //     fetch(imageUrl)
-            //         .then((response) => response.blob())
-            //         .then((blob) => {
-            //             const file = new File([blob], `${country.image}`, { type: blob.type });
-            //             setFiles([file]);
-            //         });
-            // }
+        if (cityData) {
+            setValue("name", cityData.name || '');
+            setValue("latitude", cityData.latitude .toString().replace('.', ','));
+            setValue("longitude", cityData.longitude.toString().replace('.', ','));
+            setValue("countryId", cityData.country.id.toString() || '');
+
         }
-    }, [country, setValue]);
+    }, [cityData, setValue]);
 
     useEffect(() => {
         if (inputRef.current) {
@@ -86,18 +76,20 @@ const CountryEditPage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            await updateCountry({
+            await updateCity({
                 id: Number(id),
                 name: data.name,
+                latitude: data.latitude,
+                longitude: data.longitude,
+                countryId: data.countryId,
                 image: files[0],
             }).unwrap();
 
-            showToast(`Країну успішно оновлено!`, "success");
-
+            showToast(`Місто успішно оновлено!`, "success");
             refetch();
-            navigate("/admin/countries/list");
+            navigate("/admin/cities/list");
         } catch (err) {
-            showToast(`Помилка при оновленні країни!`, "error");
+            showToast(`Помилка при оновленні міста!`, "error");
         }
     });
 
@@ -106,15 +98,15 @@ const CountryEditPage: React.FC = () => {
         setFiles([]);
     };
 
-    if (!country) return <p>Країна не знайдена</p>;
+    if (!cityData) return <p>Місто не знайдено</p>;
 
     return (
         <div className="container mx-auto flex justify-center mt-5">
-            <div className="w-full ">
-                <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Редагування Країни</h1>
+            <div className="w-full">
+                <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Редагування Міста</h1>
                 <div className="flex justify-end mb-4">
-                    <Button onClick={() => navigate("/admin/countries/list")} className="border">
-                        Назад до списку Країн
+                    <Button onClick={() => navigate("/admin/cities/list")} className="border">
+                        Назад назад до списку Міст
                     </Button>
                 </div>
                 <form className="flex flex-col gap-5" onSubmit={onSubmit}>
@@ -132,15 +124,71 @@ const CountryEditPage: React.FC = () => {
                     </div>
 
                     <div>
+                        <Label htmlFor="latitude">Широта:</Label>
+                        <Input
+                            {...register("latitude")}
+                            id="latitude"
+                            placeholder="Широта..."
+                            className="w-full"
+                        />
+                        {errors?.latitude && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.latitude?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
+                        <Label htmlFor="longitude">Довгота:</Label>
+                        <Input
+                            {...register("longitude")}
+                            id="longitude"
+                            placeholder="Довгота..."
+                            className="w-full"
+                        />
+                        {errors?.longitude && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.longitude?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
+                        <Label htmlFor="countryId">Країна:</Label>
+                        <select
+                            {...register("countryId", {required: "Country is required"})}
+                            id="countryId"
+                            className="w-full text-md border px-3 py-1 rounded-sm"
+                        >
+                            <option disabled value="">
+                                Виберіть країну
+                            </option>
+                            {countriesData?.map((country) => (
+                                <option key={country.id} value={country.id}>
+                                    {country.name}
+                                </option>
+                            ))}
+                        </select>
+                        {errors?.countryId && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.countryId?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
                         <Label>Фото:</Label>
                         <div className="relative">
-                            {imagePreview && (
-                                <img
-                                    src={imagePreview}
-                                    alt="Current Preview"
-                                    className="h-20 w-20 object-cover mb-2"
-                                />
-                            )}
+                            {/*{imagePreview && (*/}
+                            {/*    <img*/}
+                            {/*        src={imagePreview}*/}
+                            {/*        alt="Current Preview"*/}
+                            {/*        className="h-20 w-20 object-cover mb-2"*/}
+                            {/*    />*/}
+                            {/*)}*/}
                             <ImageUpload
                                 setFiles={setFiles}
                                 remove={removeImage}
@@ -191,4 +239,4 @@ const CountryEditPage: React.FC = () => {
     );
 };
 
-export default CountryEditPage;
+export default CityEditPage;

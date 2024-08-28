@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 
-public class RegistrationValidator : AbstractValidator<GoogleSignInCommand> {
-	public RegistrationValidator() {
+public class GoogleSignInValidator : AbstractValidator<GoogleSignInCommand> {
+	public GoogleSignInValidator() {
 		RuleFor(g => g.Type)
 			.Must(t => Enum.TryParse(t, out RegistrationUserType _))
 				.WithMessage(BuildTypeError());

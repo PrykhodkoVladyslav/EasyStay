@@ -2,8 +2,12 @@
 using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
 using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using Booking.Application.MediatR.Accounts.Commands.Registration;
+using Booking.Application.MediatR.Accounts.Commands.ResetPassword;
+using Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
+using Booking.Application.MediatR.Accounts.Commands.SetPhoto;
 using Booking.Application.MediatR.Accounts.Commands.SignIn;
 using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
+using Booking.Application.MediatR.Accounts.Commands.Update;
 using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
@@ -79,5 +83,35 @@ public class AccountsController : BaseApiController {
 		var realtor = await Mediator.Send(new GetRealtorDatailsCommand { Id = id });
 
 		return Ok(realtor);
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> SendResetPasswordEmailAsync([FromBody] SendResetPasswordEmailCommand command) {
+		await Mediator.Send(command);
+
+		return NoContent();
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordCommand command) {
+		await Mediator.Send(command);
+
+		return NoContent();
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Customer,Realtor,Admin")]
+	public async Task<IActionResult> UpdateInfo([FromForm] UpdateCommand command) {
+		var token = await Mediator.Send(command);
+
+		return Ok(token);
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Customer,Realtor,Admin")]
+	public async Task<IActionResult> SetPhoto([FromForm] SetPhotoCommand command) {
+		var token = await Mediator.Send(command);
+
+		return Ok(token);
 	}
 }

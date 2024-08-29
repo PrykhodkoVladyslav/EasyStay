@@ -40,7 +40,6 @@ export const hotelApi = createApi({
                 hotelFormData.append("Address.Longitude", hotel.address.longitude);
                 hotelFormData.append("Address.CityId", hotel.cityId?.toString());
                 hotelFormData.append("CategoryId", hotel.categoryId?.toString());
-
                 if (hotel.photos) {
                     Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
                 }
@@ -57,7 +56,7 @@ export const hotelApi = createApi({
         updateHotel: builder.mutation({
             query: (hotel: Hotel) => {
                 const hotelFormData = new FormData();
-                hotelFormData.append("Id", hotel.id.toString());
+                hotelFormData.append("Id", hotel.id);
                 hotelFormData.append("Name", hotel.name);
                 hotelFormData.append("Description", hotel.description);
                 hotelFormData.append("Area", hotel.area);
@@ -68,7 +67,6 @@ export const hotelApi = createApi({
                 hotelFormData.append("Address.Longitude", hotel.address.longitude);
                 hotelFormData.append("Address.CityId", hotel.cityId?.toString());
                 hotelFormData.append("CategoryId", hotel.categoryId?.toString());
-
                 if (hotel.photos) {
                     Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
                 }
@@ -93,10 +91,10 @@ export const hotelApi = createApi({
 });
 
 export const {
-    useAddHotelMutation,
+    useGetHotelQuery,
     useGetAllHotelsQuery,
+    useAddHotelMutation,
     useUpdateHotelMutation,
     useDeleteHotelMutation,
-    useGetHotelQuery,
     useGetPageHotelsQuery,
 } = hotelApi;

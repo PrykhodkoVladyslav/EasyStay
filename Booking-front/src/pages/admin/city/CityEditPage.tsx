@@ -19,10 +19,10 @@ const CityEditPage: React.FC = () => {
     const { data: cityData, refetch } = useGetCityQuery(Number(id));
     const { data: countriesData } = useGetAllCountriesQuery();
     const [updateCity, { isLoading }] = useUpdateCityMutation();
-    const navigate = useNavigate();
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const {
         register,

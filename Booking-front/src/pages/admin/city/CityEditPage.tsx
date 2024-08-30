@@ -40,7 +40,7 @@ const CityEditPage: React.FC = () => {
             setValue("latitude", cityData.latitude .toString().replace('.', ','));
             setValue("longitude", cityData.longitude.toString().replace('.', ','));
             setValue("countryId", cityData.country.id.toString() || '');
-
+            // setFiles([])
         }
     }, [cityData, setValue]);
 

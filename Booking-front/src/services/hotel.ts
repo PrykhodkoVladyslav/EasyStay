@@ -11,7 +11,7 @@ export const hotelApi = createApi({
     tagTypes: ["Hotels"],
 
     endpoints: (builder) => ({
-        getHotel: builder.query<Hotel, string>({
+        getHotel: builder.query<Hotel[], string>({
             query: (id) => `getById/${id}`,
         }),
 
@@ -81,7 +81,7 @@ export const hotelApi = createApi({
         }),
 
         deleteHotel: builder.mutation({
-            query: (id: string) => ({
+            query: (id: number) => ({
                 url: `delete/${id}`,
                 method: "DELETE",
             }),

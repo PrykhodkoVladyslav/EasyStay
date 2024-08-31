@@ -7,6 +7,7 @@ import showToast from "utils/toastShow.ts";
 
 const HotelsPage: React.FC = () => {
     const { data: hotelsData, isLoading, error, refetch } = useGetAllHotelsQuery();
+    const { data: hotelsData, isLoading, error, refetch } = useGetPageHotelsQuery({ RealtorId: realtorId });
     const [deleteHotel] = useDeleteHotelMutation();
     const navigate = useNavigate();
 

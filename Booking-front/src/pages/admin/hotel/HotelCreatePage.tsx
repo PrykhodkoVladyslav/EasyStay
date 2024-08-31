@@ -108,7 +108,7 @@ const HotelCreatePage: React.FC = () => {
     };
 
     return (
-        <div className="container mx-auto flex justify-center mt-5">
+        <div className="container mx-auto flex justify-center mt-5 max-w-4xl mx-auto">
             <div className="w-full ">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Готелю</h1>
                 <div className="flex justify-end mb-4">

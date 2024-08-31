@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import { Hotel } from "interfaces/hotel";
-import { ILocation, User, UserState } from "interfaces/user";
+import { /*ILocation,*/ User, UserState } from "interfaces/user";
 import { jwtParser } from "utils/jwtParser.ts";
 
 const initialState: UserState = {

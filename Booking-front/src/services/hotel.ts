@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { CreateHotel, Hotel } from "interfaces/hotel";
+import { /*CreateHotel,*/ Hotel } from "interfaces/hotel";
 // import { GetHotelPageRequest } from "interfaces/hotel";
 // import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
@@ -20,6 +20,11 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
+        getRealtorHotelsPage: builder.query<Hotel[], { RealtorId?: string }>({
+            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
+            providesTags: ["Hotels"],
+        }),
+
         // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
         //     query: (params) => {
         //         const queryString = createQueryString(params as Record<string, any>);
@@ -28,7 +33,7 @@ export const hotelApi = createApi({
         // }),
 
         addHotel: builder.mutation({
-            query: (hotel: CreateHotel) => {
+            query: (hotel) => {
                 const hotelFormData = new FormData();
                 hotelFormData.append("Name", hotel.name);
                 hotelFormData.append("Description", hotel.description);
@@ -96,5 +101,5 @@ export const {
     useAddHotelMutation,
     useUpdateHotelMutation,
     useDeleteHotelMutation,
-    useGetPageHotelsQuery,
+    usegetRealtorHotelsPageQuery,
 } = hotelApi;

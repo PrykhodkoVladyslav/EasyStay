@@ -18,9 +18,9 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 const HotelEditPage: React.FC = () => {
     const { id } = useParams();
     const { data: hotelData, refetch } = useGetHotelQuery(Number(id));
-    const [updateHotel, { isLoading }] = useUpdateHotelMutation();
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
+    const [updateHotel, { isLoading }] = useUpdateHotelMutation();
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -40,15 +40,15 @@ const HotelEditPage: React.FC = () => {
         if (hotelData) {
             setValue("name", hotelData.name || '');
             setValue("description", hotelData.description || '');
-            setValue("area", hotelData.area?.toString().replace('.', ',') || '');
-            setValue("numberOfRooms", String(hotelData.numberOfRooms || ''));
+            setValue("area", hotelData.area.toString().replace('.', ','));
+            setValue("numberOfRooms", hotelData.numberOfRooms.toString() || '');
             setValue("address.street", hotelData.address.street || '');
             setValue("address.houseNumber", hotelData.address.houseNumber || '');
-            setValue("address.cityId", String(hotelData.address.city?.id || ''));
-            setValue("address.latitude", hotelData.address.latitude?.toString().replace('.', ',') || '');
-            setValue("address.longitude", hotelData.address.longitude?.toString().replace('.', ',') || '');
-            setValue("categoryId", String(hotelData.category?.id || ''));
-            setFiles([]); // Optionally set initial files if there's an existing image
+            setValue("address.cityId", hotelData.address.city.id.toString() || '');
+            setValue("address.latitude", hotelData.address.latitude.toString().replace('.', ','));
+            setValue("address.longitude", hotelData.address.longitude.toString().replace('.', ','));
+            setValue("categoryId", hotelData.category.id.toString() || '');
+            // setFiles([])
         }
     }, [hotelData, setValue]);
 
@@ -91,14 +91,27 @@ const HotelEditPage: React.FC = () => {
     const onSubmit = handleSubmit(async (data) => {
         try {
             console.log("Data: ", data);
+            console.log(id);
             await updateHotel({
-                ...data,
-                photos: data.photos as File[],
+                id: Number(id),
+                name: data.name,
+                description: data.description,
+                area: data.area,
+                numberOfRooms: Number(data.numberOfRooms),
+                address: {
+                    street: data.address.street,
+                    houseNumber: data.address.houseNumber,
+                    latitude: data.address.latitude,
+                    longitude: data.address.longitude,
+                },
                 cityId: Number(data.address.cityId),
+                categoryId: Number(data.categoryId),
+                photos: data.photos as File[],
             }).unwrap();
 
             showToast(`Готель успішно оновлено!`, "success");
             refetch();
+            navigate("/admin/hotels/list");
         } catch (err) {
             showToast(`Помилка при оновленні готелю!`, "error");
         }
@@ -112,7 +125,7 @@ const HotelEditPage: React.FC = () => {
     if (!hotelData) return <p>Готель не знайдено</p>;
 
     return (
-        <div className="container mx-auto flex justify-center mt-5">
+        <div className="container mx-auto flex justify-center mt-5 max-w-4xl mx-auto">
             <div className="w-full ">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Редагування Готелю</h1>
                 <div className="flex justify-end mb-4">
@@ -250,11 +263,11 @@ const HotelEditPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="cityId">Місто:</Label>
+                        <Label htmlFor="address.cityId">Місто:</Label>
 
                         <select
                             {...register("address.cityId", {required: "City is required"})}
-                            id="cityId"
+                            id="address.cityId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm"
                         >
@@ -276,11 +289,11 @@ const HotelEditPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="latitude">Широта:</Label>
+                        <Label htmlFor="address.latitude">Широта:</Label>
 
                         <Input
                             {...register("address.latitude")}
-                            id="latitude"
+                            id="address.latitude"
                             placeholder="Широта..."
                             className="w-full"
                         />
@@ -293,11 +306,11 @@ const HotelEditPage: React.FC = () => {
                     </div>
 
                     <div>
-                        <Label htmlFor="longitude">Довгота:</Label>
+                        <Label htmlFor="address.longitude">Довгота:</Label>
 
                         <Input
                             {...register("address.longitude")}
-                            id="longitude"
+                            id="address.longitude"
                             placeholder="Довгота..."
                             className="w-full"
                         />

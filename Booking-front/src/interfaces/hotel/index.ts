@@ -29,17 +29,17 @@ export interface Realtor {
     id: number;
 }
 
-export interface HotelAddressCity {
-    id?: number;
-    name?: string;
-    longitude?: number;
-    latitude?: number;
-    minLongitude?: number;
-    maxLongitude?: number;
-    minLatitude?: number;
-    maxLatitude?: number;
-    countryId?: number;
-}
+// export interface HotelAddressCity {
+//     id?: number;
+//     name?: string;
+//     longitude?: number;
+//     latitude?: number;
+//     minLongitude?: number;
+//     maxLongitude?: number;
+//     minLatitude?: number;
+//     maxLatitude?: number;
+//     countryId?: number;
+// }
 
 // export interface HotelAddress {
 //     id?: number;
@@ -61,11 +61,11 @@ export interface HotelAddressCity {
 //     address?: HotelAddress;
 // }
 //
-export interface CreateHotel {
-    name: string;
-    cityId: number;
-    categoryId: string;
-    description: string;
-    address: HotelAddress;
-    photos: File[];
-}
+// export interface CreateHotel {
+//     name: string;
+//     cityId: number;
+//     categoryId: string;
+//     description: string;
+//     address: HotelAddress;
+//     photos: File[];
+// }

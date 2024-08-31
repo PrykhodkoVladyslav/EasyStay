@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { Country } from "interfaces/Country";
 // import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
+import {City} from "interfaces/city";
 // import { createQueryString } from "utils/createQueryString.ts";
 
 export const countryApi = createApi({
@@ -11,6 +12,11 @@ export const countryApi = createApi({
     tagTypes: ["Countries"],
 
     endpoints: (builder) => ({
+        getCountry: builder.query<Country[], string>({
+            query: (id) => `getById/${id}`,
+            providesTags: ["Countries"],
+        }),
+
         getAllCountries: builder.query<Country[], void>({
             query: () => "getAll",
             providesTags: ["Countries"],
@@ -69,10 +75,10 @@ export const countryApi = createApi({
 });
 
 export const {
+    useGetCountryQuery,
+    useGetAllCountriesQuery,
     useAddCountryMutation,
     useUpdateCountryMutation,
-    useGetAllCountriesQuery,
     useDeleteCountryMutation,
-    useGetCountryQuery,
     useGetPageCountriesQuery
 } = countryApi;

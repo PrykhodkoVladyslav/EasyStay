@@ -3,7 +3,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { City } from "interfaces/city";
 // import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import {Hotel} from "interfaces/hotel";
 // import { createQueryString } from "utils/createQueryString.ts";
 
 export const cityApi = createApi({
@@ -12,13 +11,13 @@ export const cityApi = createApi({
     tagTypes: ["Cities"],
 
     endpoints: (builder) => ({
+        getCity: builder.query<City[], string>({
+            query: (id) => `getById/${id}`,
+        }),
+
         getAllCities: builder.query<City[], void>({
             query: () => "getAll",
             providesTags: ["Cities"],
-        }),
-
-        getCity: builder.query<City[], string>({
-            query: (id) => `getById/${id}`,
         }),
 
         // getPageCities: builder.query<GetPageResponse<City>, GetCityPageRequest>({
@@ -80,10 +79,10 @@ export const cityApi = createApi({
 });
 
 export const {
-    useGetAllCitiesQuery,
     useGetCityQuery,
+    useGetAllCitiesQuery,
     useAddCityMutation,
-    useDeleteCityMutation,
     useUpdateCityMutation,
+    useDeleteCityMutation,
     useGetPageCitiesQuery
 } = cityApi;

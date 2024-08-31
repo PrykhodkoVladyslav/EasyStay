@@ -25,7 +25,7 @@ const CountriesPage: React.FC = () => {
     };
 
     return (
-        <div className="container mx-auto mt-5">
+        <div className="container mx-auto mt-5 max-w-4xl mx-auto">
             <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">
                 Список Країн
             </h1>
@@ -38,7 +38,7 @@ const CountriesPage: React.FC = () => {
                 <table className="text-sm font-bold min-w-full bg-white border text-left">
                     <thead className="text-xs uppercase bg-slate-200">
                     <tr>
-                        <th className="px-6 py-3">id</th>
+                        {/*<th className="px-6 py-3">id</th>*/}
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3" colSpan="2"></th>
@@ -47,7 +47,7 @@ const CountriesPage: React.FC = () => {
                     <tbody>
                     {countriesData?.map((country) => (
                         <tr key={country.id} className="bg-white border-b hover:bg-gray-50 ">
-                            <td className="px-6 py-4">{country.id}</td>
+                            {/*<td className="px-6 py-4">{country.id}</td>*/}
                             <td className="px-6 py-4">{country.name}</td>
                             <td className="px-6 py-4">
                                 {country.image && (

@@ -19,10 +19,10 @@ const CityEditPage: React.FC = () => {
     const { data: cityData, refetch } = useGetCityQuery(Number(id));
     const { data: countriesData } = useGetAllCountriesQuery();
     const [updateCity, { isLoading }] = useUpdateCityMutation();
-    const navigate = useNavigate();
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -40,7 +40,7 @@ const CityEditPage: React.FC = () => {
             setValue("latitude", cityData.latitude .toString().replace('.', ','));
             setValue("longitude", cityData.longitude.toString().replace('.', ','));
             setValue("countryId", cityData.country.id.toString() || '');
-
+            // setFiles([])
         }
     }, [cityData, setValue]);
 
@@ -101,7 +101,7 @@ const CityEditPage: React.FC = () => {
     if (!cityData) return <p>Місто не знайдено</p>;
 
     return (
-        <div className="container mx-auto flex justify-center mt-5">
+        <div className="container mx-auto flex justify-center mt-5 max-w-4xl mx-auto">
             <div className="w-full">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Редагування Міста</h1>
                 <div className="flex justify-end mb-4">

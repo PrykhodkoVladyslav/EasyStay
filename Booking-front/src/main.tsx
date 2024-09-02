@@ -5,13 +5,11 @@ import { store } from "store/index.ts";
 import { ToastContainer } from "react-toastify";
 import ThemeProvider from "utils/contexts/ThemeContext.tsx";
 
-import App from './App.tsx'
-import './index.css'
-// import { GoogleOAuthProvider } from "@react-oauth/google";
+import App from "./App.tsx";
+import "./css/index.css";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
     <>
-        {/*<GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>*/}
         <Provider store={store}>
             <BrowserRouter>
                 <ThemeProvider>
@@ -20,6 +18,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </ThemeProvider>
             </BrowserRouter>
         </Provider>
-        {/*</GoogleOAuthProvider>*/}
     </>,
-)
+);

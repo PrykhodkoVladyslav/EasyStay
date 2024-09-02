@@ -1,9 +1,9 @@
 import ProtectedRoute from "components/guards/ProtectedRoute.tsx";
-import AdminAuthLayout from "components/layouts/AdminAuthLayout.tsx";
-import {Route, Routes} from "react-router-dom";
+import AuthLayout from "components/layouts/AuthLayout.tsx";
+import { Route, Routes } from "react-router-dom";
 import Layout from "components/layouts/Layout.tsx";
 
-import AdminLoginPage from "pages/AdminLoginPage.tsx";
+import LoginPage from "pages/LoginPage.tsx";
 
 import AdminLayout from "components/layouts/AdminLayout";
 
@@ -50,18 +50,18 @@ function App() {
                         </Route>
 
                         <Route path="users/list" element={<UsersListPage />} />
-                        <Route path="createAdmin" element={<AdminCreatePage />}/>
+                        <Route path="createAdmin" element={<AdminCreatePage />} />
 
                     </Route>
 
                 </Route>
 
-                <Route path="adminAuth" element={<AdminAuthLayout />}>
-                    <Route path="login" element={<AdminLoginPage />}/>
+                <Route path="auth" element={<AuthLayout />}>
+                    <Route path="login" element={<LoginPage />} />
                 </Route>
             </Route>
         </Routes>
-    )
+    );
 }
 
 export default App;

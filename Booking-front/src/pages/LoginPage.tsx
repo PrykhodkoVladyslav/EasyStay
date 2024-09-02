@@ -1,9 +1,8 @@
-// import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { Button } from "components/ui/Button.tsx";
 import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useGoogleLoginMutation, useLoginMutation } from "services/user.ts";
+import { useLoginMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
@@ -11,7 +10,7 @@ import showToast from "utils/toastShow.ts";
 
 import React from "react";
 
-const AdminLoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -134,4 +133,4 @@ const AdminLoginPage: React.FC = () => {
     );
 };
 
-export default AdminLoginPage;
+export default LoginPage;

@@ -8,10 +8,10 @@ const AuthLayout = () => {
             <div className="half-width flex justify-center">
                 <div className="half-width">
                     <div className="auth-header-block">
-                        <h1>ToDo Logo</h1>
+                        <img src={getPublicResourceUrl("logo/logo_EasyStay.svg")} alt="logo" className="auth-logo" />
                         <h2 className="auth-header">Відкривай цікаві місця з нами</h2>
                     </div>
-                    <VerticalPad heightPx={22} />
+                    <VerticalPad heightPx={38} />
                     <div>
                         <Outlet />
                     </div>

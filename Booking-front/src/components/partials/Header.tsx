@@ -55,10 +55,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                         {/*    </button>*/}
                         {/*    <SearchModal isOpen={searchModalOpen} close={() => setSearchModalOpen(false)} />*/}
                         {/*</div>*/}
-
-                        {/*<ThemeToggle />*/}
-                        {/*<hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />*/}
-
+                        
                         {/*{user ? (*/}
                         {/*    <UserCard user={user} />*/}
                         {/*) : (*/}

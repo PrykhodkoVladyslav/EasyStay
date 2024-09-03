@@ -1,5 +1,4 @@
 import { Button } from "components/ui/Button.tsx";
-import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "services/user.ts";
@@ -10,6 +9,7 @@ import showToast from "utils/toastShow.ts";
 
 import React from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
+import VerticalPad from "components/ui/VerticalPad.tsx";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -74,20 +74,17 @@ const LoginPage: React.FC = () => {
                 isError={true}
                 errorMessage={"Введіть свою електронну пошту"} />
 
-            <div>
-                <label htmlFor="password" className="mb-1 text-sm block font-semibold">
-                    Пароль
-                </label>
+            <VerticalPad heightPx={4} />
 
-                <Input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                    minLength={8}
-                    id="password"
-                    placeholder="Введіть свій пароль"
-                />
-            </div>
+            <TextInput
+                id="password"
+                title="Пароль"
+                type="password"
+                value={password}
+                placeholder="Введіть пароль"
+                onChange={(e) => setPassword(e.target.value)}
+                isError={true}
+                errorMessage={""} />
 
             <Button
                 disabled={isLoadingEmailLogin}

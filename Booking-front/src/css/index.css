@@ -102,19 +102,35 @@ svg.star-svg {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: var(--active-button-text);
 }
 
 .text-input-input-default {
     background-color: var(--text-input-input-color-default);
     border: 1px solid var(--text-input-input-color-default-border);
+    color: var(--active-button-text);
 }
 
 .text-input-input-error {
     background-color: var(--text-input-input-color-error);
     border: 1px solid var(--text-input-input-color-error-border);
 
+    color: var(--active-button-text);
+}
+
+.text-input-input-password-error {
+    background-color: var(--text-input-input-color-error);
+    border: 1px solid var(--text-input-input-color-error-border);
+
+    color: var(--active-button-text);
+    /*color: black;*/
+}
+
+.cross-padding {
     padding-left: 32px;
+}
+
+.eye-padding {
+    padding-right: 52px;
 }
 
 .text-input-input-container {
@@ -122,10 +138,19 @@ svg.star-svg {
 }
 
 .text-input-error-icon {
+    position: absolute;
     width: 16px;
     height: 16px;
-    position: absolute;
     left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.text-input-password-icon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: 16px;
     top: 50%;
     transform: translateY(-50%);
 }

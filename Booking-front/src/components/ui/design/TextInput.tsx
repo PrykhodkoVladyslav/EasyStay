@@ -7,13 +7,22 @@ const TextInput = (props: {
     title: string,
     type: string,
     value: string,
-    placeholder: string,
+    placeholder?: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    isError: boolean,
-    errorMessage: string
+    isError?: boolean,
+    errorMessage?: string,
+    showCross?: boolean
 }) => {
-    const inputClass = props.isError ? "text-input-input-error" : "text-input-input-default";
-    const inputClassNames = `base-text-input-input ${inputClass}`;
+    const [showPassword, setShowPassword] = React.useState(false);
+    const showEye = props.type === "password";
+    const inputClass = props.isError
+        ? (showEye
+            ? "text-input-input-password-error"
+            : "text-input-input-error")
+        : "text-input-input-default";
+    const inputClassNames = `base-text-input-input ${inputClass} ${props.showCross ? "cross-padding" : ""} ${showEye ? "eye-padding" : ""}`;
+
+    const inputType = showPassword ? "text" : props.type;
 
     return (
         <div className="text-input-container">
@@ -22,13 +31,17 @@ const TextInput = (props: {
             </label>
 
             <div className="text-input-input-container">
-                {props.isError && <img src={getPublicResourceUrl("x-circle.svg")} alt="error"
-                                       className="text-input-error-icon" />}
+                {props.isError && props.showCross && props.type !== "password" &&
+                    <img src={getPublicResourceUrl("x-circle.svg")} alt="error"
+                         className="text-input-error-icon" />}
+
+                {showEye && <img src={getPublicResourceUrl(showPassword ? "hide.svg" : "show.svg")} alt="password"
+                                 className="text-input-password-icon" onClick={() => setShowPassword(!showPassword)} />}
 
                 <Input
                     className={inputClassNames}
                     id={props.id}
-                    type={props.type}
+                    type={inputType}
                     value={props.value}
                     onChange={props.onChange}
                     placeholder={props.placeholder}

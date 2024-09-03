@@ -9,6 +9,7 @@ import { jwtParser } from "utils/jwtParser.ts";
 import showToast from "utils/toastShow.ts";
 
 import React from "react";
+import TextInput from "components/ui/design/TextInput.tsx";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -18,7 +19,6 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    // const [googleLogin, { isLoading: isLoadingGoogleLogin }] = useGoogleLoginMutation();
     const [emailLogin, { isLoading: isLoadingEmailLogin }] = useLoginMutation();
 
     const login = async (e: React.FormEvent) => {
@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
 
         const res = await emailLogin({ email, password });
 
-        if (res && "data" in res && res.data) {
+        if (res && res.data) {
             setUser(res.data.token);
             showToast(`Авторизація успішна!`, "success");
             console.log(`Авторизація успішна!`, "success");
@@ -62,74 +62,41 @@ const LoginPage: React.FC = () => {
         navigate(from);
     };
 
-    const authError = () => {
-        console.log("Error login. Check your Gmail account!");
-    };
-
     return (
-        <div className="flex flex-col items-center justify-center ">
-            <div className="bg-white p-8 rounded w-full max-w-md font-main">
-                {/*<h1 className="text-2xl font-main mb-6 font-extrabold ">Увійдіть або створіть акаунт</h1>*/}
+        <form className="flex flex-col" onSubmit={login}>
+            <TextInput
+                id="email"
+                title="Пошта"
+                type="email"
+                value={email}
+                placeholder="Введіть свою електронну пошту"
+                onChange={(e) => setEmail(e.target.value)}
+                isError={true}
+                errorMessage={"Введіть свою електронну пошту"} />
 
-                <form className="flex flex-col gap-4" onSubmit={login}>
-                    <div>
-                        <label htmlFor="email" className="mb-1 text-sm block font-semibold">
-                            Електронна пошта
-                        </label>
+            <div>
+                <label htmlFor="password" className="mb-1 text-sm block font-semibold">
+                    Пароль
+                </label>
 
-                        <Input
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            id={"email"}
-                            type="email"
-                            placeholder="Введіть свою електронну адресу"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="password" className="mb-1 text-sm block font-semibold">
-                            Пароль
-                        </label>
-
-                        <Input
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            minLength={8}
-                            id="password"
-                            placeholder="Введіть свій пароль"
-                        />
-                    </div>
-
-                    <Button
-                        disabled={/*isLoadingGoogleLogin ||*/ isLoadingEmailLogin}
-                        type="submit"
-                        variant="primary"
-                        className="w-full mb-6 disabled:opacity-50"
-                    >
-                        Ввійти
-                    </Button>
-                </form>
-
-                {/*<div className="flex items-center mb-6">*/}
-                {/*    <div className="flex-grow border-t text-gray/20"></div>*/}
-                {/*    <span className="mx-4 text-sm">або вибрати один із цих варіантів</span>*/}
-                {/*    <div className="flex-grow border-t text-gray/20"></div>*/}
-                {/*</div>*/}
-
-                {/*<div className="flex justify-center items-center">*/}
-                {/*    <GoogleLogin*/}
-                {/*        useOneTap*/}
-                {/*        locale="uk"*/}
-                {/*        size="large"*/}
-                {/*        onSuccess={authSuccess}*/}
-                {/*        onError={authError}*/}
-                {/*    />*/}
-                {/*</div>*/}
-
-                {/*<div className="border-t text-gray/20 mt-8"></div>*/}
+                <Input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    minLength={8}
+                    id="password"
+                    placeholder="Введіть свій пароль"
+                />
             </div>
-        </div>
+
+            <Button
+                disabled={isLoadingEmailLogin}
+                type="submit"
+                className="w-full mb-6 disabled:opacity-50"
+            >
+                Ввійти
+            </Button>
+        </form>
     );
 };
 

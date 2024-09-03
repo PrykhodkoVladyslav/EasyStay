@@ -6,6 +6,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --active-button-text: #515151;
+    --text-input-input-color-default: #F7F7FD;
+    --text-input-input-color-default-border: #F7F7FD;
+    --text-input-input-color-error: #FFF5F5;
+    --text-input-input-color-error-border: #FFD8D8;
+}
+
 @layer base {
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
@@ -25,7 +33,6 @@ svg.star-svg {
 
 .auth-layout {
     display: flex;
-    height: 100vh;
 }
 
 .half-width {
@@ -38,6 +45,7 @@ svg.star-svg {
     padding-bottom: 26px;
     display: flex;
     justify-content: left;
+    height: 100vh;
 }
 
 .auth-image {
@@ -65,4 +73,59 @@ svg.star-svg {
 .auth-logo {
     width: 183px;
     height: 74px;
+}
+
+.text-input-container {
+
+}
+
+.text-input-title {
+    font-family: "Nunito", system-ui;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.text-input-error {
+    font-family: "Nunito", system-ui;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--active-button-text);
+}
+
+.base-text-input-input {
+    padding: 16px 20px;
+    border-radius: 30px;
+
+    font-family: "Nunito", system-ui;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--active-button-text);
+}
+
+.text-input-input-default {
+    background-color: var(--text-input-input-color-default);
+    border: 1px solid var(--text-input-input-color-default-border);
+}
+
+.text-input-input-error {
+    background-color: var(--text-input-input-color-error);
+    border: 1px solid var(--text-input-input-color-error-border);
+
+    padding-left: 32px;
+}
+
+.text-input-input-container {
+    position: relative;
+}
+
+.text-input-error-icon {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
 }

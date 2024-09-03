@@ -5,11 +5,11 @@ import { useLoginMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
-import showToast from "utils/toastShow.ts";
 
 import React from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import getEmptySymbol from "utils/emptySymbol.ts";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -19,35 +19,26 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
+    const [error, setError] = React.useState(getEmptySymbol());
+
     const [emailLogin, { isLoading: isLoadingEmailLogin }] = useLoginMutation();
 
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await emailLogin({ email, password });
+        const response = await emailLogin({ email, password });
 
-        if (res && res.data) {
-            setUser(res.data.token);
-            showToast(`Авторизація успішна!`, "success");
-            console.log(`Авторизація успішна!`, "success");
-            console.log(res.data.token);
-        } else {
-            showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
+        if (response.error) {
+            if ("status" in response.error && response.error.status === 400) {
+                setError("Не вірна пошта або пароль");
+            } else {
+                setError("Невідома помилка");
+            }
+        } else if (response && response.data) {
+            setUser(response.data.token);
+            setError(getEmptySymbol());
         }
     };
-
-    // const authSuccess = async (credentialResponse: CredentialResponse) => {
-    //     const res = await googleLogin({
-    //         credential: credentialResponse.credential || "",
-    //     });
-    //
-    //     if (res && "data" in res && res.data) {
-    //         setUser(res.data.token);
-    //         showToast(`Авторизація успішна!`, "success");
-    //     } else {
-    //         showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
-    //     }
-    // };
 
     const setUser = (token: string) => {
         localStorage.setItem("authToken", token);
@@ -71,8 +62,8 @@ const LoginPage: React.FC = () => {
                 value={email}
                 placeholder="Введіть свою електронну пошту"
                 onChange={(e) => setEmail(e.target.value)}
-                isError={true}
-                errorMessage={"Введіть свою електронну пошту"} />
+                isError={!!error}
+                errorMessage={""} />
 
             <VerticalPad heightPx={4} />
 
@@ -83,8 +74,10 @@ const LoginPage: React.FC = () => {
                 value={password}
                 placeholder="Введіть пароль"
                 onChange={(e) => setPassword(e.target.value)}
-                isError={true}
+                isError={!!error}
                 errorMessage={""} />
+
+            <p className="login-error-message">{error}</p>
 
             <Button
                 disabled={isLoadingEmailLogin}

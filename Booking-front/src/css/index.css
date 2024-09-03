@@ -12,6 +12,7 @@
     --text-input-input-color-default-border: #F7F7FD;
     --text-input-input-color-error: #FFF5F5;
     --text-input-input-color-error-border: #FFD8D8;
+    --red-error: #FF0000;
 }
 
 @layer base {
@@ -153,4 +154,13 @@ svg.star-svg {
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.login-error-message {
+    color: var(--red-error);
+    font-family: "Nunito", system-ui;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
 }

@@ -1,6 +1,7 @@
 import { Input } from "components/ui/Input.tsx";
 import React from "react";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import getEmptySymbol from "utils/emptySymbol.ts";
 
 const TextInput = (props: {
     id: string,
@@ -27,7 +28,7 @@ const TextInput = (props: {
     return (
         <div className="text-input-container">
             <label htmlFor={props.id} className="text-input-title">
-                {props.title || "\u00A0"}
+                {props.title || getEmptySymbol()}
             </label>
 
             <div className="text-input-input-container">
@@ -49,7 +50,7 @@ const TextInput = (props: {
             </div>
 
             <label htmlFor={props.id} className="text-input-error">
-                {props.errorMessage || "\u00A0"}
+                {props.errorMessage || getEmptySymbol()}
             </label>
         </div>
     );

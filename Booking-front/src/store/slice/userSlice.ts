@@ -35,8 +35,8 @@ const userSlice = createSlice({
 
 export const getUser = (state: { user: UserState }) => state.user.user;
 export const getToken = (state: { user: UserState }) => state.user.token;
-// export const favoriteHotels = (state: { user: UserState }) => state.user.favoriteHotels;
-// export const getUserLocation = (state: { user: UserState }) => state.user.location;
+// export const favoriteHotels = (state: { customer: UserState }) => state.customer.favoriteHotels;
+// export const getUserLocation = (state: { customer: UserState }) => state.customer.location;
 
 // export const { setLocation, setCredentials, logOut, setFavorite } = userSlice.actions;
 export const { setCredentials, logOut } = userSlice.actions;

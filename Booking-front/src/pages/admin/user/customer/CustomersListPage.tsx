@@ -1,18 +1,14 @@
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
 import { useGetAllCustomersQuery, useDeleteUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
-import { useNavigate } from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "store/index.ts";
 import {getToken} from "store/slice/userSlice.ts";
 
-// Доступ тільки для Адміна
-
 const CustomersListPage: React.FC = () => {
-    const { data: usersData, isLoading, error, refetch } = useGetAllCustomersQuery();
+    const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();
     const [deleteUser] = useDeleteUserMutation();
-    const navigate = useNavigate();
 
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
@@ -39,7 +35,7 @@ const CustomersListPage: React.FC = () => {
         }
     };
 
-    const users = usersData?.data || [];
+    const customers = customersData?.data || [];
 
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
@@ -58,7 +54,7 @@ const CustomersListPage: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {users?.map((user) => (
+                    {customers?.map((user) => (
                         <tr key={user.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{user.firstName}</td>
                             <td className="px-6 py-4">{user.lastName}</td>

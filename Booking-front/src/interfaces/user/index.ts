@@ -1,7 +1,7 @@
 import { Hotel } from "interfaces/hotel";
 
 export interface User {
-    id: string;
+    id: number;
     email: string;
     firstName: string;
     lastName: string;
@@ -24,11 +24,16 @@ export interface LoginResponse {
     token: string;
 }
 
-export interface RegisterUser {
+export interface SignIn {
+    token: string;
+}
+
+export interface Registration {
     firstName: string;
     lastName: string;
     image: File | null;
     email: string;
     username: string;
     password: string;
+    type: string;
 }

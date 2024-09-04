@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import {LoginResponse, RegisterUser, User} from "interfaces/user";
+import {LoginResponse, Registration, SignIn, User} from "interfaces/user";
 import { createBaseQuery } from "utils/apiUtils.ts";
 import {Hotel} from "interfaces/hotel";
 
@@ -19,7 +19,21 @@ export const userApi = createApi({
             providesTags: ["User"],
         }),
 
-        login: builder.mutation<LoginResponse, { email: string; password: string }>({
+        // createAdmin: builder.mutation<LoginResponse, { email: string; password: string }>({
+        //     query: (data) => {
+        //         const formData = new FormData();
+        //         formData.append("email", data.email);
+        //         formData.append("password", data.password);
+        //         formData.append("role", "admin");
+        //         return {
+        //             url: "Registration",
+        //             method: "POST",
+        //             body: formData,
+        //         };
+        //     },
+        // }),
+
+        signIn: builder.mutation<LoginResponse, SignIn>({
             query: (data) => {
                 const formData = new FormData();
                 formData.append("email", data.email);
@@ -33,15 +47,17 @@ export const userApi = createApi({
             },
         }),
 
-        register: builder.mutation<LoginResponse, RegisterUser>({
+        registration: builder.mutation<LoginResponse, Registration>({
             query: (data) => {
                 const formData = new FormData();
                 formData.append("FirstName", data.firstName);
                 formData.append("LastName", data.lastName);
-                if (data.image) formData.append("Image", data.image);
-                formData.append("Email", data.email);
+                if (data.image && data.image.length > 0) {
+                    formData.append("Image", data.image[0]);
+                }                formData.append("Email", data.email);
                 formData.append("UserName", data.username);
                 formData.append("Password", data.password);
+                formData.append("Type", data.type);
 
                 return {
                     url: "Registration",
@@ -77,8 +93,8 @@ export const userApi = createApi({
 export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
-    useLoginMutation,
-    useRegisterMutation,
+    useSignInMutation,
+    useRegistrationMutation,
     useGoogleLoginMutation,
     useDeleteUserMutation,
 } = userApi;

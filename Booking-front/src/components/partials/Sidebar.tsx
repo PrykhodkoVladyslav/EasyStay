@@ -226,7 +226,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 links={[
                                                     { to: "users/customers/list", label: "Клієнти" },
                                                     { to: "users/realtors/list", label: "Ріелтори" },
-                                                    { to: "createAdmin", label: "Створити Адміна" }
+                                                    { to: "users/createAdmin", label: "Створити Адміна" }
                                                 ]}
                                             />
                                         </>
@@ -265,6 +265,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 <SidebarChevronDown open={open} />
                                             </SidebarLinkGroupTitle>
                                             <SidebarLinkGroupMenu open={open} links={[{ to: "/adminAuth/login", label: "Вхід" }]} />
+                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/register", label: "Реєстрація" }]} />
                                         </>
                                     )}
                                 </SidebarLinkGroup>

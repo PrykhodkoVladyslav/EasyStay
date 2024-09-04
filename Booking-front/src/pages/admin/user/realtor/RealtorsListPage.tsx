@@ -1,18 +1,14 @@
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
 import { useGetAllRealtorsQuery, useDeleteUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
-import { useNavigate } from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "store/index.ts";
 import {getToken} from "store/slice/userSlice.ts";
 
-// Доступ тільки для Адміна
-
 const RealtorsListPage: React.FC = () => {
     const { data: realtorsData, isLoading, error, refetch } = useGetAllRealtorsQuery();
     const [deleteUser] = useDeleteUserMutation();
-    const navigate = useNavigate();
 
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
@@ -23,7 +19,7 @@ const RealtorsListPage: React.FC = () => {
     if (!isAdmin) {
         return <p>Ви не маєте доступу до цієї сторінки. Тільки адміністратори можуть переглядати список користувачів.</p>;
     }
-    console.log(realtorsData);
+
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
 

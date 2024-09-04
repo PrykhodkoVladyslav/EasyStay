@@ -1,8 +1,8 @@
 import { Button } from "components/ui/Button.tsx";
 import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
-import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "services/user.ts";
+// import { useNavigate } from "react-router-dom";
+import { useRegistrationMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
@@ -13,7 +13,7 @@ import React, { useState } from "react";
 const AdminCreatePage: React.FC = () => {
     // const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [register, { isLoading }] = useRegisterMutation();
+    const [register, { isLoading }] = useRegistrationMutation();
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");

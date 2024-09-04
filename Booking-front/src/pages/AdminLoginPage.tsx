@@ -3,39 +3,45 @@ import { Button } from "components/ui/Button.tsx";
 import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useGoogleLoginMutation, useLoginMutation } from "services/user.ts";
+import {/* useGoogleLoginMutation,*/ useSignInMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
 import showToast from "utils/toastShow.ts";
 
 import React from "react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {SignInSchema, SignInSchemaType} from "interfaces/zod/user.ts";
 
 const AdminLoginPage: React.FC = () => {
+
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
 
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-
     // const [googleLogin, { isLoading: isLoadingGoogleLogin }] = useGoogleLoginMutation();
-    const [emailLogin, { isLoading: isLoadingEmailLogin }] = useLoginMutation();
+    const [signIn, { isLoading: isLoadingEmailLogin }] = useSignInMutation();
 
-    const login = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<SignInSchemaType>({ resolver: zodResolver(SignInSchema) });
 
-        const res = await emailLogin({ email, password });
-
-        if (res && "data" in res && res.data) {
-            setUser(res.data.token);
-            showToast(`Авторизація успішна!`, "success");
-            console.log(`Авторизація успішна!`, "success");
-            console.log(res.data.token);
-        } else {
-            showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
+    const onSubmit = handleSubmit(async (data: SignInSchemaType) => {
+        try {
+            const res = await signIn(data).unwrap();
+            if (res.token === null) {
+                showToast(`Помилка авторизації`, "error");
+                return;
+            }
+                setUser(res.token);
+                showToast(`Авторизація успішна!`, "success");
+        } catch (error) {
+            showToast(`Помилка авторизації. Перевірте ваші дані!`, "error");
         }
-    };
+    });
 
     // const authSuccess = async (credentialResponse: CredentialResponse) => {
     //     const res = await googleLogin({
@@ -63,28 +69,27 @@ const AdminLoginPage: React.FC = () => {
         navigate(from);
     };
 
-    const authError = () => {
-        console.log("Error login. Check your Gmail account!");
-    };
-
     return (
         <div className="flex flex-col items-center justify-center ">
             <div className="bg-white p-8 rounded w-full max-w-md font-main">
                 {/*<h1 className="text-2xl font-main mb-6 font-extrabold ">Увійдіть або створіть акаунт</h1>*/}
+                <h1 className="text-2xl font-main mb-6 font-extrabold text-center">Увійдіть як Адмін</h1>
 
-                <form className="flex flex-col gap-4" onSubmit={login}>
+                <form className="flex flex-col gap-4" onSubmit={onSubmit}>
                     <div>
                         <label htmlFor="email" className="mb-1 text-sm block font-semibold">
                             Електронна пошта
                         </label>
 
                         <Input
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...register("email")}
                             id={"email"}
                             type="email"
                             placeholder="Введіть свою електронну адресу"
                         />
+                        {errors.email && (
+                            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                        )}
                     </div>
 
                     <div>
@@ -93,13 +98,15 @@ const AdminLoginPage: React.FC = () => {
                         </label>
 
                         <Input
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            {...register("password")}
                             type="password"
                             minLength={8}
                             id="password"
                             placeholder="Введіть свій пароль"
                         />
+                        {errors.password && (
+                            <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                        )}
                     </div>
 
                     <Button

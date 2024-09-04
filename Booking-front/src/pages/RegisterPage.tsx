@@ -1,4 +1,3 @@
-import { Button } from "components/ui/Button.tsx";
 import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,6 +16,7 @@ import ImageUpload from "components/ImageUpload.tsx";
 import FormError from "components/ui/FormError.tsx";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 
 const RegisterPage: React.FC = () => {
     const showCross = true;
@@ -101,8 +101,8 @@ const RegisterPage: React.FC = () => {
                 title="Ім'я"
                 type="text"
                 placeholder="Введіть ім'я"
-                isError={!!errors.firstName}
-                errorMessage={errors.firstName && errors.firstName.message}
+                isError={Boolean(errors.firstName)}
+                errorMessage={errors?.firstName?.message}
                 showCross={showCross}
                 formRegisterReturn={register("firstName")}
             />
@@ -114,11 +114,13 @@ const RegisterPage: React.FC = () => {
                 title="Прізвище"
                 type="text"
                 placeholder="Введіть прізвище"
-                isError={!!errors.lastName}
-                errorMessage={errors.lastName && errors.lastName.message}
+                isError={Boolean(errors.lastName)}
+                errorMessage={errors?.lastName?.message}
                 showCross={showCross}
                 formRegisterReturn={register("lastName")}
             />
+
+            <VerticalPad heightPx={4} />
 
             <div>
                 <Label>Фото:</Label>
@@ -138,50 +140,42 @@ const RegisterPage: React.FC = () => {
                 )}
             </div>
 
-            <div>
-                <label htmlFor="email" className="mb-1 text-sm block font-semibold">
-                    Електронна пошта
-                </label>
-                <Input
-                    {...register("email")}
-                    id="email"
-                    type="email"
-                    placeholder="Введіть електронну адресу"
-                />
-                {errors.email && (
-                    <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
-                )}
-            </div>
+            <TextInput
+                id="email"
+                title="Пошта"
+                type="text"
+                placeholder="Введіть свою електронну пошту"
+                isError={Boolean(errors.email)}
+                errorMessage={errors?.email?.message}
+                showCross={showCross}
+                formRegisterReturn={register("email")}
+            />
 
-            <div>
-                <label htmlFor="username" className="mb-1 text-sm block font-semibold">
-                    Ім'я користувача
-                </label>
-                <Input
-                    {...register("username")}
-                    id="username"
-                    type="text"
-                    placeholder="Введіть ім'я користувача"
-                />
-                {errors.username && (
-                    <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>
-                )}
-            </div>
+            <VerticalPad heightPx={4} />
 
-            <div>
-                <label htmlFor="password" className="mb-1 text-sm block font-semibold">
-                    Пароль
-                </label>
-                <Input
-                    {...register("password")}
-                    id="password"
-                    type="password"
-                    placeholder="Введіть пароль"
-                />
-                {errors.password && (
-                    <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-                )}
-            </div>
+            <TextInput
+                id="username"
+                title="Логін"
+                type="text"
+                placeholder="Введіть логін"
+                isError={Boolean(errors.username)}
+                errorMessage={errors?.username?.message}
+                showCross={showCross}
+                formRegisterReturn={register("username")}
+            />
+
+            <VerticalPad heightPx={4} />
+
+            <TextInput
+                id="password"
+                title="Пароль"
+                type="password"
+                placeholder="Введіть пароль"
+                isError={Boolean(errors.password)}
+                errorMessage={errors?.password?.message}
+                showCross={showCross}
+                formRegisterReturn={register("password")}
+            />
 
             <div>
                 <label className="mb-1 text-sm block font-semibold">Тип користувача</label>
@@ -211,14 +205,14 @@ const RegisterPage: React.FC = () => {
                 )}
             </div>
 
-            <Button
-                disabled={isLoading}
-                type="submit"
-                variant="primary"
-                className="w-full mb-6 disabled:cursor-not-allowed"
-            >
-                Зареєструвати
-            </Button>
+            <VerticalPad heightPx={10} />
+
+            <SignInRegisterButton disabled={isLoading} text="Зареєструватись" />
+
+            <VerticalPad heightPx={8} />
+
+            <p className="login-register-offer">У вас вже є аканту? <a
+                className="login-register-offer-link" href="/auth/login">Увійти</a></p>
         </form>
     );
 };

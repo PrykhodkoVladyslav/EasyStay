@@ -34,11 +34,11 @@ const TextInput = (props: {
             </label>
 
             <div className="text-input-input-container">
-                {props.isError && props.showCross && props.type !== "password" &&
+                {props.showCross && props.isError &&
                     <img src={getPublicResourceUrl("x-circle.svg")} alt="error"
                          className="text-input-error-icon" />}
 
-                {showEye && <img src={getPublicResourceUrl(showPassword ? "hide.svg" : "show.svg")} alt="password"
+                {showEye && <img src={getPublicResourceUrl(showPassword ? "show.svg" : "hide.svg")} alt="password"
                                  className="text-input-password-icon" onClick={() => setShowPassword(!showPassword)} />}
 
                 <Input

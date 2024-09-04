@@ -1,7 +1,6 @@
 import { Button } from "components/ui/Button.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
@@ -10,6 +9,7 @@ import React from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import getEmptySymbol from "utils/emptySymbol.ts";
+import { useSignInMutation } from "services/user.ts";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -19,9 +19,9 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const [error, setError] = React.useState(getEmptySymbol());
+    const [error, setError] = React.useState("");
 
-    const [emailLogin, { isLoading: isLoadingEmailLogin }] = useLoginMutation();
+    const [emailLogin, { isLoading: isLoadingEmailLogin }] = useSignInMutation();
 
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ const LoginPage: React.FC = () => {
             }
         } else if (response && response.data) {
             setUser(response.data.token);
-            setError(getEmptySymbol());
+            setError("");
         }
     };
 
@@ -62,8 +62,7 @@ const LoginPage: React.FC = () => {
                 value={email}
                 placeholder="Введіть свою електронну пошту"
                 onChange={(e) => setEmail(e.target.value)}
-                isError={!!error}
-                errorMessage={""} />
+                isError={!!error} />
 
             <VerticalPad heightPx={4} />
 
@@ -74,10 +73,9 @@ const LoginPage: React.FC = () => {
                 value={password}
                 placeholder="Введіть пароль"
                 onChange={(e) => setPassword(e.target.value)}
-                isError={!!error}
-                errorMessage={""} />
+                isError={!!error} />
 
-            <p className="login-error-message">{error}</p>
+            <p className="login-error-message">{error || getEmptySymbol()}</p>
 
             <Button
                 disabled={isLoadingEmailLogin}

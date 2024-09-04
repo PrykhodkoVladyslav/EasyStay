@@ -1,7 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import {LoginResponse, Registration, SignIn, User} from "interfaces/user";
+import { SignInResponse, Registration, SignInRequest, User } from "interfaces/user";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import {Hotel} from "interfaces/hotel";
 
 export const userApi = createApi({
     reducerPath: "userApi",
@@ -33,7 +32,7 @@ export const userApi = createApi({
         //     },
         // }),
 
-        signIn: builder.mutation<LoginResponse, SignIn>({
+        signIn: builder.mutation<SignInResponse, SignInRequest>({
             query: (data) => {
                 const formData = new FormData();
                 formData.append("email", data.email);
@@ -47,14 +46,15 @@ export const userApi = createApi({
             },
         }),
 
-        registration: builder.mutation<LoginResponse, Registration>({
+        registration: builder.mutation<SignInResponse, Registration>({
             query: (data) => {
                 const formData = new FormData();
                 formData.append("FirstName", data.firstName);
                 formData.append("LastName", data.lastName);
                 if (data.image && data.image.length > 0) {
                     formData.append("Image", data.image[0]);
-                }                formData.append("Email", data.email);
+                }
+                formData.append("Email", data.email);
                 formData.append("UserName", data.username);
                 formData.append("Password", data.password);
                 formData.append("Type", data.type);
@@ -66,19 +66,6 @@ export const userApi = createApi({
                 };
             },
         }),
-
-        // googleLogin: builder.mutation<LoginResponse, { credential: string }>({
-        //     query: (data) => {
-        //         const formData = new FormData();
-        //         formData.append("credential", data.credential);
-        //
-        //         return {
-        //             url: "GoogleSignIn",
-        //             method: "POST",
-        //             body: formData,
-        //         };
-        //     },
-        // }),
 
         deleteUser: builder.mutation({
             query: (id: number) => ({
@@ -95,6 +82,5 @@ export const {
     useGetAllRealtorsQuery,
     useSignInMutation,
     useRegistrationMutation,
-    useGoogleLoginMutation,
     useDeleteUserMutation,
 } = userApi;

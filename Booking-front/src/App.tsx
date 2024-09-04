@@ -1,6 +1,5 @@
 import ProtectedRoute from "components/guards/ProtectedRoute.tsx";
-import AdminAuthLayout from "components/layouts/AdminAuthLayout.tsx";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "components/layouts/Layout.tsx";
 
 import LoginPage from "pages/LoginPage.tsx";
@@ -24,8 +23,8 @@ import CustomersListPage from "pages/admin/user/customer/CustomersListPage.tsx";
 import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage.tsx";
 import AdminCreatePage from "pages/AdminCreatePage.tsx";
 
-import AdminLoginPage from "pages/AdminLoginPage.tsx";
 import RegisterPage from "pages/RegisterPage.tsx";
+import AuthLayout from "components/layouts/AuthLayout.tsx";
 
 function App() {
     return (
@@ -56,7 +55,7 @@ function App() {
                         <Route path="users">
                             <Route path="customers/list" element={<CustomersListPage />} />
                             <Route path="realtors/list" element={<RealtorsListPage />} />
-                            <Route path="createAdmin" element={<AdminCreatePage />}/>
+                            <Route path="createAdmin" element={<AdminCreatePage />} />
                         </Route>
 
                     </Route>
@@ -65,9 +64,9 @@ function App() {
 
                 <Route path="auth" element={<AuthLayout />}>
                     <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
                 </Route>
 
-                <Route path="register" element={<RegisterPage />}/>
             </Route>
         </Routes>
     );

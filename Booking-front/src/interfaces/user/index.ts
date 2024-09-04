@@ -1,5 +1,3 @@
-import { Hotel } from "interfaces/hotel";
-
 export interface User {
     id: number;
     email: string;
@@ -8,24 +6,18 @@ export interface User {
     photo: string;
 }
 
-// export interface ILocation {
-//     latitude: number;
-//     longitude: number;
-// }
-
 export interface UserState {
-    // location: ILocation | null;
     user: User | null;
     token: string | null;
-    // favoriteHotels: Hotel[];
 }
 
-export interface LoginResponse {
+export interface SignInResponse {
     token: string;
 }
 
-export interface SignIn {
-    token: string;
+export interface SignInRequest {
+    email: string;
+    password: string;
 }
 
 export interface Registration {

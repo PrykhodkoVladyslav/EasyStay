@@ -2,17 +2,19 @@ import { Input } from "components/ui/Input.tsx";
 import React from "react";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import getEmptySymbol from "utils/emptySymbol.ts";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 const TextInput = (props: {
     id: string,
     title: string,
     type: string,
-    value: string,
+    value?: string,
     placeholder?: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     isError?: boolean,
     errorMessage?: string,
-    showCross?: boolean
+    showCross?: boolean,
+    formRegisterReturn?: UseFormRegisterReturn
 }) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const showEye = props.type === "password";
@@ -21,7 +23,7 @@ const TextInput = (props: {
             ? "text-input-input-password-error"
             : "text-input-input-error")
         : "text-input-input-default";
-    const inputClassNames = `base-text-input-input ${inputClass} ${props.showCross ? "cross-padding" : ""} ${showEye ? "eye-padding" : ""}`;
+    const inputClassNames = `base-text-input-input ${inputClass} ${props.showCross && props.isError ? "cross-padding" : ""} ${showEye ? "eye-padding" : ""}`;
 
     const inputType = showPassword ? "text" : props.type;
 
@@ -46,6 +48,7 @@ const TextInput = (props: {
                     value={props.value}
                     onChange={props.onChange}
                     placeholder={props.placeholder}
+                    {...props.formRegisterReturn}
                 />
             </div>
 

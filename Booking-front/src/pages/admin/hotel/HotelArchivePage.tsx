@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import { RootState } from "store";
-import { getToken } from "store/slice/userSlice";
+// import { useSelector } from "react-redux";
+// import { RootState } from "store";
+// import { getToken } from "store/slice/userSlice";
 import { IconArchiveOff } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
 // import { useUnarchiveHotelMutation, useGetArchivedHotelsQuery } from "services/hotel.ts";
@@ -11,9 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import {useGetAllHotelsQuery} from "services/hotel.ts";
 
 const ArchivedHotelsPage: React.FC = () => {
-    const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
-    const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
+    // const token = useSelector((state: RootState) => getToken(state));
+    // const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    // const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
 
     const { data: hotelsData, isLoading, error, refetch } = useGetAllHotelsQuery();
     const navigate = useNavigate();

@@ -3,8 +3,6 @@ import AdminAuthLayout from "components/layouts/AdminAuthLayout.tsx";
 import {Route, Routes} from "react-router-dom";
 import Layout from "components/layouts/Layout.tsx";
 
-import AdminLoginPage from "pages/AdminLoginPage.tsx";
-
 import AdminLayout from "components/layouts/AdminLayout";
 
 import HotelsPage from "pages/admin/hotel/HotelsPage";
@@ -20,8 +18,12 @@ import CitiesPage from "pages/admin/city/CitiesPage.tsx";
 import CityCreatePage from "pages/admin/city/CityCreatePage.tsx";
 import CityEditPage from "pages/admin/city/CityEditPage.tsx";
 
-import UsersListPage from "pages/admin/user/UsersListPage";
+import CustomersListPage from "pages/admin/user/customer/CustomersListPage.tsx";
+import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage.tsx";
 import AdminCreatePage from "pages/AdminCreatePage.tsx";
+
+import AdminLoginPage from "pages/AdminLoginPage.tsx";
+import RegisterPage from "pages/RegisterPage.tsx";
 
 function App() {
     return (
@@ -49,8 +51,11 @@ function App() {
                             <Route path="edit/:id" element={<CityEditPage />} />
                         </Route>
 
-                        <Route path="users/list" element={<UsersListPage />} />
-                        <Route path="createAdmin" element={<AdminCreatePage />}/>
+                        <Route path="users">
+                            <Route path="customers/list" element={<CustomersListPage />} />
+                            <Route path="realtors/list" element={<RealtorsListPage />} />
+                            <Route path="createAdmin" element={<AdminCreatePage />}/>
+                        </Route>
 
                     </Route>
 
@@ -59,6 +64,8 @@ function App() {
                 <Route path="adminAuth" element={<AdminAuthLayout />}>
                     <Route path="login" element={<AdminLoginPage />}/>
                 </Route>
+
+                <Route path="register" element={<RegisterPage />}/>
             </Route>
         </Routes>
     )

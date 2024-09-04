@@ -8,11 +8,12 @@ import { createBaseQuery } from "utils/apiUtils.ts";
 export const hotelCategoriesApi = createApi({
     reducerPath: "hotelCategoriesApi",
     baseQuery: createBaseQuery("hotelCategories"),
-    tagCategories: ["HotelsCategories"],
+    tagTypes: ["HotelsCategories"],
 
     endpoints: (builder) => ({
         getAllHotelCategories: builder.query<HotelCategories[], void>({
             query: () => "getAll",
+            providesTags: ["HotelsCategories"],
         }),
 
         // getPageHotelCategories: builder.query<GetPageResponse<HotelCategories>, GetHotelPageRequest>({

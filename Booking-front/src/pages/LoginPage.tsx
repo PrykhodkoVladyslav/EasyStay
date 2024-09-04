@@ -1,4 +1,3 @@
-import { Button } from "components/ui/Button.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/index.ts";
@@ -10,6 +9,7 @@ import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import getEmptySymbol from "utils/emptySymbol.ts";
 import { useSignInMutation } from "services/user.ts";
+import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -25,11 +25,13 @@ const LoginPage: React.FC = () => {
 
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         const response = await emailLogin({ email, password });
 
         if (response.error) {
-            if ("status" in response.error && response.error.status === 400) {
+            if ("status" in response.error && response.error.status === 400 ||
+                "status" in response.error && response.error.status === 401) {
                 setError("Не вірна пошта або пароль");
             } else {
                 setError("Невідома помилка");
@@ -66,24 +68,29 @@ const LoginPage: React.FC = () => {
 
             <VerticalPad heightPx={4} />
 
-            <TextInput
-                id="password"
-                title="Пароль"
-                type="password"
-                value={password}
-                placeholder="Введіть пароль"
-                onChange={(e) => setPassword(e.target.value)}
-                isError={!!error} />
+            <div className="relative">
+                <TextInput
+                    id="password"
+                    title="Пароль"
+                    type="password"
+                    value={password}
+                    placeholder="Введіть пароль"
+                    onChange={(e) => setPassword(e.target.value)}
+                    isError={!!error} />
+
+                <a href="/auth/register">
+                    <p className="absolute right-0 bottom-0">Забули пароль?</p>
+                </a>
+            </div>
 
             <p className="login-error-message">{error || getEmptySymbol()}</p>
 
-            <Button
+            <VerticalPad heightPx={10} />
+
+            <SignInRegisterButton
                 disabled={isLoadingEmailLogin}
-                type="submit"
-                className="w-full mb-6 disabled:opacity-50"
-            >
-                Ввійти
-            </Button>
+                text="Вхід" />
+
         </form>
     );
 };

@@ -78,7 +78,7 @@ const LoginPage: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     isError={!!error} />
 
-                <a href="/auth/register">
+                <a href="/auth/forgot">
                     <p className="absolute right-0 bottom-0">Забули пароль?</p>
                 </a>
             </div>
@@ -91,6 +91,10 @@ const LoginPage: React.FC = () => {
                 disabled={isLoadingEmailLogin}
                 text="Вхід" />
 
+            <VerticalPad heightPx={8} />
+
+            <p className="login-register-offer">У вас немає аканту? <a
+                className="login-register-offer-link" href="/auth/register">Зареєструватись</a></p>
         </form>
     );
 };

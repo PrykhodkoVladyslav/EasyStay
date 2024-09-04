@@ -121,17 +121,17 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                     to="/admin"
                                     icon={IconHome}
                                     label="Головна"
-                                    activeCondition={(pathname) => pathname === "/admin"}
+                                    activeCondition={(pathname) => pathname === "admin"}
                                 />
 
                                 {/* Готелі */}
-                                <SidebarLinkGroup activecondition={pathname.includes("/hotels")}>
+                                <SidebarLinkGroup activecondition={pathname.includes("hotels")}>
                                     {(handleClick, open) => (
                                         <>
                                             <SidebarLinkGroupTitle
                                                 href="#"
                                                 icon={IconBuilding}
-                                                isActive={pathname.includes("/hotels")}
+                                                isActive={pathname.includes("hotels")}
                                                 handleClick={(e) => {
                                                     e.preventDefault();
                                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -152,13 +152,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                 </SidebarLinkGroup>
 
                                 {/* Країни */}
-                                <SidebarLinkGroup activecondition={pathname.includes("/countries")}>
+                                <SidebarLinkGroup activecondition={pathname.includes("countries")}>
                                     {(handleClick, open) => (
                                         <>
                                             <SidebarLinkGroupTitle
                                                 href="#"
                                                 icon={IconGlobe}
-                                                isActive={pathname.includes("/countries")}
+                                                isActive={pathname.includes("countries")}
                                                 handleClick={(e) => {
                                                     e.preventDefault();
                                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -179,13 +179,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                 </SidebarLinkGroup>
 
                                 {/* Міста */}
-                                <SidebarLinkGroup activecondition={pathname.includes("/cities")}>
+                                <SidebarLinkGroup activecondition={pathname.includes("cities")}>
                                     {(handleClick, open) => (
                                         <>
                                             <SidebarLinkGroupTitle
                                                 href="#"
                                                 icon={IconBuildingSkyscraper}
-                                                isActive={pathname.includes("/cities")}
+                                                isActive={pathname.includes("cities")}
                                                 handleClick={(e) => {
                                                     e.preventDefault();
                                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -205,32 +205,33 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                     )}
                                 </SidebarLinkGroup>
 
-                                {/* Юзери */}
-                                {/*<SidebarLinkGroup activecondition={pathname.includes("user")}>*/}
-                                {/*    {(handleClick, open) => (*/}
-                                {/*        <>*/}
-                                {/*            <SidebarLinkGroupTitle*/}
-                                {/*                href="#"*/}
-                                {/*                icon={IconUsers}*/}
-                                {/*                isActive={pathname.includes("user")}*/}
-                                {/*                handleClick={(e) => {*/}
-                                {/*                    e.preventDefault();*/}
-                                {/*                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);*/}
-                                {/*                }}*/}
-                                {/*            >*/}
-                                {/*                Користувачі*/}
-                                {/*                <SidebarChevronDown open={open} />*/}
-                                {/*            </SidebarLinkGroupTitle>*/}
-                                {/*            <SidebarLinkGroupMenu*/}
-                                {/*                open={open}*/}
-                                {/*                links={[*/}
-                                {/*                    { to: "/admin/users/list", label: "Список" },*/}
-                                {/*                    { to: "/admin/createAdmin", label: "Створити Адміна" }*/}
-                                {/*                ]}*/}
-                                {/*            />*/}
-                                {/*        </>*/}
-                                {/*    )}*/}
-                                {/*</SidebarLinkGroup>*/}
+                                 {/* Юзери */}
+                                <SidebarLinkGroup activecondition={pathname.includes("user")}>
+                                    {(handleClick, open) => (
+                                        <>
+                                            <SidebarLinkGroupTitle
+                                                href="#"
+                                                icon={IconUsers}
+                                                isActive={pathname.includes("user")}
+                                                handleClick={(e) => {
+                                                    e.preventDefault();
+                                                    sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                                                }}
+                                            >
+                                                Користувачі
+                                                <SidebarChevronDown open={open} />
+                                            </SidebarLinkGroupTitle>
+                                            <SidebarLinkGroupMenu
+                                                open={open}
+                                                links={[
+                                                    { to: "users/customers/list", label: "Клієнти" },
+                                                    { to: "users/realtors/list", label: "Ріелтори" },
+                                                    { to: "createAdmin", label: "Створити Адміна" }
+                                                ]}
+                                            />
+                                        </>
+                                    )}
+                                </SidebarLinkGroup>
                             </ul>
                         </div>
 

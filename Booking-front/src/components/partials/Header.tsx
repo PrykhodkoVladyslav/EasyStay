@@ -14,7 +14,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
     const { sidebarOpen, setSidebarOpen } = props;
     // const [searchModalOpen, setSearchModalOpen] = useState(false);
-    // const user = useAppSelector(getUser);
+    // const customer = useAppSelector(getUser);
 
     return (
         <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-10">
@@ -56,8 +56,8 @@ const Header: React.FC<HeaderProps> = (props) => {
                         {/*    <SearchModal isOpen={searchModalOpen} close={() => setSearchModalOpen(false)} />*/}
                         {/*</div>*/}
                         
-                        {/*{user ? (*/}
-                        {/*    <UserCard user={user} />*/}
+                        {/*{customer ? (*/}
+                        {/*    <UserCard customer={customer} />*/}
                         {/*) : (*/}
                         {/*    <Link*/}
                         {/*        to={"auth/sign-in"}*/}

@@ -7,9 +7,9 @@ import {useSelector} from "react-redux";
 import {RootState} from "store/index.ts";
 import {getToken} from "store/slice/userSlice.ts";
 
-// Доступ тільки Адміну
+// Доступ тільки для Адміна
 
-const UsersListPage: React.FC = () => {
+const CustomersListPage: React.FC = () => {
     const { data: usersData, isLoading, error, refetch } = useGetAllCustomersQuery();
     const [deleteUser] = useDeleteUserMutation();
     const navigate = useNavigate();
@@ -106,4 +106,4 @@ const UsersListPage: React.FC = () => {
     );
 };
 
-export default UsersListPage;
+export default CustomersListPage;

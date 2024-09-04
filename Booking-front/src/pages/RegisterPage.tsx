@@ -196,6 +196,7 @@ const RegisterPage: React.FC = () => {
                                 <input
                                     {...register("type")}
                                     type="radio"
+                                    defaultChecked={true}
                                     value="Customer"
                                     className="mr-2"
                                 />

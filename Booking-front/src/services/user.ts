@@ -11,7 +11,12 @@ export const userApi = createApi({
     endpoints: (builder) => ({
         getAllCustomers: builder.query<User[], void>({
             query: () => "GetCustomerPage",
-            providesTags: ["Users"],
+            providesTags: ["User"],
+        }),
+
+        getAllRealtors: builder.query<User[], void>({
+            query: () => "GetRealtorPage",
+            providesTags: ["User"],
         }),
 
         login: builder.mutation<LoginResponse, { email: string; password: string }>({
@@ -71,6 +76,7 @@ export const userApi = createApi({
 
 export const {
     useGetAllCustomersQuery,
+    useGetAllRealtorsQuery,
     useLoginMutation,
     useRegisterMutation,
     useGoogleLoginMutation,

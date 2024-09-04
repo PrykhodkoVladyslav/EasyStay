@@ -20,7 +20,8 @@ import CitiesPage from "pages/admin/city/CitiesPage.tsx";
 import CityCreatePage from "pages/admin/city/CityCreatePage.tsx";
 import CityEditPage from "pages/admin/city/CityEditPage.tsx";
 
-import CustomersListPage from "pages/admin/customer/CustomersListPage.tsx";
+import CustomersListPage from "pages/admin/user/customer/CustomersListPage.tsx";
+import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage.tsx";
 import AdminCreatePage from "pages/AdminCreatePage.tsx";
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
 
                         <Route path="users">
                             <Route path="customers/list" element={<CustomersListPage />} />
-                            <Route path="realtors/list" element={<CustomersListPage />} />
+                            <Route path="realtors/list" element={<RealtorsListPage />} />
                             <Route path="createAdmin" element={<AdminCreatePage />}/>
                         </Route>
 

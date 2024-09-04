@@ -1,6 +1,6 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
-import { useGetAllCustomersQuery, useDeleteUserMutation } from "services/user.ts";
+import { useGetAllRealtorsQuery, useDeleteUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -9,8 +9,8 @@ import {getToken} from "store/slice/userSlice.ts";
 
 // Доступ тільки для Адміна
 
-const CustomersListPage: React.FC = () => {
-    const { data: usersData, isLoading, error, refetch } = useGetAllCustomersQuery();
+const RealtorsListPage: React.FC = () => {
+    const { data: realtorsData, isLoading, error, refetch } = useGetAllRealtorsQuery();
     const [deleteUser] = useDeleteUserMutation();
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const CustomersListPage: React.FC = () => {
     if (!isAdmin) {
         return <p>Ви не маєте доступу до цієї сторінки. Тільки адміністратори можуть переглядати список користувачів.</p>;
     }
-
+    console.log(realtorsData);
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
 
@@ -39,12 +39,12 @@ const CustomersListPage: React.FC = () => {
         }
     };
 
-    const users = usersData?.data || [];
+    const realtors = realtorsData?.data || [];
 
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
             <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">
-                Список Клієнтів
+                Список Ріелторів
             </h1>
             <div className="overflow-x-auto sm:rounded-lg">
                 <table className="text-sm font-bold min-w-full bg-white border text-left">
@@ -54,11 +54,11 @@ const CustomersListPage: React.FC = () => {
                         <th className="px-6 py-3">Прізвище</th>
                         <th className="px-6 py-3">Електронна пошта</th>
                         <th className="px-6 py-3">Фото</th>
-                        <th className="px-6 py-3"/* colSpan="2"*/></th>
+                        <th className="px-6 py-3" colSpan="2"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {users?.map((user) => (
+                    {realtors?.map((user) => (
                         <tr key={user.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{user.firstName}</td>
                             <td className="px-6 py-4">{user.lastName}</td>
@@ -91,4 +91,4 @@ const CustomersListPage: React.FC = () => {
     );
 };
 
-export default CustomersListPage;
+export default RealtorsListPage;

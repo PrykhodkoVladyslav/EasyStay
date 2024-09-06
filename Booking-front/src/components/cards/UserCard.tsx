@@ -22,7 +22,9 @@ const UserCard: React.FC = () => {
 
     return (
         <>
-            <div className="flex items-center p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full ml-3">
+            <div className="flex items-center p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full ml-3"
+                 title={user.email}
+            >
                 <div className="flex items-center justify-center">
                     {user.photo ? (
                         <img

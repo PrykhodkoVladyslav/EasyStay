@@ -8,7 +8,7 @@ import {getToken} from "store/slice/userSlice.ts";
 
 const RealtorsListPage: React.FC = () => {
     const { data: realtorsData, isLoading, error, refetch } = useGetAllRealtorsQuery();
-    const [deleteUser] = useDeleteUserMutation();
+    // const [deleteUser] = useDeleteUserMutation();
 
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;

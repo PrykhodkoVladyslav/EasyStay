@@ -30,9 +30,22 @@ export interface Registration {
     type: string;
 }
 
-export interface IUserCard {
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    photo?: string;
+// export interface ResetPassword {
+//     password: string;
+//     token: string;
+//     email: string;
+// }
+
+// export interface ResetPasswordRequest {
+//     password: string;
+//     token: string;
+// }
+
+export interface BlockUserRequest {
+    id: number;
+    lockoutEnd: Date;
+}
+
+export interface UnlockUserRequest {
+    id: number;
 }

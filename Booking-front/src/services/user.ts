@@ -1,6 +1,15 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { SignInResponse, Registration, SignInRequest, User } from "interfaces/user";
 import { createBaseQuery } from "utils/apiUtils.ts";
+import {
+    SignInResponse,
+    Registration,
+    SignInRequest,
+    User,
+    // ResetPassword,
+    // ResetPasswordRequest,
+    BlockUserRequest,
+    UnlockUserRequest
+} from "interfaces/user";
 
 export const userApi = createApi({
     reducerPath: "userApi",
@@ -67,12 +76,26 @@ export const userApi = createApi({
             },
         }),
 
-        deleteUser: builder.mutation({
-            query: (id: number) => ({
-                url: `delete/${id}`,
-                method: "DELETE",
+        blockUser: builder.mutation<void, BlockUserRequest>({
+            query: ({ id, lockoutEnd }) => ({
+                url: `BlockUserById`,
+                method: 'PATCH',
+                body: {
+                    id,
+                    lockoutEnd: lockoutEnd.toISOString(),
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             }),
-            invalidatesTags: ["User"],
+            invalidatesTags: ['User'],
+        }),
+        unlockUser: builder.mutation<void, UnlockUserRequest>({
+            query: (id) => ({
+                url: `UnlockUserById/${id}`,
+                method: 'PATCH',
+            }),
+            invalidatesTags: ['User'],
         }),
     }),
 });
@@ -82,5 +105,6 @@ export const {
     useGetAllRealtorsQuery,
     useSignInMutation,
     useRegistrationMutation,
-    useDeleteUserMutation,
+    useBlockUserMutation,
+    useUnlockUserMutation,
 } = userApi;

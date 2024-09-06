@@ -22,6 +22,9 @@ public class RealtorPaginationService(
 		if (filter.LastName is not null)
 			query = query.Where(r => r.LastName.ToLower().Contains(filter.LastName.ToLower()));
 
+		if (filter.IsLocked is not null)
+			query = query.Where(r => (r.LockoutEnd != null && r.LockoutEnd >= DateTimeOffset.UtcNow) == filter.IsLocked);
+
 		return query;
 	}
 }

@@ -18,6 +18,7 @@ using Booking.Infrastructure.Options;
 using Booking.Infrastructure.Services;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
+using Booking.Persistence.Services;
 using Booking.Services;
 using Booking.WebApi.Extensions;
 using Booking.WebApi.Hubs;

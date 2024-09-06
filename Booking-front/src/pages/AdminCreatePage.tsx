@@ -54,7 +54,7 @@ const AdminCreatePage: React.FC = () => {
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="bg-white rounded w-full max-w-md font-main">
-                <h1 className="text-1xl text-center font-main mb-6 font-extrabold">Створення нового Адміна | Ріелтора</h1>
+                <h1 className="text-1xl text-center font-main mb-6 font-extrabold">Створення нового Адміна</h1>
 
                 <form className="flex flex-col gap-4">
                     <div>

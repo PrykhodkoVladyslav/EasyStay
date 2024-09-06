@@ -1,7 +1,7 @@
 import { IconMenu2, IconLogin } from "@tabler/icons-react";
-import ThemeToggle from "components/ui/ThemeToggle.tsx";
 import UserCard from "components/cards/UserCard.tsx";
 import { useAppSelector } from "store/hooks.ts";
+import { getUser } from "store/slice/userSlice.ts";
 import { Link } from "react-router-dom";
 
 import React, { useState } from "react";
@@ -14,7 +14,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
     const { sidebarOpen, setSidebarOpen } = props;
     // const [searchModalOpen, setSearchModalOpen] = useState(false);
-    // const customer = useAppSelector(getUser);
+    const user = useAppSelector(getUser);
 
     return (
         <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-10">
@@ -56,17 +56,17 @@ const Header: React.FC<HeaderProps> = (props) => {
                         {/*    <SearchModal isOpen={searchModalOpen} close={() => setSearchModalOpen(false)} />*/}
                         {/*</div>*/}
                         
-                        {/*{customer ? (*/}
-                        {/*    <UserCard customer={customer} />*/}
-                        {/*) : (*/}
-                        {/*    <Link*/}
-                        {/*        to={"auth/sign-in"}*/}
-                        {/*        className="flex gap-3 items-center py-2 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full ml-3"*/}
-                        {/*    >*/}
-                        {/*        <p className="text-xs font-semibold">Вхід</p>*/}
-                        {/*        <IconLogin className="w-4 h-4" />*/}
-                        {/*    </Link>*/}
-                        {/*)}*/}
+                        {user ? (
+                            <UserCard customer={user} />
+                        ) : (
+                            <Link
+                                to={"auth/register"}
+                                className="flex gap-3 items-center py-2 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full ml-3"
+                            >
+                                <p className="text-xs font-semibold">Вхід</p>
+                                <IconLogin className="w-4 h-4" />
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

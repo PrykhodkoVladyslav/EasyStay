@@ -29,3 +29,10 @@ export interface Registration {
     password: string;
     type: string;
 }
+
+export interface IUserCard {
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    photo?: string;
+}

@@ -8,6 +8,5 @@
 // import Option from "components/ui/Option.tsx";
 // import PageTitle from "components/ui/PageTitle.tsx";
 // import Select from "components/ui/Select.tsx";
-// import ThemeToggle from "components/ui/ThemeToggle.tsx";
 //
-// export { Option, Attention, Select, Button, FileInput, ThemeToggle, PageTitle, Input, InputPassword, Link, Label };
+// export { Option, Attention, Select, Button, FileInput, PageTitle, Input, InputPassword, Link, Label };

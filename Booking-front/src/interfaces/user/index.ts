@@ -43,7 +43,7 @@ export interface Registration {
 
 export interface BlockUserRequest {
     id: number;
-    lockoutEnd: Date;
+    lockoutEndUtc: Date;
 }
 
 export interface UnlockUserRequest {

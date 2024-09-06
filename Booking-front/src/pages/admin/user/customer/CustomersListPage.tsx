@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { IconLock, IconLockOpen } from "@tabler/icons-react";
-import { Button } from 'components/ui/Button.tsx'; // Ensure this path is correct
-import { useGetAllCustomersQuery, useBlockUserMutation, useUnlockUserMutation } from 'services/user.ts';
-import { API_URL } from 'utils/getEnvData.ts';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store/index.ts';
-import { getToken } from 'store/slice/userSlice.ts';
-import ModalComponent from 'components/ModalComponent'; // Adjust the path accordingly
+import { Button } from "components/ui/Button.tsx"; // Ensure this path is correct
+import { useGetAllCustomersQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
+import { API_URL } from "utils/getEnvData.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "store/index.ts";
+import { getToken } from "store/slice/userSlice.ts";
+import ModalComponent from "components/ModalComponent"; // Adjust the path accordingly
 
 const CustomersListPage: React.FC = () => {
     const [blockUser, { isLoading: isBlockLoading }] = useBlockUserMutation();
@@ -17,13 +17,14 @@ const CustomersListPage: React.FC = () => {
     const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();
 
     const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
     const userRole = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
 
     const isAdmin = userRole === "Admin";
 
     if (!isAdmin) {
-        return <p>Ви не маєте доступу до цієї сторінки. Тільки адміністратори можуть переглядати список користувачів.</p>;
+        return <p>Ви не маєте доступу до цієї сторінки. Тільки адміністратори можуть переглядати список
+            користувачів.</p>;
     }
 
     if (isLoading) return <p>Завантаження...</p>;
@@ -38,9 +39,9 @@ const CustomersListPage: React.FC = () => {
         if (selectedUserId) {
             try {
                 const utcDate = new Date(date.toISOString());
-                console.log( utcDate);
+                console.log(utcDate);
                 console.log("Sending date to API:", utcDate.toISOString());
-                await blockUser({ id: selectedUserId, lockoutEnd: utcDate }).unwrap();
+                await blockUser({ id: selectedUserId, lockoutEndUtc: utcDate }).unwrap();
                 refetch();
             } catch (err) {
                 console.error("Помилка при блокуванні користувача:", err);
@@ -99,7 +100,8 @@ const CustomersListPage: React.FC = () => {
                             <td className="px-6 py-3 text-center">
                                 {user.blocked ? (
                                     <>
-                                        <p className="text-red-800">Заблоковано до: {new Date(user.lockoutEnd).toLocaleDateString()}</p>
+                                        <p className="text-red-800">Заблоковано
+                                            до: {new Date(user.lockoutEnd).toLocaleDateString()}</p>
                                         <Button
                                             onClick={() => handleUnlockUser(user.id)}
                                             variant="icon"

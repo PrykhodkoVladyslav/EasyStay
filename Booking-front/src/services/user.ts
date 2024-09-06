@@ -8,7 +8,7 @@ import {
     // ResetPassword,
     // ResetPasswordRequest,
     BlockUserRequest,
-    UnlockUserRequest
+    UnlockUserRequest,
 } from "interfaces/user";
 
 export const userApi = createApi({
@@ -77,25 +77,25 @@ export const userApi = createApi({
         }),
 
         blockUser: builder.mutation<void, BlockUserRequest>({
-            query: ({ id, lockoutEnd }) => ({
+            query: ({ id, lockoutEndUtc }) => ({
                 url: `BlockUserById`,
-                method: 'PATCH',
+                method: "PATCH",
                 body: {
                     id,
-                    lockoutEnd: lockoutEnd.toISOString(),
+                    lockoutEndUtc: lockoutEndUtc,
                 },
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ["User"],
         }),
         unlockUser: builder.mutation<void, UnlockUserRequest>({
             query: (id) => ({
                 url: `UnlockUserById/${id}`,
-                method: 'PATCH',
+                method: "PATCH",
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ["User"],
         }),
     }),
 });

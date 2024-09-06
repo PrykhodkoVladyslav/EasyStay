@@ -36,9 +36,7 @@ public class CreateAdminValidator : AbstractValidator<CreateAdminCommand> {
 				.WithMessage("LastName is too long");
 
 		RuleFor(a => a.Image)
-			.NotNull()
-				.WithMessage("Image is not selected")
-			.MustAsync(imageValidator.IsValidImageAsync)
+			.MustAsync(imageValidator.IsValidNullPossibeImageAsync)
 				.WithMessage("Image is not valid");
 
 		RuleFor(a => a.Password)

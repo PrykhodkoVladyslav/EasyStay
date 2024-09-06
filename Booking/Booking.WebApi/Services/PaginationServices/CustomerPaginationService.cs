@@ -22,6 +22,9 @@ public class CustomerPaginationService(
 		if (filter.LastName is not null)
 			query = query.Where(c => c.LastName.ToLower().Contains(filter.LastName.ToLower()));
 
+		if (filter.IsLocked is not null)
+			query = query.Where(c => (c.LockoutEnd != null && c.LockoutEnd >= DateTimeOffset.UtcNow) == filter.IsLocked);
+
 		return query;
 	}
 }

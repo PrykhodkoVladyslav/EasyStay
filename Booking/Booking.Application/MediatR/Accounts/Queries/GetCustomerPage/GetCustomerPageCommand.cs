@@ -7,4 +7,6 @@ public class GetCustomerPageCommand : PaginationFilterDto, IRequest<PageVm<Custo
 	public string? FirstName { get; set; }
 
 	public string? LastName { get; set; }
+
+	public bool? IsLocked { get; set; }
 }

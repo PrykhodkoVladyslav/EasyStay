@@ -1,22 +1,18 @@
-import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRegistrationMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
-import showToast from "utils/toastShow.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegistrationSchemaType, RegistrationSchema } from "interfaces/zod/user.ts";
 
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import Label from "components/ui/Label.tsx";
-import ImageUpload from "components/ImageUpload.tsx";
-import FormError from "components/ui/FormError.tsx";
+import React from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
+import IValidationError from "interfaces/error/IValidationError.ts";
 
 const RegisterPage: React.FC = () => {
     const showCross = true;
@@ -25,59 +21,48 @@ const RegisterPage: React.FC = () => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const [registerUser, { isLoading }] = useRegistrationMutation();
-    const [files, setFiles] = useState<File[]>([]);
-    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [firstNameError, setFirstNameError] = React.useState("");
+    const [lastNameError, setLastNameError] = React.useState("");
+    const [emailError, setEmailError] = React.useState("");
+    const [usernameError, setUsernameError] = React.useState("");
+    const [passwordError, setPasswordError] = React.useState("");
 
     const {
         register,
         handleSubmit,
-        setValue,
         formState: { errors },
     } = useForm<RegistrationSchemaType>({
         resolver: zodResolver(RegistrationSchema),
     });
 
-    useEffect(() => {
-        if (inputRef.current) {
-            const dataTransfer = new DataTransfer();
-            files.forEach((file) => dataTransfer.items.add(file));
-            inputRef.current.files = dataTransfer.files;
-        }
-        setValue("image", inputRef.current?.files as any);
-    }, [files, setValue]);
-
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files;
-
-        if (file) {
-            setFiles((prevFiles) => {
-                const updatedFiles = [...prevFiles];
-                for (let i = 0; i < file.length; i++) {
-                    const validImageTypes = ["image/jpeg", "image/webp", "image/png"];
-                    if (validImageTypes.includes(file[i].type)) {
-                        updatedFiles[0] = file[i];
-                    }
-                }
-                return updatedFiles.slice(0, 1);
-            });
-        }
-    };
-
-    const removeImage = (file: string) => {
-        setFiles([]);
-    };
+    const lowerCaseEquals = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
     const onSubmit = async (data: RegistrationSchemaType) => {
+        setFirstNameError("");
+        setLastNameError("");
+        setEmailError("");
+        setUsernameError("");
+        setPasswordError("");
+
         try {
             const res = await registerUser(data).unwrap();
-            if (res.token === null) {
-                showToast(`Помилка реєстрації`, "error");
-                return;
-            }
             setUser(res.token);
-            showToast(`Реєстрація успішна!`, "success");
         } catch (error) {
-            showToast(`Помилка реєстраціі. Перевірте ваші дані!`, "error");
+            const validationError = error as IValidationError;
+            validationError.data.forEach(e => {
+                if (lowerCaseEquals(e.PropertyName.toLowerCase(), "firstName")) {
+                    setFirstNameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "lastName")) {
+                    setLastNameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "email")) {
+                    setEmailError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "username")) {
+                    setUsernameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "password")) {
+                    setPasswordError(e.ErrorMessage);
+                }
+            });
         }
     };
 
@@ -91,7 +76,6 @@ const RegisterPage: React.FC = () => {
         );
         const { from } = location.state || { from: { pathname: "/admin" } };
         navigate(from);
-        // navigate("/");
     };
 
     return (
@@ -101,8 +85,8 @@ const RegisterPage: React.FC = () => {
                 title="Ім'я"
                 type="text"
                 placeholder="Введіть ім'я"
-                isError={Boolean(errors.firstName)}
-                errorMessage={errors?.firstName?.message}
+                isError={Boolean(errors.firstName || firstNameError)}
+                errorMessage={errors?.firstName?.message || firstNameError}
                 showCross={showCross}
                 formRegisterReturn={register("firstName")}
             />
@@ -114,39 +98,21 @@ const RegisterPage: React.FC = () => {
                 title="Прізвище"
                 type="text"
                 placeholder="Введіть прізвище"
-                isError={Boolean(errors.lastName)}
-                errorMessage={errors?.lastName?.message}
+                isError={Boolean(errors.lastName || lastNameError)}
+                errorMessage={errors?.lastName?.message || lastNameError}
                 showCross={showCross}
                 formRegisterReturn={register("lastName")}
             />
 
             <VerticalPad heightPx={4} />
 
-            <div>
-                <Label>Фото:</Label>
-                <ImageUpload setFiles={setFiles} remove={removeImage} files={files}>
-                    <Input
-                        {...register("image")}
-                        onChange={handleFileChange}
-                        multiple
-                        ref={inputRef}
-                        id="image"
-                        type="file"
-                        className="w-full"
-                    />
-                </ImageUpload>
-                {errors?.image && (
-                    <FormError className="text-red" errorMessage={errors?.image?.message as string} />
-                )}
-            </div>
-
             <TextInput
                 id="email"
                 title="Пошта"
                 type="text"
                 placeholder="Введіть свою електронну пошту"
-                isError={Boolean(errors.email)}
-                errorMessage={errors?.email?.message}
+                isError={Boolean(errors.email || emailError)}
+                errorMessage={errors?.email?.message || emailError}
                 showCross={showCross}
                 formRegisterReturn={register("email")}
             />
@@ -158,8 +124,8 @@ const RegisterPage: React.FC = () => {
                 title="Логін"
                 type="text"
                 placeholder="Введіть логін"
-                isError={Boolean(errors.username)}
-                errorMessage={errors?.username?.message}
+                isError={Boolean(errors.username || usernameError)}
+                errorMessage={errors?.username?.message || usernameError}
                 showCross={showCross}
                 formRegisterReturn={register("username")}
             />
@@ -171,20 +137,21 @@ const RegisterPage: React.FC = () => {
                 title="Пароль"
                 type="password"
                 placeholder="Введіть пароль"
-                isError={Boolean(errors.password)}
-                errorMessage={errors?.password?.message}
+                isError={Boolean(errors.password || passwordError)}
+                errorMessage={errors?.password?.message || passwordError}
                 showCross={showCross}
                 formRegisterReturn={register("password")}
             />
 
+            <VerticalPad heightPx={4} />
+
             <div>
-                <label className="mb-1 text-sm block font-semibold">Тип користувача</label>
                 <div className="flex gap-4">
                     <label className="flex items-center">
                         <input
                             {...register("type")}
                             type="radio"
-                            defaultChecked={true}
+                            // defaultChecked={true}
                             value="Customer"
                             className="mr-2"
                         />
@@ -200,12 +167,9 @@ const RegisterPage: React.FC = () => {
                         Ріелтор
                     </label>
                 </div>
-                {errors.type && (
-                    <p className="text-red-500 text-xs mt-1">{errors.type.message}</p>
-                )}
             </div>
 
-            <VerticalPad heightPx={10} />
+            <VerticalPad heightPx={20} />
 
             <SignInRegisterButton disabled={isLoading} text="Зареєструватись" />
 

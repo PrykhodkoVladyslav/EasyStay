@@ -23,7 +23,7 @@ export interface SignInRequest {
 export interface Registration {
     firstName: string;
     lastName: string;
-    image: File | null;
+    image?: File | null;
     email: string;
     username: string;
     password: string;

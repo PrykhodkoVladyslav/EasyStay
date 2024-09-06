@@ -202,14 +202,20 @@ svg.star-svg {
     line-height: 24px;
 }
 
-.radiobutton-title {
+.radiobutton-item {
     font-family: "Nunito", system-ui;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
+
+    display: flex;
+    align-items: center;
 }
 
-.radiobutton-title-margin {
+.radiobutton-icon {
+    width: 32px;
+    height: 32px;
+
     margin-right: 8px;
 }
 

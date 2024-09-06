@@ -5,6 +5,7 @@ import getEmptySymbol from "utils/emptySymbol.ts";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 const TextInput = (props: {
+    formRegisterReturn?: UseFormRegisterReturn,
     id: string,
     title: string,
     type: string,
@@ -13,8 +14,7 @@ const TextInput = (props: {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     isError?: boolean,
     errorMessage?: string,
-    showCross?: boolean,
-    formRegisterReturn?: UseFormRegisterReturn
+    showCross?: boolean
 }) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const showEye = props.type === "password";

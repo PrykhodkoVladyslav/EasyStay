@@ -201,3 +201,22 @@ svg.star-svg {
     font-size: 18px;
     line-height: 24px;
 }
+
+.radiobutton-title {
+    font-family: "Nunito", system-ui;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.radiobutton-title-margin {
+    margin-right: 8px;
+}
+
+.radiobutton-title-default {
+    color: black;
+}
+
+.radiobutton-title-error {
+    color: var(--red-error);
+}

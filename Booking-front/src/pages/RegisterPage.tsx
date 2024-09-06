@@ -13,6 +13,7 @@ import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 import IValidationError from "interfaces/error/IValidationError.ts";
+import RadiobuttonGroup from "components/ui/design/RadiobuttonGroup.tsx";
 
 const RegisterPage: React.FC = () => {
     const showCross = true;
@@ -27,6 +28,7 @@ const RegisterPage: React.FC = () => {
     const [emailError, setEmailError] = React.useState("");
     const [usernameError, setUsernameError] = React.useState("");
     const [passwordError, setPasswordError] = React.useState("");
+    const [typeError, setTypeError] = React.useState("");
 
     const {
         register,
@@ -44,6 +46,7 @@ const RegisterPage: React.FC = () => {
         setEmailError("");
         setUsernameError("");
         setPasswordError("");
+        setTypeError("");
 
         try {
             const res = await registerUser(data).unwrap();
@@ -61,6 +64,8 @@ const RegisterPage: React.FC = () => {
                     setUsernameError(e.ErrorMessage);
                 } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "password")) {
                     setPasswordError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "type")) {
+                    setTypeError(e.ErrorMessage);
                 }
             });
         }
@@ -145,29 +150,14 @@ const RegisterPage: React.FC = () => {
 
             <VerticalPad heightPx={4} />
 
-            <div>
-                <div className="flex gap-4">
-                    <label className="flex items-center">
-                        <input
-                            {...register("type")}
-                            type="radio"
-                            // defaultChecked={true}
-                            value="Customer"
-                            className="mr-2"
-                        />
-                        Користувач
-                    </label>
-                    <label className="flex items-center">
-                        <input
-                            {...register("type")}
-                            type="radio"
-                            value="Realtor"
-                            className="mr-2"
-                        />
-                        Ріелтор
-                    </label>
-                </div>
-            </div>
+            <RadiobuttonGroup
+                formRegisterReturn={register("type")}
+                isError={Boolean(errors.type || typeError)}
+                options={[
+                    { title: "я клієнт", value: "Customer" },
+                    { title: "я рієлтор", value: "Realtor" },
+                ]}
+            />
 
             <VerticalPad heightPx={20} />
 

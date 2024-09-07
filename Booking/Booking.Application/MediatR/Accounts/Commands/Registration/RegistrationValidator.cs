@@ -37,9 +37,7 @@ public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 				.WithMessage("LastName is too long");
 
 		RuleFor(r => r.Image)
-			.NotNull()
-				.WithMessage("Image is not selected")
-			.MustAsync(imageValidator.IsValidImageAsync)
+			.MustAsync(imageValidator.IsValidNullPossibeImageAsync)
 				.WithMessage("Image is not valid");
 
 		RuleFor(r => r.Password)

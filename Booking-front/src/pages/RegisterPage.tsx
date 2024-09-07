@@ -1,79 +1,73 @@
-import { Button } from "components/ui/Button.tsx";
-import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRegistrationMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
-import showToast from "utils/toastShow.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {RegistrationSchemaType, RegistrationSchema} from "interfaces/zod/user.ts";
+import { RegistrationSchemaType, RegistrationSchema } from "interfaces/zod/user.ts";
 
-import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import Label from "components/ui/Label.tsx";
-import ImageUpload from "components/ImageUpload.tsx";
-import FormError from "components/ui/FormError.tsx";
+import React from "react";
+import TextInput from "components/ui/design/TextInput.tsx";
+import VerticalPad from "components/ui/VerticalPad.tsx";
+import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
+import IValidationError from "interfaces/error/IValidationError.ts";
+import RadiobuttonGroup from "components/ui/design/RadiobuttonGroup.tsx";
 
 const RegisterPage: React.FC = () => {
+    const showCross = true;
+
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
     const [registerUser, { isLoading }] = useRegistrationMutation();
-    const [files, setFiles] = useState<File[]>([]);
-    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [firstNameError, setFirstNameError] = React.useState("");
+    const [lastNameError, setLastNameError] = React.useState("");
+    const [emailError, setEmailError] = React.useState("");
+    const [usernameError, setUsernameError] = React.useState("");
+    const [passwordError, setPasswordError] = React.useState("");
+    const [typeError, setTypeError] = React.useState("");
 
     const {
         register,
         handleSubmit,
-        setValue,
         formState: { errors },
     } = useForm<RegistrationSchemaType>({
         resolver: zodResolver(RegistrationSchema),
     });
 
-    useEffect(() => {
-        if (inputRef.current) {
-            const dataTransfer = new DataTransfer();
-            files.forEach((file) => dataTransfer.items.add(file));
-            inputRef.current.files = dataTransfer.files;
-        }
-        setValue("image", inputRef.current?.files as any);
-    }, [files, setValue]);
-
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files;
-
-        if (file) {
-            setFiles((prevFiles) => {
-                const updatedFiles = [...prevFiles];
-                for (let i = 0; i < file.length; i++) {
-                    const validImageTypes = ["image/jpeg", "image/webp", "image/png"];
-                    if (validImageTypes.includes(file[i].type)) {
-                        updatedFiles[0] = file[i];
-                    }
-                }
-                return updatedFiles.slice(0, 1);
-            });
-        }
-    };
-
-    const removeImage = (file: string) => {
-        setFiles([]);
-    };
+    const lowerCaseEquals = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
     const onSubmit = async (data: RegistrationSchemaType) => {
+        setFirstNameError("");
+        setLastNameError("");
+        setEmailError("");
+        setUsernameError("");
+        setPasswordError("");
+        setTypeError("");
+
         try {
             const res = await registerUser(data).unwrap();
-            if (res.token === null) {
-                showToast(`Помилка реєстрації`, "error");
-                return;
-            }
             setUser(res.token);
-            showToast(`Реєстрація успішна!`, "success");
         } catch (error) {
-            showToast(`Помилка реєстраціі. Перевірте ваші дані!`, "error");
+            const validationError = error as IValidationError;
+            validationError.data.forEach(e => {
+                if (lowerCaseEquals(e.PropertyName.toLowerCase(), "firstName")) {
+                    setFirstNameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "lastName")) {
+                    setLastNameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "email")) {
+                    setEmailError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "username")) {
+                    setUsernameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "password")) {
+                    setPasswordError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "type")) {
+                    setTypeError(e.ErrorMessage);
+                }
+            });
         }
     };
 
@@ -87,147 +81,93 @@ const RegisterPage: React.FC = () => {
         );
         const { from } = location.state || { from: { pathname: "/admin" } };
         navigate(from);
-        // navigate("/");
     };
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="bg-white rounded w-full max-w-md font-main">
-                <h1 className="text-1xl text-center font-main mb-6 font-extrabold">Реєстрація</h1>
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+            <TextInput
+                id="firstName"
+                title="Ім'я"
+                type="text"
+                placeholder="Введіть ім'я"
+                isError={Boolean(errors.firstName || firstNameError)}
+                errorMessage={errors?.firstName?.message || firstNameError}
+                showCross={showCross}
+                formRegisterReturn={register("firstName")}
+            />
 
-                <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                        <label htmlFor="firstName" className="mb-1 text-sm block font-semibold">
-                            Ім'я
-                        </label>
-                        <Input
-                            {...register("firstName")}
-                            id="firstName"
-                            type="text"
-                            placeholder="Введіть ім'я"
-                        />
-                        {errors.firstName && (
-                            <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>
-                        )}
-                    </div>
+            <VerticalPad heightPx={4} />
 
-                    <div>
-                        <label htmlFor="lastName" className="mb-1 text-sm block font-semibold">
-                            Прізвище
-                        </label>
-                        <Input
-                            {...register("lastName")}
-                            id="lastName"
-                            type="text"
-                            placeholder="Введіть прізвище"
-                        />
-                        {errors.lastName && (
-                            <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>
-                        )}
-                    </div>
+            <TextInput
+                id="lastName"
+                title="Прізвище"
+                type="text"
+                placeholder="Введіть прізвище"
+                isError={Boolean(errors.lastName || lastNameError)}
+                errorMessage={errors?.lastName?.message || lastNameError}
+                showCross={showCross}
+                formRegisterReturn={register("lastName")}
+            />
 
-                    <div>
-                        <Label>Фото:</Label>
-                        <ImageUpload setFiles={setFiles} remove={removeImage} files={files}>
-                            <Input
-                                {...register("image")}
-                                onChange={handleFileChange}
-                                multiple
-                                ref={inputRef}
-                                id="image"
-                                type="file"
-                                className="w-full"
-                            />
-                        </ImageUpload>
-                        {errors?.image && (
-                            <FormError className="text-red" errorMessage={errors?.image?.message as string}/>
-                        )}
-                    </div>
+            <VerticalPad heightPx={4} />
 
-                    <div>
-                        <label htmlFor="email" className="mb-1 text-sm block font-semibold">
-                            Електронна пошта
-                        </label>
-                        <Input
-                            {...register("email")}
-                            id="email"
-                            type="email"
-                            placeholder="Введіть електронну адресу"
-                        />
-                        {errors.email && (
-                            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
-                        )}
-                    </div>
+            <TextInput
+                id="email"
+                title="Пошта"
+                type="text"
+                placeholder="Введіть свою електронну пошту"
+                isError={Boolean(errors.email || emailError)}
+                errorMessage={errors?.email?.message || emailError}
+                showCross={showCross}
+                formRegisterReturn={register("email")}
+            />
 
-                    <div>
-                        <label htmlFor="username" className="mb-1 text-sm block font-semibold">
-                            Ім'я користувача
-                        </label>
-                        <Input
-                            {...register("username")}
-                            id="username"
-                            type="text"
-                            placeholder="Введіть ім'я користувача"
-                        />
-                        {errors.username && (
-                            <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>
-                        )}
-                    </div>
+            <VerticalPad heightPx={4} />
 
-                    <div>
-                        <label htmlFor="password" className="mb-1 text-sm block font-semibold">
-                            Пароль
-                        </label>
-                        <Input
-                            {...register("password")}
-                            id="password"
-                            type="password"
-                            placeholder="Введіть пароль"
-                        />
-                        {errors.password && (
-                            <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-                        )}
-                    </div>
+            <TextInput
+                id="username"
+                title="Логін"
+                type="text"
+                placeholder="Введіть логін"
+                isError={Boolean(errors.username || usernameError)}
+                errorMessage={errors?.username?.message || usernameError}
+                showCross={showCross}
+                formRegisterReturn={register("username")}
+            />
 
-                    <div>
-                        <label className="mb-1 text-sm block font-semibold">Тип користувача</label>
-                        <div className="flex gap-4">
-                            <label className="flex items-center">
-                                <input
-                                    {...register("type")}
-                                    type="radio"
-                                    defaultChecked={true}
-                                    value="Customer"
-                                    className="mr-2"
-                                />
-                                Користувач
-                            </label>
-                            <label className="flex items-center">
-                                <input
-                                    {...register("type")}
-                                    type="radio"
-                                    value="Realtor"
-                                    className="mr-2"
-                                />
-                                Ріелтор
-                            </label>
-                        </div>
-                        {errors.type && (
-                            <p className="text-red-500 text-xs mt-1">{errors.type.message}</p>
-                        )}
-                    </div>
+            <VerticalPad heightPx={4} />
 
-                    <Button
-                        disabled={isLoading}
-                        type="submit"
-                        variant="primary"
-                        className="w-full mb-6 disabled:cursor-not-allowed"
-                    >
-                        Зареєструвати
-                    </Button>
-                </form>
-            </div>
-        </div>
+            <TextInput
+                id="password"
+                title="Пароль"
+                type="password"
+                placeholder="Введіть пароль"
+                isError={Boolean(errors.password || passwordError)}
+                errorMessage={errors?.password?.message || passwordError}
+                showCross={showCross}
+                formRegisterReturn={register("password")}
+            />
+
+            <VerticalPad heightPx={4} />
+
+            <RadiobuttonGroup
+                formRegisterReturn={register("type")}
+                isError={Boolean(errors.type || typeError)}
+                options={[
+                    { title: "я клієнт", value: "Customer" },
+                    { title: "я рієлтор", value: "Realtor" },
+                ]}
+            />
+
+            <VerticalPad heightPx={20} />
+
+            <SignInRegisterButton disabled={isLoading} text="Зареєструватись" />
+
+            <VerticalPad heightPx={8} />
+
+            <p className="login-register-offer">У вас вже є аканту? <a
+                className="login-register-offer-link" href="/auth/login">Увійти</a></p>
+        </form>
     );
 };
 

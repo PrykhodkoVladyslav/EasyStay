@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { IconLock, IconLockOpen } from "@tabler/icons-react";
-import { Button } from "components/ui/Button.tsx"; // Ensure this path is correct
+import { Button } from "components/ui/Button.tsx";
 import { useGetAllCustomersQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "store/index.ts";
 import { getToken } from "store/slice/userSlice.ts";
-import ModalComponent from "components/ModalComponent"; // Adjust the path accordingly
+import ModalComponent from "components/ModalComponent";
+import showToast from "utils/toastShow.ts";
 
 const CustomersListPage: React.FC = () => {
     const [blockUser, { isLoading: isBlockLoading }] = useBlockUserMutation();
@@ -39,13 +40,12 @@ const CustomersListPage: React.FC = () => {
         if (selectedUserId) {
             try {
                 const utcDate = new Date(date.toISOString());
-                console.log(utcDate);
-                console.log("Sending date to API:", utcDate.toISOString());
                 await blockUser({ id: selectedUserId, lockoutEndUtc: utcDate }).unwrap();
+                showToast("Користувача заблоковано", "success");
                 refetch();
             } catch (err) {
-                console.error("Помилка при блокуванні користувача:", err);
-                alert("Не вдалося заблокувати користувача.");
+                // console.error("Помилка при блокуванні користувача:", err);
+                showToast("Не вдалося заблокувати користувача", "error");
             } finally {
                 setModalOpen(false);
             }
@@ -56,10 +56,11 @@ const CustomersListPage: React.FC = () => {
         if (confirm("Ви впевнені, що хочете розблокувати цього користувача?")) {
             try {
                 await unlockUser(id).unwrap();
+                showToast("Користувача розаблоковано", "success");
                 refetch();
             } catch (err) {
-                console.error("Помилка при розблокуванні користувача:", err);
-                alert("Не вдалося розблокувати користувача.");
+                // console.error("Помилка при розблокуванні користувача:", err);
+                showToast("Не вдалося розблокувати користувача", "error");
             }
         }
     };
@@ -97,21 +98,17 @@ const CustomersListPage: React.FC = () => {
                                     />
                                 )}
                             </td>
-                            <td className="px-6 py-3 text-center">
-                                {user.blocked ? (
-                                    <>
-                                        <p className="text-red-800">Заблоковано
-                                            до: {new Date(user.lockoutEnd).toLocaleDateString()}</p>
-                                        <Button
-                                            onClick={() => handleUnlockUser(user.id)}
-                                            variant="icon"
-                                            size="iconmd"
-                                            title="Розблокувати"
-                                            disabled={isUnblockLoading}
-                                        >
-                                            <IconLock className="text-green-500" />
-                                        </Button>
-                                    </>
+                            <td className="px-6 py-3">
+                                {user.isLocked ? (
+                                    <Button
+                                        onClick={() => handleUnlockUser(user.id)}
+                                        variant="icon"
+                                        size="iconmd"
+                                        title="Розблокувати"
+                                        disabled={isUnblockLoading}
+                                    >
+                                        <IconLock className="text-red-500" />
+                                    </Button>
                                 ) : (
                                     <Button
                                         onClick={() => handleBlockUserClick(user.id)}
@@ -120,7 +117,7 @@ const CustomersListPage: React.FC = () => {
                                         title="Заблокувати"
                                         disabled={isBlockLoading}
                                     >
-                                        <IconLockOpen className="text-red-500" />
+                                        <IconLockOpen className="text-green-500" />
                                     </Button>
                                 )}
                             </td>

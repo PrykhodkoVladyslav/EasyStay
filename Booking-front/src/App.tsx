@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "components/layouts/Layout.tsx";
 
 import LoginPage from "pages/LoginPage.tsx";
+import RegisterPage from "pages/RegisterPage.tsx";
+import AuthLayout from "components/layouts/AuthLayout.tsx";
 
 import AdminLayout from "components/layouts/AdminLayout";
 
@@ -23,15 +25,17 @@ import CustomersListPage from "pages/admin/user/customer/CustomersListPage.tsx";
 import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage.tsx";
 import AdminCreatePage from "pages/AdminCreatePage.tsx";
 
-import RegisterPage from "pages/RegisterPage.tsx";
-import AuthLayout from "components/layouts/AuthLayout.tsx";
-
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
                 {/*<Route index element={<HomePage />} />*/}
                 {/*<Route path="hotel/:id" element={<HotelPage />} />*/}
+
+                <Route path="auth" element={<AuthLayout />}>
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
+                </Route>
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="admin" element={<AdminLayout />}>
@@ -60,11 +64,6 @@ function App() {
 
                     </Route>
 
-                </Route>
-
-                <Route path="auth" element={<AuthLayout />}>
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
                 </Route>
 
             </Route>

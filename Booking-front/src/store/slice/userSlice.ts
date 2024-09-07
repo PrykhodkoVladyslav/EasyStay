@@ -4,10 +4,10 @@ import { /*ILocation,*/ User, UserState } from "interfaces/user";
 import { jwtParser } from "utils/jwtParser.ts";
 
 const initialState: UserState = {
-    location: null,
+    // location: null,
     user: jwtParser(localStorage.getItem("authToken")) as User,
     token: localStorage.getItem("authToken") || null,
-    favoriteHotels: [],
+    // favoriteHotels: [],
 };
 
 const userSlice = createSlice({

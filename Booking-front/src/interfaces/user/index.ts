@@ -29,3 +29,23 @@ export interface Registration {
     password: string;
     type: string;
 }
+
+// export interface ResetPassword {
+//     password: string;
+//     token: string;
+//     email: string;
+// }
+
+// export interface ResetPasswordRequest {
+//     password: string;
+//     token: string;
+// }
+
+export interface BlockUserRequest {
+    id: number;
+    lockoutEndUtc: Date;
+}
+
+export interface UnlockUserRequest {
+    id: number;
+}

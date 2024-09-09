@@ -43,7 +43,7 @@ const HotelsPage: React.FC = () => {
     const handleSetArchiveStatus = async (id: number) => {
         if (confirm("Ви впевнені, що хочете архівувати цей готель?")) {
             try {
-                await setArchiveStatusHotel({ id, IsArchived: true }).unwrap();
+                await setArchiveStatusHotel({ id, isArchived: true }).unwrap();
                 showToast("Готель архівовано", "success");
                 refetch();
             } catch (err) {

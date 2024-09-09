@@ -23,7 +23,7 @@ import CityEditPage from "pages/admin/city/CityEditPage.tsx";
 
 import CustomersListPage from "pages/admin/user/customer/CustomersListPage.tsx";
 import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage.tsx";
-import AdminCreatePage from "pages/AdminCreatePage.tsx";
+import AdminCreatePage from "pages/admin/user/admin/AdminCreatePage.tsx";
 
 function App() {
     return (

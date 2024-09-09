@@ -30,6 +30,15 @@ export interface Registration {
     type: string;
 }
 
+export interface CreateAdmin {
+    firstName: string;
+    lastName: string;
+    image?: File | null;
+    email: string;
+    username: string;
+    password: string;
+}
+
 // export interface ResetPassword {
 //     password: string;
 //     token: string;

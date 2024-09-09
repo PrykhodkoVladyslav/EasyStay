@@ -34,8 +34,7 @@ const HotelsPage: React.FC = () => {
                 showToast("Готель видалено", "success");
                 refetch();
             } catch (err) {
-                console.error("Помилка при видаленні готелю:", err);
-                alert("Не вдалося видалити готель");
+                showToast("Не вдалося видалити готель", "error");
             }
         }
     };
@@ -47,7 +46,6 @@ const HotelsPage: React.FC = () => {
                 showToast("Готель архівовано", "success");
                 refetch();
             } catch (err) {
-                console.error("Помилка при архівуванні готелю:", err);
                 showToast("Готель не було архівовано", "error");
             }
         }

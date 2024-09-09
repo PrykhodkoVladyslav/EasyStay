@@ -165,7 +165,7 @@ const RegisterPage: React.FC = () => {
 
             <VerticalPad heightPx={8} />
 
-            <p className="login-register-offer">У вас вже є аканту? <a
+            <p className="login-register-offer">У вас вже є акаунт? <a
                 className="login-register-offer-link" href="/auth/login">Увійти</a></p>
         </form>
     );

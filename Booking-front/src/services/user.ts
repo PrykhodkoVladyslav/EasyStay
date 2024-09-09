@@ -78,14 +78,11 @@ export const userApi = createApi({
 
         blockUser: builder.mutation<void, BlockUserRequest>({
             query: ({ id, lockoutEndUtc }) => ({
-                url: `BlockUserById`,
+                url: "BlockUserById",
                 method: "PATCH",
                 body: {
                     id,
                     lockoutEndUtc: lockoutEndUtc,
-                },
-                headers: {
-                    "Content-Type": "application/json",
                 },
             }),
             invalidatesTags: ["User"],

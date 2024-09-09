@@ -29,6 +29,11 @@ export interface Realtor {
     id: number;
 }
 
+export interface SetArchiveStatusRequest {
+    id: number;
+    isArchived: boolean;
+}
+
 // export interface HotelAddressCity {
 //     id?: number;
 //     name?: string;

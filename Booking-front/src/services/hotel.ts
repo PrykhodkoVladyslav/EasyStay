@@ -1,9 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { /*CreateHotel,*/ Hotel } from "interfaces/hotel";
-// import { GetHotelPageRequest } from "interfaces/hotel";
-// import { GetPageResponse } from "interfaces/hotel.ts";
+import { /*CreateHotel,*/
+    Hotel,
+    // GetHotelPageRequest,
+    // GetPageResponse,
+    SetArchiveStatusRequest,
+} from "interfaces/hotel";
 import { createBaseQuery } from "utils/apiUtils.ts";
-// import { createQueryString } from "utils/createQueryString.ts";
 
 export const hotelApi = createApi({
     reducerPath: "hotelApi",
@@ -77,7 +79,7 @@ export const hotelApi = createApi({
                 }
 
                 return {
-                    url: `update`,
+                    url: "update",
                     method: "PUT",
                     body: hotelFormData,
                 };
@@ -92,14 +94,27 @@ export const hotelApi = createApi({
             }),
             invalidatesTags: ["Hotels"],
         }),
+
+        setArchiveStatusHotel: builder.mutation<void, SetArchiveStatusRequest>({
+            query: ({ id, isArchived }) => ({
+                url: "SetArchiveStatus",
+                method: "PATCH",
+                body: {
+                    id,
+                    IsArchived: isArchived,
+                },
+            }),
+            invalidatesTags: ["Hotels"],
+        }),
     }),
 });
 
 export const {
     useGetHotelQuery,
-    useGetAllHotelsQuery,
+    // useGetAllHotelsQuery,
+    useGetRealtorHotelsPageQuery,
     useAddHotelMutation,
     useUpdateHotelMutation,
     useDeleteHotelMutation,
-    usegetRealtorHotelsPageQuery,
+    useSetArchiveStatusHotelMutation,
 } = hotelApi;

@@ -10,17 +10,14 @@ import ModalComponent from "components/ModalComponent";
 import showToast from "utils/toastShow.ts";
 
 const CustomersListPage: React.FC = () => {
+    const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();
     const [blockUser, { isLoading: isBlockLoading }] = useBlockUserMutation();
     const [unlockUser, { isLoading: isUnblockLoading }] = useUnlockUserMutation();
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-
-    const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();
-
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
     const userRole = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
-
     const isAdmin = userRole === "Admin";
 
     if (!isAdmin) {

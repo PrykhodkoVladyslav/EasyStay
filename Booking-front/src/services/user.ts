@@ -1,10 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
 import {
-    SignInResponse,
-    Registration,
-    SignInRequest,
     User,
+    SignInResponse,
+    SignInRequest,
+    Registration,
+    CreateAdmin,
     // ResetPassword,
     // ResetPasswordRequest,
     BlockUserRequest,
@@ -76,16 +77,34 @@ export const userApi = createApi({
             },
         }),
 
+        createAdmin: builder.mutation<CreateAdmin>({
+            query: (data) => {
+                const formData = new FormData();
+                formData.append("FirstName", data.firstName);
+                formData.append("LastName", data.lastName);
+                if (data.image && data.image.length > 0) {
+                    formData.append("Image", data.image[0]);
+                }
+                formData.append("Email", data.email);
+                formData.append("UserName", data.username);
+                formData.append("Password", data.password);
+
+                return {
+                    url: "CreateAdmin",
+                    method: "POST",
+                    body: formData,
+                };
+            },
+            invalidatesTags: ["User"],
+        }),
+
         blockUser: builder.mutation<void, BlockUserRequest>({
             query: ({ id, lockoutEndUtc }) => ({
-                url: `BlockUserById`,
+                url: "BlockUserById",
                 method: "PATCH",
                 body: {
                     id,
                     lockoutEndUtc: lockoutEndUtc,
-                },
-                headers: {
-                    "Content-Type": "application/json",
                 },
             }),
             invalidatesTags: ["User"],
@@ -105,6 +124,7 @@ export const {
     useGetAllRealtorsQuery,
     useSignInMutation,
     useRegistrationMutation,
+    useCreateAdminMutation,
     useBlockUserMutation,
     useUnlockUserMutation,
 } = userApi;

@@ -68,7 +68,7 @@ const CountriesPage: React.FC = () => {
                                     <IconEdit className="text-blue-500" />
                                 </Button>
                             </td>
-                            <td className="px-6 py-3 text-center text-red-800">
+                            <td className="px-6 py-3 text-center">
                                 <Button
                                     onClick={() => handleDelete(country.id)}
                                     variant="icon"

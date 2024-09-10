@@ -12,7 +12,6 @@ import { useGetAllCitiesQuery } from "services/city.ts";
 import { useAddHotelMutation } from "services/hotel.ts";
 import { useGetAllHotelCategoriesQuery } from "services/hotelCategories.ts";
 import showToast from "utils/toastShow.ts";
-
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 const HotelCreatePage: React.FC = () => {
@@ -23,14 +22,15 @@ const HotelCreatePage: React.FC = () => {
         setValue,
         watch,
         formState: { errors },
-    } = useForm<HotelCreateSchemaType>({ resolver: zodResolver(HotelCreateSchema) });
+    } = useForm<HotelCreateSchemaType>({
+        resolver: zodResolver(HotelCreateSchema),
+    });
 
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
     const [create, { isLoading }] = useAddHotelMutation();
-
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
 
@@ -61,22 +61,17 @@ const HotelCreatePage: React.FC = () => {
     }, [selectedCityId, citiesData, setValue]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files;
+        const fileList = e.target.files;
 
-        if (file) {
+        if (fileList) {
             setFiles((prevFiles) => {
                 const updatedFiles = [...prevFiles];
-                for (let i = 0; i < file.length; i++) {
+                Array.from(fileList).forEach((file) => {
                     const validImageTypes = ["image/gif", "image/jpeg", "image/webp", "image/png"];
-                    if (validImageTypes.includes(file[i].type)) {
-                        const isDuplicate = updatedFiles.some(
-                            (existingFile) => existingFile.name === file[i].name,
-                        );
-                        if (!isDuplicate) {
-                            updatedFiles.push(file[i]);
-                        }
+                    if (validImageTypes.includes(file.type) && !updatedFiles.some((existingFile) => existingFile.name === file.name)) {
+                        updatedFiles.push(file);
                     }
-                }
+                });
                 return updatedFiles;
             });
         }
@@ -109,7 +104,7 @@ const HotelCreatePage: React.FC = () => {
 
     return (
         <div className="container mx-auto flex justify-center mt-5 max-w-4xl mx-auto">
-            <div className="w-full ">
+            <div className="w-full">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Готелю</h1>
                 <div className="flex justify-end mb-4">
                     <Button onClick={() => navigate("/admin/hotels/list")} className="border">

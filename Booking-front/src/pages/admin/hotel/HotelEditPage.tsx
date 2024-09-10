@@ -90,8 +90,8 @@ const HotelEditPage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            console.log("Data: ", data);
-            console.log(id);
+            // console.log(data);
+            // console.log(id);
             await updateHotel({
                 id: Number(id),
                 name: data.name,

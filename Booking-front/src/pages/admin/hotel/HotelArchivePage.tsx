@@ -1,35 +1,54 @@
-// import { useSelector } from "react-redux";
-// import { RootState } from "store";
-// import { getToken } from "store/slice/userSlice";
-import { IconArchiveOff } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import { getToken } from "store/slice/userSlice";
+import { IconEdit, IconTrash, IconArchiveOff } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
-// import { useUnarchiveHotelMutation, useGetArchivedHotelsQuery } from "services/hotel.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import {useGetAllHotelsQuery} from "services/hotel.ts";
+import {
+    // useGetAllHotelsQuery,
+    useGetRealtorHotelsPageQuery,
+    useDeleteHotelMutation,
+    useSetArchiveStatusHotelMutation,
+} from "services/hotel.ts";
+import showToast from "utils/toastShow.ts";
 
 const ArchivedHotelsPage: React.FC = () => {
-    // const token = useSelector((state: RootState) => getToken(state));
-    // const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
-    // const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
+    const token = useSelector((state: RootState) => getToken(state));
+    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
 
-    const { data: hotelsData, isLoading, error, refetch } = useGetAllHotelsQuery();
+    const { data: hotelsData, isLoading, error, refetch } = useGetRealtorHotelsPageQuery({ RealtorId: realtorId });
+    const [deleteHotel] = useDeleteHotelMutation();
+    const [setArchiveStatusHotel] = useSetArchiveStatusHotelMutation();
+    // const { data: hotelsData, isLoading, error, refetch } = useGetAllHotelsQuery();
     const navigate = useNavigate();
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
 
-    const handleUnarchive = async (id: number) => {
+    const handleDelete = async (id: number) => {
+        if (confirm("Ви впевнені, що хочете видалити цей готель?")) {
+            try {
+                await deleteHotel(id).unwrap();
+                showToast("Готель видалено", "success");
+                refetch();
+            } catch (err) {
+                console.error("Помилка при видаленні готелю:", err);
+                alert("Не вдалося видалити готель");
+            }
+        }
+    };
+
+    const handleSetArchiveStatus = async (id: number) => {
         if (confirm("Ви впевнені, що хочете розархівувати цей готель?")) {
             try {
-                await unarchiveHotel(id.toString()).unwrap();
-                toast.success("Готель розархівовано.");
+                await setArchiveStatusHotel({ id, isArchived: false }).unwrap();
+                showToast("Готель розархівовано", "success");
                 refetch();
             } catch (err) {
                 console.error("Помилка при розархівуванні готелю:", err);
-                toast.error("Не вдалося розархівувати готель.");
+                showToast("Готель не було розархівовано", "error");
             }
         }
     };
@@ -52,11 +71,12 @@ const ArchivedHotelsPage: React.FC = () => {
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
-                        <th className="px-6 py-3" colSpan="2"></th>
+                        <th className="px-6 py-3 text-center" colSpan="3">Дії</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {hotelsData?.filter(hotel => hotel.isArchived).map((hotel) => (
+                    {hotelsData?.data?.filter(hotel => hotel.isArchived).map((hotel) => (
+                    // {hotelsData?.filter(hotel => hotel.isArchived).map((hotel) => (
                         <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{hotel.id}</td>
                             <td className="px-6 py-4">{hotel.name}</td>
@@ -78,12 +98,32 @@ const ArchivedHotelsPage: React.FC = () => {
                             <td className="px-6 py-4">{hotel.category.name}</td>
                             <td className="px-6 py-3 text-center">
                                 <Button
-                                    onClick={() => handleUnarchive(hotel.id)}
+                                    onClick={() => navigate(`/admin/hotels/edit/${hotel.id}`)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Редагувати"
+                                >
+                                    <IconEdit className="text-blue-500"/>
+                                </Button>
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => handleDelete(hotel.id)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Видалити"
+                                >
+                                    <IconTrash className="text-red-500"/>
+                                </Button>
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => handleSetArchiveStatus(hotel.id)}
                                     variant="icon"
                                     size="iconmd"
                                     title="Розархівувати"
                                 >
-                                    <IconArchiveOff className="text-green-500"/>
+                                    <IconArchiveOff className="text-yellow-500"/>
                                 </Button>
                             </td>
                         </tr>

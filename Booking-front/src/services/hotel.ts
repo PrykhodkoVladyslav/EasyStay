@@ -111,7 +111,7 @@ export const hotelApi = createApi({
 
 export const {
     useGetHotelQuery,
-    // useGetAllHotelsQuery,
+    useGetAllHotelsQuery,
     useGetRealtorHotelsPageQuery,
     useAddHotelMutation,
     useUpdateHotelMutation,

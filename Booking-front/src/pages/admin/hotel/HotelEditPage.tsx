@@ -14,6 +14,7 @@ import { useGetAllHotelCategoriesQuery } from "services/hotelCategories.ts";
 import showToast from "utils/toastShow.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import {API_URL} from "utils/getEnvData.ts";
 
 const HotelEditPage: React.FC = () => {
     const { id } = useParams();
@@ -21,7 +22,6 @@ const HotelEditPage: React.FC = () => {
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
     const [updateHotel, { isLoading }] = useUpdateHotelMutation();
-
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -38,30 +38,58 @@ const HotelEditPage: React.FC = () => {
 
     useEffect(() => {
         if (hotelData) {
-            setValue("name", hotelData.name || '');
-            setValue("description", hotelData.description || '');
+            setValue("name", hotelData.name);
+            setValue("description", hotelData.description);
             setValue("area", hotelData.area.toString().replace('.', ','));
-            setValue("numberOfRooms", hotelData.numberOfRooms.toString() || '');
-            setValue("address.street", hotelData.address.street || '');
-            setValue("address.houseNumber", hotelData.address.houseNumber || '');
+            setValue("numberOfRooms", hotelData.numberOfRooms.toString());
+            setValue("address.street", hotelData.address.street);
+            setValue("address.houseNumber", hotelData.address.houseNumber);
             setValue("isArchived", hotelData.isArchived ? 'true' : 'false');
-            setValue("address.cityId", hotelData.address.city.id.toString() || '');
+            setValue("address.cityId", hotelData.address.city.id.toString());
             setValue("address.latitude", hotelData.address.latitude.toString().replace('.', ','));
             setValue("address.longitude", hotelData.address.longitude.toString().replace('.', ','));
-            setValue("categoryId", hotelData.category.id.toString() || '');
-            // setFiles([])
+            setValue("categoryId", hotelData.category.id.toString());
+            if (hotelData.photos) {
+                const fileUrls = hotelData.photos.map(photo => `${API_URL}/images/1200_${photo.name}`);
+                setFiles([fileUrls]);
+            }
         }
     }, [hotelData, setValue]);
-
 
     useEffect(() => {
         if (inputRef.current) {
             const dataTransfer = new DataTransfer();
-            files.forEach((file) => dataTransfer.items.add(file));
+            files.forEach((file) => {
+                if (file instanceof File) {
+                    dataTransfer.items.add(file);
+                }
+            });
             inputRef.current.files = dataTransfer.files;
         }
         setValue("photos", inputRef.current?.files as any);
     }, [files, setValue]);
+
+    useEffect(() => {
+        if (hotelData?.photos && Array.isArray(hotelData.photos)) {
+            const fetchFilesFromApi = async () => {
+                const filePromises = hotelData.photos.map(async (photo) => {
+                    const response = await fetch(`${API_URL}/images/1200_${photo.name}`);
+                    const blob = await response.blob();
+                    const file = new File([blob], photo.name, { type: blob.type });
+
+                    console.log('Fetched File:', file);
+
+                    return file;
+                });
+
+                const filesFromApi = await Promise.all(filePromises);
+                console.log('Files from API:', filesFromApi);
+                setFiles(filesFromApi);
+            };
+
+            fetchFilesFromApi();
+        }
+    }, [hotelData]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -70,7 +98,7 @@ const HotelEditPage: React.FC = () => {
             setFiles((prevFiles) => {
                 const updatedFiles = [...prevFiles];
                 for (let i = 0; i < file.length; i++) {
-                    const validImageTypes = ["image/gif", "image/jpeg", "image/webp", "image/png"];
+                    const validImageTypes = ["image/jpeg", "image/webp", "image/png"];
                     if (validImageTypes.includes(file[i].type)) {
                         const isDuplicate = updatedFiles.some(
                             (existingFile) => existingFile.name === file[i].name,
@@ -352,64 +380,17 @@ const HotelEditPage: React.FC = () => {
                         )}
                     </div>
 
-                    {/*<div>*/}
-                    {/*    <Label>Завантажте фото</Label>*/}
-                    {/*    <input*/}
-                    {/*        type="file"*/}
-                    {/*        id="photos"*/}
-                    {/*        className="hidden"*/}
-                    {/*        multiple*/}
-                    {/*        ref={inputRef}*/}
-                    {/*        accept="image/*"*/}
-                    {/*        {...register("photos")}*/}
-                    {/*        onChange={handleFileChange}*/}
-                    {/*    />*/}
-
-                    {/*    <div className="flex gap-5 items-center mt-2">*/}
-                    {/*        <Button*/}
-                    {/*            className="font-medium w-fit text-black bg-brightorange rounded-3xl text-sm py-2.5 px-5"*/}
-                    {/*            type="button"*/}
-                    {/*            onClick={() => inputRef.current?.click()}*/}
-                    {/*        >*/}
-                    {/*            Додати фото*/}
-                    {/*        </Button>*/}
-                    {/*        {files.length > 0 && (*/}
-                    {/*            <div className="flex flex-col gap-3 text-left">*/}
-                    {/*                {files.map((file) => (*/}
-                    {/*                    <div*/}
-                    {/*                        className="flex gap-5 items-center text-darkgray"*/}
-                    {/*                        key={file.name}*/}
-                    {/*                    >*/}
-                    {/*                        <span className="text-darkgray text-base">*/}
-                    {/*                            {file.name}*/}
-                    {/*                        </span>*/}
-
-                    {/*                        <IconCircleX*/}
-                    {/*                            size={20}*/}
-                    {/*                            className="cursor-pointer"*/}
-                    {/*                            onClick={() => removeImage(file.name)}*/}
-                    {/*                        />*/}
-                    {/*                    </div>*/}
-                    {/*                ))}*/}
-                    {/*            </div>*/}
-                    {/*        )}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
                     <div>
                         <Label>Фото:</Label>
                         <div className="relative">
-                            {/*{imagePreview && (*/}
-                            {/*    <img*/}
-                            {/*        src={imagePreview}*/}
-                            {/*        alt="Current Preview"*/}
-                            {/*        className="h-20 w-20 object-cover mb-2"*/}
-                            {/*    />*/}
-                            {/*)}*/}
                             <ImageUpload
                                 setFiles={setFiles}
                                 remove={removeImage}
-                                files={files}>
+                                files={files.map((file, index) => ({
+                                    ...file,
+                                    key: file.name + index
+                                }))}
+                            >
                                 <Input
                                     {...register("photos")}
                                     onChange={handleFileChange}

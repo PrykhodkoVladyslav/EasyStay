@@ -75,7 +75,7 @@ const HotelsPage: React.FC = () => {
                 <table className="text-sm font-bold min-w-full bg-white border text-left">
                     <thead className="text-xs uppercase bg-slate-200">
                     <tr>
-                        <th className="px-6 py-3">id</th>
+                        {/*<th className="px-6 py-3">id</th>*/}
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
@@ -87,7 +87,7 @@ const HotelsPage: React.FC = () => {
                     <tbody>
                     {hotels?.map((hotel) => (
                         <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
-                            <td className="px-6 py-4">{hotel.id}</td>
+                            {/*<td className="px-6 py-4">{hotel.id}</td>*/}
                             <td className="px-6 py-4">{hotel.name}</td>
                             <td className="px-6 py-4">
                                 {hotel.photos && hotel.photos.length > 0 && (

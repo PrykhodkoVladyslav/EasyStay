@@ -7,24 +7,21 @@ import Label from "components/ui/Label.tsx";
 import { CountryEditSchema, CountryEditSchemaType } from "interfaces/zod/country.ts";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetAllCountriesQuery, useUpdateCountryMutation } from "services/country.ts";
+import { useGetCountryQuery, useUpdateCountryMutation } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import {API_URL} from "utils/getEnvData.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import {API_URL} from "utils/getEnvData.ts";
 
 const CountryEditPage: React.FC = () => {
     const { id } = useParams();
-    const { data: countriesData, refetch } = useGetAllCountriesQuery();
+    const { data: countryData, refetch } = useGetCountryQuery(Number(id));
     const [updateCountry, { isLoading } ] = useUpdateCountryMutation();
-    const navigate = useNavigate();
-
-    const country = countriesData?.find(c => c.id === Number(id));
 
     const [files, setFiles] = useState<File[]>([]);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -37,31 +34,43 @@ const CountryEditPage: React.FC = () => {
     });
 
     useEffect(() => {
-        if (country) {
-            setValue("name", country.name);
-            setFiles([]);
-            // if (country.image) {
-            //     const imageUrl = API_URL + `/images/800_${country.image}`;
-            //     setImagePreview(imageUrl);
-            //
-            //     fetch(imageUrl)
-            //         .then((response) => response.blob())
-            //         .then((blob) => {
-            //             const file = new File([blob], `${country.image}`, { type: blob.type });
-            //             setFiles([file]);
-            //         });
-            // }
+        if (countryData) {
+            setValue("name", countryData.name);
+            if (countryData.image) {
+                const fileUrl = `${API_URL}/images/1200_${countryData.image}`;
+                setFiles([fileUrl]);
+            }
         }
-    }, [country, setValue]);
+    }, [countryData, setValue]);
 
     useEffect(() => {
         if (inputRef.current) {
             const dataTransfer = new DataTransfer();
-            files.forEach((file) => dataTransfer.items.add(file));
+            files.forEach((file) => {
+                if (file instanceof File) {
+                    dataTransfer.items.add(file);
+                }
+            });
             inputRef.current.files = dataTransfer.files;
         }
         setValue("image", inputRef.current?.files as any);
     }, [files, setValue]);
+
+    useEffect(() => {
+        if (countryData?.image) {
+            fetch(API_URL + `/images/1200_${countryData.image}`)
+                .then((response) => response.blob())
+                .then((blob) => {
+                    const fileFromApi = new File([blob], 'country_image.jpg', {
+                        type: 'image/jpeg',
+                    });
+                    // const fileFromApi = new File([blob], image.name, {
+                    //     type: blob.type,
+                    // });
+                    setFiles([fileFromApi]);
+                });
+        }
+    }, [countryData])
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -93,7 +102,6 @@ const CountryEditPage: React.FC = () => {
             }).unwrap();
 
             showToast(`Країну успішно оновлено!`, "success");
-
             refetch();
             navigate("/admin/countries/list");
         } catch (err) {
@@ -106,7 +114,7 @@ const CountryEditPage: React.FC = () => {
         setFiles([]);
     };
 
-    if (!country) return <p>Країна не знайдена</p>;
+    if (!countryData) return <p>Країна не знайдена</p>;
 
     return (
         <div className="container mx-auto flex justify-center mt-5 max-w-4xl mx-auto">
@@ -134,13 +142,6 @@ const CountryEditPage: React.FC = () => {
                     <div>
                         <Label>Фото:</Label>
                         <div className="relative">
-                            {imagePreview && (
-                                <img
-                                    src={imagePreview}
-                                    alt="Current Preview"
-                                    className="h-20 w-20 object-cover mb-2"
-                                />
-                            )}
                             <ImageUpload
                                 setFiles={setFiles}
                                 remove={removeImage}

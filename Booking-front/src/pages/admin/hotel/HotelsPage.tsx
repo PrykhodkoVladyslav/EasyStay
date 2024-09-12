@@ -62,9 +62,11 @@ const HotelsPage: React.FC = () => {
                 Список Готелів
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/create")} className="border">
-                    Додати новий готель
-                </Button>
+                {role !== 'Admin' && (
+                    <Button onClick={() => navigate("/admin/hotels/create")} className="border">
+                        Додати новий готель
+                    </Button>
+                )}
                 <Button onClick={() => navigate("/admin/hotels/archive")} className="border">
                     Архівовані готелі
                 </Button>

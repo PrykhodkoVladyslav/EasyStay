@@ -23,6 +23,7 @@ export interface Hotel {
     category: HotelCategories;
     realtor: Realtor;
     photos: Photo[];
+    isArchived: boolean;
 }
 
 export interface Realtor {

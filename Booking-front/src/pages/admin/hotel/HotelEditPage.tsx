@@ -44,6 +44,7 @@ const HotelEditPage: React.FC = () => {
             setValue("numberOfRooms", hotelData.numberOfRooms.toString() || '');
             setValue("address.street", hotelData.address.street || '');
             setValue("address.houseNumber", hotelData.address.houseNumber || '');
+            setValue("isArchived", hotelData.isArchived ? 'true' : 'false');
             setValue("address.cityId", hotelData.address.city.id.toString() || '');
             setValue("address.latitude", hotelData.address.latitude.toString().replace('.', ','));
             setValue("address.longitude", hotelData.address.longitude.toString().replace('.', ','));
@@ -90,14 +91,13 @@ const HotelEditPage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            // console.log(data);
-            // console.log(id);
             await updateHotel({
                 id: Number(id),
                 name: data.name,
                 description: data.description,
                 area: data.area,
                 numberOfRooms: Number(data.numberOfRooms),
+                isArchived: data.isArchived,
                 address: {
                     street: data.address.street,
                     houseNumber: data.address.houseNumber,
@@ -266,7 +266,7 @@ const HotelEditPage: React.FC = () => {
                         <Label htmlFor="address.cityId">Місто:</Label>
 
                         <select
-                            {...register("address.cityId", {required: "City is required"})}
+                            {...register("address.cityId", {required: "Місто обов'язкове"})}
                             id="address.cityId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm"
@@ -318,6 +318,36 @@ const HotelEditPage: React.FC = () => {
                             <FormError
                                 className="text-red"
                                 errorMessage={errors?.address?.longitude?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
+                        <Label>Архівувати готель:</Label>
+                        <div className="flex gap-4">
+                            <label className="flex items-center">
+                                <input
+                                    {...register("isArchived")}
+                                    type="radio"
+                                    value="true"
+                                    className="mr-2"
+                                />
+                                Так
+                            </label>
+                            <label className="flex items-center">
+                                <input
+                                    {...register("isArchived")}
+                                    type="radio"
+                                    value="false"
+                                    className="mr-2"
+                                />
+                                Ні
+                            </label>
+                        </div>
+                        {errors?.isArchived && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.isArchived?.message as string}
                             />
                         )}
                     </div>

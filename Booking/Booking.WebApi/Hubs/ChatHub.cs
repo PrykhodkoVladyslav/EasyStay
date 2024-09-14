@@ -15,6 +15,10 @@ public class ChatHub(
 	IBookingDbContext context,
 	UserManager<User> userManager
 ) : Hub {
+	private static class Methods {
+		public const string CreateChat = "CreateChat";
+		public const string ReceiveMessage = "ReceiveMessage";
+	}
 
 	public async Task SendMessage(long receiverId, string message, string requestId) {
 		var sender = await GetUserAsync();
@@ -43,7 +47,7 @@ public class ChatHub(
 			await context.Chats.AddAsync(chat);
 
 			await context.SaveChangesAsync(CancellationToken.None);
-			await Clients.User(receiverId.ToString()).SendAsync("CreateChat", chat.Id);
+			await Clients.User(receiverId.ToString()).SendAsync(Methods.CreateChat, chat.Id);
 		}
 
 		var messageEntity = new Message {
@@ -58,7 +62,7 @@ public class ChatHub(
 
 		await Clients
 			.Users(sender.Id.ToString(), receiver.Id.ToString())
-			.SendAsync("ReceiveMessage", chat.Id, message, requestId);
+			.SendAsync(Methods.ReceiveMessage, chat.Id, message, requestId);
 	}
 
 	private async Task<User> GetUserAsync() {

@@ -13,7 +13,6 @@ import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx"
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const dispatch = useAppDispatch();
 
     const [email, setEmail] = React.useState("");
@@ -51,8 +50,25 @@ const LoginPage: React.FC = () => {
                 token: token,
             }),
         );
-        const { from } = location.state || { from: { pathname: "/admin" } };
-        navigate(from);
+
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+        let redirectPath = "/";
+
+        switch (role) {
+            case 'Admin':
+                redirectPath = "/admin";
+                break;
+            case 'Realtor':
+                redirectPath = "/realtor";
+                break;
+            default:
+                redirectPath = "/";
+                break;
+        }
+
+        navigate(redirectPath);
     };
 
     return (

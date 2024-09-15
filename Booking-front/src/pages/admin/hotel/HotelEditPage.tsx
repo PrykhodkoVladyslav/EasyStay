@@ -14,6 +14,7 @@ import { useGetAllHotelCategoriesQuery } from "services/hotelCategories.ts";
 import showToast from "utils/toastShow.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import {API_URL} from "utils/getEnvData.ts";
 
 const HotelEditPage: React.FC = () => {
     const { id } = useParams();
@@ -21,7 +22,6 @@ const HotelEditPage: React.FC = () => {
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
     const [updateHotel, { isLoading }] = useUpdateHotelMutation();
-
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -38,29 +38,58 @@ const HotelEditPage: React.FC = () => {
 
     useEffect(() => {
         if (hotelData) {
-            setValue("name", hotelData.name || '');
-            setValue("description", hotelData.description || '');
+            setValue("name", hotelData.name);
+            setValue("description", hotelData.description);
             setValue("area", hotelData.area.toString().replace('.', ','));
-            setValue("numberOfRooms", hotelData.numberOfRooms.toString() || '');
-            setValue("address.street", hotelData.address.street || '');
-            setValue("address.houseNumber", hotelData.address.houseNumber || '');
-            setValue("address.cityId", hotelData.address.city.id.toString() || '');
+            setValue("numberOfRooms", hotelData.numberOfRooms.toString());
+            setValue("address.street", hotelData.address.street);
+            setValue("address.houseNumber", hotelData.address.houseNumber);
+            setValue("isArchived", hotelData.isArchived ? 'true' : 'false');
+            setValue("address.cityId", hotelData.address.city.id.toString());
             setValue("address.latitude", hotelData.address.latitude.toString().replace('.', ','));
             setValue("address.longitude", hotelData.address.longitude.toString().replace('.', ','));
-            setValue("categoryId", hotelData.category.id.toString() || '');
-            // setFiles([])
+            setValue("categoryId", hotelData.category.id.toString());
+            if (hotelData.photos) {
+                const fileUrls = hotelData.photos.map(photo => `${API_URL}/images/1200_${photo.name}`);
+                setFiles(fileUrls);
+            }
         }
     }, [hotelData, setValue]);
-
 
     useEffect(() => {
         if (inputRef.current) {
             const dataTransfer = new DataTransfer();
-            files.forEach((file) => dataTransfer.items.add(file));
+            files.forEach((file) => {
+                if (file instanceof File) {
+                    dataTransfer.items.add(file);
+                }
+            });
             inputRef.current.files = dataTransfer.files;
         }
         setValue("photos", inputRef.current?.files as any);
     }, [files, setValue]);
+
+    useEffect(() => {
+        if (hotelData?.photos && Array.isArray(hotelData.photos)) {
+            const fetchFilesFromApi = async () => {
+                const filePromises = hotelData.photos.map(async (photo) => {
+                    const response = await fetch(`${API_URL}/images/1200_${photo.name}`);
+                    const blob = await response.blob();
+                    const file = new File([blob], photo.name, { type: blob.type });
+
+                    console.log('Fetched File:', file);
+
+                    return file;
+                });
+
+                const filesFromApi = await Promise.all(filePromises);
+                console.log('Files from API:', filesFromApi);
+                setFiles(filesFromApi);
+            };
+
+            fetchFilesFromApi();
+        }
+    }, [hotelData]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -69,7 +98,7 @@ const HotelEditPage: React.FC = () => {
             setFiles((prevFiles) => {
                 const updatedFiles = [...prevFiles];
                 for (let i = 0; i < file.length; i++) {
-                    const validImageTypes = ["image/gif", "image/jpeg", "image/webp", "image/png"];
+                    const validImageTypes = ["image/jpeg", "image/webp", "image/png"];
                     if (validImageTypes.includes(file[i].type)) {
                         const isDuplicate = updatedFiles.some(
                             (existingFile) => existingFile.name === file[i].name,
@@ -90,14 +119,13 @@ const HotelEditPage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            // console.log(data);
-            // console.log(id);
             await updateHotel({
                 id: Number(id),
                 name: data.name,
                 description: data.description,
                 area: data.area,
                 numberOfRooms: Number(data.numberOfRooms),
+                isArchived: data.isArchived,
                 address: {
                     street: data.address.street,
                     houseNumber: data.address.houseNumber,
@@ -266,7 +294,7 @@ const HotelEditPage: React.FC = () => {
                         <Label htmlFor="address.cityId">Місто:</Label>
 
                         <select
-                            {...register("address.cityId", {required: "City is required"})}
+                            {...register("address.cityId", {required: "Місто обов'язкове"})}
                             id="address.cityId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm"
@@ -322,64 +350,44 @@ const HotelEditPage: React.FC = () => {
                         )}
                     </div>
 
-                    {/*<div>*/}
-                    {/*    <Label>Завантажте фото</Label>*/}
-                    {/*    <input*/}
-                    {/*        type="file"*/}
-                    {/*        id="photos"*/}
-                    {/*        className="hidden"*/}
-                    {/*        multiple*/}
-                    {/*        ref={inputRef}*/}
-                    {/*        accept="image/*"*/}
-                    {/*        {...register("photos")}*/}
-                    {/*        onChange={handleFileChange}*/}
-                    {/*    />*/}
-
-                    {/*    <div className="flex gap-5 items-center mt-2">*/}
-                    {/*        <Button*/}
-                    {/*            className="font-medium w-fit text-black bg-brightorange rounded-3xl text-sm py-2.5 px-5"*/}
-                    {/*            type="button"*/}
-                    {/*            onClick={() => inputRef.current?.click()}*/}
-                    {/*        >*/}
-                    {/*            Додати фото*/}
-                    {/*        </Button>*/}
-                    {/*        {files.length > 0 && (*/}
-                    {/*            <div className="flex flex-col gap-3 text-left">*/}
-                    {/*                {files.map((file) => (*/}
-                    {/*                    <div*/}
-                    {/*                        className="flex gap-5 items-center text-darkgray"*/}
-                    {/*                        key={file.name}*/}
-                    {/*                    >*/}
-                    {/*                        <span className="text-darkgray text-base">*/}
-                    {/*                            {file.name}*/}
-                    {/*                        </span>*/}
-
-                    {/*                        <IconCircleX*/}
-                    {/*                            size={20}*/}
-                    {/*                            className="cursor-pointer"*/}
-                    {/*                            onClick={() => removeImage(file.name)}*/}
-                    {/*                        />*/}
-                    {/*                    </div>*/}
-                    {/*                ))}*/}
-                    {/*            </div>*/}
-                    {/*        )}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div>
+                        <Label>Архівувати готель:</Label>
+                        <div className="flex gap-4">
+                            <label className="flex items-center">
+                                <input
+                                    {...register("isArchived")}
+                                    type="radio"
+                                    value="true"
+                                    className="mr-2"
+                                />
+                                Так
+                            </label>
+                            <label className="flex items-center">
+                                <input
+                                    {...register("isArchived")}
+                                    type="radio"
+                                    value="false"
+                                    className="mr-2"
+                                />
+                                Ні
+                            </label>
+                        </div>
+                        {errors?.isArchived && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.isArchived?.message as string}
+                            />
+                        )}
+                    </div>
 
                     <div>
                         <Label>Фото:</Label>
                         <div className="relative">
-                            {/*{imagePreview && (*/}
-                            {/*    <img*/}
-                            {/*        src={imagePreview}*/}
-                            {/*        alt="Current Preview"*/}
-                            {/*        className="h-20 w-20 object-cover mb-2"*/}
-                            {/*    />*/}
-                            {/*)}*/}
                             <ImageUpload
                                 setFiles={setFiles}
                                 remove={removeImage}
-                                files={files}>
+                                files={files}
+                            >
                                 <Input
                                     {...register("photos")}
                                     onChange={handleFileChange}

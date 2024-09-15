@@ -1,6 +1,6 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
-import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { getIconUrl } from "utils/publicAccessor.ts";
 
 const RadiobuttonGroup = (props: {
     formRegisterReturn?: UseFormRegisterReturn,
@@ -21,11 +21,11 @@ const RadiobuttonGroup = (props: {
         ? "radiobutton-title-error"
         : "radiobutton-title-default";
 
-    const pathToCheckedImage = getPublicResourceUrl(props.isError
+    const pathToCheckedImage = getIconUrl(props.isError
         ? "radiobutton/circle-filled-red.svg"
         : "radiobutton/circle-filled-black.svg");
 
-    const pathToUncheckedImage = getPublicResourceUrl(props.isError
+    const pathToUncheckedImage = getIconUrl(props.isError
         ? "radiobutton/circle-empty-red.svg"
         : "radiobutton/circle-empty-black.svg");
 

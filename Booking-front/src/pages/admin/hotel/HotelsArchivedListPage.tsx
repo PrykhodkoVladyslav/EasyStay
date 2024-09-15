@@ -1,23 +1,12 @@
-import { useSelector } from "react-redux";
-import { RootState } from "store";
-import { getToken } from "store/slice/userSlice";
 import { Button } from "components/ui/Button.tsx";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import {
     useGetAllHotelsQuery,
-    useGetRealtorHotelsPageQuery,
 } from "services/hotel.ts";
 
-const HotelsListPage: React.FC = () => {
-    const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
-    const role = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
-    const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
-
-    const { data: hotelsData, isLoading, error, refetch } = role === 'Admin'
-        ? useGetAllHotelsQuery()
-        : useGetRealtorHotelsPageQuery({ RealtorId: realtorId });
+const ArchivedHotelsPage: React.FC = () => {
+    const { data: hotelsData, isLoading, error } =  useGetAllHotelsQuery();
 
     const navigate = useNavigate();
 
@@ -27,11 +16,11 @@ const HotelsListPage: React.FC = () => {
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
             <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">
-                Список Готелів
+                Архівовані Готелі
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/archive")} className="border">
-                    Архівовані готелі
+                <Button onClick={() => navigate("/admin/hotels/list")} className="border">
+                    Назад до списку Готелів
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">
@@ -42,13 +31,10 @@ const HotelsListPage: React.FC = () => {
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
-                        {role !== 'Admin' && (
-                            <th className="px-6 py-3 text-center" colSpan="3">Дії</th>
-                        )}
-                    </tr>
+                        </tr>
                     </thead>
                     <tbody>
-                    {hotelsData?.filter(hotel => !hotel.isArchived).map((hotel) => (
+                    {hotelsData?.filter(hotel => hotel.isArchived).map((hotel) => (
                         <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
                             {/*<td className="px-6 py-4">{hotel.id}</td>*/}
                             <td className="px-6 py-4">{hotel.name}</td>
@@ -77,4 +63,4 @@ const HotelsListPage: React.FC = () => {
     );
 };
 
-export default HotelsListPage;
+export default ArchivedHotelsPage;

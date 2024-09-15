@@ -1,15 +1,19 @@
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { getToken } from "store/slice/userSlice";
+import { IconEdit, IconTrash, IconArchive } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import {
     useGetAllHotelsQuery,
     useGetRealtorHotelsPageQuery,
+    useDeleteHotelMutation,
+    useSetArchiveStatusHotelMutation,
 } from "services/hotel.ts";
+import showToast from "utils/toastShow.ts";
 
-const HotelsListPage: React.FC = () => {
+const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
     const role = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
@@ -19,10 +23,36 @@ const HotelsListPage: React.FC = () => {
         ? useGetAllHotelsQuery()
         : useGetRealtorHotelsPageQuery({ RealtorId: realtorId });
 
+    const [deleteHotel] = useDeleteHotelMutation();
+    const [setArchiveStatusHotel] = useSetArchiveStatusHotelMutation();
     const navigate = useNavigate();
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
+
+    const handleDelete = async (id: number) => {
+        if (confirm("Ви впевнені, що хочете видалити цей готель?")) {
+            try {
+                await deleteHotel(id).unwrap();
+                showToast("Готель видалено", "success");
+                refetch();
+            } catch (err) {
+                showToast("Не вдалося видалити готель", "error");
+            }
+        }
+    };
+
+    const handleSetArchiveStatus = async (id: number) => {
+        if (confirm("Ви впевнені, що хочете архівувати цей готель?")) {
+            try {
+                await setArchiveStatusHotel({ id, isArchived: true }).unwrap();
+                showToast("Готель архівовано", "success");
+                refetch();
+            } catch (err) {
+                showToast("Готель не було архівовано", "error");
+            }
+        }
+    };
 
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
@@ -30,7 +60,10 @@ const HotelsListPage: React.FC = () => {
                 Список Готелів
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/archive")} className="border">
+                <Button onClick={() => navigate("/realtor/hotels/create")} className="border">
+                    Додати новий готель
+                </Button>
+                <Button onClick={() => navigate("/realtor/hotels/archive")} className="border">
                     Архівовані готелі
                 </Button>
             </div>
@@ -48,7 +81,7 @@ const HotelsListPage: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {hotelsData?.filter(hotel => !hotel.isArchived).map((hotel) => (
+                    {hotelsData?.data?.filter(hotel => !hotel.isArchived).map((hotel) => (
                         <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
                             {/*<td className="px-6 py-4">{hotel.id}</td>*/}
                             <td className="px-6 py-4">{hotel.name}</td>
@@ -68,6 +101,36 @@ const HotelsListPage: React.FC = () => {
                                 )}
                             </td>
                             <td className="px-6 py-4">{hotel.category.name}</td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => navigate(`/realtor/hotels/edit/${hotel.id}`)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Редагувати"
+                                >
+                                    <IconEdit className="text-blue-500"/>
+                                </Button>
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => handleDelete(hotel.id)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Видалити"
+                                >
+                                    <IconTrash className="text-red-500"/>
+                                </Button>
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => handleSetArchiveStatus(hotel.id)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Архівувати"
+                                >
+                                    <IconArchive className="text-yellow-500"/>
+                                </Button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
@@ -77,4 +140,4 @@ const HotelsListPage: React.FC = () => {
     );
 };
 
-export default HotelsListPage;
+export default HotelsPage;

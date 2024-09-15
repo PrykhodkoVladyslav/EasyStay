@@ -41,6 +41,7 @@ export const hotelApi = createApi({
                 hotelFormData.append("Description", hotel.description);
                 hotelFormData.append("Area", hotel.area);
                 hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
+                hotelFormData.append("IsArchived", hotel.isArchived);
                 hotelFormData.append("Address.Street", hotel.address.street);
                 hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
                 hotelFormData.append("Address.Latitude", hotel.address.latitude);
@@ -68,6 +69,7 @@ export const hotelApi = createApi({
                 hotelFormData.append("Description", hotel.description);
                 hotelFormData.append("Area", hotel.area);
                 hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
+                hotelFormData.append("IsArchived", hotel.isArchived);
                 hotelFormData.append("Address.Street", hotel.address.street);
                 hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
                 hotelFormData.append("Address.Latitude", hotel.address.latitude);
@@ -111,7 +113,7 @@ export const hotelApi = createApi({
 
 export const {
     useGetHotelQuery,
-    // useGetAllHotelsQuery,
+    useGetAllHotelsQuery,
     useGetRealtorHotelsPageQuery,
     useAddHotelMutation,
     useUpdateHotelMutation,

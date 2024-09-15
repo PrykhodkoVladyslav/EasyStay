@@ -11,8 +11,8 @@ import { useGetCityQuery, useUpdateCityMutation } from "services/city.ts";
 import { useGetAllCountriesQuery } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 import ImageUpload from "components/ImageUpload.tsx";
-
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import {API_URL} from "utils/getEnvData.ts";
 
 const CityEditPage: React.FC = () => {
     const { id } = useParams();
@@ -36,22 +36,42 @@ const CityEditPage: React.FC = () => {
 
     useEffect(() => {
         if (cityData) {
-            setValue("name", cityData.name || '');
+            setValue("name", cityData.name);
             setValue("latitude", cityData.latitude .toString().replace('.', ','));
             setValue("longitude", cityData.longitude.toString().replace('.', ','));
-            setValue("countryId", cityData.country.id.toString() || '');
-            // setFiles([])
+            setValue("countryId", cityData.country.id.toString());
+            if (cityData.image) {
+                const fileUrl = `${API_URL}/images/1200_${cityData.image}`;
+                setFiles([fileUrl]);
+            }
         }
     }, [cityData, setValue]);
 
     useEffect(() => {
         if (inputRef.current) {
             const dataTransfer = new DataTransfer();
-            files.forEach((file) => dataTransfer.items.add(file));
+            files.forEach((file) => {
+                if (file instanceof File) {
+                    dataTransfer.items.add(file);
+                }
+            });
             inputRef.current.files = dataTransfer.files;
         }
         setValue("image", inputRef.current?.files as any);
     }, [files, setValue]);
+
+    useEffect(() => {
+        if (cityData?.image) {
+            fetch(API_URL + `/images/1200_${cityData.image}`)
+                .then((response) => response.blob())
+                .then((blob) => {
+                    const fileFromApi = new File([blob], 'hotel_image.jpg', {
+                        type: 'image/jpeg',
+                    });
+                    setFiles([fileFromApi]);
+                });
+        }
+    }, [cityData]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -182,13 +202,6 @@ const CityEditPage: React.FC = () => {
                     <div>
                         <Label>Фото:</Label>
                         <div className="relative">
-                            {/*{imagePreview && (*/}
-                            {/*    <img*/}
-                            {/*        src={imagePreview}*/}
-                            {/*        alt="Current Preview"*/}
-                            {/*        className="h-20 w-20 object-cover mb-2"*/}
-                            {/*    />*/}
-                            {/*)}*/}
                             <ImageUpload
                                 setFiles={setFiles}
                                 remove={removeImage}

@@ -83,7 +83,6 @@ const HotelCreatePage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            // console.log("Data: ", data);
             await create({
                 ...data,
                 photos: data.photos as File[],
@@ -246,7 +245,7 @@ const HotelCreatePage: React.FC = () => {
                         <Label htmlFor="cityId">Місто:</Label>
 
                         <select
-                            {...register("address.cityId", {required: "City is required"})}
+                            {...register("address.cityId", {required: "Місто обов'язкове"})}
                             id="cityId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm"
@@ -300,6 +299,36 @@ const HotelCreatePage: React.FC = () => {
                             <FormError
                                 className="text-red"
                                 errorMessage={errors?.address?.longitude?.message as string}
+                            />
+                        )}
+                    </div>
+
+                    <div>
+                        <Label>Архівувати готель:</Label>
+                        <div className="flex gap-4">
+                            <label className="flex items-center">
+                                <input
+                                    {...register("isArchived")}
+                                    type="radio"
+                                    value="true"
+                                    className="mr-2"
+                                />
+                                Так
+                            </label>
+                            <label className="flex items-center">
+                                <input
+                                    {...register("isArchived")}
+                                    type="radio"
+                                    value="false"
+                                    className="mr-2"
+                                />
+                                Ні
+                            </label>
+                        </div>
+                        {errors?.isArchived && (
+                            <FormError
+                                className="text-red"
+                                errorMessage={errors?.isArchived?.message as string}
                             />
                         )}
                     </div>

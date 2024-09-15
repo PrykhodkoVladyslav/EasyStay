@@ -92,28 +92,11 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         </svg>
                     </button>
 
-                    {/* Logo */}
-                    {/*<NavLink end to="/" className={`block text-slate-200 truncate transition duration-150 "}`}>*/}
-                    {/*    <div className="flex items-center">*/}
-                    {/*        <img src={logo} alt="logo" className="w-8 h-8 object-cover rounded-md" />*/}
-                    {/*        <span className="text-xl font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 duration-200">*/}
-                    {/*            Dashboard*/}
-                    {/*        </span>*/}
-                    {/*    </div>*/}
-                    {/*</NavLink>*/}
-
                     {/* Links */}
                     <div className="space-y-8 -mx-2">
                         {/* Pages group */}
                         <div>
                             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-                                {/*<span*/}
-                                {/*    className="hidden lg:block. lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"*/}
-                                {/*    aria-hidden="true"*/}
-                                {/*>*/}
-                                {/*    •••*/}
-                                {/*</span>*/}
-                                {/*<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Головна</span>*/}
                             </h3>
                             <ul className="mt-3">
                                 {/* Головна */}
@@ -144,7 +127,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 open={open}
                                                 links={[
                                                     { to: "hotels/list", label: "Список" },
-                                                    { to: "hotels/create", label: "Створити" },
                                                 ]}
                                             />
                                         </>
@@ -238,13 +220,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         {/* More group */}
                         <div>
                             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-                                {/*<span*/}
-                                {/*    className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"*/}
-                                {/*    aria-hidden="true"*/}
-                                {/*>*/}
-                                {/*    •••*/}
-                                {/*</span>*/}
-                                {/*<span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Додатково</span>*/}
                                 <hr className={"lg:hidden lg:sidebar-expanded:block 2xl:block"}/>
                             </h3>
                             <ul className="mt-3">

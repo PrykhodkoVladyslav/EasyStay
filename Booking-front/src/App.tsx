@@ -1,12 +1,15 @@
-import ProtectedRoute from "components/guards/ProtectedRoute.tsx";
 import { Route, Routes } from "react-router-dom";
 import Layout from "components/layouts/Layout.tsx";
+
+import HomePage from "pages/HomePage.tsx";
+import ProtectedRoute from "components/guards/ProtectedRoute.tsx";
 
 import LoginPage from "pages/LoginPage.tsx";
 import RegisterPage from "pages/RegisterPage.tsx";
 import AuthLayout from "components/layouts/AuthLayout.tsx";
 
 import AdminLayout from "components/layouts/AdminLayout";
+import RealtorLayout from "components/layouts/RealtorLayout";
 
 import HotelsPage from "pages/admin/hotel/HotelsPage";
 import HotelCreatePage from "pages/admin/hotel/HotelCreatePage";
@@ -29,7 +32,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                {/*<Route index element={<HomePage />} />*/}
+                <Route index element={<HomePage />} />
                 {/*<Route path="hotel/:id" element={<HotelPage />} />*/}
 
                 <Route path="auth" element={<AuthLayout />}>
@@ -37,13 +40,10 @@ function App() {
                     <Route path="register" element={<RegisterPage />} />
                 </Route>
 
-                <Route element={<ProtectedRoute />}>
+                <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
                     <Route path="admin" element={<AdminLayout />}>
                         <Route path="hotels">
                             <Route path="list" element={<HotelsPage />} />
-                            <Route path="create" element={<HotelCreatePage />} />
-                            <Route path="edit/:id" element={<HotelEditPage />} />
-                            <Route path="archive" element={<HotelArchivePage />} />
                         </Route>
                         <Route path="countries">
                             <Route path="list" element={<CountriesPage />} />
@@ -63,7 +63,18 @@ function App() {
                         </Route>
 
                     </Route>
+                </Route>
 
+                <Route element={<ProtectedRoute allowedRoles={['Realtor']} />}>
+                    <Route path="realtor" element={<RealtorLayout />}>
+                        <Route path="hotels">
+                            <Route path="list" element={<HotelsPage />} />
+                            <Route path="create" element={<HotelCreatePage />} />
+                            <Route path="edit/:id" element={<HotelEditPage />} />
+                            <Route path="archive" element={<HotelArchivePage />} />
+                        </Route>
+
+                    </Route>
                 </Route>
 
             </Route>

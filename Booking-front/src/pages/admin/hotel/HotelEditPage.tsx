@@ -51,7 +51,7 @@ const HotelEditPage: React.FC = () => {
             setValue("categoryId", hotelData.category.id.toString());
             if (hotelData.photos) {
                 const fileUrls = hotelData.photos.map(photo => `${API_URL}/images/1200_${photo.name}`);
-                setFiles([fileUrls]);
+                setFiles(fileUrls);
             }
         }
     }, [hotelData, setValue]);
@@ -386,10 +386,7 @@ const HotelEditPage: React.FC = () => {
                             <ImageUpload
                                 setFiles={setFiles}
                                 remove={removeImage}
-                                files={files.map((file, index) => ({
-                                    ...file,
-                                    key: file.name + index
-                                }))}
+                                files={files}
                             >
                                 <Input
                                     {...register("photos")}

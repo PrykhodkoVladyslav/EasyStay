@@ -11,7 +11,7 @@ interface HeaderProps {
     setSidebarOpen: (open: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = (props) => {
+const AdminHeader: React.FC<HeaderProps> = (props) => {
     const { sidebarOpen, setSidebarOpen } = props;
     // const [searchModalOpen, setSearchModalOpen] = useState(false);
     const user = useAppSelector(getUser);
@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-10">
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 -mb-px">
-                    {/* Header: Left side */}
+                    {/* AdminHeader: Left side */}
                     <div className="flex">
                         {/* Hamburger button */}
                         <button
@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                         </button>
                     </div>
 
-                    {/* Header: Right side */}
+                    {/* AdminHeader: Right side */}
                     <div className="flex items-center space-x-3">
                         {/*<div>*/}
                         {/*    <button*/}
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                         {/*    </button>*/}
                         {/*    <SearchModal isOpen={searchModalOpen} close={() => setSearchModalOpen(false)} />*/}
                         {/*</div>*/}
-                        
+
                         {user ? (
                             <UserCard customer={user} />
                         ) : (
@@ -74,4 +74,4 @@ const Header: React.FC<HeaderProps> = (props) => {
     );
 };
 
-export default Header;
+export default AdminHeader;

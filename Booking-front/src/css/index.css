@@ -150,8 +150,8 @@ svg.star-svg {
 
 .text-input-password-icon {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     right: 16px;
     top: 50%;
     transform: translateY(-50%);

@@ -1,6 +1,6 @@
 import { Input } from "components/ui/Input.tsx";
 import React from "react";
-import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { getIconUrl } from "utils/publicAccessor.ts";
 import getEmptySymbol from "utils/emptySymbol.ts";
 import { UseFormRegisterReturn } from "react-hook-form";
 
@@ -35,11 +35,13 @@ const TextInput = (props: {
 
             <div className="text-input-input-container">
                 {props.showCross && props.isError &&
-                    <img src={getPublicResourceUrl("x-circle.svg")} alt="error"
+                    <img src={getIconUrl("x-circle.svg")} alt="error"
                          className="text-input-error-icon" />}
 
-                {showEye && <img src={getPublicResourceUrl(showPassword ? "show.svg" : "hide.svg")} alt="password"
-                                 className="text-input-password-icon" onClick={() => setShowPassword(!showPassword)} />}
+                {showEye &&
+                    <img src={getIconUrl(showPassword ? "eye/show.svg" : "eye/hide.svg")}
+                         alt="password"
+                         className="text-input-password-icon" onClick={() => setShowPassword(!showPassword)} />}
 
                 <Input
                     className={inputClassNames}

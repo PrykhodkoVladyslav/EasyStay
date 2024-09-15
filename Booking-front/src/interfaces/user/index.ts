@@ -1,34 +1,60 @@
-import { Hotel } from "interfaces/hotel";
-
 export interface User {
-    id: string;
+    id: number;
     email: string;
     firstName: string;
     lastName: string;
     photo: string;
 }
 
-// export interface ILocation {
-//     latitude: number;
-//     longitude: number;
-// }
-
 export interface UserState {
-    // location: ILocation | null;
     user: User | null;
     token: string | null;
-    // favoriteHotels: Hotel[];
 }
 
-export interface LoginResponse {
+export interface SignInResponse {
     token: string;
 }
 
-export interface RegisterUser {
+export interface SignInRequest {
+    email: string;
+    password: string;
+}
+
+export interface Registration {
     firstName: string;
     lastName: string;
-    image: File | null;
+    image?: File | null;
     email: string;
     username: string;
     password: string;
+    type: string;
+}
+
+export interface CreateAdmin {
+    firstName: string;
+    lastName: string;
+    image?: File | null;
+    email: string;
+    username: string;
+    password: string;
+}
+
+// export interface ResetPassword {
+//     password: string;
+//     token: string;
+//     email: string;
+// }
+
+// export interface ResetPasswordRequest {
+//     password: string;
+//     token: string;
+// }
+
+export interface BlockUserRequest {
+    id: number;
+    lockoutEndUtc: Date;
+}
+
+export interface UnlockUserRequest {
+    id: number;
 }

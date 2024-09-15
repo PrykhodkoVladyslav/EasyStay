@@ -14,16 +14,20 @@ using Booking.Application.MediatR.Hotels.Queries.Shared;
 using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
 using Booking.Application.MediatR.RealtorReviews.Queries.Shared;
 using Booking.Domain.Identity;
+using Booking.Infrastructure.Options;
+using Booking.Infrastructure.Services;
 using Booking.Persistence;
 using Booking.Persistence.Seeding;
+using Booking.Persistence.Services;
 using Booking.Services;
+using Booking.WebApi.Extensions;
+using Booking.WebApi.Hubs;
 using Booking.WebApi.Middleware;
 using Booking.WebApi.Services;
 using Booking.WebApi.Services.PaginationServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
-using Notes.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +42,8 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
@@ -71,6 +77,7 @@ builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddScoped<IIdentityValidator, IdentityValidator>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
+builder.Services.AddSingleton<IEmailService, GmailEmailService>();
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
@@ -81,10 +88,13 @@ builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageComma
 builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
 
 
+builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment() || app.Environment.IsDocker()) {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
@@ -109,7 +119,10 @@ app.UseStaticFiles(new StaticFileOptions {
 	RequestPath = "/images"
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chat");
 
 app.MapControllers();
 

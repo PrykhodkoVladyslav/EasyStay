@@ -56,6 +56,29 @@ namespace Booking.Persistence.Migrations
                     b.ToTable("Addresses", (string)null);
                 });
 
+            modelBuilder.Entity("Booking.Domain.Chat", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RealtorId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("CustomerId", "RealtorId");
+
+                    b.HasIndex("RealtorId");
+
+                    b.ToTable("Chats", (string)null);
+                });
+
             modelBuilder.Entity("Booking.Domain.City", b =>
                 {
                     b.Property<long>("Id")
@@ -332,6 +355,40 @@ namespace Booking.Persistence.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Booking.Domain.Message", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ChatId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("Messages", (string)null);
+                });
+
             modelBuilder.Entity("Booking.Domain.RealtorReview", b =>
                 {
                     b.Property<long>("Id")
@@ -493,6 +550,25 @@ namespace Booking.Persistence.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("Booking.Domain.Chat", b =>
+                {
+                    b.HasOne("Booking.Domain.Identity.Customer", "Customer")
+                        .WithMany("Chats")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Booking.Domain.Identity.Realtor", "Realtor")
+                        .WithMany("Chats")
+                        .HasForeignKey("RealtorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Realtor");
+                });
+
             modelBuilder.Entity("Booking.Domain.City", b =>
                 {
                     b.HasOne("Booking.Domain.Country", "Country")
@@ -559,6 +635,25 @@ namespace Booking.Persistence.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Booking.Domain.Message", b =>
+                {
+                    b.HasOne("Booking.Domain.Identity.User", "Author")
+                        .WithMany("Messages")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Booking.Domain.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Chat");
                 });
 
             modelBuilder.Entity("Booking.Domain.RealtorReview", b =>
@@ -643,6 +738,11 @@ namespace Booking.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Booking.Domain.Chat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("Booking.Domain.City", b =>
                 {
                     b.Navigation("Addresses");
@@ -670,16 +770,22 @@ namespace Booking.Persistence.Migrations
 
             modelBuilder.Entity("Booking.Domain.Identity.User", b =>
                 {
+                    b.Navigation("Messages");
+
                     b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("Booking.Domain.Identity.Customer", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("RealtorReviews");
                 });
 
             modelBuilder.Entity("Booking.Domain.Identity.Realtor", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("Hotels");
 
                     b.Navigation("Reviews");

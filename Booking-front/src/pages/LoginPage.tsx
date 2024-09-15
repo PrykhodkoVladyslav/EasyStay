@@ -1,15 +1,15 @@
-// import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { Button } from "components/ui/Button.tsx";
-import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useGoogleLoginMutation, useLoginMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
-import showToast from "utils/toastShow.ts";
 
 import React from "react";
+import TextInput from "components/ui/design/TextInput.tsx";
+import VerticalPad from "components/ui/VerticalPad.tsx";
+import getEmptySymbol from "utils/emptySymbol.ts";
+import { useSignInMutation } from "services/user.ts";
+import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -19,32 +19,26 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    // const [googleLogin, { isLoading: isLoadingGoogleLogin }] = useGoogleLoginMutation();
-    const [emailLogin, { isLoading: isLoadingEmailLogin }] = useLoginMutation();
+    const [error, setError] = React.useState("");
+
+    const [emailLogin, { isLoading: isLoadingEmailLogin }] = useSignInMutation();
 
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
-        const res = await emailLogin({ email, password });
+        const response = await emailLogin({ email, password });
 
-        if (res && "data" in res && res.data) {
-            setUser(res.data.token);
-            showToast(`Авторизація успішна!`, "success");
-        } else {
-            showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
-        }
-    };
-
-    const authSuccess = async (credentialResponse: CredentialResponse) => {
-        const res = await googleLogin({
-            credential: credentialResponse.credential || "",
-        });
-
-        if (res && "data" in res && res.data) {
-            setUser(res.data.token);
-            showToast(`Авторизація успішна!`, "success");
-        } else {
-            showToast(`Помилка авторизаціі. Перевірте ваші дані!`, "error");
+        if (response.error) {
+            if ("status" in response.error && response.error.status === 400 ||
+                "status" in response.error && response.error.status === 401) {
+                setError("Не вірна пошта або пароль");
+            } else {
+                setError("Невідома помилка");
+            }
+        } else if (response && response.data) {
+            setUser(response.data.token);
+            setError("");
         }
     };
 
@@ -57,78 +51,51 @@ const LoginPage: React.FC = () => {
                 token: token,
             }),
         );
-        const { from } = location.state || { from: { pathname: "/" } };
+        const { from } = location.state || { from: { pathname: "/admin" } };
         navigate(from);
     };
 
-    const authError = () => {
-        console.log("Error login. Check your Gmail account!");
-    };
-
     return (
-        <div className="flex flex-col items-center justify-center ">
-            <div className="bg-white p-8 rounded w-full max-w-md font-main">
-                <h1 className="text-2xl font-main mb-6 font-extrabold ">Увійдіть або створіть акаунт</h1>
+        <form className="flex flex-col" onSubmit={login}>
+            <TextInput
+                id="email"
+                title="Пошта"
+                type="email"
+                value={email}
+                placeholder="Введіть свою електронну пошту"
+                onChange={(e) => setEmail(e.target.value)}
+                isError={!!error} />
 
-                <form className="flex flex-col gap-4" onSubmit={login}>
-                    <div>
-                        <label htmlFor="email" className="mb-1 text-sm block font-semibold">
-                            Електронна пошта
-                        </label>
+            <VerticalPad heightPx={4} />
 
-                        <Input
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            id={"email"}
-                            type="email"
-                            placeholder="Введіть свою електронну адресу"
-                        />
-                    </div>
+            <div className="relative">
+                <TextInput
+                    id="password"
+                    title="Пароль"
+                    type="password"
+                    value={password}
+                    placeholder="Введіть пароль"
+                    onChange={(e) => setPassword(e.target.value)}
+                    isError={!!error} />
 
-                    <div>
-                        <label htmlFor="password" className="mb-1 text-sm block font-semibold">
-                            Пароль
-                        </label>
-
-                        <Input
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            minLength={8}
-                            id="password"
-                            placeholder="Введіть свій пароль"
-                        />
-                    </div>
-
-                    <Button
-                        disabled={isLoadingGoogleLogin || isLoadingEmailLogin}
-                        type="submit"
-                        variant="primary"
-                        className="w-full mb-6 disabled:opacity-50"
-                    >
-                        Продовжити з електронною поштою
-                    </Button>
-                </form>
-
-                {/*<div className="flex items-center mb-6">*/}
-                {/*    <div className="flex-grow border-t text-gray/20"></div>*/}
-                {/*    <span className="mx-4 text-sm">або вибрати один із цих варіантів</span>*/}
-                {/*    <div className="flex-grow border-t text-gray/20"></div>*/}
-                {/*</div>*/}
-
-                {/*<div className="flex justify-center items-center">*/}
-                {/*    <GoogleLogin*/}
-                {/*        useOneTap*/}
-                {/*        locale="uk"*/}
-                {/*        size="large"*/}
-                {/*        onSuccess={authSuccess}*/}
-                {/*        onError={authError}*/}
-                {/*    />*/}
-                {/*</div>*/}
-
-                <div className="border-t text-gray/20 mt-8"></div>
+                <a href="/auth/forgot">
+                    <p className="absolute right-0 bottom-0">Забули пароль?</p>
+                </a>
             </div>
-        </div>
+
+            <p className="login-error-message">{error || getEmptySymbol()}</p>
+
+            <VerticalPad heightPx={10} />
+
+            <SignInRegisterButton
+                disabled={isLoadingEmailLogin}
+                text="Вхід" />
+
+            <VerticalPad heightPx={8} />
+
+            <p className="login-register-offer">У вас немає аканту? <a
+                className="login-register-offer-link" href="/auth/register">Зареєструватись</a></p>
+        </form>
     );
 };
 

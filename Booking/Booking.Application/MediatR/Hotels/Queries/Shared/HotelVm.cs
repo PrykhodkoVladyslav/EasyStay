@@ -19,17 +19,11 @@ public class HotelVm : IMapWith<Hotel> {
 
 	public bool IsArchived { get; set; }
 
-	public long UserId { get; set; }
-
 	public AddressVm Address { get; set; } = null!;
 
 	public HotelCategoryVm Category { get; set; } = null!;
 
+	public long RealtorId { get; set; }
+
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
-
-
-
-	public void Mapping(Profile profile) {
-		profile.CreateMap<Hotel, HotelVm>();
-	}
 }

@@ -1,25 +1,37 @@
-// import { City } from "interfaces/city";
-// import { HotelCategories } from "interfaces/hotelCategories";
-// import { PaginationOptions } from "interfaces/index.ts";
-// import { Photo } from "interfaces/photo";
+import { City } from "interfaces/city";
+import { HotelCategories } from "interfaces/hotelCategories";
+// import { PaginationOptions } from "interfaces/hotel.ts";
+import { Photo } from "interfaces/photo";
 
-// export interface Address {
-//     id: number;
-//     street: string;
-//     houseNumber: string;
-//     latitude: number;
-//     longitude: number;
-//     city: City;
-// }
+export interface Address {
+    id: number;
+    street: string;
+    houseNumber: string;
+    latitude: number;
+    longitude: number;
+    city: City;
+}
 export interface Hotel {
     id: number;
     name: string;
     description: string;
     // rating: number;
     // reviews: number;
-    // address: Address;
-    // category: HotelCategories;
-    // photos: Photo[];
+    area: number;
+    numberOfRooms: number;
+    address: Address;
+    category: HotelCategories;
+    realtor: Realtor;
+    photos: Photo[];
+}
+
+export interface Realtor {
+    id: number;
+}
+
+export interface SetArchiveStatusRequest {
+    id: number;
+    isArchived: boolean;
 }
 
 // export interface HotelAddressCity {
@@ -38,7 +50,7 @@ export interface Hotel {
 //     id?: number;
 //     street?: string;
 //     houseNumber?: string;
-//     city?: HotelAddressCity;
+//     country?: HotelAddressCity;
 //     latitude?: string;
 //     longitude?: string;
 // }
@@ -57,7 +69,7 @@ export interface Hotel {
 // export interface CreateHotel {
 //     name: string;
 //     cityId: number;
-//     typeId: string;
+//     categoryId: string;
 //     description: string;
 //     address: HotelAddress;
 //     photos: File[];

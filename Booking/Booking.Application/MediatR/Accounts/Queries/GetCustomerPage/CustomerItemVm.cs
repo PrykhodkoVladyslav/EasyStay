@@ -1,4 +1,5 @@
-﻿using Booking.Application.Common.Mappings;
+﻿using AutoMapper;
+using Booking.Application.Common.Mappings;
 using Booking.Domain.Identity;
 
 namespace Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
@@ -15,4 +16,16 @@ public class CustomerItemVm : IMapWith<Customer> {
 	public string LastName { get; set; } = null!;
 
 	public string Photo { get; set; } = null!;
+
+	public bool IsLocked { get; set; }
+
+
+
+	public void Mapping(Profile profile) {
+		profile.CreateMap<Customer, CustomerItemVm>()
+			.ForMember(
+				dest => dest.IsLocked,
+				opt => opt.MapFrom(src => src.LockoutEnd != null && src.LockoutEnd >= DateTimeOffset.UtcNow)
+			);
+	}
 }

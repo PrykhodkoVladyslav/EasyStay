@@ -1,8 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { CreateHotel, GetHotelPageRequest, Hotel } from "interfaces/hotel";
-// import { GetPageResponse } from "interfaces/index.ts";
+import { /*CreateHotel,*/
+    Hotel,
+    // GetHotelPageRequest,
+    // GetPageResponse,
+    SetArchiveStatusRequest,
+} from "interfaces/hotel";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import { createQueryString } from "utils/createQueryString.ts";
 
 export const hotelApi = createApi({
     reducerPath: "hotelApi",
@@ -10,12 +13,18 @@ export const hotelApi = createApi({
     tagTypes: ["Hotels"],
 
     endpoints: (builder) => ({
-        getHotel: builder.query<Hotel, string>({
+        getHotel: builder.query<Hotel[], string>({
             query: (id) => `getById/${id}`,
         }),
 
         getAllHotels: builder.query<Hotel[], void>({
             query: () => "getAll",
+            providesTags: ["Hotels"],
+        }),
+
+        getRealtorHotelsPage: builder.query<Hotel[], { RealtorId?: string }>({
+            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
+            providesTags: ["Hotels"],
         }),
 
         // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
@@ -26,17 +35,18 @@ export const hotelApi = createApi({
         // }),
 
         addHotel: builder.mutation({
-            query: (hotel: CreateHotel) => {
+            query: (hotel) => {
                 const hotelFormData = new FormData();
                 hotelFormData.append("Name", hotel.name);
                 hotelFormData.append("Description", hotel.description);
-                hotelFormData.append("Address.Street", hotel.address.street || "Default");
-                hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber || "Default");
-                hotelFormData.append("Address.Latitude", hotel.address.latitude || "0");
-                hotelFormData.append("Address.Longitude", hotel.address.longitude || "0");
-                hotelFormData.append("Address.CityId", hotel.cityId?.toString() || "0");
-                hotelFormData.append("TypeId", hotel.typeId?.toString() || "0");
-
+                hotelFormData.append("Area", hotel.area);
+                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
+                hotelFormData.append("Address.Street", hotel.address.street);
+                hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
+                hotelFormData.append("Address.Latitude", hotel.address.latitude);
+                hotelFormData.append("Address.Longitude", hotel.address.longitude);
+                hotelFormData.append("Address.CityId", hotel.cityId?.toString());
+                hotelFormData.append("CategoryId", hotel.categoryId?.toString());
                 if (hotel.photos) {
                     Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
                 }
@@ -49,8 +59,62 @@ export const hotelApi = createApi({
             },
             invalidatesTags: ["Hotels"],
         }),
+
+        updateHotel: builder.mutation({
+            query: (hotel: Hotel) => {
+                const hotelFormData = new FormData();
+                hotelFormData.append("Id", hotel.id);
+                hotelFormData.append("Name", hotel.name);
+                hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("Area", hotel.area);
+                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
+                hotelFormData.append("Address.Street", hotel.address.street);
+                hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
+                hotelFormData.append("Address.Latitude", hotel.address.latitude);
+                hotelFormData.append("Address.Longitude", hotel.address.longitude);
+                hotelFormData.append("Address.CityId", hotel.cityId?.toString());
+                hotelFormData.append("CategoryId", hotel.categoryId?.toString());
+                if (hotel.photos) {
+                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
+                }
+
+                return {
+                    url: "update",
+                    method: "PUT",
+                    body: hotelFormData,
+                };
+            },
+            invalidatesTags: ["Hotels"],
+        }),
+
+        deleteHotel: builder.mutation({
+            query: (id: number) => ({
+                url: `delete/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Hotels"],
+        }),
+
+        setArchiveStatusHotel: builder.mutation<void, SetArchiveStatusRequest>({
+            query: ({ id, isArchived }) => ({
+                url: "SetArchiveStatus",
+                method: "PATCH",
+                body: {
+                    id,
+                    IsArchived: isArchived,
+                },
+            }),
+            invalidatesTags: ["Hotels"],
+        }),
     }),
 });
 
-export const { useAddHotelMutation, useGetAllHotelsQuery, useGetHotelQuery, useGetPageHotelsQuery } =
-    hotelApi;
+export const {
+    useGetHotelQuery,
+    // useGetAllHotelsQuery,
+    useGetRealtorHotelsPageQuery,
+    useAddHotelMutation,
+    useUpdateHotelMutation,
+    useDeleteHotelMutation,
+    useSetArchiveStatusHotelMutation,
+} = hotelApi;

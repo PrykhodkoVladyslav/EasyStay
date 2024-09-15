@@ -8,11 +8,19 @@
 /Model/bin/
 /Model/obj/
 
+/Booking.Application/bin/
+/Booking.Application/obj/
+/Booking.Domain/bin/
+/Booking.Domain/obj/
+/Booking.Persistence/bin/
+/Booking.Persistence/obj/
+/Booking.WebApi/bin/
+/Booking.WebApi/obj/
+
 # Development appsettings.json
 /Booking/appsettings.Development.json
+/Booking.WebApi/appsettings.Development.json
 
 # API data
 /Booking/Data/
-
-# Docker volumes
-/volumes/
+/Booking.WebApi/Data/

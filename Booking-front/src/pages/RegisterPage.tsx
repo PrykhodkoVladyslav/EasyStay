@@ -1,147 +1,173 @@
-import { Button } from "components/ui/Button.tsx";
-import { Input } from "components/ui/Input.tsx";
 import { User } from "interfaces/user";
-import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "services/user.ts";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useRegistrationMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
-import showToast from "utils/toastShow.ts";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegistrationSchemaType, RegistrationSchema } from "interfaces/zod/user.ts";
 
-import React, { useState } from "react";
+import React from "react";
+import TextInput from "components/ui/design/TextInput.tsx";
+import VerticalPad from "components/ui/VerticalPad.tsx";
+import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
+import IValidationError from "interfaces/error/IValidationError.ts";
+import RadiobuttonGroup from "components/ui/design/RadiobuttonGroup.tsx";
 
 const RegisterPage: React.FC = () => {
+    const showCross = true;
+
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
-    const [register, { isLoading }] = useRegisterMutation();
+    const [registerUser, { isLoading }] = useRegistrationMutation();
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [image, setImage] = useState<File | null>(null);
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [firstNameError, setFirstNameError] = React.useState("");
+    const [lastNameError, setLastNameError] = React.useState("");
+    const [emailError, setEmailError] = React.useState("");
+    const [usernameError, setUsernameError] = React.useState("");
+    const [passwordError, setPasswordError] = React.useState("");
+    const [typeError, setTypeError] = React.useState("");
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setImage(file);
-        }
-    };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<RegistrationSchemaType>({
+        resolver: zodResolver(RegistrationSchema),
+    });
 
-    const handleRegister = async () => {
-        const res = await register({ firstName, lastName, image, email, username, password });
-        if (res && "data" in res && res.data) {
-            setUser(res.data.token);
-            showToast(`Реєстрація успішна!`, "success");
-        } else {
-            showToast(`Помилка реєстраціі. Перевірте ваші дані!`, "error");
+    const lowerCaseEquals = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+
+    const onSubmit = async (data: RegistrationSchemaType) => {
+        setFirstNameError("");
+        setLastNameError("");
+        setEmailError("");
+        setUsernameError("");
+        setPasswordError("");
+        setTypeError("");
+
+        try {
+            const res = await registerUser(data).unwrap();
+            setUser(res.token);
+        } catch (error) {
+            const validationError = error as IValidationError;
+            validationError.data.forEach(e => {
+                if (lowerCaseEquals(e.PropertyName.toLowerCase(), "firstName")) {
+                    setFirstNameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "lastName")) {
+                    setLastNameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "email")) {
+                    setEmailError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "username")) {
+                    setUsernameError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "password")) {
+                    setPasswordError(e.ErrorMessage);
+                } else if (lowerCaseEquals(e.PropertyName.toLowerCase(), "type")) {
+                    setTypeError(e.ErrorMessage);
+                }
+            });
         }
     };
 
     const setUser = (token: string) => {
         localStorage.setItem("authToken", token);
-
         dispatch(
             setCredentials({
                 user: jwtParser(token) as User,
                 token: token,
             }),
         );
-        navigate("/");
+        const { from } = location.state || { from: { pathname: "/admin" } };
+        navigate(from);
     };
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="bg-white p-8 rounded w-full max-w-md font-main">
-                <h1 className="text-2xl font-main mb-6 font-extrabold">Створіть акаунт</h1>
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+            <TextInput
+                id="firstName"
+                title="Ім'я"
+                type="text"
+                placeholder="Введіть ім'я"
+                isError={Boolean(errors.firstName || firstNameError)}
+                errorMessage={errors?.firstName?.message || firstNameError}
+                showCross={showCross}
+                formRegisterReturn={register("firstName")}
+            />
 
-                <form className="flex flex-col gap-4">
-                    <div>
-                        <label htmlFor="firstName" className="mb-1 text-sm block font-semibold">
-                            Ім'я
-                        </label>
-                        <Input
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            id="firstName"
-                            type="text"
-                            placeholder="Введіть своє ім'я"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="lastName" className="mb-1 text-sm block font-semibold">
-                            Прізвище
-                        </label>
-                        <Input
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            id="lastName"
-                            type="text"
-                            placeholder="Введіть своє прізвище"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="image" className="mb-1 text-sm block font-semibold">
-                            Зображення
-                        </label>
-                        <input
-                            onChange={handleImageChange}
-                            id="image"
-                            type="file"
-                            accept="image/*"
-                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="mb-1 text-sm block font-semibold">
-                            Електронна пошта
-                        </label>
-                        <Input
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            id="email"
-                            type="email"
-                            placeholder="Введіть свою електронну адресу"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="username" className="mb-1 text-sm block font-semibold">
-                            Ім'я користувача
-                        </label>
-                        <Input
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            id="username"
-                            type="text"
-                            placeholder="Введіть своє ім'я користувача"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="mb-1 text-sm block font-semibold">
-                            Пароль
-                        </label>
-                        <Input
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            id="password"
-                            type="password"
-                            placeholder="Введіть свій пароль"
-                        />
-                    </div>
+            <VerticalPad heightPx={4} />
 
-                    <Button
-                        disabled={isLoading}
-                        type="button"
-                        onClick={handleRegister}
-                        variant="primary"
-                        className="w-full mb-6 disabled:cursor-not-allowed"
-                    >
-                        Зареєструватися
-                    </Button>
-                </form>
-            </div>
-        </div>
+            <TextInput
+                id="lastName"
+                title="Прізвище"
+                type="text"
+                placeholder="Введіть прізвище"
+                isError={Boolean(errors.lastName || lastNameError)}
+                errorMessage={errors?.lastName?.message || lastNameError}
+                showCross={showCross}
+                formRegisterReturn={register("lastName")}
+            />
+
+            <VerticalPad heightPx={4} />
+
+            <TextInput
+                id="email"
+                title="Пошта"
+                type="text"
+                placeholder="Введіть свою електронну пошту"
+                isError={Boolean(errors.email || emailError)}
+                errorMessage={errors?.email?.message || emailError}
+                showCross={showCross}
+                formRegisterReturn={register("email")}
+            />
+
+            <VerticalPad heightPx={4} />
+
+            <TextInput
+                id="username"
+                title="Логін"
+                type="text"
+                placeholder="Введіть логін"
+                isError={Boolean(errors.username || usernameError)}
+                errorMessage={errors?.username?.message || usernameError}
+                showCross={showCross}
+                formRegisterReturn={register("username")}
+            />
+
+            <VerticalPad heightPx={4} />
+
+            <TextInput
+                id="password"
+                title="Пароль"
+                type="password"
+                placeholder="Введіть пароль"
+                isError={Boolean(errors.password || passwordError)}
+                errorMessage={errors?.password?.message || passwordError}
+                showCross={showCross}
+                formRegisterReturn={register("password")}
+            />
+
+            <VerticalPad heightPx={4} />
+
+            <RadiobuttonGroup
+                formRegisterReturn={register("type")}
+                isError={Boolean(errors.type || typeError)}
+                options={[
+                    { title: "я клієнт", value: "Customer" },
+                    { title: "я рієлтор", value: "Realtor" },
+                ]}
+            />
+
+            <VerticalPad heightPx={20} />
+
+            <SignInRegisterButton disabled={isLoading} text="Зареєструватись" />
+
+            <VerticalPad heightPx={8} />
+
+            <p className="login-register-offer">У вас вже є акаунт? <a
+                className="login-register-offer-link" href="/auth/login">Увійти</a></p>
+        </form>
     );
 };
 

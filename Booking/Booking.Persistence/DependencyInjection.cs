@@ -1,6 +1,5 @@
 ﻿using Booking.Application.Interfaces;
 using Booking.Domain.Identity;
-using Booking.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Notes.Persistence;
+namespace Booking.Persistence;
 
 public static class DependencyInjection {
 	public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) {
@@ -64,7 +63,9 @@ public static class DependencyInjection {
 						if (context.Principal is null)
 							return;
 
-						var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
+						var userManager = context.HttpContext
+							.RequestServices
+							.GetRequiredService<UserManager<User>>();
 						var user = await userManager.GetUserAsync(context.Principal);
 
 						if (user is null || user.LockoutEnd > DateTimeOffset.UtcNow) {

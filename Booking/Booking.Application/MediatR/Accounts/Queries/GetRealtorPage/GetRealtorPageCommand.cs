@@ -7,4 +7,6 @@ public class GetRealtorPageCommand : PaginationFilterDto, IRequest<PageVm<Realto
 	public string? FirstName { get; set; }
 
 	public string? LastName { get; set; }
+
+	public bool? IsLocked { get; set; }
 }

@@ -32,6 +32,8 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	public DbSet<HotelCategory> HotelCategories { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
 	public DbSet<RealtorReview> RealtorReviews { get; set; }
+	public DbSet<Chat> Chats { get; set; }
+	public DbSet<Message> Messages { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);

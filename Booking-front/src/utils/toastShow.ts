@@ -1,4 +1,5 @@
 import { Slide, ToastOptions, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ToastType = "success" | "error" | "info" | "warning";
 
@@ -12,7 +13,8 @@ const showToast = (message: string, type: ToastType = "info") => {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        theme: "light",
+        // theme: "light",
+        theme: "colored",
         transition: Slide,
     };
 

@@ -106,7 +106,7 @@ const HotelCreatePage: React.FC = () => {
             <div className="w-full">
                 <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">Створення Готелю</h1>
                 <div className="flex justify-end mb-4">
-                    <Button onClick={() => navigate("/admin/hotels/list")} className="border">
+                    <Button onClick={() => navigate("/realtor/hotels/list")} className="border">
                         Список Готелів
                     </Button>
                 </div>

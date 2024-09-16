@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { getToken } from "store/slice/userSlice";
-import { IconEdit, IconTrash, IconArchiveOff } from "@tabler/icons-react";
+import { IconEdit, IconTrash, IconArchive } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import {
 } from "services/hotel.ts";
 import showToast from "utils/toastShow.ts";
 
-const ArchivedHotelsPage: React.FC = () => {
+const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
     const role = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
@@ -37,34 +37,34 @@ const ArchivedHotelsPage: React.FC = () => {
                 showToast("Готель видалено", "success");
                 refetch();
             } catch (err) {
-                alert("Не вдалося видалити готель");
+                showToast("Не вдалося видалити готель", "error");
             }
         }
     };
 
     const handleSetArchiveStatus = async (id: number) => {
-        if (confirm("Ви впевнені, що хочете розархівувати цей готель?")) {
+        if (confirm("Ви впевнені, що хочете архівувати цей готель?")) {
             try {
-                await setArchiveStatusHotel({ id, isArchived: false }).unwrap();
-                showToast("Готель розархівовано", "success");
+                await setArchiveStatusHotel({ id, isArchived: true }).unwrap();
+                showToast("Готель архівовано", "success");
                 refetch();
             } catch (err) {
-                console.error("Помилка при розархівуванні готелю:", err);
-                showToast("Готель не було розархівовано", "error");
+                showToast("Готель не було архівовано", "error");
             }
         }
     };
 
-    const hotels = role === 'Admin' ? hotelsData?.filter(hotel => hotel.isArchived) : hotelsData?.data?.filter(hotel => hotel.isArchived);
-
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
             <h1 className="pb-5 text-2xl text-center text-black font-main font-bold">
-                Архівовані Готелі
+                Список Готелів
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/admin/hotels/list")} className="border">
-                    Назад до списку Готелів
+                <Button onClick={() => navigate("/realtor/hotels/create")} className="border">
+                    Додати новий готель
+                </Button>
+                <Button onClick={() => navigate("/realtor/hotels/archive")} className="border">
+                    Архівовані готелі
                 </Button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">
@@ -78,10 +78,10 @@ const ArchivedHotelsPage: React.FC = () => {
                         {role !== 'Admin' && (
                             <th className="px-6 py-3 text-center" colSpan="3">Дії</th>
                         )}
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
-                    {hotels?.map((hotel) => (
+                    {hotelsData?.data?.filter(hotel => !hotel.isArchived).map((hotel) => (
                         <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
                             {/*<td className="px-6 py-4">{hotel.id}</td>*/}
                             <td className="px-6 py-4">{hotel.name}</td>
@@ -101,40 +101,36 @@ const ArchivedHotelsPage: React.FC = () => {
                                 )}
                             </td>
                             <td className="px-6 py-4">{hotel.category.name}</td>
-                            {role !== 'Admin' && (
-                                <>
-                                    <td className="px-6 py-3 text-center">
-                                        <Button
-                                            onClick={() => navigate(`/admin/hotels/edit/${hotel.id}`)}
-                                            variant="icon"
-                                            size="iconmd"
-                                            title="Редагувати"
-                                        >
-                                        <IconEdit className="text-blue-500"/>
-                                    </Button>
-                                    </td>
-                                    <td className="px-6 py-3 text-center">
-                                        <Button
-                                            onClick={() => handleDelete(hotel.id)}
-                                            variant="icon"
-                                            size="iconmd"
-                                            title="Видалити"
-                                        >
-                                            <IconTrash className="text-red-500"/>
-                                        </Button>
-                                    </td>
-                                    <td className="px-6 py-3 text-center">
-                                        <Button
-                                            onClick={() => handleSetArchiveStatus(hotel.id)}
-                                            variant="icon"
-                                            size="iconmd"
-                                            title="Розархівувати"
-                                        >
-                                            <IconArchiveOff className="text-yellow-500"/>
-                                        </Button>
-                                    </td>
-                                </>
-                            )}
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => navigate(`/realtor/hotels/edit/${hotel.id}`)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Редагувати"
+                                >
+                                    <IconEdit className="text-blue-500"/>
+                                </Button>
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => handleDelete(hotel.id)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Видалити"
+                                >
+                                    <IconTrash className="text-red-500"/>
+                                </Button>
+                            </td>
+                            <td className="px-6 py-3 text-center">
+                                <Button
+                                    onClick={() => handleSetArchiveStatus(hotel.id)}
+                                    variant="icon"
+                                    size="iconmd"
+                                    title="Архівувати"
+                                >
+                                    <IconArchive className="text-yellow-500"/>
+                                </Button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
@@ -144,4 +140,4 @@ const ArchivedHotelsPage: React.FC = () => {
     );
 };
 
-export default ArchivedHotelsPage;
+export default HotelsPage;

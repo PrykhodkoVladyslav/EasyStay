@@ -3,10 +3,10 @@ import {Link, Outlet} from "react-router-dom";
 
 const RealtorLayout = () => {
     return (
-        <main className="site-layout">
+        <main className="account-layout">
             <Header/>
-            <Outlet />
-            <Link to="/realtor/hotels/list">Список готелів</Link>
+            {/*<Outlet />*/}
+            {/*<Link to="/realtor/hotels/list">Список готелів</Link>*/}
         </main>
     );
 };

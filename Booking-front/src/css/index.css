@@ -217,23 +217,3 @@
 .radiobutton-title-error {
     color: var(--red-error);
 }
-
-.header-layout {
-    display: flex;
-}
-
-.header-logo {
-    width: 183px;
-    height: 74px;
-    gap: 0;
-    opacity: 0;
-}
-
-.header {
-    width: 1721px;
-    height: 74px;
-    top: 29px;
-    left: 99px;
-    gap: 348px;
-    opacity: 0;
-}

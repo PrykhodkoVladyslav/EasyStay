@@ -4,10 +4,9 @@ import {Link, Outlet} from "react-router-dom";
 const RealtorLayout = () => {
     return (
         <main className="site-layout">
-            realtor page
             <Header/>
             <Outlet />
-            {/*<Link to="/realtor/hotels/list">Список готелів</Link>*/}
+            <Link to="/realtor/hotels/list">Список готелів</Link>
         </main>
     );
 };

@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 
 import App from "./App.tsx";
 import "./css/index.css";
+import "./css/index.scss";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <>

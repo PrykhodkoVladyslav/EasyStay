@@ -1,5 +1,5 @@
 import { User } from "interfaces/user";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/index.ts";
 import { setCredentials } from "store/slice/userSlice.ts";
 import { jwtParser } from "utils/jwtParser.ts";
@@ -51,16 +51,16 @@ const LoginPage: React.FC = () => {
             }),
         );
 
-        const payload = JSON.parse(atob(token.split('.')[1]));
+        const payload = JSON.parse(atob(token.split(".")[1]));
         const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
         let redirectPath = "/";
 
         switch (role) {
-            case 'Admin':
+            case "Admin":
                 redirectPath = "/admin";
                 break;
-            case 'Realtor':
+            case "Realtor":
                 redirectPath = "/realtor";
                 break;
             default:
@@ -109,8 +109,8 @@ const LoginPage: React.FC = () => {
 
             <VerticalPad heightPx={8} />
 
-            <p className="login-register-offer">У вас немає аканту? <a
-                className="login-register-offer-link" href="/auth/register">Зареєструватись</a></p>
+            <p className="login-register-offer">У вас немає аканту?<a className="login-register-offer-link"
+                                                                      href="/auth/register">Зареєструватись</a></p>
         </form>
     );
 };

@@ -1,11 +1,11 @@
 services:
 
-  booking:
+  easystay:
     container_name: api-container
-    image: booking-app
+    image: easystay-app
     restart: on-failure
     build:
-      context: ./Booking
+      context: ./EasyStay
       dockerfile: ./Dockerfile
     ports:
       - "5100:8080"

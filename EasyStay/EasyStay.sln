@@ -13,17 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{AAC9A677-F62A-4B01-B250-B1C853A035EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Application", "Booking.Application\EasyStay.Application.csproj", "{9599B3B8-0A88-461E-9B72-B88A8F6EDF2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Application", "EasyStay.Application\EasyStay.Application.csproj", "{9599B3B8-0A88-461E-9B72-B88A8F6EDF2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Domain", "Booking.Domain\EasyStay.Domain.csproj", "{6FA754C4-BBA7-4E9B-96D2-DEF4433B5FD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Domain", "EasyStay.Domain\EasyStay.Domain.csproj", "{6FA754C4-BBA7-4E9B-96D2-DEF4433B5FD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Persistence", "Booking.Persistence\EasyStay.Persistence.csproj", "{C8081998-DDBB-4EAA-84E2-7F5B6EC94E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Persistence", "EasyStay.Persistence\EasyStay.Persistence.csproj", "{C8081998-DDBB-4EAA-84E2-7F5B6EC94E93}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.WebApi", "Booking.WebApi\EasyStay.WebApi.csproj", "{7D101622-C0D4-47A0-AF6C-4CB7B1764294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.WebApi", "EasyStay.WebApi\EasyStay.WebApi.csproj", "{7D101622-C0D4-47A0-AF6C-4CB7B1764294}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BookingLegacy", "BookingLegacy", "{18C8DC25-92D2-4C3B-8005-FE467AF3CDB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Infrastructure", "Booking.Infrastructure\EasyStay.Infrastructure.csproj", "{9DDE607E-1981-40CE-9EC9-062BF69B6BF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Infrastructure", "EasyStay.Infrastructure\EasyStay.Infrastructure.csproj", "{9DDE607E-1981-40CE-9EC9-062BF69B6BF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

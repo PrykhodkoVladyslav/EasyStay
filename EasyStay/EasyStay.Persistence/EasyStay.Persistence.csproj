@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Booking.Application\EasyStay.Application.csproj" />
+    <ProjectReference Include="..\EasyStay.Application\EasyStay.Application.csproj" />
   </ItemGroup>
 
 </Project>

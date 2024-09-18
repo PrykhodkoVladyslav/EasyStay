@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Booking.Application\EasyStay.Application.csproj" />
-    <ProjectReference Include="..\Booking.Infrastructure\EasyStay.Infrastructure.csproj" />
-    <ProjectReference Include="..\Booking.Persistence\EasyStay.Persistence.csproj" />
+    <ProjectReference Include="..\EasyStay.Application\EasyStay.Application.csproj" />
+    <ProjectReference Include="..\EasyStay.Infrastructure\EasyStay.Infrastructure.csproj" />
+    <ProjectReference Include="..\EasyStay.Persistence\EasyStay.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

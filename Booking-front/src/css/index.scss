@@ -1,28 +1,30 @@
+// Акаунт та його складові
+
 .account-layout {
   position: relative;
   width: 100%;
   height: auto;
+  //height: 1500px;
   margin: 0 auto;
+  padding: 29px 100px 0;
 
+  // Верхня постійна частина сайту
   header {
     height: 74px;
-    margin: 29px 99px auto 99px;
+    //min-width: 900px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
 
     .logo {
-      position: static;
       width: 183px;
+      //max-width: none;
+      //min-width: calc(0.6 * 183px);
       height: 73.82px;
     }
 
     .right-section {
-      position: static;
-      width: 272px;
-      height: 37px;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -32,7 +34,6 @@
       .dropdown-lang-container {
         position: static;
         width: 98px;
-        height: 37px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -43,55 +44,39 @@
 
         .elements {
           width: 76px;
-          height: 29px;
           display: flex;
           flex-direction: row;
-          justify-content: flex-start;
+          justify-content: space-between;
           align-items: flex-end;
-          padding: 0;
-          margin: 10px 0;
+          gap: 6px;
 
           .lang {
-            width: 46px;
             height: 29px;
+            width: 46px;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding: 3px 12px;
-            margin: 0 6px;
             border-radius: 17px;
             background: rgb(63, 82, 60);
 
             .text {
-              width: 18px;
-              height: 20px;
-              display: flex;
-              flex-direction: row;
-              justify-content: center;
-              align-items: center;
-              padding: 3px 12px;
-              margin: 0 10px;
-              color: rgb(255, 255, 255);
-              font-family: Nunito, sans-serif;
+              color: white;
+              font-family: "Nunito", sans-serif;
               font-size: 15px;
               font-weight: 700;
-              line-height: 20px;
-              text-align: left;
             }
           }
           button {
             position: static;
             width: 24px;
             height: 24px;
-            flex: none;
-            order: 1;
-            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
             .arrow {
-              width: 24px;
-              height: 24px;
-              margin: 0 6px;
               //transition: transform 0.3s ease;
 
               //&.open {
@@ -101,33 +86,33 @@
           }
         }
 
-        .dropdown-options {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background-color: white;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          z-index: 10;
-          margin-top: 5px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          max-height: 200px;
-          overflow-y: auto;
-
-          .dropdown-option {
-            position: relative;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            margin-top: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-            &:hover {
-              background-color: #f0f0f0;
-            }
-          }
-        }
+        //.dropdown-options {
+        //  position: absolute;
+        //  top: 100%;
+        //  left: 0;
+        //  right: 0;
+        //  background-color: white;
+        //  border: 1px solid #ccc;
+        //  border-radius: 8px;
+        //  z-index: 10;
+        //  margin-top: 5px;
+        //  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        //  max-height: 200px;
+        //  overflow-y: auto;
+        //
+        //  .dropdown-option {
+        //    position: relative;
+        //    background-color: white;
+        //    border: 1px solid #ccc;
+        //    border-radius: 8px;
+        //    margin-top: 5px;
+        //    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        //
+        //    &:hover {
+        //      background-color: #f0f0f0;
+        //    }
+        //  }
+        //}
       }
 
       .user-section {
@@ -139,10 +124,118 @@
           position: static;
           width: 24px;
           height: 24px;
-          flex: none;
-          order: 1;
-          flex-grow: 0;
         }
+      }
+    }
+  }
+
+  // Ліва постійна частина профілю і вкладок
+  .left-side {
+    //top: 137px;
+    margin-top: 34px;
+    max-width: 290px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 58px;
+
+    .head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+
+      .photo {
+        width: 205px;
+        max-width: none;
+        //min-width: calc(0.6 * 183px);
+        height: 205px;
+        border-radius: 100%;
+        background: rgb(217, 217, 217);
+      }
+
+      .name {
+        gap: 18px;
+        font-family: "Nunito", system-ui;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 38px;
+        text-align: left;
+      }
+    }
+
+    .content-bottom {
+      width: 100%;
+      min-width: 200px;
+      padding: 24px 15px 24px 15px;
+      border-radius: 22px;
+      background: rgb(240, 240, 240);
+
+      .items {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 12px;
+
+        .item {
+          width: 100%;
+          height: 52px;
+          padding: 11px 16px 11px 16px;
+          border-radius: 22px;
+          background: white;
+          color: black;
+          font-family: "Nunito", system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  // Додати готель
+  .add-hotel {
+    position: absolute;
+    min-width: 464px;
+    top: 137px;
+    left: 535px;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 23px;
+    border-radius: 22px;
+    background: #F7F7FD;
+
+    .components {
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        min-width: 245px;
+        max-width: 434px;
+        font-family: "Nunito", system-ui;
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .link {
+        width: 100%;
+        max-width: 269px;
+        height: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 22px;
+        background: rgb(63, 82, 60);
+        color: white;
+        font-family: "Nunito", system-ui;
+        font-size: 20px;
+        font-weight: 500;
       }
     }
   }

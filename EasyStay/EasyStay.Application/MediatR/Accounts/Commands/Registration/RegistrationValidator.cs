@@ -1,8 +1,8 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain.Constants;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain.Constants;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Accounts.Commands.Registration;
+namespace EasyStay.Application.MediatR.Accounts.Commands.Registration;
 
 public class RegistrationValidator : AbstractValidator<RegistrationCommand> {
 	public RegistrationValidator(IIdentityValidator identityValidator, IImageValidator imageValidator) {

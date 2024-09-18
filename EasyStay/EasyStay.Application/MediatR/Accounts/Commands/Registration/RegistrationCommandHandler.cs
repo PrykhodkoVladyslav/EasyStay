@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Accounts.Commands.Shared;
-using Booking.Application.Models.Accounts;
-using Booking.Domain.Constants;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Accounts.Commands.Shared;
+using EasyStay.Application.Models.Accounts;
+using EasyStay.Domain.Constants;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Commands.Registration;
+namespace EasyStay.Application.MediatR.Accounts.Commands.Registration;
 
 public class RegistrationCommandHandler(
 	IJwtTokenService jwtTokenService,

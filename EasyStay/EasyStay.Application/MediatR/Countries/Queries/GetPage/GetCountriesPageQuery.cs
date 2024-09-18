@@ -1,8 +1,8 @@
-﻿using Booking.Application.MediatR.Countries.Queries.Shared;
-using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.MediatR.Countries.Queries.Shared;
+using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Countries.Queries.GetPage;
+namespace EasyStay.Application.MediatR.Countries.Queries.GetPage;
 
 public class GetCountriesPageQuery : PaginationFilterDto, IRequest<PageVm<CountryVm>> {
 	public string? Name { get; set; }

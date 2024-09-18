@@ -1,7 +1,7 @@
-﻿using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
+namespace EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
 
 public class GetCustomerPageCommand : PaginationFilterDto, IRequest<PageVm<CustomerItemVm>> {
 	public string? FirstName { get; set; }

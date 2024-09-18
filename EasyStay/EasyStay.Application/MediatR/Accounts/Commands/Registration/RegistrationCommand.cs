@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Application.MediatR.Accounts.Commands.Shared;
-using Booking.Application.Models.Accounts;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Application.MediatR.Accounts.Commands.Shared;
+using EasyStay.Application.Models.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Accounts.Commands.Registration;
+namespace EasyStay.Application.MediatR.Accounts.Commands.Registration;
 
 public class RegistrationCommand : IRequest<JwtTokenVm>, IMapWith<UserDto> {
 	public string FirstName { get; set; } = null!;

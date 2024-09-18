@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Countries.Queries.Shared;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Countries.Queries.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Countries.Queries.GetAll;
+namespace EasyStay.Application.MediatR.Countries.Queries.GetAll;
 
 public class GetAllCountriesQueryHandler(
 	IBookingDbContext context,

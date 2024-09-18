@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.Interfaces;
+namespace EasyStay.Application.Interfaces;
 
 public interface IImageService {
 	Task<string> SaveImageAsync(byte[] bytes);

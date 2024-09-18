@@ -1,9 +1,9 @@
-﻿using Booking.Application.MediatR.Hotels.Queries.Shared;
-using Booking.Application.Models.Hotel;
-using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.MediatR.Hotels.Queries.Shared;
+using EasyStay.Application.Models.Hotel;
+using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Hotels.Queries.GetPage;
+namespace EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 
 public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>> {
 	public string? Name { get; set; }

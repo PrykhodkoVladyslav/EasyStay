@@ -1,7 +1,7 @@
 using System.Security.Claims;
-using Booking.Application.Interfaces;
+using EasyStay.Application.Interfaces;
 
-namespace Booking.WebApi.Services;
+namespace EasyStay.WebApi.Services;
 
 public class CurrentUserService(
 	IHttpContextAccessor httpContextAccessor

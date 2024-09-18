@@ -1,4 +1,4 @@
-﻿namespace Booking.Domain;
+﻿namespace EasyStay.Domain;
 
 public class HotelPhoto {
 	public long Id { get; set; }

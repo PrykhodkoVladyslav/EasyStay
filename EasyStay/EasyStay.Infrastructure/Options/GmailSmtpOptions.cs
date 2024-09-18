@@ -1,4 +1,4 @@
-﻿namespace Booking.Infrastructure.Options;
+﻿namespace EasyStay.Infrastructure.Options;
 
 public class GmailSmtpOptions {
 	public string SmtpHost { get; set; } = null!;

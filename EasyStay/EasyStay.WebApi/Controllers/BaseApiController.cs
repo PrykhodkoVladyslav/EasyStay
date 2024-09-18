@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Booking.WebApi.Controllers;
+namespace EasyStay.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]

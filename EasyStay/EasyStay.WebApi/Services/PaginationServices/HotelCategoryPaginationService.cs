@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.HotelCategories.Queries.GetPage;
-using Booking.Application.MediatR.HotelCategories.Queries.Shared;
-using Booking.Domain;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
+using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
+using EasyStay.Domain;
 
-namespace Booking.WebApi.Services.PaginationServices;
+namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class HotelCategoryPaginationService(
 	IBookingDbContext context,

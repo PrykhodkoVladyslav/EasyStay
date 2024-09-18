@@ -1,20 +1,20 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.BlockUserById;
-using Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
-using Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
-using Booking.Application.MediatR.Accounts.Commands.Registration;
-using Booking.Application.MediatR.Accounts.Commands.ResetPassword;
-using Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
-using Booking.Application.MediatR.Accounts.Commands.SetPhoto;
-using Booking.Application.MediatR.Accounts.Commands.SignIn;
-using Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
-using Booking.Application.MediatR.Accounts.Commands.Update;
-using Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
-using Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
-using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
+﻿using EasyStay.Application.MediatR.Accounts.Commands.BlockUserById;
+using EasyStay.Application.MediatR.Accounts.Commands.CreateAdmin;
+using EasyStay.Application.MediatR.Accounts.Commands.GoogleSignIn;
+using EasyStay.Application.MediatR.Accounts.Commands.Registration;
+using EasyStay.Application.MediatR.Accounts.Commands.ResetPassword;
+using EasyStay.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
+using EasyStay.Application.MediatR.Accounts.Commands.SetPhoto;
+using EasyStay.Application.MediatR.Accounts.Commands.SignIn;
+using EasyStay.Application.MediatR.Accounts.Commands.UnlockUserById;
+using EasyStay.Application.MediatR.Accounts.Commands.Update;
+using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
+using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
+using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.WebApi.Controllers;
+namespace EasyStay.WebApi.Controllers;
 
 public class AccountsController : BaseApiController {
 	[HttpPost]

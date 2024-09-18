@@ -1,9 +1,9 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Create;
+namespace EasyStay.Application.MediatR.Hotels.Commands.Create;
 
 public class CreateHotelCommandHandler(
 	IBookingDbContext context,

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Addresses.Commands.Update;
-using Booking.Domain;
+using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Addresses.Commands.Update;
+using EasyStay.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Update;
+namespace EasyStay.Application.MediatR.Hotels.Commands.Update;
 
 public class UpdateHotelCommandHandler(
 	IBookingDbContext context,

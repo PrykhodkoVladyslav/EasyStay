@@ -1,4 +1,4 @@
-﻿namespace Booking.Domain.Identity;
+﻿namespace EasyStay.Domain.Identity;
 
 public class Realtor : User {
 	public ICollection<Hotel> Hotels { get; set; } = null!;

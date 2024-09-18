@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Application.Models.Accounts;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Application.Models.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
+namespace EasyStay.Application.MediatR.Accounts.Commands.CreateAdmin;
 
 public class CreateAdminCommand : IRequest<long>, IMapWith<UserDto> {
 	public string FirstName { get; set; } = null!;

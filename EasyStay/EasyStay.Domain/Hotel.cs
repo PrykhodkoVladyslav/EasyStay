@@ -1,6 +1,6 @@
-﻿using Booking.Domain.Identity;
+﻿using EasyStay.Domain.Identity;
 
-namespace Booking.Domain;
+namespace EasyStay.Domain;
 
 public class Hotel {
 	public long Id { get; set; }

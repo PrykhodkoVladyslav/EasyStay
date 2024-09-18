@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Booking.Persistence.Migrations
+namespace EasyStay.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class added_Area_NumberOfRooms_IsArchived_to_Hotel_table : Migration

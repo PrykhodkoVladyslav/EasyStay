@@ -1,8 +1,8 @@
-﻿using Booking.Domain.Identity;
+﻿using EasyStay.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Booking.Persistence.EntityTypeConfigurations.Identity;
+namespace EasyStay.Persistence.EntityTypeConfigurations.Identity;
 
 internal class UserRoleEntityTypeConfiguration : IEntityTypeConfiguration<UserRole> {
 	public void Configure(EntityTypeBuilder<UserRole> builder) {

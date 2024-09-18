@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Accounts.Commands.BlockUserById;
+namespace EasyStay.Application.MediatR.Accounts.Commands.BlockUserById;
 
 public class BlockUserByIdValidator : AbstractValidator<BlockUserByIdCommand> {
 	public BlockUserByIdValidator(ICurrentUserService currentUserService) {

@@ -1,12 +1,12 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Domain;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
+using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Create;
+namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Create;
 
 public class CreateRealtorReviewCommandHandler(
 	IBookingDbContext context,

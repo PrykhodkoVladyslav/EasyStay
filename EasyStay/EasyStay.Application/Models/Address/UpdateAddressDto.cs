@@ -1,4 +1,4 @@
-namespace Booking.Application.Models.Address;
+namespace EasyStay.Application.Models.Address;
 
 public class UpdateAddressDto {
 	public string Street { get; set; } = null!;

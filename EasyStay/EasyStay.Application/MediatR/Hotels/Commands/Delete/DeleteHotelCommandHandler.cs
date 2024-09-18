@@ -1,10 +1,10 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Addresses.Commands.Delete;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Addresses.Commands.Delete;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Delete;
+namespace EasyStay.Application.MediatR.Hotels.Commands.Delete;
 
 public class DeleteHotelCommandHandler(
 	IBookingDbContext context,

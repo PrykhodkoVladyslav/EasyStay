@@ -1,4 +1,4 @@
-﻿namespace Booking.Domain;
+﻿namespace EasyStay.Domain;
 
 public class City {
 	public long Id { get; set; }

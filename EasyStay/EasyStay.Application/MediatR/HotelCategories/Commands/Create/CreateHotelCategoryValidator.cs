@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Booking.Application.MediatR.HotelCategories.Commands.Create;
+namespace EasyStay.Application.MediatR.HotelCategories.Commands.Create;
 
 public class CreateHotelCategoryValidator : AbstractValidator<CreateHotelCategoryCommand> {
 	public CreateHotelCategoryValidator() {

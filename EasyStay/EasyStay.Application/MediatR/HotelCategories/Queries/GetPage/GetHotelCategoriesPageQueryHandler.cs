@@ -1,9 +1,9 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Application.MediatR.HotelCategories.Queries.Shared;
-using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
+using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.HotelCategories.Queries.GetPage;
+namespace EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
 
 public class GetHotelCategoriesPageQueryHandler(
 	IPaginationService<HotelCategoryVm, GetHotelCategoriesPageQuery> pagination

@@ -1,8 +1,8 @@
-﻿using Booking.Domain.Constants;
+﻿using EasyStay.Domain.Constants;
 using FluentValidation;
 using System.Text;
 
-namespace Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
+namespace EasyStay.Application.MediatR.Accounts.Commands.GoogleSignIn;
 
 public class GoogleSignInValidator : AbstractValidator<GoogleSignInCommand> {
 	public GoogleSignInValidator() {

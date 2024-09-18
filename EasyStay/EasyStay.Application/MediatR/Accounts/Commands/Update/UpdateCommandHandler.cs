@@ -1,11 +1,11 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Accounts.Commands.Shared;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Accounts.Commands.Shared;
+using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Booking.Application.MediatR.Accounts.Commands.Update;
+namespace EasyStay.Application.MediatR.Accounts.Commands.Update;
 
 public class UpdateCommandHandler(
 	UserManager<User> userManager,

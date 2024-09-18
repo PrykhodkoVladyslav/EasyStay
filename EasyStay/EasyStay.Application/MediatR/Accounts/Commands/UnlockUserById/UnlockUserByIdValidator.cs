@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Accounts.Commands.UnlockUserById;
+namespace EasyStay.Application.MediatR.Accounts.Commands.UnlockUserById;
 
 public class UnlockUserByIdValidator : AbstractValidator<UnlockUserByIdCommand> {
 	public UnlockUserByIdValidator(ICurrentUserService currentUserService) {

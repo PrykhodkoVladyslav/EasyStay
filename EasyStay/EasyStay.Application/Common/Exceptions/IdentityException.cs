@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Booking.Application.Common.Exceptions;
+namespace EasyStay.Application.Common.Exceptions;
 
 public class IdentityException(
 	IdentityResult identityResult,

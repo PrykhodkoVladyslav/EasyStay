@@ -1,14 +1,14 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain;
-using Booking.Domain.Constants;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
+using EasyStay.Domain.Constants;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace Booking.WebApi.Hubs;
+namespace EasyStay.WebApi.Hubs;
 
 [Authorize(Roles = "Customer,Realtor")]
 public class ChatHub(

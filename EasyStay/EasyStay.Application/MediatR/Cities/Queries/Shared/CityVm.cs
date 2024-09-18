@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Application.MediatR.Countries.Queries.Shared;
-using Booking.Domain;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Application.MediatR.Countries.Queries.Shared;
+using EasyStay.Domain;
 
-namespace Booking.Application.MediatR.Cities.Queries.Shared;
+namespace EasyStay.Application.MediatR.Cities.Queries.Shared;
 
 public class CityVm : IMapWith<City> {
 	public long Id { get; set; }

@@ -1,9 +1,9 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Domain;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
 using MediatR;
 
-namespace Booking.Application.MediatR.Countries.Commands.Delete;
+namespace EasyStay.Application.MediatR.Countries.Commands.Delete;
 
 public class DeleteCountryCommandHandler(
 	IBookingDbContext context,

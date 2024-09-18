@@ -1,12 +1,12 @@
-﻿using Booking.Application.MediatR.Cities.Commands.Create;
-using Booking.Application.MediatR.Cities.Commands.Delete;
-using Booking.Application.MediatR.Cities.Commands.Update;
-using Booking.Application.MediatR.Cities.Queries.GetAll;
-using Booking.Application.MediatR.Cities.Queries.GetDetails;
-using Booking.Application.MediatR.Cities.Queries.GetPage;
+﻿using EasyStay.Application.MediatR.Cities.Commands.Create;
+using EasyStay.Application.MediatR.Cities.Commands.Delete;
+using EasyStay.Application.MediatR.Cities.Commands.Update;
+using EasyStay.Application.MediatR.Cities.Queries.GetAll;
+using EasyStay.Application.MediatR.Cities.Queries.GetDetails;
+using EasyStay.Application.MediatR.Cities.Queries.GetPage;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.WebApi.Controllers;
+namespace EasyStay.WebApi.Controllers;
 
 public class CitiesController : BaseApiController {
 	[HttpGet]

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Booking.Application.MediatR.Accounts.Commands.ResetPassword;
+namespace EasyStay.Application.MediatR.Accounts.Commands.ResetPassword;
 
 public class ResetPasswordValidator : AbstractValidator<ResetPasswordCommand> {
 	public ResetPasswordValidator() {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Update;
+namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Update;
 
 public class UpdateRealtorReviewValidator : AbstractValidator<UpdateRealtorReviewCommand> {
 	public UpdateRealtorReviewValidator() {

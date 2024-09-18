@@ -1,9 +1,9 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.Processing;
 
-namespace Booking.WebApi.Services;
+namespace EasyStay.WebApi.Services;
 
 public class ImageService(
 	IConfiguration configuration

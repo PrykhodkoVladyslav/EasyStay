@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
+namespace EasyStay.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
 
 public class SendResetPasswordEmailValidator : AbstractValidator<SendResetPasswordEmailCommand> {
 	public SendResetPasswordEmailValidator() {

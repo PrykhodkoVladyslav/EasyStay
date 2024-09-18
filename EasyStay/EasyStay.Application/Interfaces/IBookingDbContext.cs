@@ -1,9 +1,9 @@
-﻿using Booking.Domain;
-using Booking.Domain.Identity;
+﻿using EasyStay.Domain;
+using EasyStay.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Booking.Application.Interfaces;
+namespace EasyStay.Application.Interfaces;
 
 public interface IBookingDbContext {
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken);

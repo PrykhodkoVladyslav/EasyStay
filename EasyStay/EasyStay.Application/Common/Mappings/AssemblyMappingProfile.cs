@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System.Reflection;
 
-namespace Booking.Application.Common.Mappings;
+namespace EasyStay.Application.Common.Mappings;
 
 public class AssemblyMappingProfile : Profile {
 	public AssemblyMappingProfile(Assembly assembly) => ApplyMappingsFromAssembly(assembly);

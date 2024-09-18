@@ -1,9 +1,9 @@
-﻿using Booking.Application.Common.Exceptions;
+﻿using EasyStay.Application.Common.Exceptions;
 using FluentValidation;
 using System.Net;
 using System.Text.Json;
 
-namespace Booking.WebApi.Middleware;
+namespace EasyStay.WebApi.Middleware;
 
 public class CustomExceptionHandlerMiddleware(
 	RequestDelegate next

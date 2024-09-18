@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Booking.Domain.Identity;
+namespace EasyStay.Domain.Identity;
 
 public abstract class User : IdentityUser<long> {
 	public string FirstName { get; set; } = null!;

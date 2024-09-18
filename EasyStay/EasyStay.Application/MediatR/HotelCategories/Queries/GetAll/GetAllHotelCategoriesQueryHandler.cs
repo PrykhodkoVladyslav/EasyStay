@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.HotelCategories.Queries.Shared;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.HotelCategories.Queries.GetAll;
+namespace EasyStay.Application.MediatR.HotelCategories.Queries.GetAll;
 
 public class GetAllHotelCategoriesQueryHandler(
 	IBookingDbContext context,

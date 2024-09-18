@@ -1,12 +1,12 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Booking.Persistence;
+namespace EasyStay.Persistence;
 
 public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	: IdentityDbContext<

@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Countries.Commands.Update;
+namespace EasyStay.Application.MediatR.Countries.Commands.Update;
 
 public class UpdateCountryValidator : AbstractValidator<UpdateCountryCommand> {
 	public UpdateCountryValidator(IImageValidator imageValidator) {

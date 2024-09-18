@@ -1,4 +1,4 @@
-﻿namespace Booking.Application.Models.Pagination;
+﻿namespace EasyStay.Application.Models.Pagination;
 
 public class PaginationFilterDto {
 	public int? PageIndex { get; set; }

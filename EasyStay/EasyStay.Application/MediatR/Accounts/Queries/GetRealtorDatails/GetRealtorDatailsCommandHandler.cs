@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Booking.Application.Common.Exceptions;
-using Booking.Domain.Identity;
+using EasyStay.Application.Common.Exceptions;
+using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorDatails;
+namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 
 public class GetRealtorDatailsCommandHandler(
 	UserManager<User> userManager,

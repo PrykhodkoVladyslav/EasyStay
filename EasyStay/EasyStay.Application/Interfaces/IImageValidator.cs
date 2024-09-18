@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.Interfaces;
+namespace EasyStay.Application.Interfaces;
 
 public interface IImageValidator {
 	Task<bool> IsValidImageAsync(IFormFile image, CancellationToken cancellationToken);

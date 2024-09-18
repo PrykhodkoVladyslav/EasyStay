@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Countries.Commands.Update;
+namespace EasyStay.Application.MediatR.Countries.Commands.Update;
 
 public class UpdateCountryCommand : IRequest {
 	public long Id { get; set; }

@@ -1,9 +1,9 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain.Constants;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain.Constants;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace Booking.Persistence.Seeding;
+namespace EasyStay.Persistence.Seeding;
 
 public static class CleanDataSeeder {
 	public static void Seed(IBookingDbContext context, IImageService imageService, UserManager<User> userManager) {

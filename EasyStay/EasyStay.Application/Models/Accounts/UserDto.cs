@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.Models.Accounts;
+namespace EasyStay.Application.Models.Accounts;
 
 public class UserDto {
 	public string FirstName { get; set; } = null!;

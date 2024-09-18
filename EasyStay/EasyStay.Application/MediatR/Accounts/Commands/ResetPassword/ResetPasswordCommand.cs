@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Commands.ResetPassword;
+namespace EasyStay.Application.MediatR.Accounts.Commands.ResetPassword;
 
 public class ResetPasswordCommand : IRequest {
 	public string Email { get; set; } = null!;

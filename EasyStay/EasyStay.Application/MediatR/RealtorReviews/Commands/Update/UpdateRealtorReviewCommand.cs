@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Update;
+namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Update;
 
 public class UpdateRealtorReviewCommand : IRequest {
 	public long Id { get; set; }

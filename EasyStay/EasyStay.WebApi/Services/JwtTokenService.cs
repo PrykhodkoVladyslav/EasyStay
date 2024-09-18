@@ -1,12 +1,12 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Booking.Services;
+namespace EasyStay.Services;
 
 public class JwtTokenService(
 	UserManager<User> userManager,

@@ -1,8 +1,8 @@
-﻿using Booking.Application.MediatR.Cities.Queries.Shared;
-using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.MediatR.Cities.Queries.Shared;
+using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Cities.Queries.GetPage;
+namespace EasyStay.Application.MediatR.Cities.Queries.GetPage;
 
 public class GetCitiesPageQuery : PaginationFilterDto, IRequest<PageVm<CityVm>> {
 	public string? Name { get; set; }

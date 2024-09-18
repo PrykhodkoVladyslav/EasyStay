@@ -1,4 +1,4 @@
-﻿namespace Booking.Application.Interfaces;
+﻿namespace EasyStay.Application.Interfaces;
 
 public interface IExistingEntityCheckerService {
 	Task<bool> IsCorrectCountryId(long id, CancellationToken cancellationToken);

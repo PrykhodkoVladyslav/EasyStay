@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
+namespace EasyStay.Application.MediatR.Accounts.Commands.CreateAdmin;
 
 public class CreateAdminValidator : AbstractValidator<CreateAdminCommand> {
 	public CreateAdminValidator(IIdentityValidator identityValidator, IImageValidator imageValidator) {

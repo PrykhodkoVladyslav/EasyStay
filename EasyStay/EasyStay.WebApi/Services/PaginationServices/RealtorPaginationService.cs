@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
-using Booking.Domain.Identity;
+using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace Booking.WebApi.Services.PaginationServices;
+namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class RealtorPaginationService(
 	UserManager<User> customerManager,

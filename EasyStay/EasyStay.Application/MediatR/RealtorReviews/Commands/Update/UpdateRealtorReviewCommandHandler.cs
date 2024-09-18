@@ -1,10 +1,10 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Domain;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Update;
+namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Update;
 
 public class UpdateRealtorReviewCommandHandler(
 	IBookingDbContext context,

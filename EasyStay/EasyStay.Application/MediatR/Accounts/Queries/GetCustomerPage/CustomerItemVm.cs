@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Domain.Identity;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Domain.Identity;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetCustomerPage;
+namespace EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
 
 public class CustomerItemVm : IMapWith<Customer> {
 	public long Id { get; set; }

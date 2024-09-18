@@ -1,9 +1,9 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Booking.Application.MediatR.Accounts.Commands.BlockUserById;
+namespace EasyStay.Application.MediatR.Accounts.Commands.BlockUserById;
 
 public class BlockUserByIdCommandHandler(
 	UserManager<User> userManager

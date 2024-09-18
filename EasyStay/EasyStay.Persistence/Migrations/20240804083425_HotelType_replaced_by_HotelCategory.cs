@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Booking.Persistence.Migrations
+namespace EasyStay.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class HotelType_replaced_by_HotelCategory : Migration

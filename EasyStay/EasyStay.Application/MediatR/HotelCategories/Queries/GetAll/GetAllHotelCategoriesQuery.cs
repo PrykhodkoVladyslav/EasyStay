@@ -1,6 +1,6 @@
-﻿using Booking.Application.MediatR.HotelCategories.Queries.Shared;
+﻿using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using MediatR;
 
-namespace Booking.Application.MediatR.HotelCategories.Queries.GetAll;
+namespace EasyStay.Application.MediatR.HotelCategories.Queries.GetAll;
 
 public class GetAllHotelCategoriesQuery : IRequest<IEnumerable<HotelCategoryVm>> { }

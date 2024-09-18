@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Booking.Persistence.Migrations
+namespace EasyStay.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class added_CreatedAtUtc_and_UpdatedAtUtc_to_RealtorReviews_table : Migration

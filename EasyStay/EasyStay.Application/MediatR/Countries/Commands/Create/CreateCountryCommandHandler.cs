@@ -1,8 +1,8 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
 using MediatR;
 
-namespace Booking.Application.MediatR.Countries.Commands.Create;
+namespace EasyStay.Application.MediatR.Countries.Commands.Create;
 
 public class CreateCountryCommandHandler(
 	IBookingDbContext context,

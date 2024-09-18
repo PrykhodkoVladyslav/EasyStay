@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Create;
+namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Create;
 
 public class CreateRealtorReviewValidator : AbstractValidator<CreateRealtorReviewCommand> {
 	public CreateRealtorReviewValidator() {

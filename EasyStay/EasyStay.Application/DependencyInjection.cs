@@ -1,9 +1,9 @@
-﻿using Booking.Application.Common.Behaviors;
+﻿using EasyStay.Application.Common.Behaviors;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Booking.Application;
+namespace EasyStay.Application;
 
 public static class DependencyInjection {
 	public static IServiceCollection AddApplication(this IServiceCollection services) {

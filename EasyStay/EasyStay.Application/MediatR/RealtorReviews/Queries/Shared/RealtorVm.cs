@@ -1,7 +1,7 @@
-﻿using Booking.Application.Common.Mappings;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Common.Mappings;
+using EasyStay.Domain.Identity;
 
-namespace Booking.Application.MediatR.RealtorReviews.Queries.Shared;
+namespace EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
 
 public class RealtorVm : IMapWith<Realtor> {
 	public long Id { get; set; }

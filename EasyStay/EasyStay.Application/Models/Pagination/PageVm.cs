@@ -1,4 +1,4 @@
-﻿namespace Booking.Application.Models.Pagination;
+﻿namespace EasyStay.Application.Models.Pagination;
 
 public class PageVm<T> {
 	public IEnumerable<T> Data { get; set; } = null!;

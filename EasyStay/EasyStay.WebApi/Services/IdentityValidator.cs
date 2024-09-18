@@ -1,8 +1,8 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace Booking.WebApi.Services;
+namespace EasyStay.WebApi.Services;
 
 public class IdentityValidator(
 	UserManager<User> userManager,

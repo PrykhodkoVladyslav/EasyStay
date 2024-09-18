@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Cities.Queries.Shared;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Cities.Queries.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Cities.Queries.GetAll;
+namespace EasyStay.Application.MediatR.Cities.Queries.GetAll;
 
 public class GetAllCitiesQueryHandler(
 	IBookingDbContext context,

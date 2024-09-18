@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Booking.Persistence.Migrations
+namespace EasyStay.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

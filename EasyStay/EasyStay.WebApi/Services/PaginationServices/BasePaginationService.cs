@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Application.Models.Pagination;
+using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.WebApi.Services.PaginationServices;
+namespace EasyStay.WebApi.Services.PaginationServices;
 
 public abstract class BasePaginationService<EntityType, EntityVmType, PaginationVmType>(
 	IMapper mapper

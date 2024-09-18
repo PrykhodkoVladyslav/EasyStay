@@ -1,8 +1,8 @@
-﻿using Booking.Application.MediatR.Addresses.Commands.Create;
+﻿using EasyStay.Application.MediatR.Addresses.Commands.Create;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Create;
+namespace EasyStay.Application.MediatR.Hotels.Commands.Create;
 
 public class CreateHotelCommand : IRequest<long> {
 	public string Name { get; set; } = null!;

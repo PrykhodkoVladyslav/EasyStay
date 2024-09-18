@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Hotels.Commands.Update;
+namespace EasyStay.Application.MediatR.Hotels.Commands.Update;
 
 public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
 	public UpdateHotelValidator(IImageValidator imageValidator, IExistingEntityCheckerService existingEntityCheckerService) {

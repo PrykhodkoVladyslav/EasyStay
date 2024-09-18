@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Addresses.Commands.Create;
+namespace EasyStay.Application.MediatR.Addresses.Commands.Create;
 
 public class CreateAddressValidator : AbstractValidator<CreateAddressCommand> {
 	public CreateAddressValidator(IExistingEntityCheckerService existingEntityCheckerService) {

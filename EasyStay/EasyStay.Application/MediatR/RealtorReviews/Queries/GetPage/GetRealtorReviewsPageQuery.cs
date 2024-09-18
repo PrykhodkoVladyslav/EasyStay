@@ -1,8 +1,8 @@
-﻿using Booking.Application.MediatR.RealtorReviews.Queries.Shared;
-using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
+using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
+namespace EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 
 public class GetRealtorReviewsPageQuery : PaginationFilterDto, IRequest<PageVm<RealtorReviewVm>> {
 	public string? Description { get; set; }

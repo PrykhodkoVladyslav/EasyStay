@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace Booking.Application.MediatR.Cities.Commands.Create;
+namespace EasyStay.Application.MediatR.Cities.Commands.Create;
 
 public class CreateCityValidator : AbstractValidator<CreateCityCommand> {
 	public CreateCityValidator(IImageValidator imageValidator, IExistingEntityCheckerService existingEntityCheckerService) {

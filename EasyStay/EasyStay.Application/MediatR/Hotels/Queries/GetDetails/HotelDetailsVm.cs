@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Application.MediatR.Addresses.Queries.Shared;
-using Booking.Application.MediatR.HotelCategories.Queries.Shared;
-using Booking.Application.MediatR.Hotels.Queries.Shared;
-using Booking.Domain;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Application.MediatR.Addresses.Queries.Shared;
+using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
+using EasyStay.Application.MediatR.Hotels.Queries.Shared;
+using EasyStay.Domain;
 
-namespace Booking.Application.MediatR.Hotels.Queries.GetDetails;
+namespace EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
 
 public class HotelDetailsVm : IMapWith<Hotel> {
 	public long Id { get; set; }

@@ -1,6 +1,6 @@
-﻿using Booking.Application.Models.Email;
+﻿using EasyStay.Application.Models.Email;
 
-namespace Booking.Application.Interfaces;
+namespace EasyStay.Application.Interfaces;
 
 public interface IEmailService {
 	Task SendMessageAsync(EmailDto email, CancellationToken cancellationToken = default);

@@ -1,8 +1,8 @@
 ﻿using Bogus;
-using Booking.Application.Interfaces;
-using Booking.Domain;
+using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
 
-namespace Booking.Persistence.Seeding;
+namespace EasyStay.Persistence.Seeding;
 
 public static class GeneratedDataSeeder {
 	public static void Seed(IBookingDbContext context, IImageService imageService) {

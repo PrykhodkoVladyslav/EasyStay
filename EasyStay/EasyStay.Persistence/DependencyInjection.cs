@@ -1,5 +1,5 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Booking.Persistence;
+namespace EasyStay.Persistence;
 
 public static class DependencyInjection {
 	public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) {

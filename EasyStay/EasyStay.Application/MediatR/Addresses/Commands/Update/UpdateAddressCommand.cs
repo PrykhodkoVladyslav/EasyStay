@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Application.Models.Address;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Application.Models.Address;
 using MediatR;
 
-namespace Booking.Application.MediatR.Addresses.Commands.Update;
+namespace EasyStay.Application.MediatR.Addresses.Commands.Update;
 
 public class UpdateAddressCommand : IRequest, IMapWith<UpdateAddressDto> {
 	public long Id { get; set; }

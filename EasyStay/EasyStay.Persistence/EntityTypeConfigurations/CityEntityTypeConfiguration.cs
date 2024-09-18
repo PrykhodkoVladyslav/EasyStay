@@ -1,8 +1,8 @@
-﻿using Booking.Domain;
+﻿using EasyStay.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Booking.Persistence.EntityTypeConfigurations;
+namespace EasyStay.Persistence.EntityTypeConfigurations;
 
 internal class CityEntityTypeConfiguration : IEntityTypeConfiguration<City> {
 	public void Configure(EntityTypeBuilder<City> builder) {

@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.WebApi.Services;
+namespace EasyStay.WebApi.Services;
 
 public class ExistingEntityCheckerService(
 	IBookingDbContext context,

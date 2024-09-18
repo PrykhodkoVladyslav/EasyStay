@@ -1,11 +1,11 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Domain.Constants;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Domain.Constants;
+using EasyStay.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Booking.Persistence;
+namespace EasyStay.Persistence;
 
 public static class DbInitializer {
 	public static void Inicialize(BookingDbContext context) {

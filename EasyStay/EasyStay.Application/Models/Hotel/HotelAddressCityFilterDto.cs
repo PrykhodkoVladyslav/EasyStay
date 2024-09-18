@@ -1,4 +1,4 @@
-namespace Booking.Application.Models.Hotel;
+namespace EasyStay.Application.Models.Hotel;
 
 public class HotelAddressCityFilterDto {
 	public long? Id { get; set; }

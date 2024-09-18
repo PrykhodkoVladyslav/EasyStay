@@ -1,12 +1,12 @@
-﻿using Booking.Application.MediatR.RealtorReviews.Commands.Create;
-using Booking.Application.MediatR.RealtorReviews.Commands.Delete;
-using Booking.Application.MediatR.RealtorReviews.Commands.Update;
-using Booking.Application.MediatR.RealtorReviews.Queries.GetDetails;
-using Booking.Application.MediatR.RealtorReviews.Queries.GetPage;
+﻿using EasyStay.Application.MediatR.RealtorReviews.Commands.Create;
+using EasyStay.Application.MediatR.RealtorReviews.Commands.Delete;
+using EasyStay.Application.MediatR.RealtorReviews.Commands.Update;
+using EasyStay.Application.MediatR.RealtorReviews.Queries.GetDetails;
+using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.WebApi.Controllers;
+namespace EasyStay.WebApi.Controllers;
 
 public class RealtorReviewsController : BaseApiController {
 	[HttpGet]

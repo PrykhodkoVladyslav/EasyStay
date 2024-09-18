@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace Booking.Application.Common.Behaviors;
+namespace EasyStay.Application.Common.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>(
 	IEnumerable<IValidator<TRequest>> validators

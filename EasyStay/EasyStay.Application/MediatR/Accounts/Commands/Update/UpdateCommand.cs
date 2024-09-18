@@ -1,8 +1,8 @@
-﻿using Booking.Application.MediatR.Accounts.Commands.Shared;
+﻿using EasyStay.Application.MediatR.Accounts.Commands.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Accounts.Commands.Update;
+namespace EasyStay.Application.MediatR.Accounts.Commands.Update;
 
 public class UpdateCommand : IRequest<JwtTokenVm> {
 	public string Email { get; set; } = null!;

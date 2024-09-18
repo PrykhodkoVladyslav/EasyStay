@@ -1,11 +1,11 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Application.Models.Email;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Application.Models.Email;
+using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
-namespace Booking.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
+namespace EasyStay.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
 
 public class SendResetPasswordEmailCommandHandler(
 	UserManager<User> userManager,

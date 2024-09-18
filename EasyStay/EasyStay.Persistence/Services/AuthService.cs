@@ -1,14 +1,14 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Application.Models.Accounts;
-using Booking.Domain.Constants;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.Models.Accounts;
+using EasyStay.Domain.Constants;
+using EasyStay.Domain.Identity;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 
-namespace Booking.Persistence.Services;
+namespace EasyStay.Persistence.Services;
 
 public class AuthService(
 	IBookingDbContext context,

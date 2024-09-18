@@ -1,10 +1,10 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Application.MediatR.Accounts.Commands.Shared;
-using Booking.Domain.Constants;
-using Booking.Domain.Identity;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Accounts.Commands.Shared;
+using EasyStay.Domain.Constants;
+using EasyStay.Domain.Identity;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Commands.GoogleSignIn;
+namespace EasyStay.Application.MediatR.Accounts.Commands.GoogleSignIn;
 
 public class GoogleSignInCommandHandler(
 	IJwtTokenService jwtTokenService,

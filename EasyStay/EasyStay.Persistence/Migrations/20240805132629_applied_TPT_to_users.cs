@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Booking.Persistence.Migrations
+namespace EasyStay.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class applied_TPT_to_users : Migration

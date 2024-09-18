@@ -1,7 +1,7 @@
-﻿using Booking.Application.Interfaces;
+﻿using EasyStay.Application.Interfaces;
 using SixLabors.ImageSharp;
 
-namespace Booking.WebApi.Services;
+namespace EasyStay.WebApi.Services;
 
 public class ImageValidator : IImageValidator {
 	public async Task<bool> IsValidImageAsync(IFormFile image, CancellationToken cancellationToken) {

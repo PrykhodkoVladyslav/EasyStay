@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Booking.Application.MediatR.RealtorReviews.Commands.Create;
+namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Create;
 
 public class CreateRealtorReviewCommand : IRequest<long> {
 	public string Description { get; set; } = null!;

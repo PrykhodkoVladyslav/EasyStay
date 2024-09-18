@@ -1,4 +1,4 @@
-﻿namespace Booking.Application.Models.Email;
+﻿namespace EasyStay.Application.Models.Email;
 
 public class EmailReceiverDto {
 	public string Name { get; set; } = null!;

@@ -1,7 +1,7 @@
-﻿using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
+namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
 
 public class GetRealtorPageCommand : PaginationFilterDto, IRequest<PageVm<RealtorItemVm>> {
 	public string? FirstName { get; set; }

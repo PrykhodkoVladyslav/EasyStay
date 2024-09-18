@@ -1,12 +1,12 @@
-﻿using Booking.Application.MediatR.HotelCategories.Commands.Create;
-using Booking.Application.MediatR.HotelCategories.Commands.Delete;
-using Booking.Application.MediatR.HotelCategories.Commands.Update;
-using Booking.Application.MediatR.HotelCategories.Queries.GetAll;
-using Booking.Application.MediatR.HotelCategories.Queries.GetDetails;
-using Booking.Application.MediatR.HotelCategories.Queries.GetPage;
+﻿using EasyStay.Application.MediatR.HotelCategories.Commands.Create;
+using EasyStay.Application.MediatR.HotelCategories.Commands.Delete;
+using EasyStay.Application.MediatR.HotelCategories.Commands.Update;
+using EasyStay.Application.MediatR.HotelCategories.Queries.GetAll;
+using EasyStay.Application.MediatR.HotelCategories.Queries.GetDetails;
+using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Booking.WebApi.Controllers;
+namespace EasyStay.WebApi.Controllers;
 
 public class HotelCategoriesController : BaseApiController {
 	[HttpGet]

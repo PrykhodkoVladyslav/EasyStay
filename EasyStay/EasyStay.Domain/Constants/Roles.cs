@@ -1,4 +1,4 @@
-﻿namespace Booking.Domain.Constants;
+﻿namespace EasyStay.Domain.Constants;
 
 public static class Roles {
 	public const string Customer = "Customer";

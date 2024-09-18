@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Booking.Application.Interfaces;
-using Booking.Application.Models.Accounts;
-using Booking.Domain.Constants;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.Models.Accounts;
+using EasyStay.Domain.Constants;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Commands.CreateAdmin;
+namespace EasyStay.Application.MediatR.Accounts.Commands.CreateAdmin;
 
 public class CreateAdminCommandHandler(
 	IMapper mapper,

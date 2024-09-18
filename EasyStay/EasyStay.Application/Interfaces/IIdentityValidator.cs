@@ -1,4 +1,4 @@
-﻿namespace Booking.Application.Interfaces;
+﻿namespace EasyStay.Application.Interfaces;
 
 public interface IIdentityValidator {
 	Task<bool> IsNewEmailAsync(string email, CancellationToken cancellationToken);

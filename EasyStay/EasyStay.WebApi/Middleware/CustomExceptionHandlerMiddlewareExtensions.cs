@@ -1,4 +1,4 @@
-﻿namespace Booking.WebApi.Middleware;
+﻿namespace EasyStay.WebApi.Middleware;
 
 public static class CustomExceptionHandlerMiddlewareExtensions {
 	public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder builder) {

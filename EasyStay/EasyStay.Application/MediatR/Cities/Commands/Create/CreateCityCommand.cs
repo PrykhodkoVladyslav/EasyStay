@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Booking.Application.MediatR.Cities.Commands.Create;
+namespace EasyStay.Application.MediatR.Cities.Commands.Create;
 
 public class CreateCityCommand : IRequest<long> {
 	public string Name { get; set; } = null!;

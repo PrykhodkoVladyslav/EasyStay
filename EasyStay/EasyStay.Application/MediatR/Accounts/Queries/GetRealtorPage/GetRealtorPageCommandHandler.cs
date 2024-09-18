@@ -1,8 +1,8 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Application.Models.Pagination;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Application.Models.Pagination;
 using MediatR;
 
-namespace Booking.Application.MediatR.Accounts.Queries.GetRealtorPage;
+namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
 
 public class GetRealtorPageCommandHandler(
 	IPaginationService<RealtorItemVm, GetRealtorPageCommand> paginationService

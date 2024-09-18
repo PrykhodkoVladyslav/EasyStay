@@ -1,10 +1,10 @@
-﻿using Booking.Application.Common.Exceptions;
-using Booking.Application.Interfaces;
-using Booking.Domain;
+﻿using EasyStay.Application.Common.Exceptions;
+using EasyStay.Application.Interfaces;
+using EasyStay.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Application.MediatR.Hotels.Commands.SetArchiveStatus;
+namespace EasyStay.Application.MediatR.Hotels.Commands.SetArchiveStatus;
 
 public class SetArchiveStatusHotelCommandHandler(
 	IBookingDbContext context,

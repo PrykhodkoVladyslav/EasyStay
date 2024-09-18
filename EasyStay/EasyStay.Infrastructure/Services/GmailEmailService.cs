@@ -1,12 +1,12 @@
-﻿using Booking.Application.Interfaces;
-using Booking.Application.Models.Email;
-using Booking.Infrastructure.Options;
+﻿using EasyStay.Application.Interfaces;
+using EasyStay.Application.Models.Email;
+using EasyStay.Infrastructure.Options;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace Booking.Infrastructure.Services;
+namespace EasyStay.Infrastructure.Services;
 
 public class GmailEmailService(
 	IOptions<GmailSmtpOptions> smtpOptions

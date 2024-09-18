@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Booking.Application.Common.Mappings;
-using Booking.Domain;
+using EasyStay.Application.Common.Mappings;
+using EasyStay.Domain;
 
-namespace Booking.Application.MediatR.Hotels.Queries.Shared;
+namespace EasyStay.Application.MediatR.Hotels.Queries.Shared;
 
 public class HotelPhotoVm : IMapWith<HotelPhoto> {
 	public string Name { get; set; } = null!;

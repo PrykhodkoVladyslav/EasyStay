@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import "../../node_modules/react-toastify/dist/ReactToastify.css";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: rgb(63, 82, 60); // Основний колір
+  --color-secondary: rgb(240, 240, 240); // Колір фону
+  --color-accent: rgb(165, 165, 165); // Акцентний колір (для старих цін і інших дрібних елементів)
+  --color-text: rgb(81, 81, 81); // Колір тексту
+
+  --font-primary: "Nunito", sans-serif;
+  --font-secondary: "Montserrat", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+
+  --border-radius: 22px;
+}
+
 // Акаунт та його складові
 
 .account-layout {
@@ -13,7 +34,6 @@
     height: 74px;
     //min-width: 900px;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
@@ -26,26 +46,19 @@
 
     .right-section {
       display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
       gap: 46px;
 
       .dropdown-lang-container {
-        position: static;
         width: 98px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
         padding: 4px 6px;
         border-radius: 17px;
-        background: rgb(240, 240, 240);
+        background: var(--color-secondary);
 
         .elements {
           width: 76px;
           display: flex;
-          flex-direction: row;
           justify-content: space-between;
           align-items: flex-end;
           gap: 6px;
@@ -54,21 +67,19 @@
             height: 29px;
             width: 46px;
             display: flex;
-            flex-direction: row;
             justify-content: center;
             align-items: center;
             border-radius: 17px;
-            background: rgb(63, 82, 60);
+            background: var(--color-primary);
 
             .text {
               color: white;
-              font-family: "Nunito", sans-serif;
+              font-family: var(--font-primary);
               font-size: 15px;
               font-weight: 700;
             }
           }
           button {
-            position: static;
             width: 24px;
             height: 24px;
             display: flex;
@@ -121,7 +132,6 @@
         gap: 28px;
 
         button {
-          position: static;
           width: 24px;
           height: 24px;
         }
@@ -147,7 +157,6 @@
 
       .photo {
         width: 205px;
-        max-width: none;
         //min-width: calc(0.6 * 183px);
         height: 205px;
         border-radius: 100%;
@@ -155,41 +164,35 @@
       }
 
       .name {
-        gap: 18px;
         font-family: "Nunito", system-ui;
         font-size: 28px;
         font-weight: 700;
         line-height: 38px;
-        text-align: left;
       }
     }
 
     .content-bottom {
       width: 100%;
-      min-width: 200px;
-      padding: 24px 15px 24px 15px;
-      border-radius: 22px;
-      background: rgb(240, 240, 240);
+      min-width: 205px;
+      padding: 24px 15px;
+      border-radius: var(--border-radius);
+      background: var(--color-secondary);
 
       .items {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
         gap: 12px;
 
         .item {
           width: 100%;
           height: 52px;
-          padding: 11px 16px 11px 16px;
-          border-radius: 22px;
+          padding: 11px 16px;
+          border-radius: var(--border-radius);
           background: white;
-          color: black;
-          font-family: "Nunito", system-ui;
+          font-family: var(--font-primary);
           font-size: 14px;
           font-weight: 500;
           line-height: 28px;
-          text-align: left;
         }
       }
     }
@@ -198,27 +201,24 @@
   // Додати готель
   .add-hotel {
     position: absolute;
-    min-width: 464px;
+    min-width: 560px;
     top: 137px;
     left: 535px;
     right: 100px;
     display: flex;
     flex-direction: column;
     padding: 18px 23px;
-    border-radius: 22px;
-    background: #F7F7FD;
+    border-radius: var(--border-radius);
+    background: rgba(247, 247, 253);
 
     .components {
       height: 60px;
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
       align-items: center;
 
       p {
-        min-width: 245px;
-        max-width: 434px;
-        font-family: "Nunito", system-ui;
+        font-family: var(--font-primary);
         font-size: 28px;
         font-weight: 700;
       }
@@ -230,12 +230,437 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 22px;
-        background: rgb(63, 82, 60);
+        border-radius: var(--border-radius);
+        background: var(--color-primary);
         color: white;
-        font-family: "Nunito", system-ui;
+        font-family: var(--font-primary);
         font-size: 20px;
         font-weight: 500;
+      }
+    }
+  }
+
+  // Контент
+  .content {
+    //border: 1px solid #ccc;
+
+    position: absolute;
+    //width: 100%;
+    //width: auto;
+    width: 1292px;
+    //max-width: 1292px;
+    //min-width: 560px;
+    height: 995px;
+    top: 343px;
+    left: 535px;
+    right: 100px;
+    //margin-top: 104px;
+    display: flex;
+    flex-direction: column;
+    gap: 58px;
+
+    // Список готелів
+    .hotels-container {
+      //border: 1px solid #ccc;
+      width: 100%;
+      min-height: 584px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .container1 {
+        width: 100%;
+        gap: 24px;
+
+        .title {
+          font-family: var(--font-primary);
+          font-size: 32px;
+          font-weight: 700;
+        }
+
+        .items {
+          display: flex;
+          gap: 23px;
+
+          .item {
+            max-width: 413px;
+            height: 453px;
+            border-radius: var(--border-radius);
+            background: white;
+            box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+
+            .images-container {
+              position: relative;
+
+              .image {
+                width: 413px;
+                height: 241px;
+                object-fit: cover;
+                border-radius: var(--border-radius);
+              }
+
+              .slides {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 10px;
+                padding: 3px;
+                background: rgba(55, 55, 55, 0.7);
+                border-radius: 21px;
+
+                .container2 {
+                  width: 57px;
+                  height: 6px;
+                  display: flex;
+                  //flex-direction: row;
+                  //justify-content: flex-start;
+                  //align-items: center;
+                  gap: 3px;
+
+                  .slide {
+                    width: 6px;
+                    background: var(--color-accent);
+                    border-radius: 100%;
+                  }
+                  .active-slide {
+                    width: 12px;
+                    background: white;
+                    border-radius: 9px;
+                  }
+                }
+              }
+            }
+
+            .info {
+              width: 369px;
+              display: flex;
+              flex-direction: column;
+              gap: 22px;
+              margin: 15px 22px 9px;
+
+              .top {
+                display: flex;
+                flex-direction: column;
+
+                .container3 {
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 61px;
+
+                  .name {
+                    max-width: 240px;
+                    font-family: var(--font-primary);
+                    font-size: 28px;
+                    font-weight: 700;
+                    line-height: 38px;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                  }
+
+                  .stars-container {
+                    width: 57px;
+                    height: 28px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid rgb(234, 232, 232);
+                    border-radius: 30px;
+
+                    .container4 {
+                      display: flex;
+                      align-items: center;
+
+                      .star {
+                        width: 13px;
+                        height: 13px;
+                      }
+
+                      .rating {
+                        font-family: var(--font-primary);
+                        font-size: 16px;
+                        font-weight: 600;
+                        line-height: 22px;
+                      }
+                    }
+                  }
+                }
+
+                .location {
+                  color: rgb(81, 81, 81);
+                  font-family: var(--font-secondary);
+                  font-size: 16px;
+                  font-weight: 500;
+                  line-height: 20px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                }
+
+                .description {
+                  margin-top: 10px;
+                  font-family: var(--font-primary);
+                  font-size: 13px;
+                  font-weight: 600;
+                  line-height: 16px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                }
+
+                .realtor {
+                  height: 28px;
+                  display: flex;
+                  align-items: center;
+                  gap: 4px;
+                  color: var(--color-text);
+                  font-size: 14px;
+
+                  p:first-child {
+                    font-family: var(--font-primary);
+                    font-weight: 700;
+                  }
+
+                  p {
+                    font-family: var(--font-primary);
+                    font-weight: 500;
+                    line-height: 28px;
+                  }
+                }
+              }
+
+              .bottom {
+                display: flex;
+                flex-direction: column;
+
+                p {
+                  color: var(--color-text);
+                  font-family: var(--font-primary);
+                  font-size: 16px;
+                  font-weight: 600;
+                  line-height: 22px;
+                }
+
+                .container5 {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 20px;
+
+                  .prices-container {
+                    display: flex;
+                    align-items: flex-end;
+                    gap: 3px;
+
+                    .price {
+                      color: rgb(0, 0, 0);
+                      font-family: var(--font-secondary);
+                      font-size: 28px;
+                      font-weight: 600;
+                      line-height: 34px;
+                    }
+
+                    .old-price {
+                      position: relative;
+                      //display: inline-block;
+                      margin-right: 3px;
+                      color: var(--color-accent);
+                      font-family: var(--font-secondary);
+                      font-size: 16px;
+                      font-weight: 500;
+                      line-height: 20px;
+
+                      &::after {
+                        content: '';
+                        position: absolute;
+                        width: calc(100% + 3px);
+                        height: 1px;
+                        left: 0;
+                        bottom: 8px;
+                        background-color: rgb(165, 165, 165);
+                      }
+                    }
+                  }
+
+                  .container6 {
+                    border-radius: 8px;
+                    background: rgb(252, 243, 242);
+                    font-family: "Nunito", system-ui;
+
+                    .no-any-of-left {
+                      padding: 5px;
+                      color: rgb(249, 50, 50);
+                      font-size: 13px;
+                      font-weight: 600;
+                      line-height: 16px;
+                    }
+
+                    .any-of-left {
+                      border-radius: 8px;
+                      padding: 5px;
+                      background: rgb(227, 244, 225);                      font-family: "Nunito", system-ui;
+                      font-size: 13px;
+                      font-weight: 600;
+                      line-height: 16px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .container8 {
+        margin: 28px 0;
+
+        button {
+          padding: 9px 18px;
+          border-radius: 55px;
+          background: rgb(63, 82, 60);
+          color: white;
+          font-family: "Montserrat", system-ui;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 15px;
+        }
+      }
+    }
+
+    // Відгуки
+    .reviews-container {
+      //border: 1px solid #ccc;
+      width: 100%;
+      min-height: 353px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .container7 {
+        width: 100%;
+        gap: 24px;
+
+        .title {
+          font-family: var(--font-primary);
+          font-size: 32px;
+          font-weight: 700;
+        }
+
+        .reviews {
+          width: 100%;
+          display: flex;
+          gap: 21px;
+
+          .review {
+            width: 414px;
+            min-height: 222px;
+            flex-direction: column;
+            padding: 22px 23px;
+            border-radius: 22px;
+            box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+
+            .author {
+              height: 57px;
+              display: flex;
+              align-items: center;
+              gap: 19px;
+              //display: -webkit-box;
+              //-webkit-box-orient: vertical;
+              //-webkit-line-clamp: 1;
+              overflow: hidden;
+
+              .image {
+                width: 57px;
+                border-radius: 100%;
+                //background: rgb(47, 42, 42);
+
+                img {
+                  box-sizing: border-box;
+                }
+              }
+
+              .container9 {
+                //width: 100%;
+
+                .name-and-country {
+                  height: 27px;
+                  display: flex;
+                  align-items: center;
+
+                  p {
+                    margin-right: 7px;
+                    font-family: var(--font-primary);
+                    font-size: 20px;
+                    font-weight: 600;
+                    line-height: 27px;
+                  }
+
+                  .country {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                  }
+                }
+                .stars-container {
+                  width: 57px;
+                  height: 28px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  border: 1px solid rgb(234, 232, 232);
+                  border-radius: 30px;
+
+                  .container4 {
+                    display: flex;
+                    align-items: center;
+
+                    .star {
+                      width: 13px;
+                      height: 13px;
+                  }
+
+                    .rating {
+                      font-family: var(--font-primary);
+                      font-size: 16px;
+                      font-weight: 600;
+                      line-height: 22px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .description {
+              margin-top: 24px;
+              font-family: var(--font-primary);
+              font-size: 13px;
+              font-weight: 600;
+              line-height: 16px;
+            }
+          }
+        }
+      }
+
+      .container8 {
+        margin: 28px 0;
+
+        button {
+          padding: 9px 18px;
+          border-radius: 55px;
+          background: rgb(63, 82, 60);
+          color: white;
+          font-family: var(--font-secondary);
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 15px;
+        }
       }
     }
   }

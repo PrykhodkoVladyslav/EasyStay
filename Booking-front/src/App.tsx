@@ -8,16 +8,19 @@ import LoginPage from "pages/LoginPage.tsx";
 import RegisterPage from "pages/RegisterPage.tsx";
 import AuthLayout from "components/layouts/AuthLayout.tsx";
 
-import AdminLayout from "components/layouts/AdminLayout";
 import RealtorLayout from "components/layouts/RealtorLayout";
 
-import HotelsListPage from "pages/admin/hotel/HotelsListPage.tsx";
-import HotelsArchivedListPage from "pages/admin/hotel/HotelsArchivedListPage.tsx";
+import RealtorHomePage from "pages/realtor/HomePage.tsx";
 
 import HotelsPage from "pages/realtor/hotel/HotelsPage";
 import HotelCreatePage from "pages/realtor/hotel/HotelCreatePage.tsx";
 import HotelEditPage from "pages/realtor/hotel/HotelEditPage.tsx";
 import HotelsArchivedPage from "pages/realtor/hotel/HotelsArchivedPage.tsx";
+
+import AdminLayout from "components/layouts/AdminLayout";
+
+import HotelsListPage from "pages/admin/hotel/HotelsListPage.tsx";
+import HotelsArchivedListPage from "pages/admin/hotel/HotelsArchivedListPage.tsx";
 
 import CountriesPage from "pages/admin/country/CountriesPage.tsx";
 import CountryCreatePage from "pages/admin/country/CountryCreatePage.tsx";
@@ -43,6 +46,21 @@ function App() {
                     <Route path="register" element={<RegisterPage />} />
                 </Route>
 
+
+                <Route element={<ProtectedRoute allowedRoles={['Realtor']} />}>
+                    <Route path="realtor" element={<RealtorLayout />}>
+                        <Route path="home" element={<RealtorHomePage />} />
+
+                    </Route>
+                    <Route path="hotels">
+                        <Route path="list" element={<HotelsPage />} />
+                        <Route path="create" element={<HotelCreatePage />} />
+                        <Route path="edit/:id" element={<HotelEditPage />} />
+                        <Route path="archive" element={<HotelsArchivedPage />} />
+                    </Route>
+                </Route>
+
+
                 <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
                     <Route path="admin" element={<AdminLayout />}>
                         <Route path="hotels">
@@ -64,18 +82,6 @@ function App() {
                             <Route path="customers/list" element={<CustomersListPage />} />
                             <Route path="realtors/list" element={<RealtorsListPage />} />
                             <Route path="createAdmin" element={<AdminCreatePage />} />
-                        </Route>
-
-                    </Route>
-                </Route>
-
-                <Route element={<ProtectedRoute allowedRoles={['Realtor']} />}>
-                    <Route path="realtor" element={<RealtorLayout />}>
-                        <Route path="hotels">
-                            <Route path="list" element={<HotelsPage />} />
-                            <Route path="create" element={<HotelCreatePage />} />
-                            <Route path="edit/:id" element={<HotelEditPage />} />
-                            <Route path="archive" element={<HotelsArchivedPage />} />
                         </Route>
 
                     </Route>

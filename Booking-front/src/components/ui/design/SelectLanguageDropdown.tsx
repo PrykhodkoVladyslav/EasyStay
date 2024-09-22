@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import HorizontalPad from "components/ui/HorizontalPad.tsx";
 import { FaChevronDown } from 'react-icons/fa';
 import {getPublicResourceUrl} from "utils/publicAccessor.ts";
 
@@ -25,7 +24,6 @@ const SelectLanguageDropdown: React.FC<DropdownProps> = ({ options, defaultOptio
                 <div className="lang">
                     <div className="text">{selectedAbbr}</div>
                 </div>
-                <HorizontalPad widthPx={6}/>
                 <button className={`arrow ${isOpen ? 'open' : ''}`}>
                     <img
                         src={getPublicResourceUrl("account/header/vector.svg")}

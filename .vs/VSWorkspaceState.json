@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Booking",
-    "\\Booking\\Booking.Persistence"
+    ""
   ],
-  "SelectedNode": "\\Booking\\Booking.Persistence\\DbInitializer.cs",
+  "SelectedNode": "\\EasyStay.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -61,7 +61,7 @@ const LoginPage: React.FC = () => {
                 redirectPath = "/admin";
                 break;
             case 'Realtor':
-                redirectPath = "/realtor";
+                redirectPath = "/realtor/home";
                 break;
             default:
                 redirectPath = "/";

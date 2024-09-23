@@ -16,14 +16,17 @@ const TextInput = (props: {
     errorMessage?: string,
     showCross?: boolean
 }) => {
+    const isPasswordInput = props.type === "password";
+    const inputClassDefault = (isPasswordInput
+        ? "text-input-input-password-default"
+        : "text-input-input-default");
+    const inputClassError = (isPasswordInput
+        ? "text-input-input-password-error"
+        : "text-input-input-error");
+    const inputClass = props.isError ? inputClassError : inputClassDefault;
+    const inputClassNames = `base-text-input-input ${inputClass} ${props.showCross && props.isError ? "cross-padding" : ""} ${isPasswordInput ? "eye-padding" : ""}`;
+
     const [showPassword, setShowPassword] = React.useState(false);
-    const showEye = props.type === "password";
-    const inputClass = props.isError
-        ? (showEye
-            ? "text-input-input-password-error"
-            : "text-input-input-error")
-        : "text-input-input-default";
-    const inputClassNames = `base-text-input-input ${inputClass} ${props.showCross && props.isError ? "cross-padding" : ""} ${showEye ? "eye-padding" : ""}`;
 
     const inputType = showPassword ? "text" : props.type;
 
@@ -38,7 +41,7 @@ const TextInput = (props: {
                     <img src={getIconUrl("x-circle.svg")} alt="error"
                          className="text-input-error-icon" />}
 
-                {showEye &&
+                {isPasswordInput &&
                     <img src={getIconUrl(showPassword ? "eye/show.svg" : "eye/hide.svg")}
                          alt="password"
                          className="text-input-password-icon" onClick={() => setShowPassword(!showPassword)} />}

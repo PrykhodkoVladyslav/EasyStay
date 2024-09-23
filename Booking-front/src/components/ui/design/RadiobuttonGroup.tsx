@@ -22,12 +22,12 @@ const RadiobuttonGroup = (props: {
         : "radiobutton-title-default";
 
     const pathToCheckedImage = getIconUrl(props.isError
-        ? "radiobutton/circle-filled-red.svg"
-        : "radiobutton/circle-filled-black.svg");
+        ? "radiobutton/checked-red.svg"
+        : "radiobutton/checked-black.svg");
 
     const pathToUncheckedImage = getIconUrl(props.isError
-        ? "radiobutton/circle-empty-red.svg"
-        : "radiobutton/circle-empty-black.svg");
+        ? "radiobutton/unchecked-red.svg"
+        : "radiobutton/unchecked-black.svg");
 
     return (
         <div className="flex flex-row justify-evenly">

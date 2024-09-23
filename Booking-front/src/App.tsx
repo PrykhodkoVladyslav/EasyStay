@@ -43,7 +43,7 @@ function App() {
                     <Route path="register" element={<RegisterPage />} />
                 </Route>
 
-                <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
+                <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
                     <Route path="admin" element={<AdminLayout />}>
                         <Route path="hotels">
                             <Route path="list" element={<HotelsListPage />} />
@@ -69,7 +69,7 @@ function App() {
                     </Route>
                 </Route>
 
-                <Route element={<ProtectedRoute allowedRoles={['Realtor']} />}>
+                <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
                     <Route path="realtor" element={<RealtorLayout />}>
                         <Route path="hotels">
                             <Route path="list" element={<HotelsPage />} />

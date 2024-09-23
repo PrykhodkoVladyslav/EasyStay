@@ -1,5 +1,4 @@
 import {getPublicResourceUrl} from "utils/publicAccessor.ts";
-import { UA } from 'country-flag-icons/react/1x1'
 
 const Reviews = () => {
 
@@ -17,13 +16,7 @@ const Reviews = () => {
                                 />
                             </div>
                             <div className="container9">
-                                <div className="name-and-country">
-                                    <p>Марія</p>
-                                    <UA
-                                        title="Україна"
-                                        className="country"
-                                    />
-                                </div>
+                                <p className="name">Марія</p>
                                 <div className="stars-container">
                                     <img
                                         src={getPublicResourceUrl("account/home/star.svg")}
@@ -35,7 +28,6 @@ const Reviews = () => {
                                     </p>
                                 </div>
                             </div>
-
                         </div>
 
                         <p className="description">
@@ -52,13 +44,7 @@ const Reviews = () => {
                                 />
                             </div>
                             <div className="container9">
-                                <div className="name-and-country">
-                                    <p>Олександра dsad as d asd  dad s </p>
-                                    <UA
-                                        title="Україна"
-                                        className="country"
-                                    />
-                                </div>
+                                <p className="name">Олександра dsad as d asd  dad s </p>
                                 <div className="stars-container">
                                     <img
                                         src={getPublicResourceUrl("account/home/star.svg")}
@@ -75,6 +61,8 @@ const Reviews = () => {
 
                         <p className="description">
                             Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
+                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
+                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
                             чистою та дуже добре мебльованою. Ціна була дуже хорошою.
                         </p>
                     </div>
@@ -87,13 +75,7 @@ const Reviews = () => {
                                 />
                             </div>
                             <div className="container9">
-                                <div className="name-and-country">
-                                    <p>Даніела</p>
-                                    <UA
-                                        title="Україна"
-                                        className="country"
-                                    />
-                                </div>
+                                <p className="name">Даніела</p>
                                 <div className="stars-container">
                                     <img
                                         src={getPublicResourceUrl("account/home/star.svg")}

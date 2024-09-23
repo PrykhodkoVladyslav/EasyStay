@@ -24,12 +24,12 @@ const SelectLanguageDropdown: React.FC<DropdownProps> = ({ options, defaultOptio
                 <div className="lang">
                     <div className="text">{selectedAbbr}</div>
                 </div>
-                <button className={`arrow ${isOpen ? 'open' : ''}`}>
-                    <img
-                        src={getPublicResourceUrl("account/header/vector.svg")}
-                        alt="Messages"
-                    />
-                </button>
+                {/*<button className={`arrow ${isOpen ? 'open' : ''}`}>*/}
+                {/*    <img*/}
+                {/*        src={getPublicResourceUrl("account/header/vector.svg")}*/}
+                {/*        alt="Messages"*/}
+                {/*    />*/}
+                {/*</button>*/}
             </div>
             {/*{isOpen && (*/}
             {/*    <ul className="dropdown-options">*/}

@@ -4,13 +4,13 @@ import Reviews from "components/partials/account/home/Reviews.tsx";
 
 const HomePage = () => {
     return (
-        <>
+        <div className="home-content">
             <AddHotel />
-            <div className="content">
+            <div className="hotels-reviews">
                 <MyHotels />
                 <Reviews />
             </div>
-        </>
+        </div>
     );
 }
 

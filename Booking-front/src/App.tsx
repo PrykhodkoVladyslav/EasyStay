@@ -1,38 +1,43 @@
 import { Route, Routes } from "react-router-dom";
-import Layout from "components/layouts/Layout.tsx";
+import Layout from "components/layouts/Layout";
 
 import HomePage from "pages/HomePage.tsx";
-import ProtectedRoute from "components/guards/ProtectedRoute.tsx";
+import ProtectedRoute from "components/guards/ProtectedRoute";
 
-import LoginPage from "pages/LoginPage.tsx";
-import RegisterPage from "pages/RegisterPage.tsx";
-import AuthLayout from "components/layouts/AuthLayout.tsx";
+import LoginPage from "pages/LoginPage";
+import RegisterPage from "pages/RegisterPage";
+import AuthLayout from "components/layouts/AuthLayout";
 
 import RealtorLayout from "components/layouts/RealtorLayout";
 
-import RealtorHomePage from "pages/realtor/HomePage.tsx";
+import RealtorHomePage from "pages/realtor/HomePage";
+import RealtorDataPage from "pages/realtor/DataPage";
+import RealtorHotelsPage from "pages/realtor/HotelsPage";
+import RealtorReviewsPage from "pages/realtor/ReviewsPage";
+import RealtorArchivedPage from "pages/realtor/ArchivedPage";
+import RealtorDiscountPage from "pages/realtor/DiscountsPage";
 
 import HotelsPage from "pages/realtor/hotel/HotelsPage";
-import HotelCreatePage from "pages/realtor/hotel/HotelCreatePage.tsx";
-import HotelEditPage from "pages/realtor/hotel/HotelEditPage.tsx";
-import HotelsArchivedPage from "pages/realtor/hotel/HotelsArchivedPage.tsx";
+import HotelCreatePage from "pages/realtor/hotel/HotelCreatePage";
+import HotelEditPage from "pages/realtor/hotel/HotelEditPage";
+import HotelsArchivedPage from "pages/realtor/hotel/HotelsArchivedPage";
 
 import AdminLayout from "components/layouts/AdminLayout";
 
-import HotelsListPage from "pages/admin/hotel/HotelsListPage.tsx";
-import HotelsArchivedListPage from "pages/admin/hotel/HotelsArchivedListPage.tsx";
+import HotelsListPage from "pages/admin/hotel/HotelsListPage";
+import HotelsArchivedListPage from "pages/admin/hotel/HotelsArchivedListPage";
 
-import CountriesPage from "pages/admin/country/CountriesPage.tsx";
-import CountryCreatePage from "pages/admin/country/CountryCreatePage.tsx";
-import CountryEditPage from "pages/admin/country/CountryEditPage.tsx";
+import CountriesPage from "pages/admin/country/CountriesPage";
+import CountryCreatePage from "pages/admin/country/CountryCreatePage";
+import CountryEditPage from "pages/admin/country/CountryEditPage";
 
-import CitiesPage from "pages/admin/city/CitiesPage.tsx";
-import CityCreatePage from "pages/admin/city/CityCreatePage.tsx";
-import CityEditPage from "pages/admin/city/CityEditPage.tsx";
+import CitiesPage from "pages/admin/city/CitiesPage";
+import CityCreatePage from "pages/admin/city/CityCreatePage";
+import CityEditPage from "pages/admin/city/CityEditPage";
 
-import CustomersListPage from "pages/admin/user/customer/CustomersListPage.tsx";
-import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage.tsx";
-import AdminCreatePage from "pages/admin/user/admin/AdminCreatePage.tsx";
+import CustomersListPage from "pages/admin/user/customer/CustomersListPage";
+import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage";
+import AdminCreatePage from "pages/admin/user/admin/AdminCreatePage";
 
 function App() {
     return (
@@ -50,6 +55,11 @@ function App() {
                 <Route element={<ProtectedRoute allowedRoles={['Realtor']} />}>
                     <Route path="realtor" element={<RealtorLayout />}>
                         <Route path="home" element={<RealtorHomePage />} />
+                        <Route path="personal-data" element={<RealtorDataPage />} />
+                        <Route path="hotels" element={<RealtorHotelsPage />} />
+                        <Route path="reviews" element={<RealtorReviewsPage />} />
+                        <Route path="archived" element={<RealtorArchivedPage />} />
+                        <Route path="discounts" element={<RealtorDiscountPage />} />
 
                     </Route>
                     <Route path="hotels">

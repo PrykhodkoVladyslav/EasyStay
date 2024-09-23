@@ -5,10 +5,12 @@ import {useSelector} from "react-redux";
 import {getUser} from "store/slice/userSlice.ts";
 // import {IconUser} from "@tabler/icons-react";
 // import HorizontalPad from "components/ui/HorizontalPad.tsx";
+import {useNavigate} from "react-router-dom";
 
 const Side = () => {
     const user = useSelector(getUser);
     const [activeButton, setActiveButton] = useState<string>("Головна");
+    const navigate = useNavigate();
 
     if (!user) {
         return null;
@@ -17,15 +19,16 @@ const Side = () => {
     const displayName = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.email || "Невідомий Юзер";
 
     const buttons = [
-        "Головна",
-        "Особисті дані",
-        "Мої готелі",
-        "Відгуки",
-        "Архів"
+        { name: "Головна", path: "home" },
+        { name: "Особисті дані", path: "personal-data" },
+        { name: "Мої готелі", path: "hotels" },
+        { name: "Відгуки", path: "reviews" },
+        { name: "Архів", path: "archived" }
     ];
 
-    const handleButtonClick = (button: string) => {
-        setActiveButton(button);
+    const handleButtonClick = (buttonName: string, buttonPath: string) => {
+        setActiveButton(buttonName);
+        navigate(`/realtor/${buttonPath}`);
     };
 
     return (
@@ -51,15 +54,15 @@ const Side = () => {
                 <div className="items">
                     {buttons.map((button) => (
                         <button
-                            key={button}
+                            key={button.name}
                             className="item"
-                            onClick={() => handleButtonClick(button)}
+                            onClick={() => handleButtonClick(button.name, button.path)}
                             style={{
-                                background: activeButton === button ? "rgb(63, 82, 60)" : "white",
-                                color: activeButton === button ? "white" : "black",
+                                background: activeButton === button.name ? "rgb(63, 82, 60)" : "white",
+                                color: activeButton === button.name ? "white" : "black",
                             }}
                         >
-                            {button}
+                            {button.name}
                         </button>
                     ))}
                 </div>

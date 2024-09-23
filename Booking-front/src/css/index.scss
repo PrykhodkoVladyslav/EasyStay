@@ -675,10 +675,94 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    font-family: var(--font-primary);
 
     .title {
+      height: 44px;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 44px;
+    }
 
+    .data {
 
+      width: 100%;
+      height: 726px;
+      display: flex;
+      flex-direction: column;
+      gap: 38px;
+
+      .info {
+        border: 1px solid #ccc;
+
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .name {
+          height: 44px;
+          font-size: 32px;
+          font-weight: 700;
+          line-height: 44px;
+        }
+
+        .email {
+          height: 16px;
+          color: rgb(81, 81, 81);
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 16px;
+        }
+      }
+
+      .container10 {
+        border: 1px solid #ccc;
+
+        height: 620px;
+        gap: 28px;
+
+        p:nth-of-type(-n+7) {
+          height: 22px;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 22px;
+        }
+
+        .data1 {
+
+          border: 1px solid #ccc;
+
+          .phone {
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .number {
+              height: 22px;
+              font-size: 16px;
+              font-weight: 700;
+              line-height: 22px;
+            }
+          }
+        }
+
+        .data2 {
+
+        }
+
+        .data3 {
+
+        }
+
+        .data4 {
+
+        }
+
+        .data5 {
+
+        }
+      }
     }
   }
 }

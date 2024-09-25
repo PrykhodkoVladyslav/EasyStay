@@ -20,6 +20,7 @@ public interface IBookingDbContext {
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }
 	DbSet<Address> Addresses { get; set; }
+	DbSet<RentalPeriod> RentalPeriods { get; set; }
 	DbSet<Hotel> Hotels { get; set; }
 	DbSet<HotelCategory> HotelCategories { get; set; }
 	DbSet<HotelPhoto> HotelPhotos { get; set; }

@@ -28,6 +28,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	public DbSet<Country> Countries { get; set; }
 	public DbSet<City> Cities { get; set; }
 	public DbSet<Address> Addresses { get; set; }
+	public DbSet<RentalPeriod> RentalPeriods { get; set; }
 	public DbSet<Hotel> Hotels { get; set; }
 	public DbSet<HotelCategory> HotelCategories { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }

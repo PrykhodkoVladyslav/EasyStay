@@ -13,6 +13,8 @@ using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
+using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
+using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
 using EasyStay.Domain.Identity;
 using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
@@ -81,6 +83,7 @@ builder.Services.AddSingleton<IEmailService, GmailEmailService>();
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
+builder.Services.AddScoped<IPaginationService<RentalPeriodVm, GetRentalPeriodsPageQuery>, RentalPeriodPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelCategoryVm, GetHotelCategoriesPageQuery>, HotelCategoryPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
 builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();

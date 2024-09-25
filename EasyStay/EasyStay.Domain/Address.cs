@@ -13,4 +13,6 @@ public class Address {
 
 	public long CityId { get; set; }
 	public City City { get; set; } = null!;
+
+	public Hotel Hotel { get; set; } = null!;
 }

@@ -29,17 +29,21 @@ const DataPage = () => {
                     </div>
                     <div className="containers1">
                         <p>Дата народження</p>
-                        <input className="text-input"
-                            id="date"
+                        <input
+                            className="text-input"
+                            id="birthdate"
                             title="Дата народження"
                             type="date"
                             placeholder="Введіть дату народження"
+                            min="1900-01-01"
+                            max="2024-12-31"
                         />
 
                     </div>
                     <div className="containers1">
                         <p>Громадянство</p>
-                        <input className="text-input"
+                        <input
+                            className="text-input"
                             id="Country"
                             title="Громадянство"
                             type="text"
@@ -48,7 +52,8 @@ const DataPage = () => {
                     </div>
                     <div className="containers1">
                         <p>Стать</p>
-                        <input className="text-input"
+                        <input
+                            className="text-input"
                             id="gender"
                             title="Стать"
                             type="text"
@@ -57,7 +62,8 @@ const DataPage = () => {
                     </div>
                     <div className="containers1">
                         <p>Адресса</p>
-                        <input className="text-input"
+                        <input
+                            className="text-input"
                             id="address"
                             title="Адресса"
                             type="text"
@@ -68,20 +74,22 @@ const DataPage = () => {
                         <div className="container11">
                             <div>
                                 <p>Країна/регіон</p>
-                                <input className="text-input"
-                                       id="date"
-                                       title="Дата народження"
+                                <input
+                                    className="text-input"
+                                       id="text"
+                                       title="Країна/регіон"
                                        type="text"
-                                       placeholder="Введіть дату народження"
+                                       placeholder="Введіть країну/регіон"
                                 />
                             </div>
                             <div>
                                 <p>Місто</p>
-                                <input className="text-input"
-                                       id="date"
-                                       title="Дата народження"
+                                <input
+                                    className="text-input"
+                                       id="text"
+                                       title="Місто"
                                        type="text"
-                                       placeholder="Введіть дату народження"
+                                       placeholder="Введіть місто"
                                 />
                             </div>
                         </div>

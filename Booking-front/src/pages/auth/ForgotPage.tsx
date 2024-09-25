@@ -10,8 +10,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import IValidationError from "interfaces/error/IValidationError.ts";
 import { useSendResetPasswordEmailMutation } from "services/user.ts";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPage = () => {
+    const navigate = useNavigate();
     const [emailError, setEmailError] = React.useState("");
 
     const [sendResetPasswordEmail, { isLoading }] = useSendResetPasswordEmailMutation();
@@ -31,7 +33,7 @@ const ForgotPage = () => {
 
         try {
             await sendResetPasswordEmail(data).unwrap();
-            // ToDo Відкрити сторінку успішної відправки
+            navigate("/auth/success-send");
         } catch (error) {
             const validationError = error as IValidationError;
             validationError.data.forEach(e => {

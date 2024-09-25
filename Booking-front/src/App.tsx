@@ -8,6 +8,7 @@ import LoginPage from "pages/auth/LoginPage";
 import RegisterPage from "pages/auth/RegisterPage";
 import ForgotPage from "pages/auth/ForgotPage";
 import AuthLayout from "components/layouts/AuthLayout";
+import SuccessSendPage from "pages/auth/SuccessSendPage.tsx";
 
 import RealtorLayout from "components/layouts/RealtorLayout";
 
@@ -51,6 +52,7 @@ function App() {
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot" element={<ForgotPage />} />
+                    <Route path="success-send" element={<SuccessSendPage />} />
                 </Route>
 
 

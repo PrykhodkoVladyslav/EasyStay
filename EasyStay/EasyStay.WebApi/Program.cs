@@ -72,6 +72,7 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddTransient<ICleanDataSeeder, CleanDataSeeder>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
@@ -129,8 +130,17 @@ app.MapHub<ChatHub>("/chat");
 
 app.MapControllers();
 
-using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
+
+var seedTask = SeedAsync(app);
+var appTask = app.RunAsync();
+
+await seedTask;
+await appTask;
+
+static async Task SeedAsync(WebApplication app) {
+	using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 	var serviceProvider = scope.ServiceProvider;
+
 	var context = serviceProvider.GetRequiredService<BookingDbContext>();
 	var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
@@ -141,10 +151,10 @@ using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().Creat
 	DbInitializer.SeedIdentity(context, userManager, roleManager, configuration, imageService);
 
 	if (app.Configuration.GetValue<bool>("SeedCleanData"))
-		CleanDataSeeder.Seed(context, imageService, userManager);
+		await serviceProvider.GetRequiredService<ICleanDataSeeder>().SeedAsync();
 
 	if (app.Configuration.GetValue<bool>("SeedGeneratedData"))
 		GeneratedDataSeeder.Seed(context, imageService);
-}
 
-app.Run();
+	await Console.Out.WriteLineAsync("Seedind completed");
+}

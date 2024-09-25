@@ -64,8 +64,9 @@ const ForgotPage = () => {
 
             <VerticalPad heightPx={8} />
 
-            <p className="login-register-offer">Пригадали пароль?<a className="login-register-offer-link"
-                                                                    href="/auth/login">Увійти</a></p>
+            <p className="login-register-offer">Пригадали пароль?
+                <a className="login-register-offer-link"
+                   href="/auth/login">Увійти</a></p>
         </form>
     );
 };

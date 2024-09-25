@@ -13,9 +13,9 @@
   --color-accent: rgb(165, 165, 165); // Акцентний колір (для старих цін і інших дрібних елементів)
   --color-text: rgb(81, 81, 81); // Колір тексту
 
-  --font-primary: "Nunito", sans-serif;
-  --font-secondary: "Montserrat", sans-serif;
-  --font-roboto: "Roboto", sans-serif;
+  --font-primary: "Nunito", system-ui;
+  --font-secondary: "Montserrat", system-ui;
+  --font-roboto: "Roboto", system-ui;
 
   --border-radius: 22px;
 }
@@ -248,8 +248,7 @@
   }
 }
 
-// Акаунт та його складові
-
+// Акаунт Ріелтора
 .account-layout {
   position: relative;
   width: 100%;
@@ -891,23 +890,18 @@
 
   // Особисті дані
   .data-content {
-    //border: 1px solid #ccc;
-
     position: absolute;
-    //width: 100%;
-    //width: auto;
-    width: 850px;
-    //max-width: 1292px;
+    max-width: 850px;
     //min-width: 560px;
     height: 794px;
     top: 137px;
     left: 535px;
     right: 100px;
-    //margin-top: 104px;
     display: flex;
     flex-direction: column;
     gap: 24px;
     font-family: var(--font-primary);
+    white-space: nowrap;
 
     .title {
       height: 44px;
@@ -917,7 +911,6 @@
     }
 
     .data {
-
       width: 100%;
       height: 726px;
       display: flex;
@@ -925,8 +918,6 @@
       gap: 38px;
 
       .info {
-        border: 1px solid #ccc;
-
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -948,51 +939,82 @@
       }
 
       .container10 {
-        border: 1px solid #ccc;
-
         height: 620px;
+        display: flex;
+        flex-direction: column;
         gap: 28px;
 
-        p:nth-of-type(-n+7) {
+        p {
           height: 22px;
           font-size: 16px;
           font-weight: 700;
           line-height: 22px;
         }
 
-        .data1 {
+        input {
+          width: 100%;
+          min-width: 200px;
+          height: 56px;
+          padding: 9px 14px;
+          border-radius: 18px;
+          background: rgb(247, 247, 253);
+          color: var(--color-text);
+          font-family: var(--font-primary);
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+        }
 
-          border: 1px solid #ccc;
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          display: none;
+        }
 
-          .phone {
-            height: 80px;
+        .containers1 {
+          width: 100%;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
+
+        .containers2 {
+          width: 100%;
+          height: 80px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 44px;
+
+          .container11 {
+            width: 628px;
             display: flex;
-            flex-direction: column;
-            gap: 2px;
+            gap: 48px;
 
-            .number {
-              height: 22px;
-              font-size: 16px;
-              font-weight: 700;
-              line-height: 22px;
+            div {
+              width: 100%;
             }
           }
-        }
 
-        .data2 {
+          .btn-edit {
+            width: 178px;
+            //width: 100%;
+            //max-width: 178px;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 1px;
+            border-radius: 18px;
 
-        }
-
-        .data3 {
-
-        }
-
-        .data4 {
-
-        }
-
-        .data5 {
-
+            background: rgb(63, 82, 60);
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 27px;
+            text-align: center;
+          }
         }
       }
     }

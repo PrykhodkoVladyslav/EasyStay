@@ -18,9 +18,9 @@ public static class GeneratedDataSeeder {
 		if (!context.HotelPhotos.Any())
 			SeedHotelPhotos(context, imageService);
 
-        if (!context.RealtorReviews.Any())
-            SeedRealtorReviews(context);
-    }
+		if (!context.RealtorReviews.Any())
+			SeedRealtorReviews(context);
+	}
 
 	private static void SeedAddresses(IBookingDbContext context) {
 		Faker faker = new Faker();
@@ -73,20 +73,22 @@ public static class GeneratedDataSeeder {
 		var addressesId = context.Addresses.Select(c => c.Id).ToList();
 		var categoryIds = context.HotelCategories.Select(hc => hc.Id).ToArray();
 		var userIds = context.Realtors.Select(u => u.Id).ToArray();
+		var rentalPeriodIds = context.RentalPeriods.Select(rp => rp.Id).ToArray();
 
 		foreach (var address in addressesId) {
-            int numberOfRooms = random.Next(1, 21);
-            double areaPerRoom = Math.Round(5 + (random.NextDouble() * 45), 2);
-            double area = Math.Round(numberOfRooms * areaPerRoom, 2);
+			int numberOfRooms = random.Next(1, 21);
+			double areaPerRoom = Math.Round(5 + (random.NextDouble() * 45), 2);
+			double area = Math.Round(numberOfRooms * areaPerRoom, 2);
 
-            context.Hotels.Add(
+			context.Hotels.Add(
 				new() {
 					Name = faker.Company.CompanyName(),
 					Description = faker.Lorem.Sentences(5),
-                    Area = area,
-                    NumberOfRooms = numberOfRooms,
-                    IsArchived = random.Next(0, 2) == 1,
-                    AddressId = address,
+					Area = area,
+					NumberOfRooms = numberOfRooms,
+					IsArchived = random.Next(0, 2) == 1,
+					RentalPeriodId = faker.PickRandom(rentalPeriodIds),
+					AddressId = address,
 					CategoryId = faker.PickRandom(categoryIds),
 					RealtorId = faker.PickRandom(userIds)
 				}
@@ -123,35 +125,31 @@ public static class GeneratedDataSeeder {
 		}
 	}
 
-    private static void SeedRealtorReviews(IBookingDbContext context)
-    {
-        Faker faker = new Faker();
-        Random random = new Random();
+	private static void SeedRealtorReviews(IBookingDbContext context) {
+		Faker faker = new Faker();
+		Random random = new Random();
 
-        var realtorsIds = context.Realtors.Select(r => r.Id).ToArray();
-        var customersIds = context.Customers.Select(c => c.Id).ToArray();
+		var realtorsIds = context.Realtors.Select(r => r.Id).ToArray();
+		var customersIds = context.Customers.Select(c => c.Id).ToArray();
 
-        if (realtorsIds.Any() && customersIds.Any())
-        {
-            for (int i = 0; i < 15; i++)
-            {
-                context.RealtorReviews.Add(
-                    new RealtorReview
-                    {
-                        Description = faker.Lorem.Sentences(3),
-                        Score = faker.Random.Int(1, 5),
-                        CreatedAtUtc = DateTime.UtcNow,
-                        RealtorId = faker.PickRandom(realtorsIds),
-                        AuthorId = faker.PickRandom(customersIds)
-                    }
-                );
-            }
+		if (realtorsIds.Any() && customersIds.Any()) {
+			for (int i = 0; i < 15; i++) {
+				context.RealtorReviews.Add(
+					new RealtorReview {
+						Description = faker.Lorem.Sentences(3),
+						Score = faker.Random.Int(1, 5),
+						CreatedAtUtc = DateTime.UtcNow,
+						RealtorId = faker.PickRandom(realtorsIds),
+						AuthorId = faker.PickRandom(customersIds)
+					}
+				);
+			}
 
-            context.SaveChanges();
-        }
-    }
+			context.SaveChanges();
+		}
+	}
 
-    private static string GetImageAsBase64(HttpClient httpClient, string imageUrl) {
+	private static string GetImageAsBase64(HttpClient httpClient, string imageUrl) {
 		var imageBytes = httpClient.GetByteArrayAsync(imageUrl).Result;
 		return Convert.ToBase64String(imageBytes);
 	}

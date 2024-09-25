@@ -46,3 +46,12 @@ export const CreateAdminSchema = z.object({
 });
 
 export type CreateAdminSchemaType = z.infer<typeof CreateAdminSchema>;
+
+export const ForgotPasswordSchema = z.object({
+    email: z
+        .string()
+        .min(1, "Дане поле повинно бути заповнене")
+        .email("Неправильний формат електронної пошти"),
+});
+
+export type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;

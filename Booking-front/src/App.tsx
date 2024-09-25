@@ -4,8 +4,9 @@ import Layout from "components/layouts/Layout";
 import HomePage from "pages/HomePage.tsx";
 import ProtectedRoute from "components/guards/ProtectedRoute";
 
-import LoginPage from "pages/LoginPage";
-import RegisterPage from "pages/RegisterPage";
+import LoginPage from "pages/auth/LoginPage";
+import RegisterPage from "pages/auth/RegisterPage";
+import ForgotPage from "pages/auth/ForgotPage";
 import AuthLayout from "components/layouts/AuthLayout";
 
 import RealtorLayout from "components/layouts/RealtorLayout";
@@ -49,10 +50,11 @@ function App() {
                 <Route path="auth" element={<AuthLayout />}>
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
+                    <Route path="forgot" element={<ForgotPage />} />
                 </Route>
 
 
-                <Route element={<ProtectedRoute allowedRoles={['Realtor']} />}>
+                <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
                     <Route path="realtor" element={<RealtorLayout />}>
                         <Route path="home" element={<RealtorHomePage />} />
                         <Route path="personal-data" element={<RealtorDataPage />} />
@@ -71,7 +73,7 @@ function App() {
                 </Route>
 
 
-                <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
+                <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
                     <Route path="admin" element={<AdminLayout />}>
                         <Route path="hotels">
                             <Route path="list" element={<HotelsListPage />} />

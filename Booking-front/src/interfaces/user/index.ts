@@ -39,17 +39,6 @@ export interface CreateAdmin {
     password: string;
 }
 
-// export interface ResetPassword {
-//     password: string;
-//     token: string;
-//     email: string;
-// }
-
-// export interface ResetPasswordRequest {
-//     password: string;
-//     token: string;
-// }
-
 export interface BlockUserRequest {
     id: number;
     lockoutEndUtc: Date;
@@ -57,4 +46,8 @@ export interface BlockUserRequest {
 
 export interface UnlockUserRequest {
     id: number;
+}
+
+export interface ISendResetPasswordEmailRequest {
+    email: string;
 }

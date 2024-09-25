@@ -8,19 +8,22 @@ public class ExistingEntityCheckerService(
 	ICurrentUserService currentUserService
 ) : IExistingEntityCheckerService {
 
-	public async Task<bool> IsCorrectCountryId(long id, CancellationToken cancellationToken) =>
+	public async Task<bool> IsCorrectCountryIdAsync(long id, CancellationToken cancellationToken) =>
 		await context.Countries.AnyAsync(c => c.Id == id, cancellationToken);
 
-	public async Task<bool> IsCorrectCityId(long id, CancellationToken cancellationToken) =>
+	public async Task<bool> IsCorrectCityIdAsync(long id, CancellationToken cancellationToken) =>
 		await context.Cities.AnyAsync(c => c.Id == id, cancellationToken);
 
-	public async Task<bool> IsCorrectHotelId(long id, CancellationToken cancellationToken) =>
+	public async Task<bool> IsCorrectHotelIdAsync(long id, CancellationToken cancellationToken) =>
 		await context.Hotels.AnyAsync(h => h.Id == id, cancellationToken);
 
-	public async Task<bool> IsCorrectHotelIdOfCurrentUser(long id, CancellationToken cancellationToken) =>
+	public async Task<bool> IsCorrectHotelIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
 		await context.Hotels.AnyAsync(h => h.Id == id && h.RealtorId == currentUserService.GetRequiredUserId(),
 			cancellationToken);
 
-	public async Task<bool> IsCorrectHotelCategoryId(long id, CancellationToken cancellationToken) =>
+	public async Task<bool> IsCorrectHotelCategoryIdAsync(long id, CancellationToken cancellationToken) =>
 		await context.HotelCategories.AnyAsync(hc => hc.Id == id, cancellationToken);
+
+	public Task<bool> IsCorrectRentalPeriodIdAsync(long id, CancellationToken cancellationToken) =>
+		context.RentalPeriods.AsNoTracking().AnyAsync(rp => rp.Id == id, cancellationToken);
 }

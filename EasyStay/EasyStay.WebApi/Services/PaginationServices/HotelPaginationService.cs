@@ -2,6 +2,7 @@ using AutoMapper;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
+using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.WebApi.Services.PaginationServices;
@@ -46,6 +47,9 @@ public class HotelPaginationService(
 
 		if (filter.RealtorId is not null)
 			query = query.Where(h => h.RealtorId == filter.RealtorId);
+
+		if (filter.RentalPeriodId is not null)
+			query = query.Where(h => h.RentalPeriodId == filter.RentalPeriodId);
 
 		if (filter.Address is not null) {
 			var address = filter.Address;

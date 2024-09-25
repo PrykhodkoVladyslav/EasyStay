@@ -39,6 +39,7 @@ public class UpdateHotelCommandHandler(
 		entity.Area = request.Area;
 		entity.NumberOfRooms = request.NumberOfRooms;
 		entity.IsArchived = request.IsArchived;
+		entity.RentalPeriodId = request.RentalPeriodId;
 		entity.CategoryId = request.CategoryId;
 
 		entity.Photos.Clear();

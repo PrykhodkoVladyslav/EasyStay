@@ -6,7 +6,7 @@ namespace EasyStay.Application.MediatR.Addresses.Commands.Create;
 public class CreateAddressValidator : AbstractValidator<CreateAddressCommand> {
 	public CreateAddressValidator(IExistingEntityCheckerService existingEntityCheckerService) {
 		RuleFor(a => a.CityId)
-			.MustAsync(existingEntityCheckerService.IsCorrectCityId)
+			.MustAsync(existingEntityCheckerService.IsCorrectCityIdAsync)
 				.WithMessage("City with this id is not exists");
 
 		RuleFor(a => a.HouseNumber)

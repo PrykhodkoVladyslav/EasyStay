@@ -19,6 +19,7 @@ public class CreateHotelCommandHandler(
 			Area = request.Area,
 			NumberOfRooms = request.NumberOfRooms,
 			IsArchived = request.IsArchived ?? false,
+			RentalPeriodId = request.RentalPeriodId,
 			CategoryId = request.CategoryId,
 			RealtorId = currentUserService.GetRequiredUserId(),
 		};

@@ -1,11 +1,12 @@
 ﻿namespace EasyStay.Application.Interfaces;
 
 public interface IExistingEntityCheckerService {
-	Task<bool> IsCorrectCountryId(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectCityId(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelId(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelIdOfCurrentUser(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelCategoryId(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectCountryIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectCityIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelCategoryIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectRentalPeriodIdAsync(long id, CancellationToken cancellationToken);
 	//Task<bool> IsCorrectHotelReviewId(long id, CancellationToken cancellationToken);
 	//Task<bool> IsCorrectHotelReviewIdOfCurrentUser(long id, CancellationToken cancellationToken);
 	//Task<bool> IsCorrectHotelReviewByBookingIdAndUserId(long bookingId, CancellationToken cancellationToken);

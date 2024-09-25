@@ -25,8 +25,12 @@ public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
 			.GreaterThan(0)
 				.WithMessage("Number of rooms cannot be negative or equal to 0");
 
+		RuleFor(h => h.RentalPeriodId)
+			.MustAsync(existingEntityCheckerService.IsCorrectRentalPeriodIdAsync)
+				.WithMessage("RentalPeriod with this id is not exists");
+
 		RuleFor(h => h.CategoryId)
-			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryId)
+			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryIdAsync)
 				.WithMessage("HotelCategory with this id is not exists");
 
 		RuleFor(h => h.Photos)

@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using EasyStay.Application.Common.Mappings;
+﻿using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Addresses.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
+using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.Shared;
@@ -18,6 +18,8 @@ public class HotelVm : IMapWith<Hotel> {
 	public int NumberOfRooms { get; set; }
 
 	public bool IsArchived { get; set; }
+
+	public RentalPeriodVm RentalPeriod { get; set; } = null!;
 
 	public AddressVm Address { get; set; } = null!;
 

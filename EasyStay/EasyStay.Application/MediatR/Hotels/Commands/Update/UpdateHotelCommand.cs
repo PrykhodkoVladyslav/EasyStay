@@ -17,6 +17,8 @@ public class UpdateHotelCommand : IRequest {
 
 	public bool IsArchived { get; set; }
 
+	public long RentalPeriodId { get; set; }
+
 	public UpdateAddressDto Address { get; set; } = null!;
 
 	public long CategoryId { get; set; }

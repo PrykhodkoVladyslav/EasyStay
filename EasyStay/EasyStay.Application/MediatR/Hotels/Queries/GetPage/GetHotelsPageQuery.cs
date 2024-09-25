@@ -20,11 +20,13 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public bool? IsArchived { get; set; }
 
-	public long? RealtorId { get; set; }
+	public long? RentalPeriodId { get; set; }
 
 	public HotelAddressFilterDto? Address { get; set; }
 
 	public long? CategoryId { get; set; }
+
+	public long? RealtorId { get; set; }
 
 	public bool? IsRandomItems { get; set; }
 }

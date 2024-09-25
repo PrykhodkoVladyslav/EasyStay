@@ -19,7 +19,7 @@ const Side = () => {
     const displayName = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.email || "Невідомий Юзер";
 
     const buttons = [
-        { name: "Головна", path: "home" },
+        { name: "Головна", path: "" },
         { name: "Особисті дані", path: "personal-data" },
         { name: "Мої готелі", path: "hotels" },
         { name: "Відгуки", path: "reviews" },

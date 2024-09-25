@@ -8,7 +8,7 @@ import {
     CreateAdmin,
     BlockUserRequest,
     UnlockUserRequest,
-    ISendResetPasswordEmailRequest,
+    ISendResetPasswordEmailRequest, IResetPasswordRequest,
 } from "interfaces/user";
 
 export const userApi = createApi({
@@ -123,6 +123,14 @@ export const userApi = createApi({
                 body: data,
             }),
         }),
+
+        resetPassword: builder.mutation<void, IResetPasswordRequest>({
+            query: (data) => ({
+                url: "ResetPassword",
+                method: "POST",
+                body: data,
+            }),
+        }),
     }),
 });
 
@@ -135,4 +143,5 @@ export const {
     useBlockUserMutation,
     useUnlockUserMutation,
     useSendResetPasswordEmailMutation,
+    useResetPasswordMutation,
 } = userApi;

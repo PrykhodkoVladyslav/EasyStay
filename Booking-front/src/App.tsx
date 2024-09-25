@@ -40,25 +40,27 @@ import CityEditPage from "pages/admin/city/CityEditPage";
 import CustomersListPage from "pages/admin/user/customer/CustomersListPage";
 import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage";
 import AdminCreatePage from "pages/admin/user/admin/AdminCreatePage";
+import ResetPasswordPage from "pages/auth/ResetPasswordPage.tsx";
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route index element={<HomePage />} />
-                {/*<Route path="hotel/:id" element={<HotelPage />} />*/}
+                <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
+                    <Route index element={<HomePage />} />
+                </Route>
 
                 <Route path="auth" element={<AuthLayout />}>
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot" element={<ForgotPage />} />
                     <Route path="success-send" element={<SuccessSendPage />} />
+                    <Route path="reset" element={<ResetPasswordPage />} />
                 </Route>
-
 
                 <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
                     <Route path="realtor" element={<RealtorLayout />}>
-                        <Route path="home" element={<RealtorHomePage />} />
+                        <Route index element={<RealtorHomePage />} />
                         <Route path="personal-data" element={<RealtorDataPage />} />
                         <Route path="hotels" element={<RealtorHotelsPage />} />
                         <Route path="reviews" element={<RealtorReviewsPage />} />

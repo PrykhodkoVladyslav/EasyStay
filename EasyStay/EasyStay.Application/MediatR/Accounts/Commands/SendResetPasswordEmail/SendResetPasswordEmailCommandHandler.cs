@@ -4,6 +4,7 @@ using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace EasyStay.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
 
@@ -23,8 +24,9 @@ public class SendResetPasswordEmailCommandHandler(
 			?? throw new NullReferenceException("ResetPasswordUrl is null");
 
 		var token = await userManager.GeneratePasswordResetTokenAsync(user);
+		var base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
 
-		var resetPasswordUrl = string.Format(resetPasswordUrlPattern, user.Email, token);
+		var resetPasswordUrl = string.Format(resetPasswordUrlPattern, user.Email, base64Token);
 
 		var email = new EmailDto {
 			Receivers = [

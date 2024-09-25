@@ -1,9 +1,7 @@
-import { User } from "interfaces/user";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRegistrationMutation } from "services/user.ts";
 import { useAppDispatch } from "store/index.ts";
-import { setCredentials } from "store/slice/userSlice.ts";
-import { jwtParser } from "utils/jwtParser.ts";
+import { getUserLocation, setToken } from "store/slice/userSlice.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegistrationSchemaType, RegistrationSchema } from "interfaces/zod/user.ts";
@@ -14,13 +12,14 @@ import VerticalPad from "components/ui/VerticalPad.tsx";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 import IValidationError from "interfaces/error/IValidationError.ts";
 import RadiobuttonGroup from "components/ui/design/RadiobuttonGroup.tsx";
+import { useSelector } from "react-redux";
 
 const RegisterPage: React.FC = () => {
     const showCross = true;
 
     const navigate = useNavigate();
-    const location = useLocation();
     const dispatch = useAppDispatch();
+    const userLocation = useSelector(getUserLocation);
     const [registerUser, { isLoading }] = useRegistrationMutation();
 
     const [firstNameError, setFirstNameError] = React.useState("");
@@ -72,15 +71,11 @@ const RegisterPage: React.FC = () => {
     };
 
     const setUser = (token: string) => {
-        localStorage.setItem("authToken", token);
         dispatch(
-            setCredentials({
-                user: jwtParser(token) as User,
-                token: token,
-            }),
+            setToken(token),
         );
-        const { from } = location.state || { from: { pathname: "/admin" } };
-        navigate(from);
+
+        navigate(userLocation);
     };
 
     return (

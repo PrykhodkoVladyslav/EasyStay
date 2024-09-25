@@ -1,12 +1,17 @@
 export interface User {
     id: number;
+    // Id
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": number;
     email: string;
+    // Roles
+    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": string;
     firstName: string;
     lastName: string;
     photo: string;
 }
 
 export interface UserState {
+    location: string;
     user: User | null;
     token: string | null;
 }
@@ -50,4 +55,10 @@ export interface UnlockUserRequest {
 
 export interface ISendResetPasswordEmailRequest {
     email: string;
+}
+
+export interface IResetPasswordRequest {
+    email: string;
+    token: string;
+    newPassword: string;
 }

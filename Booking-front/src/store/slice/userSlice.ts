@@ -1,29 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { Hotel } from "interfaces/hotel";
-import { /*ILocation,*/ User, UserState } from "interfaces/user";
+import { User, UserState } from "interfaces/user";
 import { jwtParser } from "utils/jwtParser.ts";
+import { jwtDecode } from "jwt-decode";
+
+const getLocation = (token?: string | null) => {
+    if (!token)
+        return "/";
+
+    const user = jwtDecode<User>(token);
+    const roles = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    if (roles.includes("Admin"))
+        return "/admin";
+    if (roles.includes("Realtor"))
+        return "/realtor";
+    if (roles.includes("Customer"))
+        return "/";
+
+    return "/";
+};
 
 const initialState: UserState = {
-    // location: null,
+    location: getLocation(localStorage.getItem("authToken")),
     user: jwtParser(localStorage.getItem("authToken")) as User,
     token: localStorage.getItem("authToken") || null,
-    // favoriteHotels: [],
 };
 
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        // setLocation: (state, action: { payload: ILocation }) => {
-        //     state.location = action.payload;
-        // },
-        // setFavorite: (state, action: { payload: Hotel[] }) => {
-        //     state.favoriteHotels = action.payload;
-        // },
-        setCredentials: (state, action: { payload: { user: User; token: string } }) => {
-            const { user, token } = action.payload;
-            state.user = user;
-            state.token = token;
+        setToken: (state, action: { payload: string }) => {
+            localStorage.setItem("authToken", action.payload);
+            state.token = action.payload;
+            state.user = jwtParser(action.payload) as User;
+            state.location = getLocation(action.payload);
         },
         logOut: (state) => {
             state.user = null;
@@ -35,10 +45,7 @@ const userSlice = createSlice({
 
 export const getUser = (state: { user: UserState }) => state.user.user;
 export const getToken = (state: { user: UserState }) => state.user.token;
-// export const favoriteHotels = (state: { customer: UserState }) => state.customer.favoriteHotels;
-// export const getUserLocation = (state: { customer: UserState }) => state.customer.location;
-
-// export const { setLocation, setCredentials, logOut, setFavorite } = userSlice.actions;
-export const { setCredentials, logOut } = userSlice.actions;
+export const getUserLocation = (state: { user: UserState }) => state.user.location;
+export const { setToken, logOut } = userSlice.actions;
 
 export default userSlice.reducer;

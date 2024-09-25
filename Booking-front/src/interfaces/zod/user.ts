@@ -55,3 +55,12 @@ export const ForgotPasswordSchema = z.object({
 });
 
 export type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
+
+export const ResetPasswordSchema = z.object({
+    password: z
+        .string()
+        .min(8, "Пароль повинен містити не менше 8 символів")
+        .max(100, "Пароль не повинен перевищувати 100 символів"),
+});
+
+export type ResetPasswordSchemaType = z.infer<typeof ResetPasswordSchema>;

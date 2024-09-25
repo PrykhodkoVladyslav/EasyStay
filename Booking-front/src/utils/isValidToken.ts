@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-export const checkToken = (token: string | null) => {
+export const isValidToken = (token: string | null) => {
     if (!token) {
         return false;
     }

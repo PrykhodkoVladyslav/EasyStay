@@ -1,8 +1,6 @@
-import { User } from "interfaces/user";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/index.ts";
-import { setCredentials } from "store/slice/userSlice.ts";
-import { jwtParser } from "utils/jwtParser.ts";
+import { getUserLocation, setToken } from "store/slice/userSlice.ts";
 
 import React from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
@@ -10,10 +8,12 @@ import VerticalPad from "components/ui/VerticalPad.tsx";
 import getEmptySymbol from "utils/emptySymbol.ts";
 import { useSignInMutation } from "services/user.ts";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
+import { useSelector } from "react-redux";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const userLocation = useSelector(getUserLocation);
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -42,33 +42,11 @@ const LoginPage: React.FC = () => {
     };
 
     const setUser = (token: string) => {
-        localStorage.setItem("authToken", token);
-
         dispatch(
-            setCredentials({
-                user: jwtParser(token) as User,
-                token: token,
-            }),
+            setToken(token),
         );
 
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-
-        let redirectPath = "/";
-
-        switch (role) {
-            case 'Admin':
-                redirectPath = "/admin";
-                break;
-            case 'Realtor':
-                redirectPath = "/realtor/home";
-                break;
-            default:
-                redirectPath = "/";
-                break;
-        }
-
-        navigate(redirectPath);
+        navigate(userLocation);
     };
 
     return (

@@ -31,6 +31,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	public DbSet<RentalPeriod> RentalPeriods { get; set; }
 	public DbSet<Hotel> Hotels { get; set; }
 	public DbSet<HotelCategory> HotelCategories { get; set; }
+	public DbSet<HotelRentalPeriod> HotelRentalPeriods { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
 	public DbSet<RealtorReview> RealtorReviews { get; set; }
 	public DbSet<Chat> Chats { get; set; }

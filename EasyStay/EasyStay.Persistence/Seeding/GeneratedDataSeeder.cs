@@ -20,6 +20,9 @@ public static class GeneratedDataSeeder {
 
 		if (!context.RealtorReviews.Any())
 			SeedRealtorReviews(context);
+
+		if (!context.HotelRentalPeriods.Any())
+			SeedHotelRentalPeriods(context);
 	}
 
 	private static void SeedAddresses(IBookingDbContext context) {
@@ -73,7 +76,6 @@ public static class GeneratedDataSeeder {
 		var addressesId = context.Addresses.Select(c => c.Id).ToList();
 		var categoryIds = context.HotelCategories.Select(hc => hc.Id).ToArray();
 		var userIds = context.Realtors.Select(u => u.Id).ToArray();
-		var rentalPeriodIds = context.RentalPeriods.Select(rp => rp.Id).ToArray();
 
 		foreach (var address in addressesId) {
 			int numberOfRooms = random.Next(1, 21);
@@ -87,7 +89,6 @@ public static class GeneratedDataSeeder {
 					Area = area,
 					NumberOfRooms = numberOfRooms,
 					IsArchived = random.Next(0, 2) == 1,
-					RentalPeriodId = faker.PickRandom(rentalPeriodIds),
 					AddressId = address,
 					CategoryId = faker.PickRandom(categoryIds),
 					RealtorId = faker.PickRandom(userIds)
@@ -147,6 +148,26 @@ public static class GeneratedDataSeeder {
 
 			context.SaveChanges();
 		}
+	}
+
+	private static void SeedHotelRentalPeriods(IBookingDbContext context) {
+		Faker faker = new Faker();
+		var hotels = context.Hotels.ToArray();
+		var rentalPeriods = context.RentalPeriods.Select(rp => rp.Id).ToArray();
+
+		foreach (var hotel in hotels) {
+			var rentalPeriodIds = faker.PickRandom(rentalPeriods, faker.Random.Int(1, 3));
+			hotel.HotelRentalPeriods = [];
+
+			foreach (var rentalPeriodId in rentalPeriodIds) {
+				hotel.HotelRentalPeriods.Add(new HotelRentalPeriod {
+					HotelId = hotel.Id,
+					RentalPeriodId = rentalPeriodId
+				});
+			}
+		}
+
+		context.SaveChanges();
 	}
 
 	private static string GetImageAsBase64(HttpClient httpClient, string imageUrl) {

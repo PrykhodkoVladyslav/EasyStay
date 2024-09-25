@@ -19,12 +19,18 @@ public class CreateHotelCommandHandler(
 			Area = request.Area,
 			NumberOfRooms = request.NumberOfRooms,
 			IsArchived = request.IsArchived ?? false,
-			RentalPeriodId = request.RentalPeriodId,
 			CategoryId = request.CategoryId,
 			RealtorId = currentUserService.GetRequiredUserId(),
 		};
 		entity.Photos = await SaveAndPrioritizePhotosAsync(request.Photos, entity);
 		entity.AddressId = await mediator.Send(request.Address, cancellationToken);
+
+		entity.HotelRentalPeriods = (request.RentalPeriodIds ?? [])
+			.Select(rId => new HotelRentalPeriod {
+				Hotel = entity,
+				RentalPeriodId = rId
+			})
+			.ToArray();
 
 		await context.Hotels.AddAsync(entity, cancellationToken);
 

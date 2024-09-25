@@ -172,9 +172,6 @@ namespace EasyStay.Persistence.Migrations
                     b.Property<long>("RealtorId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("RentalPeriodId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
@@ -183,8 +180,6 @@ namespace EasyStay.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("RealtorId");
-
-                    b.HasIndex("RentalPeriodId");
 
                     b.ToTable("Hotels", (string)null);
                 });
@@ -231,6 +226,21 @@ namespace EasyStay.Persistence.Migrations
                     b.HasIndex("HotelId");
 
                     b.ToTable("HotelPhotos", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.HotelRentalPeriod", b =>
+                {
+                    b.Property<long>("HotelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RentalPeriodId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("HotelId", "RentalPeriodId");
+
+                    b.HasIndex("RentalPeriodId");
+
+                    b.ToTable("HotelRentalPeriods", (string)null);
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Identity.Role", b =>
@@ -624,19 +634,11 @@ namespace EasyStay.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EasyStay.Domain.RentalPeriod", "RentalPeriod")
-                        .WithMany("Hotel")
-                        .HasForeignKey("RentalPeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
 
                     b.Navigation("Category");
 
                     b.Navigation("Realtor");
-
-                    b.Navigation("RentalPeriod");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.HotelPhoto", b =>
@@ -648,6 +650,25 @@ namespace EasyStay.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.HotelRentalPeriod", b =>
+                {
+                    b.HasOne("EasyStay.Domain.Hotel", "Hotel")
+                        .WithMany("HotelRentalPeriods")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EasyStay.Domain.RentalPeriod", "RentalPeriod")
+                        .WithMany("HotelRentalPeriods")
+                        .HasForeignKey("RentalPeriodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+
+                    b.Navigation("RentalPeriod");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Identity.UserRole", b =>
@@ -793,6 +814,8 @@ namespace EasyStay.Persistence.Migrations
 
             modelBuilder.Entity("EasyStay.Domain.Hotel", b =>
                 {
+                    b.Navigation("HotelRentalPeriods");
+
                     b.Navigation("Photos");
                 });
 
@@ -815,7 +838,7 @@ namespace EasyStay.Persistence.Migrations
 
             modelBuilder.Entity("EasyStay.Domain.RentalPeriod", b =>
                 {
-                    b.Navigation("Hotel");
+                    b.Navigation("HotelRentalPeriods");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Identity.Customer", b =>

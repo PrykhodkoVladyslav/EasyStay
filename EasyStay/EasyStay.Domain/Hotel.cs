@@ -15,9 +15,6 @@ public class Hotel {
 
 	public bool IsArchived { get; set; }
 
-	public long RentalPeriodId { get; set; }
-	public RentalPeriod RentalPeriod { get; set; } = null!;
-
 	public long AddressId { get; set; }
 	public Address Address { get; set; } = null!;
 
@@ -26,6 +23,8 @@ public class Hotel {
 
 	public long RealtorId { get; set; }
 	public Realtor Realtor { get; set; } = null!;
+
+	public ICollection<HotelRentalPeriod> HotelRentalPeriods { get; set; } = null!;
 
 	public ICollection<HotelPhoto> Photos { get; set; } = null!;
 }

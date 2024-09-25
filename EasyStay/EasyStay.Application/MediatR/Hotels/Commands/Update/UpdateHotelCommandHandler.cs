@@ -20,6 +20,7 @@ public class UpdateHotelCommandHandler(
 	public async Task Handle(UpdateHotelCommand request, CancellationToken cancellationToken) {
 		var entity = await context.Hotels
 			.Include(h => h.Photos)
+			.Include(h => h.HotelRentalPeriods)
 			.FirstOrDefaultAsync(
 				h => h.Id == request.Id && h.RealtorId == currentUserService.GetRequiredUserId(),
 				cancellationToken
@@ -39,12 +40,18 @@ public class UpdateHotelCommandHandler(
 		entity.Area = request.Area;
 		entity.NumberOfRooms = request.NumberOfRooms;
 		entity.IsArchived = request.IsArchived;
-		entity.RentalPeriodId = request.RentalPeriodId;
 		entity.CategoryId = request.CategoryId;
 
 		entity.Photos.Clear();
 		foreach (var photo in await SaveAndPrioritizePhotosAsync(request.Photos, entity))
 			entity.Photos.Add(photo);
+
+		entity.HotelRentalPeriods.Clear();
+		foreach (var rentalPeriodId in request.RentalPeriodIds ?? [])
+			entity.HotelRentalPeriods.Add(new HotelRentalPeriod {
+				HotelId = entity.Id,
+				RentalPeriodId = rentalPeriodId
+			});
 
 		try {
 			await context.SaveChangesAsync(cancellationToken);

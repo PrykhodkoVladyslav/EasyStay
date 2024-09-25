@@ -2,7 +2,6 @@ using AutoMapper;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
-using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.WebApi.Services.PaginationServices;
@@ -44,12 +43,6 @@ public class HotelPaginationService(
 
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);
-
-		if (filter.RealtorId is not null)
-			query = query.Where(h => h.RealtorId == filter.RealtorId);
-
-		if (filter.RentalPeriodId is not null)
-			query = query.Where(h => h.RentalPeriodId == filter.RentalPeriodId);
 
 		if (filter.Address is not null) {
 			var address = filter.Address;
@@ -95,6 +88,23 @@ public class HotelPaginationService(
 
 		if (filter.CategoryId is not null)
 			query = query.Where(h => h.CategoryId == filter.CategoryId);
+
+		if (filter.RealtorId is not null)
+			query = query.Where(h => h.RealtorId == filter.RealtorId);
+
+		if (filter.AllRentalPeriodIds is not null)
+			query = query.Where(
+				h => filter.AllRentalPeriodIds.All(
+					rpId => h.HotelRentalPeriods.Any(rp => rp.RentalPeriodId == rpId)
+				)
+			);
+
+		if (filter.AnyRentalPeriodIds is not null)
+			query = query.Where(
+				h => filter.AnyRentalPeriodIds.Any(
+					rpId => h.HotelRentalPeriods.Any(rp => rp.RentalPeriodId == rpId)
+				)
+			);
 
 		return query;
 	}

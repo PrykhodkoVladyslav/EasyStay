@@ -15,11 +15,11 @@ public class CreateHotelCommand : IRequest<long> {
 
 	public bool? IsArchived { get; set; }
 
-	public long RentalPeriodId { get; set; }
-
 	public CreateAddressCommand Address { get; set; } = null!;
 
 	public long CategoryId { get; set; }
+
+	public IEnumerable<long>? RentalPeriodIds { get; set; } = null!;
 
 	public IEnumerable<IFormFile> Photos { get; set; } = null!;
 }

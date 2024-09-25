@@ -4,7 +4,7 @@ using FluentValidation;
 namespace EasyStay.Application.MediatR.Hotels.Commands.Update;
 
 public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
-	public UpdateHotelValidator(IImageValidator imageValidator, IExistingEntityCheckerService existingEntityCheckerService) {
+	public UpdateHotelValidator(IImageValidator imageValidator, IExistingEntityCheckerService existingEntityCheckerService, ICollectionValidator collectionValidator) {
 		RuleFor(h => h.Name)
 			.NotEmpty()
 				.WithMessage("Name is empty or null")
@@ -25,13 +25,15 @@ public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
 			.GreaterThan(0)
 				.WithMessage("Number of rooms cannot be negative or equal to 0");
 
-		RuleFor(h => h.RentalPeriodId)
-			.MustAsync(existingEntityCheckerService.IsCorrectRentalPeriodIdAsync)
-				.WithMessage("RentalPeriod with this id is not exists");
-
 		RuleFor(h => h.CategoryId)
 			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryIdAsync)
 				.WithMessage("HotelCategory with this id is not exists");
+
+		RuleFor(h => h.RentalPeriodIds)
+			.Must(rpIds => collectionValidator.IsNullPossibleDistinct(rpIds))
+				.WithMessage("RentalPeriodIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectRentalPeriodIdsAsync)
+				.WithMessage("Not all RentalPeriods with this id exists");
 
 		RuleFor(h => h.Photos)
 			.MustAsync(imageValidator.IsValidImagesAsync)

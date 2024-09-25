@@ -26,4 +26,16 @@ public class ExistingEntityCheckerService(
 
 	public Task<bool> IsCorrectRentalPeriodIdAsync(long id, CancellationToken cancellationToken) =>
 		context.RentalPeriods.AsNoTracking().AnyAsync(rp => rp.Id == id, cancellationToken);
+
+	public async Task<bool> IsCorrectRentalPeriodIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken) {
+		if (ids is null)
+			return true;
+
+		var conveniencesFromDb = await context.RentalPeriods
+			.Where(rp => ids.Contains(rp.Id))
+			.Select(rp => rp.Id)
+			.ToArrayAsync(cancellationToken);
+
+		return ids.All(id => conveniencesFromDb.Contains(id));
+	}
 }

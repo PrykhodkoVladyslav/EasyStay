@@ -15,13 +15,6 @@ namespace EasyStay.Persistence.Migrations
                 name: "IX_Hotels_AddressId",
                 table: "Hotels");
 
-            migrationBuilder.AddColumn<long>(
-                name: "RentalPeriodId",
-                table: "Hotels",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
             migrationBuilder.CreateTable(
                 name: "RentalPeriods",
                 columns: table => new
@@ -35,6 +28,30 @@ namespace EasyStay.Persistence.Migrations
                     table.PrimaryKey("PK_RentalPeriods", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "HotelRentalPeriods",
+                columns: table => new
+                {
+                    HotelId = table.Column<long>(type: "bigint", nullable: false),
+                    RentalPeriodId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HotelRentalPeriods", x => new { x.HotelId, x.RentalPeriodId });
+                    table.ForeignKey(
+                        name: "FK_HotelRentalPeriods_Hotels_HotelId",
+                        column: x => x.HotelId,
+                        principalTable: "Hotels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HotelRentalPeriods_RentalPeriods_RentalPeriodId",
+                        column: x => x.RentalPeriodId,
+                        principalTable: "RentalPeriods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Hotels_AddressId",
                 table: "Hotels",
@@ -42,39 +59,22 @@ namespace EasyStay.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hotels_RentalPeriodId",
-                table: "Hotels",
+                name: "IX_HotelRentalPeriods_RentalPeriodId",
+                table: "HotelRentalPeriods",
                 column: "RentalPeriodId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Hotels_RentalPeriods_RentalPeriodId",
-                table: "Hotels",
-                column: "RentalPeriodId",
-                principalTable: "RentalPeriods",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Hotels_RentalPeriods_RentalPeriodId",
-                table: "Hotels");
+            migrationBuilder.DropTable(
+                name: "HotelRentalPeriods");
 
             migrationBuilder.DropTable(
                 name: "RentalPeriods");
 
             migrationBuilder.DropIndex(
                 name: "IX_Hotels_AddressId",
-                table: "Hotels");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Hotels_RentalPeriodId",
-                table: "Hotels");
-
-            migrationBuilder.DropColumn(
-                name: "RentalPeriodId",
                 table: "Hotels");
 
             migrationBuilder.CreateIndex(

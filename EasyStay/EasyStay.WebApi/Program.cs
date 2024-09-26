@@ -7,6 +7,8 @@ using EasyStay.Application.MediatR.Cities.Queries.GetPage;
 using EasyStay.Application.MediatR.Cities.Queries.Shared;
 using EasyStay.Application.MediatR.Countries.Queries.GetPage;
 using EasyStay.Application.MediatR.Countries.Queries.Shared;
+using EasyStay.Application.MediatR.HotelAmenities.Queries.GetPage;
+using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
@@ -15,6 +17,7 @@ using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
+using EasyStay.Domain;
 using EasyStay.Domain.Identity;
 using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
@@ -91,6 +94,7 @@ builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, Hote
 builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageCommand>, RealtorPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
+builder.Services.AddScoped<IPaginationService<HotelAmenityVm, GetHotelAmenitiesPageQuery>, HotelAmenityPaginationService>();
 
 
 builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));

@@ -5,7 +5,7 @@ const HotelsPage = () => {
     return (
         <div className="hotels-content">
             <div className="top">
-                <p className="title">Мої готелі</p>
+                <p className="title">Архів оголошень</p>
                 <div className="sort">
                     <button>
                         <img

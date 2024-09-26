@@ -1,4 +1,5 @@
 import React from 'react';
+import { Outlet } from "react-router-dom";
 import Navbar from "components/HomePage/Navbar.tsx";
 import Footer  from "components/HomePage/Footer.tsx";
 import Services  from "components/HomePage/Services.tsx";
@@ -32,7 +33,7 @@ const HomePage: React.FC = () => {
                 <Footer />
             </div>
 
-
+            <Outlet />
         </div>
     );
 };

@@ -23,6 +23,9 @@ public class CleanDataSeeder(
 
 		if (!await context.RentalPeriods.AnyAsync(cancellationToken))
 			await SeedRentalPeriodsAsync(cancellationToken);
+
+		if (!await context.HotelAmenities.AnyAsync(cancellationToken))
+			await SeedHotelAmenitiesAsync(cancellationToken);
 	}
 
 	private async Task SeedUsersAsync(CancellationToken cancellationToken) {
@@ -69,14 +72,16 @@ public class CleanDataSeeder(
 			}
 		};
 
-		var realtorTasks = realtors.Select(async r => {
+		foreach (var r in realtors) {
 			var result = await userManager.CreateAsync(r, "12345678");
 
 			if (!result.Succeeded)
 				throw new Exception("Error while creating realtors");
 
 			await userManager.AddToRoleAsync(r, Roles.Realtor);
-		});
+		}
+
+		cancellationToken.ThrowIfCancellationRequested();
 
 		var customers = new List<Customer> {
 			new()
@@ -121,16 +126,14 @@ public class CleanDataSeeder(
 			}
 		};
 
-		var customerTasks = customers.Select(async c => {
+		foreach (var c in customers) {
 			var result = await userManager.CreateAsync(c, "12345678");
 
 			if (!result.Succeeded)
 				throw new Exception("Error while creating customers");
 
 			await userManager.AddToRoleAsync(c, Roles.Customer);
-		});
-
-		await Task.WhenAll(realtorTasks.Concat(customerTasks));
+		}
 	}
 
 	private async Task SeedCountriesAsync(CancellationToken cancellationToken) {
@@ -613,6 +616,70 @@ public class CleanDataSeeder(
 			},
 			new() {
 				Name = "Довготривала оренда"
+			}
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedHotelAmenitiesAsync(CancellationToken cancellationToken) {
+		await context.HotelAmenities.AddRangeAsync([
+			new() {
+				Name = "Ресторан"
+			},
+			new() {
+				Name = "Обслуговування номерів"
+			},
+			new() {
+				Name = "Бар"
+			},
+			new() {
+				Name = "Цілодобова стійка реєстрації гостей"
+			},
+			new() {
+				Name = "Сауна"
+			},
+			new() {
+				Name = "Сад"
+			},
+			new() {
+				Name = "Трансфер з/до аеропорту"
+			},
+			new() {
+				Name = "Тераса"
+			},
+			new() {
+				Name = "Номери для некурців"
+			},
+			new() {
+				Name = "Фітнес-центр"
+			},
+			new() {
+				Name = "Кондиціонер"
+			},
+			new() {
+				Name = "Пляж"
+			},
+			new() {
+				Name = "Безкоштовний Wi-Fi"
+			},
+			new() {
+				Name = "Оздоровчий спа-центр"
+			},
+			new() {
+				Name = "Гідромасажна ванна/джакузі"
+			},
+			new() {
+				Name = "Сімейні номери"
+			},
+			new() {
+				Name = "Станція для заряджання електричних автомобілів"
+			},
+			new() {
+				Name = "Басейн"
+			},
+			new() {
+				Name = "Аквапарк"
 			}
 		], cancellationToken);
 

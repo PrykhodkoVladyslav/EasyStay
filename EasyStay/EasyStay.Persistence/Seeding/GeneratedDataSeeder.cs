@@ -83,24 +83,33 @@ public static class GeneratedDataSeeder {
 		var addressesId = context.Addresses.Select(c => c.Id).ToList();
 		var categoryIds = context.HotelCategories.Select(hc => hc.Id).ToArray();
 		var userIds = context.Realtors.Select(u => u.Id).ToArray();
+		var hotelAmenityIds = context.HotelAmenities.Select(ha => ha.Id).ToArray();
 
 		foreach (var address in addressesId) {
 			int numberOfRooms = random.Next(1, 21);
 			double areaPerRoom = Math.Round(5 + (random.NextDouble() * 45), 2);
 			double area = Math.Round(numberOfRooms * areaPerRoom, 2);
+			var randomHotelAmenityIds = faker.PickRandom(hotelAmenityIds, random.Next(0, hotelAmenityIds.Length));
 
-			context.Hotels.Add(
-				new() {
-					Name = faker.Company.CompanyName(),
-					Description = faker.Lorem.Sentences(5),
-					Area = area,
-					NumberOfRooms = numberOfRooms,
-					IsArchived = random.Next(0, 2) == 1,
-					AddressId = address,
-					CategoryId = faker.PickRandom(categoryIds),
-					RealtorId = faker.PickRandom(userIds)
-				}
-			);
+			Hotel hotel = new() {
+				Name = faker.Company.CompanyName(),
+				Description = faker.Lorem.Sentences(5),
+				Area = area,
+				NumberOfRooms = numberOfRooms,
+				IsArchived = random.Next(0, 2) == 1,
+				AddressId = address,
+				CategoryId = faker.PickRandom(categoryIds),
+				RealtorId = faker.PickRandom(userIds)
+			};
+
+			hotel.HotelHotelAmenities = randomHotelAmenityIds
+				.Select(haId => new HotelHotelAmenity {
+					Hotel = hotel,
+					HotelAmenityId = haId
+				})
+				.ToArray();
+
+			context.Hotels.Add(hotel);
 		}
 
 		context.SaveChanges();

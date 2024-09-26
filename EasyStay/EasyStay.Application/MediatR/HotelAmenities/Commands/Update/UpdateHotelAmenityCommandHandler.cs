@@ -10,7 +10,7 @@ public class UpdateHotelAmenityCommandHandler(
 ) : IRequestHandler<UpdateHotelAmenityCommand> {
 
 	public async Task Handle(UpdateHotelAmenityCommand request, CancellationToken cancellationToken) {
-		var entity = await context.RentalPeriods.FindAsync([request.Id], cancellationToken)
+		var entity = await context.HotelAmenities.FindAsync([request.Id], cancellationToken)
 			?? throw new NotFoundException(nameof(HotelAmenity), request.Id);
 
 		entity.Name = request.Name;

@@ -21,6 +21,7 @@ public class UpdateHotelCommandHandler(
 		var entity = await context.Hotels
 			.Include(h => h.Photos)
 			.Include(h => h.HotelRentalPeriods)
+			.Include(h => h.HotelHotelAmenities)
 			.FirstOrDefaultAsync(
 				h => h.Id == request.Id && h.RealtorId == currentUserService.GetRequiredUserId(),
 				cancellationToken
@@ -51,6 +52,13 @@ public class UpdateHotelCommandHandler(
 			entity.HotelRentalPeriods.Add(new HotelRentalPeriod {
 				HotelId = entity.Id,
 				RentalPeriodId = rentalPeriodId
+			});
+
+		entity.HotelHotelAmenities.Clear();
+		foreach (var hotelAmenityId in request.HotelAmenityIds ?? [])
+			entity.HotelHotelAmenities.Add(new HotelHotelAmenity {
+				HotelId = entity.Id,
+				HotelAmenityId = hotelAmenityId
 			});
 
 		try {

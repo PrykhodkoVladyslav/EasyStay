@@ -32,6 +32,13 @@ public class CreateHotelCommandHandler(
 			})
 			.ToArray();
 
+		entity.HotelHotelAmenities = (request.HotelAmenityIds ?? [])
+			.Select(haId => new HotelHotelAmenity {
+				Hotel = entity,
+				HotelAmenityId = haId
+			})
+			.ToArray();
+
 		await context.Hotels.AddAsync(entity, cancellationToken);
 
 		try {

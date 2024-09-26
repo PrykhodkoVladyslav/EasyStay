@@ -112,6 +112,20 @@ public class HotelPaginationService(
 				)
 			);
 
+		if (filter.AllHotelAmenityIds is not null)
+			query = query.Where(
+				h => filter.AllHotelAmenityIds.All(
+					haId => h.HotelHotelAmenities.Any(hha => hha.HotelAmenityId == haId)
+				)
+			);
+
+		if (filter.AnyHotelAmenityIds is not null)
+			query = query.Where(
+				h => filter.AnyHotelAmenityIds.Any(
+					haId => h.HotelHotelAmenities.Any(hha => hha.HotelAmenityId == haId)
+				)
+			);
+
 		return query;
 	}
 }

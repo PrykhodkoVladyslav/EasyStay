@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Addresses.Queries.Shared;
+using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
@@ -30,6 +31,8 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public IEnumerable<RentalPeriodVm> RentalPeriods { get; set; } = null!;
 
+	public IEnumerable<HotelAmenityVm> HotelAmenities { get; set; } = null!;
+
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
 
 
@@ -41,6 +44,14 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 				opt => opt.MapFrom(
 					src => src.HotelRentalPeriods
 						.Select(hrp => hrp.RentalPeriod)
+						.ToArray()
+				)
+			)
+			.ForMember(
+				dest => dest.HotelAmenities,
+				opt => opt.MapFrom(
+					src => src.HotelHotelAmenities
+						.Select(hha => hha.HotelAmenity)
 						.ToArray()
 				)
 			);

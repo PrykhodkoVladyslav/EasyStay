@@ -35,6 +35,12 @@ public class CreateHotelValidator : AbstractValidator<CreateHotelCommand> {
 			.MustAsync(existingEntityCheckerService.IsCorrectRentalPeriodIdsAsync)
 				.WithMessage("Not all RentalPeriods with this id exists");
 
+		RuleFor(h => h.HotelAmenityIds)
+			.Must(haIds => collectionValidator.IsNullPossibleDistinct(haIds))
+				.WithMessage("HotelAmenityIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectHotelAmenityIdsAsync)
+				.WithMessage("Not all HotelAmenities with this id exists");
+
 		RuleFor(h => h.Photos)
 			.MustAsync(imageValidator.IsValidImagesAsync)
 				.WithMessage("One ore more of photos are invalid");

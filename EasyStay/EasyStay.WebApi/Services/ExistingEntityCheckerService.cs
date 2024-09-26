@@ -32,10 +32,22 @@ public class ExistingEntityCheckerService(
 			return true;
 
 		var conveniencesFromDb = await context.RentalPeriods
-			.Where(rp => ids.Contains(rp.Id))
 			.Select(rp => rp.Id)
+			.Where(id => ids.Contains(id))
 			.ToArrayAsync(cancellationToken);
 
-		return ids.All(id => conveniencesFromDb.Contains(id));
+		return ids.All(conveniencesFromDb.Contains);
+	}
+
+	public async Task<bool> IsCorrectHotelAmenityIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken) {
+		if (ids is null)
+			return true;
+
+		var hotelAmenitiesFromDb = await context.HotelAmenities
+			.Select(ha => ha.Id)
+			.Where(id => ids.Contains(id))
+			.ToArrayAsync(cancellationToken);
+
+		return ids.All(hotelAmenitiesFromDb.Contains);
 	}
 }

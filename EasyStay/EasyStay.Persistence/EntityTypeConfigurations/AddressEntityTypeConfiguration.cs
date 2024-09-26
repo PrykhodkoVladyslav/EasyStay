@@ -15,5 +15,12 @@ internal class AddressEntityTypeConfiguration : IEntityTypeConfiguration<Address
 		builder.Property(a => a.HouseNumber)
 			.HasMaxLength(20)
 			.IsRequired();
+
+		builder.Property(a => a.Floor)
+			.IsRequired(false);
+
+		builder.Property(a => a.ApartmentNumber)
+			.HasMaxLength(20)
+			.IsRequired(false);
 	}
 }

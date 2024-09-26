@@ -12,8 +12,8 @@ public class CreateAddressCommandHandler(
 		var entity = new Address {
 			Street = request.Street,
 			HouseNumber = request.HouseNumber,
-			Longitude = request.Longitude,
-			Latitude = request.Latitude,
+			Floor = request.Floor,
+			ApartmentNumber = request.ApartmentNumber,
 			CityId = request.CityId
 		};
 

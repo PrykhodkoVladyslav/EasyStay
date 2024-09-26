@@ -16,8 +16,8 @@ public class UpdateAddressCommandHandler(
 
 		entity.Street = request.Street;
 		entity.HouseNumber = request.HouseNumber;
-		entity.Longitude = request.Longitude;
-		entity.Latitude = request.Latitude;
+		entity.Floor = request.Floor;
+		entity.ApartmentNumber = request.ApartmentNumber;
 		entity.CityId = request.CityId;
 
 		await context.SaveChangesAsync(cancellationToken);

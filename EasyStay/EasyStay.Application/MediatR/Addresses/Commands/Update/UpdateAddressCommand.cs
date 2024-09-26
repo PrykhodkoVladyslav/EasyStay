@@ -12,9 +12,9 @@ public class UpdateAddressCommand : IRequest, IMapWith<UpdateAddressDto> {
 
 	public string HouseNumber { get; set; } = null!;
 
-	public double Longitude { get; set; }
+	public int? Floor { get; set; }
 
-	public double Latitude { get; set; }
+	public string? ApartmentNumber { get; set; }
 
 	public long CityId { get; set; }
 

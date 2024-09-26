@@ -56,6 +56,12 @@ public class HotelPaginationService(
 			if (address.HouseNumber is not null)
 				query = query.Where(h => h.Address.HouseNumber.ToLower().Contains(address.HouseNumber));
 
+			if (address.ByFloor == true)
+				query = query.Where(h => h.Address.Floor == address.Floor);
+
+			if (address.ByApartmentNumber == true)
+				query = query.Where(h => h.Address.ApartmentNumber == address.ApartmentNumber);
+
 			if (address.City is not null) {
 				var city = address.City;
 

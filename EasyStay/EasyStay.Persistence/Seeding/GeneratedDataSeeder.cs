@@ -27,7 +27,6 @@ public static class GeneratedDataSeeder {
 
 	private static void SeedAddresses(IBookingDbContext context) {
 		Faker faker = new Faker();
-		Random random = new Random();
 
 		var citiesId = context.Cities.Select(c => c.Id).ToList();
 
@@ -36,13 +35,21 @@ public static class GeneratedDataSeeder {
 			var city = context.Cities.Where(c => c.Id == cityId).FirstOrDefault();
 
 			if (city != null) {
+				int? floor = faker.Random.Int(0, 10);
+				if (floor == 0)
+					floor = null;
+
+				string? apartmentNumber = null;
+				if (floor is not null && faker.Random.Bool(0.5f))
+					apartmentNumber = faker.Random.Int(1, 100).ToString();
+
 				context.Addresses.Add(
 					new() {
 						Street = faker.Address.StreetName(),
 						HouseNumber = faker.Address.BuildingNumber(),
 						CityId = cityId,
-						Latitude = city.Latitude + (random.NextDouble() * 0.01 - 0.005),
-						Longitude = city.Longitude + (random.NextDouble() * 0.01 - 0.005)
+						Floor = floor,
+						ApartmentNumber = apartmentNumber
 					}
 				);
 			}

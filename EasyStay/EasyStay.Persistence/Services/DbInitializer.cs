@@ -5,36 +5,47 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace EasyStay.Persistence;
+namespace EasyStay.Persistence.Services;
 
-public static class DbInitializer {
-	public static void Inicialize(EasyStayDbContext context) {
-		context.Database.Migrate();
+public class DbInitializer(
+	EasyStayDbContext context,
+	IConfiguration configuration,
+	UserManager<User> userManager,
+	RoleManager<Role> roleManager,
+	IImageService imageService
+) : IDbInicializer {
+
+	public async Task InitializeAsync(CancellationToken cancellationToken = default) {
+		await MigrateAsync(cancellationToken);
+
+		await InitializeIdentityAsync(cancellationToken);
 	}
 
-	public static void SeedIdentity(IEasyStayDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager, IConfiguration configuration, IImageService imageService) {
-		var cancellationTokenSource = new CancellationTokenSource();
-		var token = cancellationTokenSource.Token;
-		using var transaction = context.BeginTransactionAsync(token).Result;
+	public async Task MigrateAsync(CancellationToken cancellationToken) {
+		await context.Database.MigrateAsync(cancellationToken);
+	}
+
+	public async Task InitializeIdentityAsync(CancellationToken cancellationToken) {
+		using var transaction = await context.BeginTransactionAsync(cancellationToken);
 
 		try {
-			if (!roleManager.Roles.Any()) {
-				CreateRolesAsync(roleManager).Wait();
+			if (!await roleManager.Roles.AnyAsync(cancellationToken)) {
+				await CreateRolesAsync();
 			}
 
-			if (!userManager.Users.Any()) {
-				CreateAdminAsync(userManager, configuration, imageService).Wait();
+			if (!await userManager.Users.AnyAsync(cancellationToken)) {
+				await CreateAdminAsync();
 			}
 
-			transaction.Commit();
+			await transaction.CommitAsync(cancellationToken);
 		}
-		catch (Exception) {
+		catch {
 			transaction.Rollback();
 			throw;
 		}
 	}
 
-	private static async Task CreateRolesAsync(RoleManager<Role> roleManager) {
+	private async Task CreateRolesAsync() {
 		foreach (var roleName in Roles.All) {
 			await roleManager.CreateAsync(new Role {
 				Name = roleName
@@ -42,7 +53,7 @@ public static class DbInitializer {
 		}
 	}
 
-	private static async Task CreateAdminAsync(UserManager<User> userManager, IConfiguration configuration, IImageService imageService) {
+	private async Task CreateAdminAsync() {
 		string defaultBase64Image = configuration.GetValue<string>("DefaultUserImageBase64")
 			?? throw new Exception("DefaultUserImageBase64 is not inicialized");
 

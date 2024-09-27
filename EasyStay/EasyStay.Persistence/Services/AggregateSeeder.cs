@@ -1,6 +1,4 @@
 ﻿using EasyStay.Application.Interfaces;
-using EasyStay.Domain.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,14 +12,6 @@ public class AggregateSeeder(
 	public async Task SeedAsync(CancellationToken cancellationToken = default) {
 		using var scope = serviceScopeFactory.CreateScope();
 		var serviceProvider = scope.ServiceProvider;
-
-		var context = serviceProvider.GetRequiredService<EasyStayDbContext>();
-		var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-		var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
-		var imageService = serviceProvider.GetRequiredService<IImageService>();
-
-		DbInitializer.Inicialize(context);
-		DbInitializer.SeedIdentity(context, userManager, roleManager, configuration, imageService);
 
 		if (configuration.GetValue<bool>("SeedCleanData"))
 			await serviceProvider.GetRequiredService<ICleanDataSeeder>().SeedAsync(cancellationToken);

@@ -19,7 +19,6 @@ using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
-using EasyStay.Domain;
 using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
 using EasyStay.Persistence;
@@ -74,6 +73,8 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddTransient<IDbInicializer, DbInitializer>();
+builder.Services.AddTransient<IScopeCoveredDbInicializer, ScopeCoveredDbInicializer>();
 builder.Services.AddTransient<ICleanDataSeeder, CleanDataSeeder>();
 builder.Services.AddTransient<IGeneratedDataSeeder, GeneratedDataSeeder>();
 builder.Services.AddTransient<IAggregateSeeder, AggregateSeeder>();
@@ -134,6 +135,7 @@ app.MapHub<ChatHub>("/chat");
 
 app.MapControllers();
 
+await app.Services.GetRequiredService<IScopeCoveredDbInicializer>().InitializeAsync();
 
 var seedTask = app.Services.GetRequiredService<IAggregateSeeder>().SeedAsync();
 var appTask = app.RunAsync();

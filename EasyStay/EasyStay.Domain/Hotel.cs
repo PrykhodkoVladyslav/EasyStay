@@ -28,5 +28,7 @@ public class Hotel {
 
 	public ICollection<HotelHotelAmenity> HotelHotelAmenities { get; set; } = null!;
 
+	public ICollection<HotelBreakfast> HotelBreakfasts { get; set; } = null!;
+
 	public ICollection<HotelPhoto> Photos { get; set; } = null!;
 }

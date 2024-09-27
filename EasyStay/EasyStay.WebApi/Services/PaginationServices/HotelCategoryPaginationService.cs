@@ -7,7 +7,7 @@ using EasyStay.Domain;
 namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class HotelCategoryPaginationService(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : BasePaginationService<HotelCategory, HotelCategoryVm, GetHotelCategoriesPageQuery>(mapper) {
 

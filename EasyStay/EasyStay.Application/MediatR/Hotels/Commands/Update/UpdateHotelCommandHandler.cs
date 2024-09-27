@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Hotels.Commands.Update;
 
 public class UpdateHotelCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService,
 	IMediator mediator,
 	IMapper mapper,

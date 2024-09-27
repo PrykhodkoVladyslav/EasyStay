@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.WebApi.Services;
 
 public class ExistingEntityCheckerService(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	ICurrentUserService currentUserService
 ) : IExistingEntityCheckerService {
 

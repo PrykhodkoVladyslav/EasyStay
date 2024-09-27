@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Breakfasts.Queries.GetAll;
 
 public class GetAllBreakfastsQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetAllBreakfastsQuery, IEnumerable<BreakfastVm>> {
 

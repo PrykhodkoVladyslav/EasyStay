@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.HotelCategories.Queries.GetDetails;
 
 public class GetHotelCategoryDetailsQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetHotelCategoryDetailsQuery, HotelCategoryVm> {
 

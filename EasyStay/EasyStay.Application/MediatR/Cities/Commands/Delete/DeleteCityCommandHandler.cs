@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Cities.Commands.Delete;
 
 public class DeleteCityCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService
 ) : IRequestHandler<DeleteCityCommand> {
 

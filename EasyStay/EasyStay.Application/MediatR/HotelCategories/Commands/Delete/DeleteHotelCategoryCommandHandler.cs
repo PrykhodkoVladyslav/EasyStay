@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.HotelCategories.Commands.Delete;
 
 public class DeleteHotelCategoryCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<DeleteHotelCategoryCommand> {
 
 	public async Task Handle(DeleteHotelCategoryCommand request, CancellationToken cancellationToken) {

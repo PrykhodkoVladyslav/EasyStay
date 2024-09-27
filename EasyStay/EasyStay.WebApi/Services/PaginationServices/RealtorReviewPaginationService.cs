@@ -7,7 +7,7 @@ using EasyStay.Domain;
 namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class RealtorReviewPaginationService(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : BasePaginationService<RealtorReview, RealtorReviewVm, GetRealtorReviewsPageQuery>(mapper) {
 

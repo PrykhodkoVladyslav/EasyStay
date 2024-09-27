@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Cities.Commands.Update;
 
 public class UpdateCityCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService
 ) : IRequestHandler<UpdateCityCommand> {
 

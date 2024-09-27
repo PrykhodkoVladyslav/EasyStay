@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Hotels.Commands.Delete;
 
 public class DeleteHotelCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService,
 	IMediator mediator,
 	ICurrentUserService currentUserService

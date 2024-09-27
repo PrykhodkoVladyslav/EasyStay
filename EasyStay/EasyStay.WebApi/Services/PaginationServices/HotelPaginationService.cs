@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class HotelPaginationService(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
 

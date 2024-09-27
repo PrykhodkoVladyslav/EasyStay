@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Persistence.Services;
 
 public class GeneratedDataSeeder(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService
 ) : IGeneratedDataSeeder {
 

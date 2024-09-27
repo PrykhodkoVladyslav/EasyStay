@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EasyStay.Persistence;
 
-public class BookingDbContext(DbContextOptions<BookingDbContext> options)
+public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	: IdentityDbContext<
 		User,
 		Role,
@@ -19,7 +19,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 		IdentityRoleClaim<long>,
 		IdentityUserToken<long>
 	>(options),
-	IBookingDbContext {
+	IEasyStayDbContext {
 
 	public DbSet<Customer> Customers { get; set; }
 	public DbSet<Realtor> Realtors { get; set; }
@@ -44,7 +44,7 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options)
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);
 
-		modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookingDbContext).Assembly);
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(EasyStayDbContext).Assembly);
 	}
 
 	public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken) {

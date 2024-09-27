@@ -8,11 +8,11 @@ using Microsoft.Extensions.Configuration;
 namespace EasyStay.Persistence;
 
 public static class DbInitializer {
-	public static void Inicialize(BookingDbContext context) {
+	public static void Inicialize(EasyStayDbContext context) {
 		context.Database.Migrate();
 	}
 
-	public static void SeedIdentity(IBookingDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager, IConfiguration configuration, IImageService imageService) {
+	public static void SeedIdentity(IEasyStayDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager, IConfiguration configuration, IImageService imageService) {
 		var cancellationTokenSource = new CancellationTokenSource();
 		var token = cancellationTokenSource.Token;
 		using var transaction = context.BeginTransactionAsync(token).Result;

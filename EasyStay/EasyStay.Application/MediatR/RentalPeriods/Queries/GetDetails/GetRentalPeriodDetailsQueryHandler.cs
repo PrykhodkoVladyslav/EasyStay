@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.RentalPeriods.Queries.GetDetails;
 
 public class GetRentalPeriodDetailsQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetRentalPeriodDetailsQuery, RentalPeriodVm> {
 

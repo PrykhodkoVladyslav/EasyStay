@@ -5,7 +5,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.HotelAmenities.Commands.Create;
 
 public class CreateHotelAmenityCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<CreateHotelAmenityCommand, long> {
 
 	public async Task<long> Handle(CreateHotelAmenityCommand request, CancellationToken cancellationToken) {

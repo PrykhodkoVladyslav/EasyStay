@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.RentalPeriods.Queries.GetAll;
 
 public class GetAllRentalPeriodsQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetAllRentalPeriodsQuery, IEnumerable<RentalPeriodVm>> {
 

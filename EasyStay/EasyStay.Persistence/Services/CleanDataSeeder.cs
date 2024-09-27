@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Persistence.Services;
 
 public class CleanDataSeeder(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	UserManager<User> userManager,
 	IImageService imageService
 ) : ICleanDataSeeder {

@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Countries.Commands.Update;
 
 public class UpdateCountryCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService
 ) : IRequestHandler<UpdateCountryCommand> {
 

@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Addresses.Commands.Delete;
 
 public class DeleteAddressCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<DeleteAddressCommand> {
 
 	public async Task Handle(DeleteAddressCommand request, CancellationToken cancellationToken) {

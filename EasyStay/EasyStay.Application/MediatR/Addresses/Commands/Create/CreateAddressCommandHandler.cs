@@ -5,7 +5,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Addresses.Commands.Create;
 
 public class CreateAddressCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<CreateAddressCommand, long> {
 
 	public async Task<long> Handle(CreateAddressCommand request, CancellationToken cancellationToken) {

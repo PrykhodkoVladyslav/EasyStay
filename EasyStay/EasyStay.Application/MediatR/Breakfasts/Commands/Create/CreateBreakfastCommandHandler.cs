@@ -5,7 +5,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Breakfasts.Commands.Create;
 
 public class CreateBreakfastCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<CreateBreakfastCommand, long> {
 
 	public async Task<long> Handle(CreateBreakfastCommand request, CancellationToken cancellationToken) {

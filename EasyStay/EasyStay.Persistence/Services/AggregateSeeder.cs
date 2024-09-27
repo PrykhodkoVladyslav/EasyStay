@@ -15,7 +15,7 @@ public class AggregateSeeder(
 		using var scope = serviceScopeFactory.CreateScope();
 		var serviceProvider = scope.ServiceProvider;
 
-		var context = serviceProvider.GetRequiredService<BookingDbContext>();
+		var context = serviceProvider.GetRequiredService<EasyStayDbContext>();
 		var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 		var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
 		var imageService = serviceProvider.GetRequiredService<IImageService>();

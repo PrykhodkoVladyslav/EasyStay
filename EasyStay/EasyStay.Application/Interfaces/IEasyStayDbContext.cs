@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EasyStay.Application.Interfaces;
 
-public interface IBookingDbContext {
+public interface IEasyStayDbContext {
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 	int SaveChanges();
 

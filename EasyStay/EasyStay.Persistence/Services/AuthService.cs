@@ -11,7 +11,7 @@ using static Google.Apis.Auth.GoogleJsonWebSignature;
 namespace EasyStay.Persistence.Services;
 
 public class AuthService(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	UserManager<User> userManager,
 	IConfiguration configuration,
 	IImageService imageService

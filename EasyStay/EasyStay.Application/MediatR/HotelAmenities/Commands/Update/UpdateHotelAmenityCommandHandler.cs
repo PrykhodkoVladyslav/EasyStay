@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.HotelAmenities.Commands.Update;
 
 public class UpdateHotelAmenityCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<UpdateHotelAmenityCommand> {
 
 	public async Task Handle(UpdateHotelAmenityCommand request, CancellationToken cancellationToken) {

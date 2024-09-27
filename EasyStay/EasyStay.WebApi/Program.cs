@@ -38,7 +38,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddAutoMapper(
 	configAction => {
-		configAction.AddProfile(new AssemblyMappingProfile(typeof(IBookingDbContext).Assembly));
+		configAction.AddProfile(new AssemblyMappingProfile(typeof(IEasyStayDbContext).Assembly));
 	}
 );
 

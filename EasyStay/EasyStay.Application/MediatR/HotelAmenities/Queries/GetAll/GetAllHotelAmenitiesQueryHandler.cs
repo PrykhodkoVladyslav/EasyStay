@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.HotelAmenities.Queries.GetAll;
 
 public class GetAllHotelAmenitiesQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetAllHotelAmenitiesQuery, IEnumerable<HotelAmenityVm>> {
 

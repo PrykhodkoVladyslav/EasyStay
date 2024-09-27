@@ -12,7 +12,7 @@ namespace EasyStay.WebApi.Hubs;
 
 [Authorize(Roles = "Customer,Realtor")]
 public class ChatHub(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	UserManager<User> userManager
 ) : Hub {
 	private static class Methods {

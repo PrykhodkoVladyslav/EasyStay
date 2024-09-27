@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EasyStay.Persistence.Migrations
 {
-    [DbContext(typeof(BookingDbContext))]
+    [DbContext(typeof(EasyStayDbContext))]
     [Migration("20240926150443_added_HotelAmenities_and_HotelHotelAmenities_tables")]
     partial class added_HotelAmenities_and_HotelHotelAmenities_tables
     {

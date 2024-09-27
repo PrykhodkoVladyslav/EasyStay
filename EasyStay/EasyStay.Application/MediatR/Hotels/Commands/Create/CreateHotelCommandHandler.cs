@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 namespace EasyStay.Application.MediatR.Hotels.Commands.Create;
 
 public class CreateHotelCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService,
 	IMediator mediator,
 	ICurrentUserService currentUserService

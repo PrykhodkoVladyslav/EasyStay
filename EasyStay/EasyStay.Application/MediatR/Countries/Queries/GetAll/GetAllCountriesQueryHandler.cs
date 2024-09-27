@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Countries.Queries.GetAll;
 
 public class GetAllCountriesQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetAllCountriesQuery, IEnumerable<CountryVm>> {
 

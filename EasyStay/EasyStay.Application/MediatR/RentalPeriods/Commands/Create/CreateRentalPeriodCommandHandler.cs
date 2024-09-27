@@ -5,7 +5,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.RentalPeriods.Commands.Create;
 
 public class CreateRentalPeriodCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<CreateRentalPeriodCommand, long> {
 
 	public async Task<long> Handle(CreateRentalPeriodCommand request, CancellationToken cancellationToken) {

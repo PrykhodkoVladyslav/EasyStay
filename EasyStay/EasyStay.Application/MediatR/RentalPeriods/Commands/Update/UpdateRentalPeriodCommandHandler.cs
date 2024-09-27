@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.RentalPeriods.Commands.Update;
 
 public class UpdateRentalPeriodCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<UpdateRentalPeriodCommand> {
 
 	public async Task Handle(UpdateRentalPeriodCommand request, CancellationToken cancellationToken) {

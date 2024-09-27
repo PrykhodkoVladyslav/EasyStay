@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyStay.Persistence.Services;
+
 public class CleanDataSeeder(
 	IBookingDbContext context,
 	UserManager<User> userManager,

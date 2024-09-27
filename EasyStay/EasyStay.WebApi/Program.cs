@@ -17,12 +17,9 @@ using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
-using EasyStay.Domain;
-using EasyStay.Domain.Identity;
 using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
 using EasyStay.Persistence;
-using EasyStay.Persistence.Seeding;
 using EasyStay.Persistence.Services;
 using EasyStay.Services;
 using EasyStay.WebApi.Extensions;
@@ -30,7 +27,6 @@ using EasyStay.WebApi.Hubs;
 using EasyStay.WebApi.Middleware;
 using EasyStay.WebApi.Services;
 using EasyStay.WebApi.Services.PaginationServices;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 
@@ -76,6 +72,7 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<ICleanDataSeeder, CleanDataSeeder>();
+builder.Services.AddTransient<IGeneratedDataSeeder, GeneratedDataSeeder>();
 builder.Services.AddTransient<IAggregateSeeder, AggregateSeeder>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

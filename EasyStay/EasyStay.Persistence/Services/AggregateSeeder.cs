@@ -1,6 +1,5 @@
 ﻿using EasyStay.Application.Interfaces;
 using EasyStay.Domain.Identity;
-using EasyStay.Persistence.Seeding;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +27,7 @@ public class AggregateSeeder(
 			await serviceProvider.GetRequiredService<ICleanDataSeeder>().SeedAsync(cancellationToken);
 
 		if (configuration.GetValue<bool>("SeedGeneratedData"))
-			GeneratedDataSeeder.Seed(context, imageService);
+			await serviceProvider.GetRequiredService<IGeneratedDataSeeder>().SeedAsync(cancellationToken);
 
 		await Console.Out.WriteLineAsync("Seedind completed");
 	}

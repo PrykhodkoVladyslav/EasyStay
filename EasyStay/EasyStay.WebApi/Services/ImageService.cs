@@ -16,22 +16,6 @@ public class ImageService(
 		return fileName;
 	}
 
-	public async Task<List<string>> SaveImagesAsync(IEnumerable<IFormFile> images) {
-		List<string> result = [];
-
-		try {
-			foreach (var image in images) {
-				result.Add(await SaveImageAsync(image));
-			}
-		}
-		catch (Exception) {
-			result.ForEach(DeleteImageIfExists);
-			throw;
-		}
-
-		return result;
-	}
-
 	public async Task<string> SaveImageAsync(string base64) {
 		if (base64.Contains(','))
 			base64 = base64.Split(',')[1];
@@ -61,20 +45,20 @@ public class ImageService(
 		return imageName;
 	}
 
-	private async Task SaveImageAsync(byte[] bytes, string name, int size) {
-		string dirSaveImage = Path.Combine(ImagesDir, $"{size}_{name}");
+	public async Task<List<string>> SaveImagesAsync(IEnumerable<IFormFile> images) {
+		List<string> result = [];
 
-		using (var image = Image.Load(bytes)) {
-			image.Mutate(imageProcessingContext => {
-				imageProcessingContext.Resize(new ResizeOptions {
-					Size = new Size(Math.Min(image.Width, size), Math.Min(image.Height, size)),
-					Mode = ResizeMode.Max
-				});
-			});
-
-			using var stream = File.Create(dirSaveImage);
-			await image.SaveAsync(stream, new WebpEncoder());
+		try {
+			foreach (var image in images) {
+				result.Add(await SaveImageAsync(image));
+			}
 		}
+		catch (Exception) {
+			result.ForEach(DeleteImageIfExists);
+			throw;
+		}
+
+		return result;
 	}
 
 	public async Task<List<string>> SaveImagesAsync(IEnumerable<byte[]> bytesArrays) {
@@ -93,25 +77,16 @@ public class ImageService(
 		return result;
 	}
 
-	public async Task<byte[]> LoadBytesAsync(string name) {
+
+	public async Task<byte[]> LoadAsBytesAsync(string name) {
 		return await File.ReadAllBytesAsync(Path.Combine(ImagesDir, name));
 	}
 
-	public string ImagesDir => Path.Combine(
-		Directory.GetCurrentDirectory(),
-		configuration["DataDir"] ?? throw new NullReferenceException("DataDir"),
-		configuration["ImagesDir"] ?? throw new NullReferenceException("Images")
-	);
 
 	public void DeleteImage(string nameWithFormat) {
 		foreach (var size in Sizes) {
 			File.Delete(Path.Combine(ImagesDir, $"{size}_{nameWithFormat}"));
 		}
-	}
-
-	public void DeleteImages(IEnumerable<string> images) {
-		foreach (var image in images)
-			DeleteImage(image);
 	}
 
 	public void DeleteImageIfExists(string nameWithFormat) {
@@ -122,9 +97,41 @@ public class ImageService(
 		}
 	}
 
+	public void DeleteImages(IEnumerable<string> images) {
+		foreach (var image in images)
+			DeleteImage(image);
+	}
+
 	public void DeleteImagesIfExists(IEnumerable<string> images) {
 		foreach (var image in images)
 			DeleteImageIfExists(image);
+	}
+
+
+	public string ImagesDir => Path.Combine(
+		Directory.GetCurrentDirectory(),
+		configuration["DataDir"] ?? throw new NullReferenceException("DataDir"),
+		configuration["ImagesDir"] ?? throw new NullReferenceException("Images")
+	);
+
+	public void CreateImagesDirIfNotExists() {
+		Directory.CreateDirectory(ImagesDir);
+	}
+
+
+	private async Task SaveImageAsync(byte[] bytes, string name, int size) {
+		string dirSaveImage = Path.Combine(ImagesDir, $"{size}_{name}");
+
+		using var image = Image.Load(bytes);
+		image.Mutate(imageProcessingContext => {
+			imageProcessingContext.Resize(new ResizeOptions {
+				Size = new Size(Math.Min(image.Width, size), Math.Min(image.Height, size)),
+				Mode = ResizeMode.Max
+			});
+		});
+
+		using var stream = File.Create(dirSaveImage);
+		await image.SaveAsync(stream, new WebpEncoder());
 	}
 
 	private List<int> Sizes {

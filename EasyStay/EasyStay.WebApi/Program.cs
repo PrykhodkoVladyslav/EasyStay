@@ -115,14 +115,11 @@ app.UseCors(
 		.AllowAnyMethod()
 );
 
-string imagesDirPath = app.Services.GetRequiredService<IImageService>().ImagesDir;
-
-if (!Directory.Exists(imagesDirPath)) {
-	Directory.CreateDirectory(imagesDirPath);
-}
+var imageService = app.Services.GetRequiredService<IImageService>();
+imageService.CreateImagesDirIfNotExists();
 
 app.UseStaticFiles(new StaticFileOptions {
-	FileProvider = new PhysicalFileProvider(imagesDirPath),
+	FileProvider = new PhysicalFileProvider(imageService.ImagesDir),
 	RequestPath = "/images"
 });
 

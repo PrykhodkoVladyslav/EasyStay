@@ -1193,6 +1193,182 @@
     }
   }
 
+  // Відгуки
+  .reviews-content {
+    position: absolute;
+    //width: 100%;
+    max-width: 1285px;
+    //min-width: 560px;
+    top: 137px;
+    left: 535px;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-family: var(--font-primary);
+    white-space: nowrap;
 
+    .top {
+      width: 527px;
+      height: 124px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .title {
+        height: 44px;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 44px;
+      }
+
+      .sort {
+        width: fit-content;
+        height: 124px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 22px;
+        background: rgb(247, 247, 253);
+
+        button {
+          height: 56px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          padding: 16px 19px;
+          font-size: 20px;
+          line-height: 24px;
+          gap: 6px;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+          p:nth-of-type(1) {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+          }
+          .sort-active {
+            font-family: var(--font-primary);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .reviews {
+      //width: 100%;
+      //display: flex;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 21px;
+    }
+
+    .review {
+      position: relative;
+      width: 414px;
+      //min-height: 222px;
+      display: flex;
+      flex-direction: column;
+      padding: 22px 23px;
+      border-radius: 22px;
+      box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+      font-family: var(--font-primary);
+      font-weight: 600;
+
+      .author {
+        height: 57px;
+        display: flex;
+        align-items: center;
+        gap: 19px;
+        overflow: hidden;
+
+        .image {
+          width: 67px;
+          border-radius: 100%;
+
+          img {
+            box-sizing: border-box;
+          }
+        }
+
+        .container9 {
+          width: 75%;
+
+          .name {
+            font-size: 20px;
+            line-height: 27px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-wrap: wrap;
+          }
+
+          .stars-container {
+            width: 57px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgb(234, 232, 232);
+            border-radius: 30px;
+
+            .container4 {
+              display: flex;
+              align-items: center;
+
+              .star {
+                width: 13px;
+                height: 13px;
+              }
+
+              .rating {
+                font-size: 16px;
+                line-height: 22px;
+              }
+            }
+          }
+        }
+      }
+
+      .description {
+        width: 369px;
+        margin-top: 24px;
+        font-size: 13px;
+        line-height: 16px;
+        //display: -webkit-box;
+        //-webkit-box-orient: vertical;
+        //-webkit-line-clamp: 5;
+        //overflow: hidden;
+        text-wrap: wrap;
+      }
+
+      .btn-delete {
+        position: absolute;
+        right: 22px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (max-width: 1840px) {
+      .reviews {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 1500px) {
+      .reviews {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bottom {
+
+    }
+  }
 }
 

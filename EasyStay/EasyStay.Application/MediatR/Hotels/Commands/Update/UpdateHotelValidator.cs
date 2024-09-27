@@ -30,16 +30,22 @@ public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
 				.WithMessage("HotelCategory with this id is not exists");
 
 		RuleFor(h => h.RentalPeriodIds)
-			.Must(rpIds => collectionValidator.IsNullPossibleDistinct(rpIds))
+			.Must(collectionValidator.IsNullPossibleDistinct)
 				.WithMessage("RentalPeriodIds cannot contain duplicates")
 			.MustAsync(existingEntityCheckerService.IsCorrectRentalPeriodIdsAsync)
 				.WithMessage("Not all RentalPeriods with this id exists");
 
 		RuleFor(h => h.HotelAmenityIds)
-			.Must(haIds => collectionValidator.IsNullPossibleDistinct(haIds))
+			.Must(collectionValidator.IsNullPossibleDistinct)
 				.WithMessage("HotelAmenityIds cannot contain duplicates")
 			.MustAsync(existingEntityCheckerService.IsCorrectHotelAmenityIdsAsync)
 				.WithMessage("Not all HotelAmenities with this id exists");
+
+		RuleFor(h => h.BreakfastIds)
+			.Must(collectionValidator.IsNullPossibleDistinct)
+				.WithMessage("BreakfastIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectBreakfastIdsAsync)
+				.WithMessage("Not all Breakfasts with this id exists");
 
 		RuleFor(h => h.Photos)
 			.MustAsync(imageValidator.IsValidImagesAsync)

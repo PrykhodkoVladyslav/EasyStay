@@ -15,6 +15,7 @@ public class GetHotelDetailsQueryHandler(
 
 	public async Task<HotelDetailsVm> Handle(GetHotelDetailsQuery request, CancellationToken cancellationToken) {
 		var vm = await context.Hotels
+			.AsNoTracking()
 			.ProjectTo<HotelDetailsVm>(mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(h => h.Id == request.Id, cancellationToken)
 			?? throw new NotFoundException(nameof(Hotel), request.Id);

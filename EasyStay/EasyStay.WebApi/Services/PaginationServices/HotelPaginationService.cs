@@ -3,6 +3,7 @@ using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
 using EasyStay.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyStay.WebApi.Services.PaginationServices;
 
@@ -11,7 +12,7 @@ public class HotelPaginationService(
 	IMapper mapper
 ) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
 
-	protected override IQueryable<Hotel> GetQuery() => context.Hotels.OrderBy(h => h.Id);
+	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().OrderBy(h => h.Id);
 
 	protected override IQueryable<Hotel> FilterQuery(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
 		if (filter.IsRandomItems == true) {
@@ -123,6 +124,20 @@ public class HotelPaginationService(
 			query = query.Where(
 				h => filter.AnyHotelAmenityIds.Any(
 					haId => h.HotelHotelAmenities.Any(hha => hha.HotelAmenityId == haId)
+				)
+			);
+
+		if (filter.AllBreakfastIds is not null)
+			query = query.Where(
+				h => filter.AllBreakfastIds.All(
+					bId => h.HotelBreakfasts.Any(hb => hb.BreakfastId == bId)
+				)
+			);
+
+		if (filter.AnyBreakfastIds is not null)
+			query = query.Where(
+				h => filter.AnyBreakfastIds.Any(
+					bId => h.HotelBreakfasts.Any(hb => hb.BreakfastId == bId)
 				)
 			);
 

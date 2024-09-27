@@ -50,4 +50,16 @@ public class ExistingEntityCheckerService(
 
 		return ids.All(hotelAmenitiesFromDb.Contains);
 	}
+
+	public async Task<bool> IsCorrectBreakfastIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken) {
+		if (ids is null)
+			return true;
+
+		var breakfastsFromDb = await context.Breakfasts
+			.Select(b => b.Id)
+			.Where(id => ids.Contains(id))
+			.ToArrayAsync(cancellationToken);
+
+		return ids.All(breakfastsFromDb.Contains);
+	}
 }

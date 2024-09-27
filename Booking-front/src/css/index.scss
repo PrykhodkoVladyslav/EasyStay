@@ -13,9 +13,9 @@
   --color-accent: rgb(165, 165, 165); // Акцентний колір (для старих цін і інших дрібних елементів)
   --color-text: rgb(81, 81, 81); // Колір тексту
 
-  --font-primary: "Nunito", sans-serif;
-  --font-secondary: "Montserrat", sans-serif;
-  --font-roboto: "Roboto", sans-serif;
+  --font-primary: "Nunito", system-ui;
+  --font-secondary: "Montserrat", system-ui;
+  --font-roboto: "Roboto", system-ui;
 
   --border-radius: 22px;
 }
@@ -248,8 +248,7 @@
   }
 }
 
-// Акаунт та його складові
-
+// Акаунт Ріелтора
 .account-layout {
   position: relative;
   width: 100%;
@@ -261,7 +260,9 @@
   // Верхня постійна частина сайту
   header {
     height: 74px;
-    //min-width: 900px;
+    width: 100%;
+    max-width: 1721px;
+    min-width: 1035px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -378,6 +379,9 @@
     flex-direction: column;
     align-items: center;
     gap: 58px;
+    padding: 20px 17px;
+    border-radius: var(--border-radius);
+    background: var(--color-secondary);
 
     .head {
       display: flex;
@@ -404,21 +408,20 @@
     .content-bottom {
       width: 100%;
       min-width: 205px;
-      padding: 24px 15px;
-      border-radius: var(--border-radius);
-      background: var(--color-secondary);
 
       .items {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
 
         .item {
           width: 100%;
-          height: 52px;
+          height: 28px;
           padding: 11px 16px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
           border-radius: var(--border-radius);
-          background: white;
           font-family: var(--font-primary);
           font-size: 14px;
           font-weight: 500;
@@ -434,7 +437,7 @@
     // Додати готель
     .add-hotel {
       position: absolute;
-      min-width: 560px;
+      min-width: 600px;
       top: 137px;
       left: 535px;
       right: 100px;
@@ -888,26 +891,20 @@
     }
   }
 
-
   // Особисті дані
   .data-content {
-    //border: 1px solid #ccc;
-
     position: absolute;
-    //width: 100%;
-    //width: auto;
-    width: 850px;
-    //max-width: 1292px;
+    max-width: 850px;
     //min-width: 560px;
-    height: 794px;
+    height: 1000px;
     top: 137px;
     left: 535px;
     right: 100px;
-    //margin-top: 104px;
     display: flex;
     flex-direction: column;
     gap: 24px;
     font-family: var(--font-primary);
+    white-space: nowrap;
 
     .title {
       height: 44px;
@@ -917,7 +914,6 @@
     }
 
     .data {
-
       width: 100%;
       height: 726px;
       display: flex;
@@ -925,8 +921,6 @@
       gap: 38px;
 
       .info {
-        border: 1px solid #ccc;
-
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -948,53 +942,432 @@
       }
 
       .container10 {
-        border: 1px solid #ccc;
-
         height: 620px;
+        display: flex;
+        flex-direction: column;
         gap: 28px;
 
-        p:nth-of-type(-n+7) {
+        p {
           height: 22px;
           font-size: 16px;
           font-weight: 700;
           line-height: 22px;
         }
 
-        .data1 {
+        input {
+          width: 100%;
+          min-width: 200px;
+          height: 56px;
+          padding: 9px 14px;
+          border-radius: 18px;
+          background: rgb(247, 247, 253);
+          color: var(--color-text);
+          font-family: var(--font-primary);
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+        }
 
-          border: 1px solid #ccc;
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          display: none;
+        }
 
-          .phone {
-            height: 80px;
+        .containers1 {
+          width: 100%;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
+
+        .containers2 {
+          width: 100%;
+          height: 80px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 44px;
+
+          .container11 {
+            width: 628px;
+            display: flex;
+            gap: 48px;
+
+            div {
+              width: 100%;
+            }
+          }
+
+          .btn-edit {
+            width: 178px;
+            //width: 100%;
+            //max-width: 178px;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 1px;
+            border-radius: 18px;
+
+            background: rgb(63, 82, 60);
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 27px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  // Мої готелі
+  .hotels-content {
+    position: absolute;
+    //width: 100%;
+    max-width: 1285px;
+    //min-width: 560px;
+    top: 137px;
+    left: 535px;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-family: var(--font-primary);
+    white-space: nowrap;
+
+    .top {
+      width: 527px;
+      height: 124px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .title {
+        height: 44px;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 44px;
+      }
+
+      .sort {
+        width: fit-content;
+        height: 124px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 22px;
+        background: rgb(247, 247, 253);
+
+        button {
+          height: 56px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          padding: 16px 19px;
+          font-size: 20px;
+          line-height: 24px;
+          gap: 6px;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+          p:nth-of-type(1) {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+          }
+          .sort-active {
+            font-family: var(--font-primary);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .hotels {
+      width: 100%;
+      min-width: 600px;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+
+      .hotel {
+        width: 100%;
+        height: 131px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 23px;
+        border-radius: 22px;
+        background: rgb(240, 240, 240);
+
+        .info {
+          width: fit-content;
+          display: flex;
+          gap: 22px;
+
+          .img {
+            width: 140px;
+            height: 86px;
+            border-radius: 22px;
+            background: rgb(55, 55, 55);
+            background-size: cover;
+            //background-position: center;
+          }
+
+          .info {
+            width: fit-content;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 12px;
 
-            .number {
-              height: 22px;
-              font-size: 16px;
-              font-weight: 700;
-              line-height: 22px;
+            .top-info {
+              display: flex;
+              flex-direction: column;
+
+              .name {
+                font-family: var(--font-primary);
+                font-size: 20px;
+                font-weight: 700;
+                line-height: 27px;
+              }
+
+              div {
+                display: flex;
+                flex-direction: row;
+                gap: 6px;
+
+                .city,
+                .address {
+                  color: var(--color-text);
+                  font-family: var(--font-secondary);
+                  font-size: 12px;
+                  font-weight: 600;
+                  line-height: 15px;
+                }
+              }
+            }
+
+            .category {
+              font-family: var(--font-primary);
+              font-size: 13px;
+              font-weight: 600;
+              line-height: 16px;
             }
           }
         }
 
-        .data2 {
+        .actions {
+          width: 122px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 28px;
 
-        }
-
-        .data3 {
-
-        }
-
-        .data4 {
-
-        }
-
-        .data5 {
-
+          .btn-delete {
+            width: 24px;
+            height: 24px;
+          }
+          .btn-edit {
+            width: 122px;
+            padding: 10px 24px;
+            border-radius: 14px;
+            color: white;
+            font-family: var(--font-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 15px;
+            background: rgb(63, 82, 60);
+          }
         }
       }
+    }
+
+
+    .bottom {
+
+    }
+  }
+
+  // Відгуки
+  .reviews-content {
+    position: absolute;
+    //width: 100%;
+    max-width: 1285px;
+    //min-width: 560px;
+    top: 137px;
+    left: 535px;
+    right: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-family: var(--font-primary);
+    white-space: nowrap;
+
+    .top {
+      width: 527px;
+      height: 124px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .title {
+        height: 44px;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 44px;
+      }
+
+      .sort {
+        width: fit-content;
+        height: 124px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 22px;
+        background: rgb(247, 247, 253);
+
+        button {
+          height: 56px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          padding: 16px 19px;
+          font-size: 20px;
+          line-height: 24px;
+          gap: 6px;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+          p:nth-of-type(1) {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+          }
+          .sort-active {
+            font-family: var(--font-primary);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .reviews {
+      //width: 100%;
+      //display: flex;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 21px;
+    }
+
+    .review {
+      position: relative;
+      width: 414px;
+      //min-height: 222px;
+      display: flex;
+      flex-direction: column;
+      padding: 22px 23px;
+      border-radius: 22px;
+      box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+      font-family: var(--font-primary);
+      font-weight: 600;
+
+      .author {
+        height: 57px;
+        display: flex;
+        align-items: center;
+        gap: 19px;
+        overflow: hidden;
+
+        .image {
+          width: 67px;
+          border-radius: 100%;
+
+          img {
+            box-sizing: border-box;
+          }
+        }
+
+        .container9 {
+          width: 75%;
+
+          .name {
+            font-size: 20px;
+            line-height: 27px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-wrap: wrap;
+          }
+
+          .stars-container {
+            width: 57px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgb(234, 232, 232);
+            border-radius: 30px;
+
+            .container4 {
+              display: flex;
+              align-items: center;
+
+              .star {
+                width: 13px;
+                height: 13px;
+              }
+
+              .rating {
+                font-size: 16px;
+                line-height: 22px;
+              }
+            }
+          }
+        }
+      }
+
+      .description {
+        width: 369px;
+        margin-top: 24px;
+        font-size: 13px;
+        line-height: 16px;
+        //display: -webkit-box;
+        //-webkit-box-orient: vertical;
+        //-webkit-line-clamp: 5;
+        //overflow: hidden;
+        text-wrap: wrap;
+      }
+
+      .btn-delete {
+        position: absolute;
+        right: 22px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (max-width: 1840px) {
+      .reviews {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 1500px) {
+      .reviews {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bottom {
+
     }
   }
 }

@@ -482,10 +482,10 @@
       position: absolute;
       //width: 100%;
       //width: auto;
-      width: 1292px;
+      //width: 1292px;
       //max-width: 1292px;
       //min-width: 560px;
-      height: 995px;
+      //height: 995px;
       top: 343px;
       left: 535px;
       right: 100px;
@@ -497,14 +497,14 @@
       // Список готелів
       .hotels-container {
         //border: 1px solid #ccc;
-        width: 100%;
+        //width: 100%;
+        width: fit-content;
         min-height: 584px;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: start;
 
         .container1 {
-          width: 100%;
           gap: 24px;
 
           .title {
@@ -513,240 +513,254 @@
             font-weight: 700;
           }
 
-          .items {
-            display: flex;
+          .hotels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 23px;
+          }
 
-            .item {
-              max-width: 413px;
-              height: 453px;
-              border-radius: var(--border-radius);
-              background: white;
-              box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+          @media (max-width: 1840px) {
+            .hotels {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
 
-              .images-container {
-                position: relative;
+          @media (max-width: 1500px) {
+            .hotels {
+              grid-template-columns: 1fr;
+            }
+          }
 
-                .image {
-                  width: 413px;
-                  height: 241px;
-                  object-fit: cover;
-                  border-radius: var(--border-radius);
+          .hotel {
+            //max-width: 413px;
+            width: 413px;
+            height: 453px;
+            border-radius: var(--border-radius);
+            background: white;
+            box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+
+            .images-container {
+              position: relative;
+
+              .image {
+                width: 413px;
+                height: 241px;
+                object-fit: cover;
+                border-radius: var(--border-radius);
+              }
+
+              .slides {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 10px;
+                padding: 3px;
+                background: rgba(55, 55, 55, 0.7);
+                border-radius: 21px;
+
+                .container2 {
+                  width: 57px;
+                  height: 6px;
+                  display: flex;
+                  //flex-direction: row;
+                  //justify-content: flex-start;
+                  //align-items: center;
+                  gap: 3px;
+
+                  .slide {
+                    width: 6px;
+                    background: var(--color-accent);
+                    border-radius: 100%;
+                  }
+
+                  .active-slide {
+                    width: 12px;
+                    background: white;
+                    border-radius: 9px;
+                  }
+                }
+              }
+            }
+
+            .info {
+              width: 369px;
+              display: flex;
+              flex-direction: column;
+              gap: 22px;
+              margin: 15px 22px 9px;
+
+              .top {
+                display: flex;
+                flex-direction: column;
+
+                .container3 {
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 61px;
+
+                  .name {
+                    max-width: 240px;
+                    font-family: var(--font-primary);
+                    font-size: 28px;
+                    font-weight: 700;
+                    line-height: 38px;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                  }
+
+                  .stars-container {
+                    width: 57px;
+                    height: 28px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid rgb(234, 232, 232);
+                    border-radius: 30px;
+
+                    .container4 {
+                      display: flex;
+                      align-items: center;
+
+                      .star {
+                        width: 13px;
+                        height: 13px;
+                      }
+
+                      .rating {
+                        font-family: var(--font-primary);
+                        font-size: 16px;
+                        font-weight: 600;
+                        line-height: 22px;
+                      }
+                    }
+                  }
                 }
 
-                .slides {
-                  position: absolute;
-                  bottom: 10px;
-                  left: 50%;
-                  transform: translateX(-50%);
+                .location {
+                  color: rgb(81, 81, 81);
+                  font-family: var(--font-secondary);
+                  font-size: 16px;
+                  font-weight: 500;
+                  line-height: 20px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                }
+
+                .description {
+                  margin-top: 10px;
+                  font-family: var(--font-primary);
+                  font-size: 13px;
+                  font-weight: 600;
+                  line-height: 16px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                }
+
+                .realtor {
+                  height: 28px;
                   display: flex;
-                  gap: 10px;
-                  padding: 3px;
-                  background: rgba(55, 55, 55, 0.7);
-                  border-radius: 21px;
+                  align-items: center;
+                  gap: 4px;
+                  color: var(--color-text);
+                  font-size: 14px;
 
-                  .container2 {
-                    width: 57px;
-                    height: 6px;
-                    display: flex;
-                    //flex-direction: row;
-                    //justify-content: flex-start;
-                    //align-items: center;
-                    gap: 3px;
+                  p:first-child {
+                    font-family: var(--font-primary);
+                    font-weight: 700;
+                  }
 
-                    .slide {
-                      width: 6px;
-                      background: var(--color-accent);
-                      border-radius: 100%;
-                    }
-
-                    .active-slide {
-                      width: 12px;
-                      background: white;
-                      border-radius: 9px;
-                    }
+                  p {
+                    font-family: var(--font-primary);
+                    font-weight: 500;
+                    line-height: 28px;
                   }
                 }
               }
 
-              .info {
-                width: 369px;
+              .bottom {
                 display: flex;
                 flex-direction: column;
-                gap: 22px;
-                margin: 15px 22px 9px;
 
-                .top {
-                  display: flex;
-                  flex-direction: column;
-
-                  .container3 {
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 61px;
-
-                    .name {
-                      max-width: 240px;
-                      font-family: var(--font-primary);
-                      font-size: 28px;
-                      font-weight: 700;
-                      line-height: 38px;
-                      display: -webkit-box;
-                      -webkit-box-orient: vertical;
-                      -webkit-line-clamp: 1;
-                      overflow: hidden;
-                    }
-
-                    .stars-container {
-                      width: 57px;
-                      height: 28px;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      border: 1px solid rgb(234, 232, 232);
-                      border-radius: 30px;
-
-                      .container4 {
-                        display: flex;
-                        align-items: center;
-
-                        .star {
-                          width: 13px;
-                          height: 13px;
-                        }
-
-                        .rating {
-                          font-family: var(--font-primary);
-                          font-size: 16px;
-                          font-weight: 600;
-                          line-height: 22px;
-                        }
-                      }
-                    }
-                  }
-
-                  .location {
-                    color: rgb(81, 81, 81);
-                    font-family: var(--font-secondary);
-                    font-size: 16px;
-                    font-weight: 500;
-                    line-height: 20px;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;
-                  }
-
-                  .description {
-                    margin-top: 10px;
-                    font-family: var(--font-primary);
-                    font-size: 13px;
-                    font-weight: 600;
-                    line-height: 16px;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;
-                  }
-
-                  .realtor {
-                    height: 28px;
-                    display: flex;
-                    align-items: center;
-                    gap: 4px;
-                    color: var(--color-text);
-                    font-size: 14px;
-
-                    p:first-child {
-                      font-family: var(--font-primary);
-                      font-weight: 700;
-                    }
-
-                    p {
-                      font-family: var(--font-primary);
-                      font-weight: 500;
-                      line-height: 28px;
-                    }
-                  }
+                p {
+                  color: var(--color-text);
+                  font-family: var(--font-primary);
+                  font-size: 16px;
+                  font-weight: 600;
+                  line-height: 22px;
                 }
 
-                .bottom {
+                .container5 {
                   display: flex;
-                  flex-direction: column;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 20px;
 
-                  p {
-                    color: var(--color-text);
-                    font-family: var(--font-primary);
-                    font-size: 16px;
-                    font-weight: 600;
-                    line-height: 22px;
-                  }
-
-                  .container5 {
+                  .prices-container {
                     display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 20px;
+                    align-items: flex-end;
+                    gap: 3px;
 
-                    .prices-container {
-                      display: flex;
-                      align-items: flex-end;
-                      gap: 3px;
-
-                      .price {
-                        color: rgb(0, 0, 0);
-                        font-family: var(--font-secondary);
-                        font-size: 28px;
-                        font-weight: 600;
-                        line-height: 34px;
-                      }
-
-                      .old-price {
-                        position: relative;
-                        //display: inline-block;
-                        margin-right: 3px;
-                        color: var(--color-accent);
-                        font-family: var(--font-secondary);
-                        font-size: 16px;
-                        font-weight: 500;
-                        line-height: 20px;
-
-                        &::after {
-                          content: '';
-                          position: absolute;
-                          width: calc(100% + 3px);
-                          height: 1px;
-                          left: 0;
-                          bottom: 8px;
-                          background-color: rgb(165, 165, 165);
-                        }
-                      }
+                    .price {
+                      color: rgb(0, 0, 0);
+                      font-family: var(--font-secondary);
+                      font-size: 28px;
+                      font-weight: 600;
+                      line-height: 34px;
                     }
 
-                    .container6 {
+                    .old-price {
+                      position: relative;
+                      //display: inline-block;
+                      margin-right: 3px;
+                      color: var(--color-accent);
+                      font-family: var(--font-secondary);
+                      font-size: 16px;
+                      font-weight: 500;
+                      line-height: 20px;
+
+                      &::after {
+                        content: '';
+                        position: absolute;
+                        width: calc(100% + 3px);
+                        height: 1px;
+                        left: 0;
+                        bottom: 8px;
+                        background-color: rgb(165, 165, 165);
+                      }
+                    }
+                  }
+
+                  .container6 {
+                    border-radius: 8px;
+                    background: rgb(252, 243, 242);
+                    font-family: "Nunito", system-ui;
+
+                    .no-any-of-left {
+                      padding: 5px;
+                      color: rgb(249, 50, 50);
+                      font-size: 13px;
+                      font-weight: 600;
+                      line-height: 16px;
+                    }
+
+                    .any-of-left {
                       border-radius: 8px;
-                      background: rgb(252, 243, 242);
+                      padding: 5px;
+                      background: rgb(227, 244, 225);
                       font-family: "Nunito", system-ui;
-
-                      .no-any-of-left {
-                        padding: 5px;
-                        color: rgb(249, 50, 50);
-                        font-size: 13px;
-                        font-weight: 600;
-                        line-height: 16px;
-                      }
-
-                      .any-of-left {
-                        border-radius: 8px;
-                        padding: 5px;
-                        background: rgb(227, 244, 225);
-                        font-family: "Nunito", system-ui;
-                        font-size: 13px;
-                        font-weight: 600;
-                        line-height: 16px;
-                      }
+                      font-size: 13px;
+                      font-weight: 600;
+                      line-height: 16px;
                     }
                   }
                 }
@@ -757,6 +771,9 @@
 
         .container8 {
           margin: 28px 0;
+          width: 100%;
+          display: flex;
+          justify-content: center;
 
           button {
             padding: 9px 18px;
@@ -774,14 +791,13 @@
       // Відгуки
       .reviews-container {
         //border: 1px solid #ccc;
-        width: 100%;
+        width: fit-content;
         min-height: 353px;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: start;
 
         .container7 {
-          width: 100%;
           gap: 24px;
 
           .title {
@@ -792,10 +808,24 @@
 
           .reviews {
             width: 100%;
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 21px;
+          }
 
-            .review {
+          @media (max-width: 1840px) {
+            .reviews {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+
+          @media (max-width: 1500px) {
+            .reviews {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          .review {
               width: 414px;
               min-height: 222px;
               flex-direction: column;
@@ -870,11 +900,13 @@
                 //overflow: hidden;
               }
             }
-          }
         }
 
         .container8 {
           margin: 28px 0;
+          width: 100%;
+          display: flex;
+          justify-content: center;
 
           button {
             padding: 9px 18px;
@@ -1196,14 +1228,14 @@
   // Відгуки
   .reviews-content {
     position: absolute;
-    //width: 100%;
-    max-width: 1285px;
+    //max-width: 1285px;
     //min-width: 560px;
     top: 137px;
     left: 535px;
     right: 100px;
     display: flex;
     flex-direction: column;
+    align-items: start;
     gap: 24px;
     font-family: var(--font-primary);
     white-space: nowrap;
@@ -1257,11 +1289,21 @@
     }
 
     .reviews {
-      //width: 100%;
-      //display: flex;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 21px;
+    }
+
+    @media (max-width: 1915px) {
+      .reviews {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 1500px) {
+      .reviews {
+        grid-template-columns: 1fr;
+      }
     }
 
     .review {
@@ -1351,18 +1393,6 @@
         right: 22px;
         width: 24px;
         height: 24px;
-      }
-    }
-
-    @media (max-width: 1840px) {
-      .reviews {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 1500px) {
-      .reviews {
-        grid-template-columns: 1fr;
       }
     }
 

@@ -38,7 +38,7 @@ const Side = () => {
                 {user.photo ? (
                     <img
                         src={API_URL + `/images/800_${user.photo}`}
-                        alt={displayName}
+                        alt=""
                         className="photo"
                     />
                 ) : (

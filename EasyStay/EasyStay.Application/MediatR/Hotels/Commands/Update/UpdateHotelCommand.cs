@@ -11,9 +11,9 @@ public class UpdateHotelCommand : IRequest {
 
 	public string Description { get; set; } = null!;
 
-	public DateTimeOffset ArrivalTimeUtc { get; set; }
+	public TimeOnly ArrivalTimeUtc { get; set; }
 
-	public DateTimeOffset DepartureTimeUtc { get; set; }
+	public TimeOnly DepartureTimeUtc { get; set; }
 
 	public bool IsArchived { get; set; }
 

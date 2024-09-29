@@ -9,7 +9,8 @@ namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class HotelPaginationService(
 	IEasyStayDbContext context,
-	IMapper mapper
+	IMapper mapper,
+	ITimeConverter timeConverter
 ) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
 
 	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().OrderBy(h => h.Id);
@@ -28,19 +29,31 @@ public class HotelPaginationService(
 		if (filter.Description is not null)
 			query = query.Where(h => h.Name.ToLower().Contains(filter.Description.ToLower()));
 
-		if (filter.ArrivalTimeUtc is not null)
-			query = query.Where(h => h.ArrivalTimeUtc == filter.ArrivalTimeUtc);
-		if (filter.MinArrivalTimeUtc is not null)
-			query = query.Where(h => h.ArrivalTimeUtc >= filter.MinArrivalTimeUtc);
-		if (filter.MaxArrivalTimeUtc is not null)
-			query = query.Where(h => h.ArrivalTimeUtc <= filter.MaxArrivalTimeUtc);
+		if (filter.ArrivalTimeUtc.HasValue) {
+			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.ArrivalTimeUtc.Value);
+			query = query.Where(h => h.ArrivalTimeUtc == dateTimeOffset);
+		}
+		if (filter.MinArrivalTimeUtc.HasValue) {
+			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.MinArrivalTimeUtc.Value);
+			query = query.Where(h => h.ArrivalTimeUtc >= dateTimeOffset);
+		}
+		if (filter.MaxArrivalTimeUtc.HasValue) {
+			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.MaxArrivalTimeUtc.Value);
+			query = query.Where(h => h.ArrivalTimeUtc <= dateTimeOffset);
+		}
 
-		if (filter.DepartureTimeUtc is not null)
-			query = query.Where(h => h.DepartureTimeUtc == filter.DepartureTimeUtc);
-		if (filter.MinDepartureTimeUtc is not null)
-			query = query.Where(h => h.DepartureTimeUtc >= filter.MinDepartureTimeUtc);
-		if (filter.MaxDepartureTimeUtc is not null)
-			query = query.Where(h => h.DepartureTimeUtc <= filter.MaxDepartureTimeUtc);
+		if (filter.DepartureTimeUtc.HasValue) {
+			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.DepartureTimeUtc.Value);
+			query = query.Where(h => h.DepartureTimeUtc == dateTimeOffset);
+		}
+		if (filter.MinDepartureTimeUtc.HasValue) {
+			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.MinDepartureTimeUtc.Value);
+			query = query.Where(h => h.DepartureTimeUtc >= dateTimeOffset);
+		}
+		if (filter.MaxDepartureTimeUtc.HasValue) {
+			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.MaxDepartureTimeUtc.Value);
+			query = query.Where(h => h.DepartureTimeUtc <= dateTimeOffset);
+		}
 
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);

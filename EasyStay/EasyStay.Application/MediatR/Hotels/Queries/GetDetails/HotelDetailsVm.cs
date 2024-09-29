@@ -16,9 +16,9 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public string Description { get; set; } = null!;
 
-	public DateTimeOffset ArrivalTimeUtc { get; set; }
+	public TimeOnly ArrivalTimeUtc { get; set; }
 
-	public DateTimeOffset DepartureTimeUtc { get; set; }
+	public TimeOnly DepartureTimeUtc { get; set; }
 
 	public bool IsArchived { get; set; }
 
@@ -39,6 +39,15 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public void Mapping(Profile profile) {
 		profile.CreateMap<Hotel, HotelDetailsVm>()
+			.ForMember(
+				dest => dest.ArrivalTimeUtc,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.ArrivalTimeUtc.DateTime))
+			)
+			.ForMember(
+				dest => dest.DepartureTimeUtc,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtc.DateTime))
+			)
+			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
 			.ForMember(
 				dest => dest.HotelAmenities,
 				opt => opt.MapFrom(

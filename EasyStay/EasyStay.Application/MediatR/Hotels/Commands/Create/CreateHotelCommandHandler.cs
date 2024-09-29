@@ -9,15 +9,16 @@ public class CreateHotelCommandHandler(
 	IEasyStayDbContext context,
 	IImageService imageService,
 	IMediator mediator,
-	ICurrentUserService currentUserService
+	ICurrentUserService currentUserService,
+	ITimeConverter timeConverter
 ) : IRequestHandler<CreateHotelCommand, long> {
 
 	public async Task<long> Handle(CreateHotelCommand request, CancellationToken cancellationToken) {
 		var entity = new Hotel {
 			Name = request.Name,
 			Description = request.Description,
-			ArrivalTimeUtc = request.ArrivalTimeUtc,
-			DepartureTimeUtc = request.DepartureTimeUtc,
+			ArrivalTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtc),
+			DepartureTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtc),
 			IsArchived = request.IsArchived ?? false,
 			HotelCategoryId = request.CategoryId,
 			RealtorId = currentUserService.GetRequiredUserId(),

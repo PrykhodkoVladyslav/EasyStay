@@ -89,6 +89,7 @@ builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
 builder.Services.AddSingleton<IEmailService, GmailEmailService>();
+builder.Services.AddSingleton<ITimeConverter, TimeConverter>();
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();

@@ -14,7 +14,8 @@ public class UpdateHotelCommandHandler(
 	IImageService imageService,
 	IMediator mediator,
 	IMapper mapper,
-	ICurrentUserService currentUserService
+	ICurrentUserService currentUserService,
+	ITimeConverter timeConverter
 ) : IRequestHandler<UpdateHotelCommand> {
 
 	public async Task Handle(UpdateHotelCommand request, CancellationToken cancellationToken) {
@@ -38,8 +39,8 @@ public class UpdateHotelCommandHandler(
 
 		entity.Name = request.Name;
 		entity.Description = request.Description;
-		entity.ArrivalTimeUtc = request.ArrivalTimeUtc;
-		entity.DepartureTimeUtc = request.DepartureTimeUtc;
+		entity.ArrivalTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtc);
+		entity.DepartureTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtc);
 		entity.IsArchived = request.IsArchived;
 		entity.HotelCategoryId = request.CategoryId;
 

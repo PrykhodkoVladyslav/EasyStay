@@ -26,6 +26,8 @@ public interface IEasyStayDbContext {
 	DbSet<HotelHotelAmenity> HotelHotelAmenities { get; set; }
 	DbSet<Breakfast> Breakfasts { get; set; }
 	DbSet<HotelBreakfast> HotelBreakfasts { get; set; }
+	DbSet<Language> Languages { get; set; }
+	DbSet<HotelStaffLanguage> HotelStaffLanguages { get; set; }
 	DbSet<HotelPhoto> HotelPhotos { get; set; }
 	DbSet<Room> Rooms { get; set; }
 	DbSet<RentalPeriod> RentalPeriods { get; set; }

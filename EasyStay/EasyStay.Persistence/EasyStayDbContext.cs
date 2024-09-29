@@ -34,6 +34,8 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	public DbSet<HotelHotelAmenity> HotelHotelAmenities { get; set; }
 	public DbSet<Breakfast> Breakfasts { get; set; }
 	public DbSet<HotelBreakfast> HotelBreakfasts { get; set; }
+	public DbSet<Language> Languages { get; set; }
+	public DbSet<HotelStaffLanguage> HotelStaffLanguages { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
 	public DbSet<Room> Rooms { get; set; }
 	public DbSet<RentalPeriod> RentalPeriods { get; set; }

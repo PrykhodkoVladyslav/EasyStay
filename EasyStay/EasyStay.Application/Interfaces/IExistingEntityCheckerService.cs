@@ -11,4 +11,6 @@ public interface IExistingEntityCheckerService {
 	Task<bool> IsCorrectHotelAmenityIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
 	Task<bool> IsCorrectBreakfastIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
 	Task<bool> IsCorrectRoomIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectLanguageIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
+	Task<bool> IsCorrectLanguageNameAsync(string name, CancellationToken cancellationToken);
 }

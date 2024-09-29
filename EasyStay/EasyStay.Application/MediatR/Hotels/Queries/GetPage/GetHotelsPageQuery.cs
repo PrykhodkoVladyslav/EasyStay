@@ -41,4 +41,7 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public IEnumerable<long>? AllBreakfastIds { get; set; } = null!;
 	public IEnumerable<long>? AnyBreakfastIds { get; set; } = null!;
+
+	public IEnumerable<long>? AllLanguageIds { get; set; } = null!;
+	public IEnumerable<long>? AnyLanguageIds { get; set; } = null!;
 }

@@ -33,6 +33,12 @@ public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
 			.MustAsync(existingEntityCheckerService.IsCorrectBreakfastIdsAsync)
 				.WithMessage("Not all Breakfasts with this id exists");
 
+		RuleFor(h => h.StaffLanguageIds)
+			.Must(collectionValidator.IsNullPossibleDistinct)
+				.WithMessage("StaffLanguageIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectLanguageIdsAsync)
+				.WithMessage("Not all Languages with this id exists");
+
 		RuleFor(h => h.Photos)
 			.MustAsync(imageValidator.IsValidImagesAsync)
 				.WithMessage("One ore more of photos are invalid");

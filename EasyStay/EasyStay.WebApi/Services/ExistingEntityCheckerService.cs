@@ -67,4 +67,19 @@ public class ExistingEntityCheckerService(
 		 context.Rooms
 			.Include(r => r.Hotel)
 			.AnyAsync(r => r.Id == id && r.Hotel.RealtorId == currentUserService.GetRequiredUserId(), cancellationToken);
+
+	public async Task<bool> IsCorrectLanguageIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken) {
+		if (ids is null)
+			return true;
+
+		var itemsFromDb = await context.Languages
+			.Select(l => l.Id)
+			.Where(id => ids.Contains(id))
+			.ToArrayAsync(cancellationToken);
+
+		return ids.All(itemsFromDb.Contains);
+	}
+
+	public Task<bool> IsCorrectLanguageNameAsync(string name, CancellationToken cancellationToken) =>
+		context.Languages.AsNoTracking().AnyAsync(l => l.Name == name, cancellationToken);
 }

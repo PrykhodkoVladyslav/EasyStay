@@ -166,6 +166,20 @@ public class HotelPaginationService(
 				)
 			);
 
+		if (filter.AllLanguageIds is not null)
+			query = query.Where(
+				h => filter.AllLanguageIds.All(
+					lId => h.HotelStaffLanguages.Any(hsl => hsl.LanguageId == lId)
+				)
+			);
+
+		if (filter.AnyLanguageIds is not null)
+			query = query.Where(
+				h => filter.AnyLanguageIds.Any(
+					lId => h.HotelStaffLanguages.Any(hsl => hsl.LanguageId == lId)
+				)
+			);
+
 		return query;
 	}
 }

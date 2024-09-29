@@ -42,6 +42,13 @@ public class CreateHotelCommandHandler(
 			})
 			.ToArray();
 
+		entity.HotelStaffLanguages = (request.StaffLanguageIds ?? [])
+			.Select(lId => new HotelStaffLanguage {
+				Hotel = entity,
+				LanguageId = lId
+			})
+			.ToArray();
+
 		await context.Hotels.AddAsync(entity, cancellationToken);
 
 		try {

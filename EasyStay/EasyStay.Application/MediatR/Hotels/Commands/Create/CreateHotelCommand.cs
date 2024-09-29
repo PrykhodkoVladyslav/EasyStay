@@ -25,5 +25,7 @@ public class CreateHotelCommand : IRequest<long> {
 
 	public IEnumerable<long>? BreakfastIds { get; set; } = null!;
 
+	public IEnumerable<long>? StaffLanguageIds { get; set; } = null!;
+
 	public IEnumerable<IFormFile> Photos { get; set; } = null!;
 }

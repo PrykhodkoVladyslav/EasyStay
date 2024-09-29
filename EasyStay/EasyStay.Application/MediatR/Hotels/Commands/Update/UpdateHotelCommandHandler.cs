@@ -64,6 +64,13 @@ public class UpdateHotelCommandHandler(
 				BreakfastId = breakfastId
 			});
 
+		entity.HotelStaffLanguages.Clear();
+		foreach (var languageId in request.StaffLanguageIds ?? [])
+			entity.HotelStaffLanguages.Add(new HotelStaffLanguage {
+				HotelId = entity.Id,
+				LanguageId = languageId
+			});
+
 		try {
 			await context.SaveChangesAsync(cancellationToken);
 

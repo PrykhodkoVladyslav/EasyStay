@@ -11,7 +11,7 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 	IMapper mapper
 ) : IPaginationService<EntityVmType, PaginationVmType> where PaginationVmType : PaginationFilterDto {
 
-	public async Task<PageVm<EntityVmType>> GetPageAsync(PaginationVmType vm) {
+	public async Task<PageVm<EntityVmType>> GetPageAsync(PaginationVmType vm, CancellationToken cancellationToken = default) {
 		if (vm.PageSize is not null && vm.PageIndex is null)
 			throw new BadRequestException("PageIndex is required if PageSize is initialized");
 
@@ -26,7 +26,7 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 
 		query = FilterQuery(query, vm);
 
-		int count = await query.CountAsync();
+		int count = await query.CountAsync(cancellationToken);
 
 		int pagesAvailable;
 
@@ -40,7 +40,7 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 			pagesAvailable = count > 0 ? 1 : 0;
 		}
 
-		var data = await MapAsync(query);
+		var data = await MapAsync(query, cancellationToken);
 
 		return new PageVm<EntityVmType> {
 			Data = data,
@@ -53,9 +53,9 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 
 	protected abstract IQueryable<EntityType> FilterQuery(IQueryable<EntityType> query, PaginationVmType filter);
 
-	protected virtual async Task<IEnumerable<EntityVmType>> MapAsync(IQueryable<EntityType> query) {
+	protected virtual async Task<IEnumerable<EntityVmType>> MapAsync(IQueryable<EntityType> query, CancellationToken cancellationToken) {
 		return await query
 			.ProjectTo<EntityVmType>(mapper.ConfigurationProvider)
-			.ToArrayAsync();
+			.ToArrayAsync(cancellationToken);
 	}
 }

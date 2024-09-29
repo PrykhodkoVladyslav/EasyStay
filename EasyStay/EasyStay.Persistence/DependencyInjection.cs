@@ -14,11 +14,11 @@ public static class DependencyInjection {
 	public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) {
 		var connectionString = configuration.GetConnectionString("Npgsql");
 
-		services.AddDbContext<BookingDbContext>(options => {
+		services.AddDbContext<EasyStayDbContext>(options => {
 			options.UseNpgsql(connectionString);
 		});
 
-		services.AddScoped<IBookingDbContext, BookingDbContext>();
+		services.AddScoped<IEasyStayDbContext, EasyStayDbContext>();
 
 		services
 			.AddIdentity<User, Role>(options => {
@@ -30,7 +30,7 @@ public static class DependencyInjection {
 				options.Password.RequireUppercase = false;
 				options.Password.RequireLowercase = false;
 			})
-			.AddEntityFrameworkStores<BookingDbContext>()
+			.AddEntityFrameworkStores<EasyStayDbContext>()
 			.AddDefaultTokenProviders();
 
 		var singinKey = new SymmetricSecurityKey(

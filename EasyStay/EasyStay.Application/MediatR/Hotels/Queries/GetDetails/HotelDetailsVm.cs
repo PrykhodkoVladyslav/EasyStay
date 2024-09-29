@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Addresses.Queries.Shared;
+using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
+using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
+using EasyStay.Application.MediatR.Languages.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
@@ -14,9 +17,11 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public string Description { get; set; } = null!;
 
-	public double Area { get; set; }
+	public TimeOnly ArrivalTimeUtcFrom { get; set; }
+	public TimeOnly ArrivalTimeUtcTo { get; set; }
 
-	public int NumberOfRooms { get; set; }
+	public TimeOnly DepartureTimeUtcFrom { get; set; }
+	public TimeOnly DepartureTimeUtcTo { get; set; }
 
 	public bool IsArchived { get; set; }
 
@@ -27,5 +32,58 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 	public long RealtorId { get; set; }
 	public RealtorVm Realtor { get; set; } = null!;
 
+	public IEnumerable<HotelAmenityVm> HotelAmenities { get; set; } = null!;
+
+	public IEnumerable<BreakfastVm> Breakfasts { get; set; } = null!;
+
+	public IEnumerable<LanguageVm> Languages { get; set; } = null!;
+
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
+
+
+
+	public void Mapping(Profile profile) {
+		profile.CreateMap<Hotel, HotelDetailsVm>()
+			.ForMember(
+				dest => dest.ArrivalTimeUtcFrom,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.ArrivalTimeUtcFrom.DateTime))
+			)
+			.ForMember(
+				dest => dest.ArrivalTimeUtcTo,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.ArrivalTimeUtcTo.DateTime))
+			)
+			.ForMember(
+				dest => dest.DepartureTimeUtcFrom,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtcFrom.DateTime))
+			)
+			.ForMember(
+				dest => dest.DepartureTimeUtcTo,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtcTo.DateTime))
+			)
+			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
+			.ForMember(
+				dest => dest.HotelAmenities,
+				opt => opt.MapFrom(
+					src => src.HotelHotelAmenities
+						.Select(hha => hha.HotelAmenity)
+						.ToArray()
+				)
+			)
+			.ForMember(
+				dest => dest.Breakfasts,
+				opt => opt.MapFrom(
+					src => src.HotelBreakfasts
+						.Select(hb => hb.Breakfast)
+						.ToArray()
+				)
+			)
+			.ForMember(
+				dest => dest.Languages,
+				opt => opt.MapFrom(
+					src => src.HotelStaffLanguages
+						.Select(hsl => hsl.Language)
+						.ToArray()
+				)
+			);
+	}
 }

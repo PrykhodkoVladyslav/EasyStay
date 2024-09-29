@@ -6,7 +6,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Addresses.Commands.Update;
 
 public class UpdateAddressCommandHandler(
-	IBookingDbContext context
+	IEasyStayDbContext context
 ) : IRequestHandler<UpdateAddressCommand> {
 
 	public async Task Handle(UpdateAddressCommand request, CancellationToken cancellationToken) {
@@ -16,8 +16,8 @@ public class UpdateAddressCommandHandler(
 
 		entity.Street = request.Street;
 		entity.HouseNumber = request.HouseNumber;
-		entity.Longitude = request.Longitude;
-		entity.Latitude = request.Latitude;
+		entity.Floor = request.Floor;
+		entity.ApartmentNumber = request.ApartmentNumber;
 		entity.CityId = request.CityId;
 
 		await context.SaveChangesAsync(cancellationToken);

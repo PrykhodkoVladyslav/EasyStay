@@ -10,16 +10,20 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Hotels.Commands.Update;
 
 public class UpdateHotelCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService,
 	IMediator mediator,
 	IMapper mapper,
-	ICurrentUserService currentUserService
+	ICurrentUserService currentUserService,
+	ITimeConverter timeConverter
 ) : IRequestHandler<UpdateHotelCommand> {
 
 	public async Task Handle(UpdateHotelCommand request, CancellationToken cancellationToken) {
 		var entity = await context.Hotels
 			.Include(h => h.Photos)
+			.Include(h => h.HotelHotelAmenities)
+			.Include(h => h.HotelBreakfasts)
+			.Include(h => h.HotelStaffLanguages)
 			.FirstOrDefaultAsync(
 				h => h.Id == request.Id && h.RealtorId == currentUserService.GetRequiredUserId(),
 				cancellationToken
@@ -36,14 +40,37 @@ public class UpdateHotelCommandHandler(
 
 		entity.Name = request.Name;
 		entity.Description = request.Description;
-		entity.Area = request.Area;
-		entity.NumberOfRooms = request.NumberOfRooms;
+		entity.ArrivalTimeUtcFrom = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtcFrom);
+		entity.ArrivalTimeUtcTo = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtcTo);
+		entity.DepartureTimeUtcFrom = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtcFrom);
+		entity.DepartureTimeUtcTo = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtcTo);
 		entity.IsArchived = request.IsArchived;
-		entity.CategoryId = request.CategoryId;
+		entity.HotelCategoryId = request.CategoryId;
 
 		entity.Photos.Clear();
 		foreach (var photo in await SaveAndPrioritizePhotosAsync(request.Photos, entity))
 			entity.Photos.Add(photo);
+
+		entity.HotelHotelAmenities.Clear();
+		foreach (var hotelAmenityId in request.HotelAmenityIds ?? [])
+			entity.HotelHotelAmenities.Add(new HotelHotelAmenity {
+				HotelId = entity.Id,
+				HotelAmenityId = hotelAmenityId
+			});
+
+		entity.HotelBreakfasts.Clear();
+		foreach (var breakfastId in request.BreakfastIds ?? [])
+			entity.HotelBreakfasts.Add(new HotelBreakfast {
+				HotelId = entity.Id,
+				BreakfastId = breakfastId
+			});
+
+		entity.HotelStaffLanguages.Clear();
+		foreach (var languageId in request.StaffLanguageIds ?? [])
+			entity.HotelStaffLanguages.Add(new HotelStaffLanguage {
+				HotelId = entity.Id,
+				LanguageId = languageId
+			});
 
 		try {
 			await context.SaveChangesAsync(cancellationToken);

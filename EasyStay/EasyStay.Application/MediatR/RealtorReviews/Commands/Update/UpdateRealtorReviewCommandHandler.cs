@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Update;
 
 public class UpdateRealtorReviewCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<UpdateRealtorReviewCommand> {
 

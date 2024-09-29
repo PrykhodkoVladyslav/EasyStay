@@ -1,18 +1,17 @@
 ﻿namespace EasyStay.Application.Interfaces;
 
 public interface IExistingEntityCheckerService {
-	Task<bool> IsCorrectCountryId(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectCityId(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelId(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelIdOfCurrentUser(long id, CancellationToken cancellationToken);
-	Task<bool> IsCorrectHotelCategoryId(long id, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectHotelReviewId(long id, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectHotelReviewIdOfCurrentUser(long id, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectHotelReviewByBookingIdAndUserId(long bookingId, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectFavoriteHotelKey(long hotelId, long userId, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectConvenienceId(long id, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectConvenienceIds(IEnumerable<long>? ids, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectRoomId(long id, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectRoomIdOfCurrentUser(long id, CancellationToken cancellationToken);
-	//Task<bool> IsCorrectBookingId(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectCountryIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectCityIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelCategoryIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectRentalPeriodIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectRentalPeriodIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelAmenityIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
+	Task<bool> IsCorrectBreakfastIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
+	Task<bool> IsCorrectRoomIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectLanguageIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
+	Task<bool> IsCorrectLanguageNameAsync(string name, CancellationToken cancellationToken);
+	Task<bool> IsNewLanguageNameAsync(long id, string name, CancellationToken cancellationToken);
 }

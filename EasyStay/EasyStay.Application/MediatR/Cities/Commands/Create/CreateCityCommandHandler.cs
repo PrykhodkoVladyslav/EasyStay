@@ -5,7 +5,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Cities.Commands.Create;
 
 public class CreateCityCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService
 ) : IRequestHandler<CreateCityCommand, long> {
 

@@ -6,7 +6,7 @@ namespace EasyStay.Application.MediatR.Addresses.Commands.Create;
 public class CreateAddressValidator : AbstractValidator<CreateAddressCommand> {
 	public CreateAddressValidator(IExistingEntityCheckerService existingEntityCheckerService) {
 		RuleFor(a => a.CityId)
-			.MustAsync(existingEntityCheckerService.IsCorrectCityId)
+			.MustAsync(existingEntityCheckerService.IsCorrectCityIdAsync)
 				.WithMessage("City with this id is not exists");
 
 		RuleFor(a => a.HouseNumber)
@@ -21,12 +21,8 @@ public class CreateAddressValidator : AbstractValidator<CreateAddressCommand> {
 			.MaximumLength(255)
 				.WithMessage("Street is too long");
 
-		RuleFor(a => a.Longitude)
-			.InclusiveBetween(-180, 180)
-				.WithMessage("Longitude must be between -180 and 180 degrees");
-
-		RuleFor(a => a.Latitude)
-			.InclusiveBetween(-90, 90)
-				.WithMessage("Latitude must be between -90 and 90 degrees");
+		RuleFor(a => a.ApartmentNumber)
+			.MaximumLength(20)
+				.WithMessage("Apartment number is too long");
 	}
 }

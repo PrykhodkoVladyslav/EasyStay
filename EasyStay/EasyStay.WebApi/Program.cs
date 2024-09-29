@@ -3,21 +3,29 @@ using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
+using EasyStay.Application.MediatR.Breakfasts.Queries.GetPage;
+using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
 using EasyStay.Application.MediatR.Cities.Queries.GetPage;
 using EasyStay.Application.MediatR.Cities.Queries.Shared;
 using EasyStay.Application.MediatR.Countries.Queries.GetPage;
 using EasyStay.Application.MediatR.Countries.Queries.Shared;
+using EasyStay.Application.MediatR.HotelAmenities.Queries.GetPage;
+using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
+using EasyStay.Application.MediatR.Languages.Queries.GetPage;
+using EasyStay.Application.MediatR.Languages.Queries.Shared;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
-using EasyStay.Domain.Identity;
+using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
+using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
+using EasyStay.Application.MediatR.Rooms.Queries.GetPage;
+using EasyStay.Application.MediatR.Rooms.Queries.Shared;
 using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
 using EasyStay.Persistence;
-using EasyStay.Persistence.Seeding;
 using EasyStay.Persistence.Services;
 using EasyStay.Services;
 using EasyStay.WebApi.Extensions;
@@ -25,7 +33,6 @@ using EasyStay.WebApi.Hubs;
 using EasyStay.WebApi.Middleware;
 using EasyStay.WebApi.Services;
 using EasyStay.WebApi.Services.PaginationServices;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 
@@ -34,7 +41,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddAutoMapper(
 	configAction => {
-		configAction.AddProfile(new AssemblyMappingProfile(typeof(IBookingDbContext).Assembly));
+		configAction.AddProfile(new AssemblyMappingProfile(typeof(IEasyStayDbContext).Assembly));
 	}
 );
 
@@ -70,19 +77,31 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddTransient<IDbInicializer, DbInitializer>();
+builder.Services.AddTransient<IScopeCoveredDbInicializer, ScopeCoveredDbInicializer>();
+builder.Services.AddTransient<ICleanDataSeeder, CleanDataSeeder>();
+builder.Services.AddTransient<IGeneratedDataSeeder, GeneratedDataSeeder>();
+builder.Services.AddTransient<IAggregateSeeder, AggregateSeeder>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddScoped<IIdentityValidator, IdentityValidator>();
+builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
 builder.Services.AddSingleton<IEmailService, GmailEmailService>();
+builder.Services.AddSingleton<ITimeConverter, TimeConverter>();
 
 builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
 builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelCategoryVm, GetHotelCategoriesPageQuery>, HotelCategoryPaginationService>();
+builder.Services.AddScoped<IPaginationService<HotelAmenityVm, GetHotelAmenitiesPageQuery>, HotelAmenityPaginationService>();
+builder.Services.AddScoped<IPaginationService<BreakfastVm, GetBreakfastsPageQuery>, BreakfastPaginationService>();
+builder.Services.AddScoped<IPaginationService<LanguageVm, GetLanguagesPageQuery>, LanguagePaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
+builder.Services.AddScoped<IPaginationService<RoomVm, GetRoomsPageQuery>, RoomPaginationService>();
+builder.Services.AddScoped<IPaginationService<RentalPeriodVm, GetRentalPeriodsPageQuery>, RentalPeriodPaginationService>();
 builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageCommand>, RealtorPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
@@ -108,14 +127,11 @@ app.UseCors(
 		.AllowAnyMethod()
 );
 
-string imagesDirPath = app.Services.GetRequiredService<IImageService>().ImagesDir;
-
-if (!Directory.Exists(imagesDirPath)) {
-	Directory.CreateDirectory(imagesDirPath);
-}
+var imageService = app.Services.GetRequiredService<IImageService>();
+imageService.CreateImagesDirIfNotExists();
 
 app.UseStaticFiles(new StaticFileOptions {
-	FileProvider = new PhysicalFileProvider(imagesDirPath),
+	FileProvider = new PhysicalFileProvider(imageService.ImagesDir),
 	RequestPath = "/images"
 });
 
@@ -126,22 +142,10 @@ app.MapHub<ChatHub>("/chat");
 
 app.MapControllers();
 
-using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope()) {
-	var serviceProvider = scope.ServiceProvider;
-	var context = serviceProvider.GetRequiredService<BookingDbContext>();
-	var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-	var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
-	var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-	var imageService = serviceProvider.GetRequiredService<IImageService>();
+await app.Services.GetRequiredService<IScopeCoveredDbInicializer>().InitializeAsync();
 
-	DbInitializer.Inicialize(context);
-	DbInitializer.SeedIdentity(context, userManager, roleManager, configuration, imageService);
+var seedTask = app.Services.GetRequiredService<IAggregateSeeder>().SeedAsync();
+var appTask = app.RunAsync();
 
-	if (app.Configuration.GetValue<bool>("SeedCleanData"))
-		CleanDataSeeder.Seed(context, imageService, userManager);
-
-	if (app.Configuration.GetValue<bool>("SeedGeneratedData"))
-		GeneratedDataSeeder.Seed(context, imageService);
-}
-
-app.Run();
+await seedTask;
+await appTask;

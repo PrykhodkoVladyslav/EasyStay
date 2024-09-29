@@ -26,7 +26,7 @@ public class CreateCityValidator : AbstractValidator<CreateCityCommand> {
 				.WithMessage("Latitude must be between -90 and 90 degrees");
 
 		RuleFor(c => c.CountryId)
-			.MustAsync(existingEntityCheckerService.IsCorrectCountryId)
+			.MustAsync(existingEntityCheckerService.IsCorrectCountryIdAsync)
 				.WithMessage("Country with this id is not exists");
 	}
 }

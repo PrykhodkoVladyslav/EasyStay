@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetAll;
 
 public class GetAllHotelsQueryHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IMapper mapper
 ) : IRequestHandler<GetAllHotelsQuery, IEnumerable<HotelVm>> {
 
 	public async Task<IEnumerable<HotelVm>> Handle(GetAllHotelsQuery request, CancellationToken cancellationToken) {
 		var items = await context.Hotels
+			.AsNoTracking()
 			.ProjectTo<HotelVm>(mapper.ConfigurationProvider)
 			.ToArrayAsync(cancellationToken);
 

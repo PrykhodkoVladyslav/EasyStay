@@ -5,7 +5,7 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Countries.Commands.Create;
 
 public class CreateCountryCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	IImageService imageService
 ) : IRequestHandler<CreateCountryCommand, long> {
 

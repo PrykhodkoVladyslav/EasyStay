@@ -1,0 +1,15 @@
+﻿using EasyStay.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace EasyStay.Persistence.EntityTypeConfigurations;
+
+internal class HotelAmenityEntityTypeConfiguration : IEntityTypeConfiguration<HotelAmenity> {
+	public void Configure(EntityTypeBuilder<HotelAmenity> builder) {
+		builder.ToTable("HotelAmenities");
+
+		builder.Property(ha => ha.Name)
+			.HasMaxLength(255)
+			.IsRequired();
+	}
+}

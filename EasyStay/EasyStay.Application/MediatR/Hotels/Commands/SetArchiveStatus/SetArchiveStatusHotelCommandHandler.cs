@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.Hotels.Commands.SetArchiveStatus;
 
 public class SetArchiveStatusHotelCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<SetArchiveStatusHotelCommand> {
 

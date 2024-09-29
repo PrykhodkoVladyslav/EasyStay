@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Create;
 
 public class CreateRealtorReviewCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	ICurrentUserService currentUserService,
 	UserManager<User> userManager
 ) : IRequestHandler<CreateRealtorReviewCommand, long> {

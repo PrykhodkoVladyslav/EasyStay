@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyStay.Application.MediatR.RealtorReviews.Commands.Delete;
 
 public class DeleteRealtorReviewCommandHandler(
-	IBookingDbContext context,
+	IEasyStayDbContext context,
 	ICurrentUserService currentUserService
 ) : IRequestHandler<DeleteRealtorReviewCommand> {
 

@@ -4,7 +4,7 @@ using FluentValidation;
 namespace EasyStay.Application.MediatR.Hotels.Commands.Update;
 
 public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
-	public UpdateHotelValidator(IImageValidator imageValidator, IExistingEntityCheckerService existingEntityCheckerService) {
+	public UpdateHotelValidator(IImageValidator imageValidator, IExistingEntityCheckerService existingEntityCheckerService, ICollectionValidator collectionValidator) {
 		RuleFor(h => h.Name)
 			.NotEmpty()
 				.WithMessage("Name is empty or null")
@@ -17,17 +17,27 @@ public class UpdateHotelValidator : AbstractValidator<UpdateHotelCommand> {
 			.MaximumLength(4000)
 				.WithMessage("Description is too long (4000)");
 
-		RuleFor(h => h.Area)
-			.GreaterThan(0)
-				.WithMessage("Area cannot be negative or equal to 0");
-
-		RuleFor(h => h.NumberOfRooms)
-			.GreaterThan(0)
-				.WithMessage("Number of rooms cannot be negative or equal to 0");
-
 		RuleFor(h => h.CategoryId)
-			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryId)
+			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryIdAsync)
 				.WithMessage("HotelCategory with this id is not exists");
+
+		RuleFor(h => h.HotelAmenityIds)
+			.Must(collectionValidator.IsNullPossibleDistinct)
+				.WithMessage("HotelAmenityIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectHotelAmenityIdsAsync)
+				.WithMessage("Not all HotelAmenities with this id exists");
+
+		RuleFor(h => h.BreakfastIds)
+			.Must(collectionValidator.IsNullPossibleDistinct)
+				.WithMessage("BreakfastIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectBreakfastIdsAsync)
+				.WithMessage("Not all Breakfasts with this id exists");
+
+		RuleFor(h => h.StaffLanguageIds)
+			.Must(collectionValidator.IsNullPossibleDistinct)
+				.WithMessage("StaffLanguageIds cannot contain duplicates")
+			.MustAsync(existingEntityCheckerService.IsCorrectLanguageIdsAsync)
+				.WithMessage("Not all Languages with this id exists");
 
 		RuleFor(h => h.Photos)
 			.MustAsync(imageValidator.IsValidImagesAsync)

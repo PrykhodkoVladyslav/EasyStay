@@ -3,5 +3,5 @@
 namespace EasyStay.Application.Interfaces;
 
 public interface IPaginationService<EntityVmType, PaginationVmType> where PaginationVmType : PaginationFilterDto {
-	Task<PageVm<EntityVmType>> GetPageAsync(PaginationVmType vm);
+	Task<PageVm<EntityVmType>> GetPageAsync(PaginationVmType vm, CancellationToken cancellationToken = default);
 }

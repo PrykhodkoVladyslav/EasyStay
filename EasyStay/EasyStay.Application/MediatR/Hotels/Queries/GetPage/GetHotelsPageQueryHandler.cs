@@ -5,10 +5,10 @@ using MediatR;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 
-public class GetCountriesPageQueryHandler(
+public class GetHotelsPageQueryHandler(
 	IPaginationService<HotelVm, GetHotelsPageQuery> pagination
 ) : IRequestHandler<GetHotelsPageQuery, PageVm<HotelVm>> {
 
 	public Task<PageVm<HotelVm>> Handle(GetHotelsPageQuery request, CancellationToken cancellationToken) =>
-		pagination.GetPageAsync(request);
+		pagination.GetPageAsync(request, cancellationToken);
 }

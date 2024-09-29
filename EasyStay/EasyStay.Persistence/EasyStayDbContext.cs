@@ -28,15 +28,16 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	public DbSet<Country> Countries { get; set; }
 	public DbSet<City> Cities { get; set; }
 	public DbSet<Address> Addresses { get; set; }
-	public DbSet<RentalPeriod> RentalPeriods { get; set; }
 	public DbSet<Hotel> Hotels { get; set; }
 	public DbSet<HotelCategory> HotelCategories { get; set; }
-	public DbSet<HotelRentalPeriod> HotelRentalPeriods { get; set; }
 	public DbSet<HotelAmenity> HotelAmenities { get; set; }
 	public DbSet<HotelHotelAmenity> HotelHotelAmenities { get; set; }
 	public DbSet<Breakfast> Breakfasts { get; set; }
 	public DbSet<HotelBreakfast> HotelBreakfasts { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
+	public DbSet<Room> Rooms { get; set; }
+	public DbSet<RentalPeriod> RentalPeriods { get; set; }
+	public DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
 	public DbSet<RealtorReview> RealtorReviews { get; set; }
 	public DbSet<Chat> Chats { get; set; }
 	public DbSet<Message> Messages { get; set; }

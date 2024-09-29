@@ -9,26 +9,26 @@ public class Hotel {
 
 	public string Description { get; set; } = null!;
 
-	public double Area { get; set; }
+	public DateTimeOffset ArrivalTimeUtc { get; set; }
 
-	public int NumberOfRooms { get; set; }
+	public DateTimeOffset DepartureTimeUtc { get; set; }
 
 	public bool IsArchived { get; set; }
 
 	public long AddressId { get; set; }
 	public Address Address { get; set; } = null!;
 
-	public long CategoryId { get; set; }
-	public HotelCategory Category { get; set; } = null!;
+	public long HotelCategoryId { get; set; }
+	public HotelCategory HotelCategory { get; set; } = null!;
 
 	public long RealtorId { get; set; }
 	public Realtor Realtor { get; set; } = null!;
 
-	public ICollection<HotelRentalPeriod> HotelRentalPeriods { get; set; } = null!;
-
 	public ICollection<HotelHotelAmenity> HotelHotelAmenities { get; set; } = null!;
 
 	public ICollection<HotelBreakfast> HotelBreakfasts { get; set; } = null!;
+
+	public ICollection<Room> Rooms { get; set; } = null!;
 
 	public ICollection<HotelPhoto> Photos { get; set; } = null!;
 }

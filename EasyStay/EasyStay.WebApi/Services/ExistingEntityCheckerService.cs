@@ -62,4 +62,9 @@ public class ExistingEntityCheckerService(
 
 		return ids.All(breakfastsFromDb.Contains);
 	}
+
+	public Task<bool> IsCorrectRoomIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
+		 context.Rooms
+			.Include(r => r.Hotel)
+			.AnyAsync(r => r.Id == id && r.Hotel.RealtorId == currentUserService.GetRequiredUserId(), cancellationToken);
 }

@@ -11,17 +11,15 @@ public class UpdateHotelCommand : IRequest {
 
 	public string Description { get; set; } = null!;
 
-	public double Area { get; set; }
+	public DateTimeOffset ArrivalTimeUtc { get; set; }
 
-	public int NumberOfRooms { get; set; }
+	public DateTimeOffset DepartureTimeUtc { get; set; }
 
 	public bool IsArchived { get; set; }
 
 	public UpdateAddressDto Address { get; set; } = null!;
 
 	public long CategoryId { get; set; }
-
-	public IEnumerable<long>? RentalPeriodIds { get; set; } = null!;
 
 	public IEnumerable<long>? HotelAmenityIds { get; set; } = null!;
 

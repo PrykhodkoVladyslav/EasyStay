@@ -26,8 +26,8 @@ public class GeneratedDataSeeder(
 		if (!await context.RealtorReviews.AnyAsync(cancellationToken))
 			await SeedRealtorReviewsAsync(cancellationToken);
 
-		if (!await context.HotelRentalPeriods.AnyAsync(cancellationToken))
-			await SeedHotelRentalPeriodsAsync(cancellationToken);
+		if (!await context.RoomRentalPeriods.AnyAsync(cancellationToken))
+			await SeedRoomRentalPeriodsAsync(cancellationToken);
 	}
 
 	private async Task SeedAddressesAsync(CancellationToken cancellationToken) {
@@ -95,14 +95,17 @@ public class GeneratedDataSeeder(
 			double area = Math.Round(numberOfRooms * areaPerRoom, 2);
 			var randomHotelAmenityIds = faker.PickRandom(hotelAmenityIds, random.Next(0, hotelAmenityIds.Length));
 
+			var arrivalTicks = faker.Date.BetweenTimeOnly(new TimeOnly(2, 0), new TimeOnly(15, 0)).ToTimeSpan().Ticks;
+			var departureTicks = faker.Date.BetweenTimeOnly(new TimeOnly(2, 0), new TimeOnly(15, 0)).ToTimeSpan().Ticks;
+
 			Hotel hotel = new() {
 				Name = faker.Company.CompanyName(),
 				Description = faker.Lorem.Sentences(5),
-				Area = area,
-				NumberOfRooms = numberOfRooms,
+				ArrivalTimeUtc = new DateTime(arrivalTicks, DateTimeKind.Utc),
+				DepartureTimeUtc = new DateTime(departureTicks, DateTimeKind.Utc),
 				IsArchived = random.Next(0, 2) == 1,
 				AddressId = address,
-				CategoryId = faker.PickRandom(categoryIds),
+				HotelCategoryId = faker.PickRandom(categoryIds),
 				RealtorId = faker.PickRandom(userIds)
 			};
 
@@ -170,19 +173,19 @@ public class GeneratedDataSeeder(
 		await context.SaveChangesAsync(cancellationToken);
 	}
 
-	private async Task SeedHotelRentalPeriodsAsync(CancellationToken cancellationToken) {
+	private async Task SeedRoomRentalPeriodsAsync(CancellationToken cancellationToken) {
 		Faker faker = new Faker();
 
-		var hotels = await context.Hotels.ToArrayAsync(cancellationToken);
+		var rooms = await context.Rooms.ToArrayAsync(cancellationToken);
 		var rentalPeriodIds = await context.RentalPeriods.Select(rp => rp.Id).ToArrayAsync(cancellationToken);
 
-		foreach (var hotel in hotels) {
+		foreach (var room in rooms) {
 			var randomRentalPeriodIds = faker.PickRandom(rentalPeriodIds, faker.Random.Int(1, 3));
-			hotel.HotelRentalPeriods ??= [];
+			room.RoomRentalPeriods ??= [];
 
 			foreach (var rentalPeriodId in randomRentalPeriodIds) {
-				hotel.HotelRentalPeriods.Add(new HotelRentalPeriod {
-					HotelId = hotel.Id,
+				room.RoomRentalPeriods.Add(new RoomRentalPeriod {
+					RoomId = room.Id,
 					RentalPeriodId = rentalPeriodId
 				});
 			}

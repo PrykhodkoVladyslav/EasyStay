@@ -20,15 +20,16 @@ public interface IEasyStayDbContext {
 	DbSet<Country> Countries { get; set; }
 	DbSet<City> Cities { get; set; }
 	DbSet<Address> Addresses { get; set; }
-	DbSet<RentalPeriod> RentalPeriods { get; set; }
 	DbSet<Hotel> Hotels { get; set; }
 	DbSet<HotelCategory> HotelCategories { get; set; }
-	DbSet<HotelRentalPeriod> HotelRentalPeriods { get; set; }
 	DbSet<HotelAmenity> HotelAmenities { get; set; }
 	DbSet<HotelHotelAmenity> HotelHotelAmenities { get; set; }
 	DbSet<Breakfast> Breakfasts { get; set; }
 	DbSet<HotelBreakfast> HotelBreakfasts { get; set; }
 	DbSet<HotelPhoto> HotelPhotos { get; set; }
+	DbSet<Room> Rooms { get; set; }
+	DbSet<RentalPeriod> RentalPeriods { get; set; }
+	DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
 	DbSet<RealtorReview> RealtorReviews { get; set; }
 	DbSet<Chat> Chats { get; set; }
 	DbSet<Message> Messages { get; set; }

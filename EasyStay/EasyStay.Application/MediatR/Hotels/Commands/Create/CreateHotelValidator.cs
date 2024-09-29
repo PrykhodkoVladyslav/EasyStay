@@ -17,23 +17,9 @@ public class CreateHotelValidator : AbstractValidator<CreateHotelCommand> {
 			.MaximumLength(4000)
 				.WithMessage("Description is too long (4000)");
 
-		RuleFor(h => h.Area)
-			.GreaterThan(0)
-				.WithMessage("Area cannot be negative or equal to 0");
-
-		RuleFor(h => h.NumberOfRooms)
-			.GreaterThan(0)
-				.WithMessage("Number of rooms cannot be negative or equal to 0");
-
 		RuleFor(h => h.CategoryId)
 			.MustAsync(existingEntityCheckerService.IsCorrectHotelCategoryIdAsync)
 				.WithMessage("HotelCategory with this id is not exists");
-
-		RuleFor(h => h.RentalPeriodIds)
-			.Must(collectionValidator.IsNullPossibleDistinct)
-				.WithMessage("RentalPeriodIds cannot contain duplicates")
-			.MustAsync(existingEntityCheckerService.IsCorrectRentalPeriodIdsAsync)
-				.WithMessage("Not all RentalPeriods with this id exists");
 
 		RuleFor(h => h.HotelAmenityIds)
 			.Must(collectionValidator.IsNullPossibleDistinct)

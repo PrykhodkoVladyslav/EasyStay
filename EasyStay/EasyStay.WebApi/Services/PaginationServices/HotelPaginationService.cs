@@ -28,19 +28,19 @@ public class HotelPaginationService(
 		if (filter.Description is not null)
 			query = query.Where(h => h.Name.ToLower().Contains(filter.Description.ToLower()));
 
-		if (filter.Area is not null)
-			query = query.Where(h => h.Area == filter.Area);
-		if (filter.MinArea is not null)
-			query = query.Where(h => h.Area >= filter.MinArea);
-		if (filter.MaxArea is not null)
-			query = query.Where(h => h.Area <= filter.MaxArea);
+		if (filter.ArrivalTimeUtc is not null)
+			query = query.Where(h => h.ArrivalTimeUtc == filter.ArrivalTimeUtc);
+		if (filter.MinArrivalTimeUtc is not null)
+			query = query.Where(h => h.ArrivalTimeUtc >= filter.MinArrivalTimeUtc);
+		if (filter.MaxArrivalTimeUtc is not null)
+			query = query.Where(h => h.ArrivalTimeUtc <= filter.MaxArrivalTimeUtc);
 
-		if (filter.NumberOfRooms is not null)
-			query = query.Where(h => h.NumberOfRooms == filter.NumberOfRooms);
-		if (filter.MinNumberOfRooms is not null)
-			query = query.Where(h => h.NumberOfRooms >= filter.MinNumberOfRooms);
-		if (filter.MaxNumberOfRooms is not null)
-			query = query.Where(h => h.NumberOfRooms <= filter.MaxNumberOfRooms);
+		if (filter.DepartureTimeUtc is not null)
+			query = query.Where(h => h.DepartureTimeUtc == filter.DepartureTimeUtc);
+		if (filter.MinDepartureTimeUtc is not null)
+			query = query.Where(h => h.DepartureTimeUtc >= filter.MinDepartureTimeUtc);
+		if (filter.MaxDepartureTimeUtc is not null)
+			query = query.Where(h => h.DepartureTimeUtc <= filter.MaxDepartureTimeUtc);
 
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);
@@ -94,24 +94,10 @@ public class HotelPaginationService(
 		}
 
 		if (filter.CategoryId is not null)
-			query = query.Where(h => h.CategoryId == filter.CategoryId);
+			query = query.Where(h => h.HotelCategoryId == filter.CategoryId);
 
 		if (filter.RealtorId is not null)
 			query = query.Where(h => h.RealtorId == filter.RealtorId);
-
-		if (filter.AllRentalPeriodIds is not null)
-			query = query.Where(
-				h => filter.AllRentalPeriodIds.All(
-					rpId => h.HotelRentalPeriods.Any(rp => rp.RentalPeriodId == rpId)
-				)
-			);
-
-		if (filter.AnyRentalPeriodIds is not null)
-			query = query.Where(
-				h => filter.AnyRentalPeriodIds.Any(
-					rpId => h.HotelRentalPeriods.Any(rp => rp.RentalPeriodId == rpId)
-				)
-			);
 
 		if (filter.AllHotelAmenityIds is not null)
 			query = query.Where(

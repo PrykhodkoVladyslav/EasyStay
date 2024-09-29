@@ -5,7 +5,6 @@ using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
 using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
-using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
@@ -17,9 +16,9 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public string Description { get; set; } = null!;
 
-	public double Area { get; set; }
+	public DateTimeOffset ArrivalTimeUtc { get; set; }
 
-	public int NumberOfRooms { get; set; }
+	public DateTimeOffset DepartureTimeUtc { get; set; }
 
 	public bool IsArchived { get; set; }
 
@@ -29,8 +28,6 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public long RealtorId { get; set; }
 	public RealtorVm Realtor { get; set; } = null!;
-
-	public IEnumerable<RentalPeriodVm> RentalPeriods { get; set; } = null!;
 
 	public IEnumerable<HotelAmenityVm> HotelAmenities { get; set; } = null!;
 
@@ -42,14 +39,6 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 
 	public void Mapping(Profile profile) {
 		profile.CreateMap<Hotel, HotelDetailsVm>()
-			.ForMember(
-				dest => dest.RentalPeriods,
-				opt => opt.MapFrom(
-					src => src.HotelRentalPeriods
-						.Select(hrp => hrp.RentalPeriod)
-						.ToArray()
-				)
-			)
 			.ForMember(
 				dest => dest.HotelAmenities,
 				opt => opt.MapFrom(

@@ -10,13 +10,13 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public string? Description { get; set; }
 
-	public double? Area { get; set; }
-	public double? MinArea { get; set; }
-	public double? MaxArea { get; set; }
+	public DateTimeOffset? ArrivalTimeUtc { get; set; }
+	public DateTimeOffset? MinArrivalTimeUtc { get; set; }
+	public DateTimeOffset? MaxArrivalTimeUtc { get; set; }
 
-	public int? NumberOfRooms { get; set; }
-	public int? MinNumberOfRooms { get; set; }
-	public int? MaxNumberOfRooms { get; set; }
+	public DateTimeOffset? DepartureTimeUtc { get; set; }
+	public DateTimeOffset? MinDepartureTimeUtc { get; set; }
+	public DateTimeOffset? MaxDepartureTimeUtc { get; set; }
 
 	public bool? IsArchived { get; set; }
 
@@ -27,9 +27,6 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 	public long? RealtorId { get; set; }
 
 	public bool? IsRandomItems { get; set; }
-
-	public IEnumerable<long>? AllRentalPeriodIds { get; set; } = null!;
-	public IEnumerable<long>? AnyRentalPeriodIds { get; set; } = null!;
 
 	public IEnumerable<long>? AllHotelAmenityIds { get; set; } = null!;
 	public IEnumerable<long>? AnyHotelAmenityIds { get; set; } = null!;

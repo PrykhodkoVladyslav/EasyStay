@@ -6,8 +6,8 @@ const MyHotels = () => {
         <div className="hotels-container">
             <div className="container1">
                 <p className="title">Мої готелі</p>
-                <div className="items">
-                    <div className="item">
+                <div className="hotels">
+                    <div className="hotel">
                         <div className="images-container">
                             <img className="image"
                                  src="https://img.poehalisnami.ua/static/hotels/dominikana/khuan-dolio/h6158/orig/booking6158_16158_637973645967969341.jpg"
@@ -67,7 +67,7 @@ const MyHotels = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="hotel">
                         <div className="images-container">
                             <img className="image"
                                  src="https://hotel-mir-rivne.hotelmix.com.ua/data/Photos/OriginalPhoto/1381/138197/138197871/Hotel-Mir-Rivne-Exterior.JPEG"
@@ -126,7 +126,7 @@ const MyHotels = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="hotel">
                         <div className="images-container">
                             <img className="image"
                                  src="https://hotel-mir-rivne.hotelmix.com.ua/data/Photos/OriginalPhoto/1381/138197/138197871/Hotel-Mir-Rivne-Exterior.JPEG"

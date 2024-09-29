@@ -38,14 +38,28 @@ namespace EasyStay.Persistence.Migrations
                 newName: "IX_Hotels_HotelCategoryId");
 
             migrationBuilder.AddColumn<DateTimeOffset>(
-                name: "ArrivalTimeUtc",
+                name: "ArrivalTimeUtcFrom",
                 table: "Hotels",
                 type: "timestamp with time zone",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
             migrationBuilder.AddColumn<DateTimeOffset>(
-                name: "DepartureTimeUtc",
+                name: "ArrivalTimeUtcTo",
+                table: "Hotels",
+                type: "timestamp with time zone",
+                nullable: false,
+                defaultValue: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+
+            migrationBuilder.AddColumn<DateTimeOffset>(
+                name: "DepartureTimeUtcFrom",
+                table: "Hotels",
+                type: "timestamp with time zone",
+                nullable: false,
+                defaultValue: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+
+            migrationBuilder.AddColumn<DateTimeOffset>(
+                name: "DepartureTimeUtcTo",
                 table: "Hotels",
                 type: "timestamp with time zone",
                 nullable: false,
@@ -130,11 +144,19 @@ namespace EasyStay.Persistence.Migrations
                 name: "Rooms");
 
             migrationBuilder.DropColumn(
-                name: "ArrivalTimeUtc",
+                name: "ArrivalTimeUtcFrom",
                 table: "Hotels");
 
             migrationBuilder.DropColumn(
-                name: "DepartureTimeUtc",
+                name: "ArrivalTimeUtcTo",
+                table: "Hotels");
+
+            migrationBuilder.DropColumn(
+                name: "DepartureTimeUtcFrom",
+                table: "Hotels");
+
+            migrationBuilder.DropColumn(
+                name: "DepartureTimeUtcTo",
                 table: "Hotels");
 
             migrationBuilder.RenameColumn(

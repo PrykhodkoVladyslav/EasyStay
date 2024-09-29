@@ -39,8 +39,10 @@ public class UpdateHotelCommandHandler(
 
 		entity.Name = request.Name;
 		entity.Description = request.Description;
-		entity.ArrivalTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtc);
-		entity.DepartureTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtc);
+		entity.ArrivalTimeUtcFrom = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtcFrom);
+		entity.ArrivalTimeUtcTo = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtcTo);
+		entity.DepartureTimeUtcFrom = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtcFrom);
+		entity.DepartureTimeUtcTo = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtcTo);
 		entity.IsArchived = request.IsArchived;
 		entity.HotelCategoryId = request.CategoryId;
 

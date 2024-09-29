@@ -95,14 +95,13 @@ public class GeneratedDataSeeder(
 			double area = Math.Round(numberOfRooms * areaPerRoom, 2);
 			var randomHotelAmenityIds = faker.PickRandom(hotelAmenityIds, random.Next(0, hotelAmenityIds.Length));
 
-			var arrivalTicks = faker.Date.BetweenTimeOnly(new TimeOnly(2, 0), new TimeOnly(15, 0)).ToTimeSpan().Ticks;
-			var departureTicks = faker.Date.BetweenTimeOnly(new TimeOnly(2, 0), new TimeOnly(15, 0)).ToTimeSpan().Ticks;
-
 			Hotel hotel = new() {
 				Name = faker.Company.CompanyName(),
 				Description = faker.Lorem.Sentences(5),
-				ArrivalTimeUtc = new DateTime(arrivalTicks, DateTimeKind.Utc),
-				DepartureTimeUtc = new DateTime(departureTicks, DateTimeKind.Utc),
+				ArrivalTimeUtcFrom = GetRandomTimeUtc(faker),
+				ArrivalTimeUtcTo = GetRandomTimeUtc(faker),
+				DepartureTimeUtcFrom = GetRandomTimeUtc(faker),
+				DepartureTimeUtcTo = GetRandomTimeUtc(faker),
 				IsArchived = random.Next(0, 2) == 1,
 				AddressId = address,
 				HotelCategoryId = faker.PickRandom(categoryIds),
@@ -196,4 +195,10 @@ public class GeneratedDataSeeder(
 
 	private static Task<byte[]> GetImageAsBytesAsync(HttpClient httpClient, string imageUrl)
 		=> httpClient.GetByteArrayAsync(imageUrl);
+
+	private static DateTimeOffset GetRandomTimeUtc(Faker faker) {
+		var ticks = faker.Date.BetweenTimeOnly(new TimeOnly(2, 0), new TimeOnly(15, 0)).ToTimeSpan().Ticks;
+
+		return new DateTime(ticks, DateTimeKind.Utc);
+	}
 }

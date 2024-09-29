@@ -15,9 +15,11 @@ public class HotelVm : IMapWith<Hotel> {
 
 	public string Description { get; set; } = null!;
 
-	public TimeOnly ArrivalTimeUtc { get; set; }
+	public TimeOnly ArrivalTimeUtcFrom { get; set; }
+	public TimeOnly ArrivalTimeUtcTo { get; set; }
 
-	public TimeOnly DepartureTimeUtc { get; set; }
+	public TimeOnly DepartureTimeUtcFrom { get; set; }
+	public TimeOnly DepartureTimeUtcTo { get; set; }
 
 	public bool IsArchived { get; set; }
 
@@ -38,12 +40,20 @@ public class HotelVm : IMapWith<Hotel> {
 	public void Mapping(Profile profile) {
 		profile.CreateMap<Hotel, HotelVm>()
 			.ForMember(
-				dest => dest.ArrivalTimeUtc,
-				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.ArrivalTimeUtc.DateTime))
+				dest => dest.ArrivalTimeUtcFrom,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.ArrivalTimeUtcFrom.DateTime))
 			)
 			.ForMember(
-				dest => dest.DepartureTimeUtc,
-				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtc.DateTime))
+				dest => dest.ArrivalTimeUtcTo,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.ArrivalTimeUtcTo.DateTime))
+			)
+			.ForMember(
+				dest => dest.DepartureTimeUtcFrom,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtcFrom.DateTime))
+			)
+			.ForMember(
+				dest => dest.DepartureTimeUtcTo,
+				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtcTo.DateTime))
 			)
 			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
 			.ForMember(

@@ -166,10 +166,16 @@ namespace EasyStay.Persistence.Migrations
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTimeOffset>("ArrivalTimeUtc")
+                    b.Property<DateTimeOffset>("ArrivalTimeUtcFrom")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset>("DepartureTimeUtc")
+                    b.Property<DateTimeOffset>("ArrivalTimeUtcTo")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("DepartureTimeUtcFrom")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("DepartureTimeUtcTo")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")

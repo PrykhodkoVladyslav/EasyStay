@@ -17,8 +17,10 @@ public class CreateHotelCommandHandler(
 		var entity = new Hotel {
 			Name = request.Name,
 			Description = request.Description,
-			ArrivalTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtc),
-			DepartureTimeUtc = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtc),
+			ArrivalTimeUtcFrom = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtcFrom),
+			ArrivalTimeUtcTo = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.ArrivalTimeUtcTo),
+			DepartureTimeUtcFrom = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtcFrom),
+			DepartureTimeUtcTo = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(request.DepartureTimeUtcTo),
 			IsArchived = request.IsArchived ?? false,
 			HotelCategoryId = request.CategoryId,
 			RealtorId = currentUserService.GetRequiredUserId(),

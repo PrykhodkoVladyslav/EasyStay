@@ -9,9 +9,13 @@ public class Hotel {
 
 	public string Description { get; set; } = null!;
 
-	public DateTimeOffset ArrivalTimeUtc { get; set; }
+	public DateTimeOffset ArrivalTimeUtcFrom { get; set; }
 
-	public DateTimeOffset DepartureTimeUtc { get; set; }
+	public DateTimeOffset ArrivalTimeUtcTo { get; set; }
+
+	public DateTimeOffset DepartureTimeUtcFrom { get; set; }
+
+	public DateTimeOffset DepartureTimeUtcTo { get; set; }
 
 	public bool IsArchived { get; set; }
 

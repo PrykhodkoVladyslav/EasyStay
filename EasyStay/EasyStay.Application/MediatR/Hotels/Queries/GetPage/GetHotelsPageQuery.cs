@@ -10,13 +10,21 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public string? Description { get; set; }
 
-	public TimeOnly? ArrivalTimeUtc { get; set; }
-	public TimeOnly? MinArrivalTimeUtc { get; set; }
-	public TimeOnly? MaxArrivalTimeUtc { get; set; }
+	public TimeOnly? ArrivalTimeUtcFrom { get; set; }
+	public TimeOnly? MinArrivalTimeUtcFrom { get; set; }
+	public TimeOnly? MaxArrivalTimeUtcFrom { get; set; }
 
-	public TimeOnly? DepartureTimeUtc { get; set; }
-	public TimeOnly? MinDepartureTimeUtc { get; set; }
-	public TimeOnly? MaxDepartureTimeUtc { get; set; }
+	public TimeOnly? ArrivalTimeUtcTo { get; set; }
+	public TimeOnly? MinArrivalTimeUtcTo { get; set; }
+	public TimeOnly? MaxArrivalTimeUtcTo { get; set; }
+
+	public TimeOnly? DepartureTimeUtcFrom { get; set; }
+	public TimeOnly? MinDepartureTimeUtcFrom { get; set; }
+	public TimeOnly? MaxDepartureTimeUtcFrom { get; set; }
+
+	public TimeOnly? DepartureTimeUtcTo { get; set; }
+	public TimeOnly? MinDepartureTimeUtcTo { get; set; }
+	public TimeOnly? MaxDepartureTimeUtcTo { get; set; }
 
 	public bool? IsArchived { get; set; }
 

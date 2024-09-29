@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EasyStay.Persistence.Migrations
 {
     [DbContext(typeof(EasyStayDbContext))]
-    [Migration("20240929105356_updated_Hotels_and_added_Rooms_table")]
+    [Migration("20240929134459_updated_Hotels_and_added_Rooms_table")]
     partial class updated_Hotels_and_added_Rooms_table
     {
         /// <inheritdoc />
@@ -169,10 +169,16 @@ namespace EasyStay.Persistence.Migrations
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTimeOffset>("ArrivalTimeUtc")
+                    b.Property<DateTimeOffset>("ArrivalTimeUtcFrom")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset>("DepartureTimeUtc")
+                    b.Property<DateTimeOffset>("ArrivalTimeUtcTo")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("DepartureTimeUtcFrom")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("DepartureTimeUtcTo")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")

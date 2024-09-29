@@ -1,14 +1,19 @@
 import React from 'react';
-import { Outlet } from "react-router-dom";
+
 import Navbar from "components/HomePage/Navbar.tsx";
 import Footer  from "components/HomePage/Footer.tsx";
 import Services  from "components/HomePage/Services.tsx";
+import TravelCarousel  from "components/HomePage/TravelCarousel.tsx";
+import DiscountsComponent  from "components/HomePage/DiscountsComponent.tsx";
+
+
 const HomePage: React.FC = () => {
 
     return (
         <div>
             <div className="app">
-                <Navbar />
+                <Navbar/>
+
                 <header className="hero-section">
                     <div className="hero-content">
                         <div className="hero-content2">
@@ -19,6 +24,12 @@ const HomePage: React.FC = () => {
                     </div>
 
                 </header>
+
+                <TravelCarousel/>
+
+                <DiscountsComponent/>
+
+
 
                 <Services />
 
@@ -33,7 +44,7 @@ const HomePage: React.FC = () => {
                 <Footer />
             </div>
 
-            <Outlet />
+
         </div>
     );
 };

@@ -23,6 +23,7 @@ public class UpdateHotelCommandHandler(
 			.Include(h => h.Photos)
 			.Include(h => h.HotelHotelAmenities)
 			.Include(h => h.HotelBreakfasts)
+			.Include(h => h.HotelStaffLanguages)
 			.FirstOrDefaultAsync(
 				h => h.Id == request.Id && h.RealtorId == currentUserService.GetRequiredUserId(),
 				cancellationToken

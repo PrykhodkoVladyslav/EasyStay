@@ -15,6 +15,8 @@ using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
+using EasyStay.Application.MediatR.Languages.Queries.GetPage;
+using EasyStay.Application.MediatR.Languages.Queries.Shared;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
 using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
@@ -96,6 +98,7 @@ builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityP
 builder.Services.AddScoped<IPaginationService<HotelCategoryVm, GetHotelCategoriesPageQuery>, HotelCategoryPaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelAmenityVm, GetHotelAmenitiesPageQuery>, HotelAmenityPaginationService>();
 builder.Services.AddScoped<IPaginationService<BreakfastVm, GetBreakfastsPageQuery>, BreakfastPaginationService>();
+builder.Services.AddScoped<IPaginationService<LanguageVm, GetLanguagesPageQuery>, LanguagePaginationService>();
 builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
 builder.Services.AddScoped<IPaginationService<RoomVm, GetRoomsPageQuery>, RoomPaginationService>();
 builder.Services.AddScoped<IPaginationService<RentalPeriodVm, GetRentalPeriodsPageQuery>, RentalPeriodPaginationService>();

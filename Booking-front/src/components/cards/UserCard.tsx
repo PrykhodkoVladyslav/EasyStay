@@ -4,10 +4,12 @@ import { useAppDispatch } from "store/hooks.ts";
 import { logOut, getUser } from "store/slice/userSlice.ts";
 // import { getRandomColor } from "utils/getRandomColor.ts";
 import { API_URL } from "utils/getEnvData.ts";
+import {useNavigate} from "react-router-dom";
 
 const UserCard: React.FC = () => {
     const dispatch = useAppDispatch();
     const user = useSelector(getUser);
+    const navigate = useNavigate();
 
     if (!user) {
         return null;
@@ -18,6 +20,7 @@ const UserCard: React.FC = () => {
 
     const handleLogout = () => {
         dispatch(logOut());
+        navigate("/auth/login")
     };
 
     return (
@@ -43,7 +46,7 @@ const UserCard: React.FC = () => {
                     )}
                 </div>
                 <div className="ml-2">
-                    <p className="text-xs font-semibold">{displayName}</p>
+                    <p className="text-xs font-semibold text-slate-200">{displayName}</p>
                 </div>
             </div>
 

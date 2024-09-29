@@ -26,7 +26,7 @@ const SidebarLinkGroupTitle: React.FC<SidebarLinkGroupMenuItemProps> = ({
                     <div>
                         <Icon className={`${isActive ? "text-indigo-500" : "text-slate-400"}`} />
                     </div>
-                    <span className="flex justify-between text-sm w-full font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 duration-200">
+                    <span className="flex justify-between text-sm w-full font-medium ml-3 lg:opacity-90 lg:sidebar-expanded:opacity-100 duration-200">
             {children}
           </span>
                 </div>

@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EasyStay.Persistence.Migrations
 {
     [DbContext(typeof(EasyStayDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    partial class EasyStayDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -301,6 +301,21 @@ namespace EasyStay.Persistence.Migrations
                     b.ToTable("HotelPhotos", (string)null);
                 });
 
+            modelBuilder.Entity("EasyStay.Domain.HotelStaffLanguage", b =>
+                {
+                    b.Property<long>("HotelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LanguageId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("HotelId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("HotelStaffLanguages", (string)null);
+                });
+
             modelBuilder.Entity("EasyStay.Domain.Identity.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -427,6 +442,27 @@ namespace EasyStay.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.Language", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Message", b =>
@@ -790,6 +826,25 @@ namespace EasyStay.Persistence.Migrations
                     b.Navigation("Hotel");
                 });
 
+            modelBuilder.Entity("EasyStay.Domain.HotelStaffLanguage", b =>
+                {
+                    b.HasOne("EasyStay.Domain.Hotel", "Hotel")
+                        .WithMany("HotelStaffLanguages")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EasyStay.Domain.Language", "Language")
+                        .WithMany("HotelStaffLanguages")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+
+                    b.Navigation("Language");
+                });
+
             modelBuilder.Entity("EasyStay.Domain.Identity.UserRole", b =>
                 {
                     b.HasOne("EasyStay.Domain.Identity.Role", "Role")
@@ -972,6 +1027,8 @@ namespace EasyStay.Persistence.Migrations
 
                     b.Navigation("HotelHotelAmenities");
 
+                    b.Navigation("HotelStaffLanguages");
+
                     b.Navigation("Photos");
 
                     b.Navigation("Rooms");
@@ -997,6 +1054,11 @@ namespace EasyStay.Persistence.Migrations
                     b.Navigation("Messages");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.Language", b =>
+                {
+                    b.Navigation("HotelStaffLanguages");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.RentalPeriod", b =>

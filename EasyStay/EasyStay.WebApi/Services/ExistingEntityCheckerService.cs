@@ -85,4 +85,10 @@ public class ExistingEntityCheckerService(
 
 	public Task<bool> IsNewLanguageNameAsync(long id, string name, CancellationToken cancellationToken) =>
 		context.Languages.AsNoTracking().AnyAsync(l => l.Id != id && l.Name == name, cancellationToken);
+
+	public Task<bool> IsCorrectCitizenshipIdAsync(long id, CancellationToken cancellationToken) =>
+		context.Citizenships.AsNoTracking().AnyAsync(c => c.Id == id, cancellationToken);
+
+	public Task<bool> IsCorrectGenderIdAsync(long id, CancellationToken cancellationToken) =>
+		context.Genders.AsNoTracking().AnyAsync(g => g.Id == id, cancellationToken);
 }

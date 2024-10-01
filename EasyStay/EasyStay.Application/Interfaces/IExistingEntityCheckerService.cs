@@ -14,4 +14,6 @@ public interface IExistingEntityCheckerService {
 	Task<bool> IsCorrectLanguageIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
 	Task<bool> IsCorrectLanguageNameAsync(string name, CancellationToken cancellationToken);
 	Task<bool> IsNewLanguageNameAsync(long id, string name, CancellationToken cancellationToken);
+	Task<bool> IsCorrectCitizenshipIdAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectGenderIdAsync(long id, CancellationToken cancellationToken);
 }

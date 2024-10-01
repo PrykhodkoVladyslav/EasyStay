@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EasyStay.Persistence.Migrations
 {
     [DbContext(typeof(EasyStayDbContext))]
-    [Migration("20241001125949_added_Genders_and_Citizenships_tables")]
+    [Migration("20241001134135_added_Genders_and_Citizenships_tables")]
     partial class added_Genders_and_Citizenships_tables
     {
         /// <inheritdoc />
@@ -746,7 +746,8 @@ namespace EasyStay.Persistence.Migrations
                     b.HasBaseType("EasyStay.Domain.Identity.User");
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<long?>("CitizenshipId")
                         .HasColumnType("bigint");

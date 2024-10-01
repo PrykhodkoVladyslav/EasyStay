@@ -743,7 +743,8 @@ namespace EasyStay.Persistence.Migrations
                     b.HasBaseType("EasyStay.Domain.Identity.User");
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<long?>("CitizenshipId")
                         .HasColumnType("bigint");

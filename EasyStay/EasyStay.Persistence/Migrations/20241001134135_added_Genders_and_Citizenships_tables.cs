@@ -15,7 +15,8 @@ namespace EasyStay.Persistence.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Address",
                 table: "Realtors",
-                type: "text",
+                type: "character varying(255)",
+                maxLength: 255,
                 nullable: true);
 
             migrationBuilder.AddColumn<long>(

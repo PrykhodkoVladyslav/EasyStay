@@ -16,6 +16,7 @@ internal class RealtorEntityTypeConfiguration : IEntityTypeConfiguration<Realtor
 			.IsRequired(false);
 
 		builder.Property(r => r.Address)
+			.HasMaxLength(255)
 			.IsRequired(false);
 	}
 }

@@ -12,6 +12,7 @@ using EasyStay.Application.MediatR.Accounts.Commands.UpdateRealtorsInformation;
 using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
+using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorsInformation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -122,5 +123,13 @@ public class AccountsController : BaseApiController {
 		await Mediator.Send(command);
 
 		return NoContent();
+	}
+
+	[HttpGet]
+	[Authorize(Roles = "Realtor")]
+	public async Task<IActionResult> GetRealtorsInformationAsync() {
+		var vm = await Mediator.Send(new GetRealtorsInformationCommand());
+
+		return Ok(vm);
 	}
 }

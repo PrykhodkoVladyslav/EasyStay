@@ -33,7 +33,7 @@ public class UpdateRealtorsInformationCommandHandler(
 			if (!result.Succeeded)
 				throw new IdentityException(result, "Failed to update realtor information");
 
-			result = await userManager.SetPhoneNumberAsync(realtor, realtor.PhoneNumber);
+			result = await userManager.SetPhoneNumberAsync(realtor, request.PhoneNumber);
 			if (!result.Succeeded)
 				throw new IdentityException(result, "Failed to update realtor phone number");
 

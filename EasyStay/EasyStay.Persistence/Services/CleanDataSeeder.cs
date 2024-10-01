@@ -27,6 +27,12 @@ public class CleanDataSeeder(
 
 		if (!await context.HotelAmenities.AnyAsync(cancellationToken))
 			await SeedHotelAmenitiesAsync(cancellationToken);
+
+		if (!await context.Genders.AnyAsync(cancellationToken))
+			await SeedGendersAsync(cancellationToken);
+
+		if (!await context.Citizenships.AnyAsync(cancellationToken))
+			await SeedCitizenshipsAsync(cancellationToken);
 	}
 
 	private async Task SeedUsersAsync(CancellationToken cancellationToken) {
@@ -682,6 +688,38 @@ public class CleanDataSeeder(
 			new() {
 				Name = "Аквапарк"
 			}
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	public async Task SeedGendersAsync(CancellationToken cancellationToken) {
+		await context.Genders.AddRangeAsync([
+			new() {
+				Name = "Чоловік"
+			},
+			new() {
+				Name = "Жінка"
+			}
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	public async Task SeedCitizenshipsAsync(CancellationToken cancellationToken) {
+		await context.Citizenships.AddRangeAsync([
+			new() {
+				Name = "Українець"
+			},
+			new() {
+				Name = "Німець"
+			},
+			new() {
+				Name = "Поляк"
+			},
+			new() {
+				Name = "Француз"
+			},
 		], cancellationToken);
 
 		await context.SaveChangesAsync(cancellationToken);

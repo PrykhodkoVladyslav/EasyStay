@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Navbar from "components/HomePage/Navbar.tsx";
-import Footer  from "components/HomePage/Footer.tsx";
+import Footer  from "components/Footer.tsx";
 import Services  from "components/HomePage/Services.tsx";
 import TravelCarousel  from "components/HomePage/TravelCarousel.tsx";
 import DiscountsComponent  from "components/HomePage/DiscountsComponent.tsx";

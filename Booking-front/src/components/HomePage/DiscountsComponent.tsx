@@ -29,7 +29,7 @@ const DiscountsComponent = () => {
                                             <div className="stars-container1">
                                                 <div className="container41">
                                                     <img
-                                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                                        src={getPublicResourceUrl("account/star.svg")}
                                                         alt=""
                                                         className="star1"
                                                     />
@@ -79,7 +79,7 @@ const DiscountsComponent = () => {
                                             <div className="stars-container1">
                                                 <div className="container41">
                                                     <img
-                                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                                        src={getPublicResourceUrl("account/star.svg")}
                                                         alt=""
                                                         className="star1"
                                                     />
@@ -128,7 +128,7 @@ const DiscountsComponent = () => {
                                             <div className="stars-container1">
                                                 <div className="container41">
                                                     <img
-                                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                                        src={getPublicResourceUrl("account/star.svg")}
                                                         alt=""
                                                         className="star1"
                                                     />
@@ -178,7 +178,7 @@ const DiscountsComponent = () => {
                                             <div className="stars-container1">
                                                 <div className="container41">
                                                     <img
-                                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                                        src={getPublicResourceUrl("account/star.svg")}
                                                         alt=""
                                                         className="star1"
                                                     />

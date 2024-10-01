@@ -261,17 +261,41 @@
   header {
     height: 74px;
     width: 100%;
-    max-width: 1721px;
+    max-width: 1720px;
     min-width: 1035px;
+    margin-bottom: 34px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
 
     .logo {
       width: 183px;
       //max-width: none;
       //min-width: calc(0.6 * 183px);
       height: 73.82px;
+    }
+
+    .center-section {
+      height: 45px;
+      display: flex;
+      gap: 39px;
+      font-size: 20px;
+      line-height: 27px;
+      font-family: var(--font-primary);
+
+      .pages {
+        white-space: nowrap;
+        font-weight: 600;
+      }
+
+      .active {
+        padding: 9px 26px;
+        border-radius: 14px;
+        color: white;
+        background: var(--color-primary);
+        font-weight: 800;
+      }
     }
 
     .right-section {
@@ -334,7 +358,6 @@
         //  left: 0;
         //  right: 0;
         //  background-color: white;
-        //  border: 1px solid #ccc;
         //  border-radius: 8px;
         //  z-index: 10;
         //  margin-top: 5px;
@@ -345,7 +368,6 @@
         //  .dropdown-option {
         //    position: relative;
         //    background-color: white;
-        //    border: 1px solid #ccc;
         //    border-radius: 8px;
         //    margin-top: 5px;
         //    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -370,144 +392,136 @@
     }
   }
 
-  // Ліва постійна частина профілю і вкладок
-  .left-side {
-    //top: 137px;
-    margin-top: 34px;
-    max-width: 290px;
+  .body-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 58px;
-    padding: 20px 17px;
-    border-radius: var(--border-radius);
-    background: var(--color-secondary);
+    gap: 45px;
 
-    .head {
+
+    // Ліва постійна частина профілю і вкладок
+    .left-side {
+      //top: 137px;
+      width: 100%;
+      max-width: 290px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 58px;
+      padding: 23px 34px;
+      border-radius: var(--border-radius);
+      background: var(--color-secondary);
 
-      .photo {
-        width: 205px;
-        //min-width: calc(0.6 * 183px);
-        height: 205px;
-        border-radius: 100%;
-        background: rgb(217, 217, 217);
-      }
-
-      .name {
-        font-family: "Nunito", system-ui;
-        font-size: 28px;
-        font-weight: 700;
-        line-height: 38px;
-      }
-    }
-
-    .content-bottom {
-      width: 100%;
-      min-width: 205px;
-
-      .items {
+      .head {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-
-        .item {
-          width: 100%;
-          height: 28px;
-          padding: 11px 16px;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          border-radius: var(--border-radius);
-          font-family: var(--font-primary);
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 28px;
-        }
-      }
-    }
-  }
-
-  // Головна
-  .home-content {
-
-    // Додати готель
-    .add-hotel {
-      position: absolute;
-      min-width: 600px;
-      top: 137px;
-      left: 535px;
-      right: 100px;
-      display: flex;
-      flex-direction: column;
-      padding: 18px 23px;
-      border-radius: var(--border-radius);
-      background: rgba(247, 247, 253);
-
-      .components {
-        height: 60px;
-        display: flex;
-        justify-content: space-between;
         align-items: center;
+        gap: 18px;
 
-        p {
-          font-family: var(--font-primary);
+        .photo {
+          width: 205px;
+          //min-width: calc(0.6 * 183px);
+          height: 205px;
+          border-radius: 100%;
+          background: rgb(217, 217, 217);
+        }
+
+        .name {
+          font-family: "Nunito", system-ui;
           font-size: 28px;
           font-weight: 700;
+          line-height: 38px;
         }
+      }
 
-        .link {
-          width: 100%;
-          max-width: 269px;
-          height: 64px;
+      .content-bottom {
+        width: 100%;
+        min-width: 205px;
+
+        .items {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: var(--border-radius);
-          background: var(--color-primary);
-          color: white;
-          font-family: var(--font-primary);
-          font-size: 20px;
-          font-weight: 500;
+          flex-direction: column;
+          gap: 8px;
+
+          .item {
+            width: 100%;
+            height: 28px;
+            padding: 11px 16px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 28px;
+          }
         }
       }
     }
 
-    // Готелі та відгуки
-    .hotels-reviews {
-      //border: 1px solid #ccc;
-      position: absolute;
-      //width: 100%;
-      //width: auto;
-      //width: 1292px;
-      //max-width: 1292px;
-      //min-width: 560px;
-      //height: 995px;
-      top: 343px;
-      left: 535px;
-      right: 100px;
-      //margin-top: 104px;
+    // Головна
+    .home-content {
       display: flex;
       flex-direction: column;
-      gap: 58px;
 
-      // Список готелів
-      .hotels-container {
-        //border: 1px solid #ccc;
+      // Додати готель
+      .add-hotel {
+        min-width: 600px;
+        padding: 18px 23px;
+        border-radius: var(--border-radius);
+        background: rgba(247, 247, 253);
+
+        .components {
+          height: 60px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          p {
+            font-family: var(--font-primary);
+            font-size: 28px;
+            font-weight: 700;
+          }
+
+          .link {
+            width: 100%;
+            max-width: 269px;
+            height: 64px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--border-radius);
+            background: var(--color-primary);
+            color: white;
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 500;
+          }
+        }
+      }
+
+      // Готелі та відгуки
+      .hotels-reviews {
         //width: 100%;
-        width: fit-content;
-        min-height: 584px;
+        //width: auto;
+        //width: 1292px;
+        //max-width: 1292px;
+        //min-width: 560px;
+        //height: 995px;
+        margin-top: 34px;
         display: flex;
         flex-direction: column;
-        align-items: start;
+        gap: 34px;
 
-        .container1 {
-          gap: 24px;
+        // Список готелів
+        .hotels-container {
+          //width: 100%;
+          min-height: 584px;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
 
           .title {
+            margin-bottom: 24px;
             font-family: var(--font-primary);
             font-size: 32px;
             font-weight: 700;
@@ -767,38 +781,32 @@
               }
             }
           }
-        }
 
-        .container8 {
-          margin: 28px 0;
-          width: 100%;
-          display: flex;
-          justify-content: center;
+          .container8 {
+            margin-top: 28px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
 
-          button {
-            padding: 9px 18px;
-            border-radius: 55px;
-            background: rgb(63, 82, 60);
-            color: white;
-            font-family: "Montserrat", system-ui;
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 15px;
+            button {
+              padding: 9px 18px;
+              border-radius: 55px;
+              background: rgb(63, 82, 60);
+              color: white;
+              font-family: "Montserrat", system-ui;
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 15px;
+            }
           }
         }
-      }
 
-      // Відгуки
-      .reviews-container {
-        //border: 1px solid #ccc;
-        width: fit-content;
-        min-height: 353px;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-
-        .container7 {
-          gap: 24px;
+        // Відгуки
+        .reviews-container {
+          min-height: 353px;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
 
           .title {
             font-family: var(--font-primary);
@@ -826,580 +834,568 @@
           }
 
           .review {
-              width: 414px;
-              min-height: 222px;
-              flex-direction: column;
-              padding: 22px 23px;
-              border-radius: 22px;
-              box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-              font-family: var(--font-primary);
-              font-weight: 600;
+            width: 414px;
+            min-height: 222px;
+            flex-direction: column;
+            padding: 22px 23px;
+            border-radius: 22px;
+            box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+            font-family: var(--font-primary);
+            font-weight: 600;
 
-              .author {
-                height: 57px;
-                display: flex;
-                align-items: center;
-                gap: 19px;
-                overflow: hidden;
+            .author {
+              height: 57px;
+              display: flex;
+              align-items: center;
+              gap: 19px;
+              overflow: hidden;
 
-                .image {
-                  width: 67px;
-                  border-radius: 100%;
+              .image {
+                width: 67px;
+                border-radius: 100%;
 
-                  img {
-                    box-sizing: border-box;
-                  }
+                img {
+                  box-sizing: border-box;
+                }
+              }
+
+              .container9 {
+                width: 75%;
+
+                .name {
+                  font-size: 20px;
+                  line-height: 27px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
                 }
 
-                .container9 {
-                  width: 75%;
+                .stars-container {
+                  width: 57px;
+                  height: 28px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  border: 1px solid rgb(234, 232, 232);
+                  border-radius: 30px;
 
-                  .name {
-                    font-size: 20px;
-                    line-height: 27px;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;
-                  }
-
-                  .stars-container {
-                    width: 57px;
-                    height: 28px;
+                  .container4 {
                     display: flex;
-                    justify-content: center;
                     align-items: center;
-                    border: 1px solid rgb(234, 232, 232);
-                    border-radius: 30px;
 
-                    .container4 {
-                      display: flex;
-                      align-items: center;
+                    .star {
+                      width: 13px;
+                      height: 13px;
+                    }
 
-                      .star {
-                        width: 13px;
-                        height: 13px;
-                      }
-
-                      .rating {
-                        font-size: 16px;
-                        line-height: 22px;
-                      }
+                    .rating {
+                      font-size: 16px;
+                      line-height: 22px;
                     }
                   }
                 }
               }
-
-              .description {
-                margin-top: 24px;
-                font-size: 13px;
-                line-height: 16px;
-                //display: -webkit-box;
-                //-webkit-box-orient: vertical;
-                //-webkit-line-clamp: 5;
-                //overflow: hidden;
-              }
             }
-        }
 
-        .container8 {
-          margin: 28px 0;
-          width: 100%;
-          display: flex;
-          justify-content: center;
+            .description {
+              margin-top: 24px;
+              font-size: 13px;
+              line-height: 16px;
+              //display: -webkit-box;
+              //-webkit-box-orient: vertical;
+              //-webkit-line-clamp: 5;
+              //overflow: hidden;
+            }
+          }
 
-          button {
-            padding: 9px 18px;
-            border-radius: 55px;
-            background: rgb(63, 82, 60);
-            color: white;
-            font-family: var(--font-secondary);
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 15px;
+          .container8 {
+            margin-top: 28px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            button {
+              padding: 9px 18px;
+              border-radius: 55px;
+              background: rgb(63, 82, 60);
+              color: white;
+              font-family: var(--font-secondary);
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 15px;
+            }
           }
         }
       }
     }
-  }
 
-  // Особисті дані
-  .data-content {
-    position: absolute;
-    max-width: 850px;
-    //min-width: 560px;
-    height: 1000px;
-    top: 137px;
-    left: 535px;
-    right: 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    font-family: var(--font-primary);
-    white-space: nowrap;
-
-    .title {
-      height: 44px;
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 44px;
-    }
-
-    .data {
+    // Особисті дані
+    .data-content {
       width: 100%;
-      height: 726px;
+      max-width: 850px;
+      //min-width: 560px;
       display: flex;
       flex-direction: column;
-      gap: 38px;
+      gap: 24px;
+      font-family: var(--font-primary);
+      white-space: nowrap;
 
-      .info {
+      .title {
+        height: 44px;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 44px;
+      }
+
+      .data {
+        width: 100%;
+        height: 726px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 38px;
 
-        .name {
+        .info {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .name {
+            height: 44px;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 44px;
+          }
+
+          .email {
+            height: 16px;
+            color: rgb(81, 81, 81);
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 16px;
+          }
+        }
+
+        .container10 {
+          height: 620px;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+
+          p {
+            height: 22px;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 22px;
+          }
+
+          input {
+            width: 100%;
+            min-width: 200px;
+            height: 56px;
+            padding: 9px 14px;
+            border-radius: 18px;
+            background: rgb(247, 247, 253);
+            color: var(--color-text);
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+          }
+
+          input[type="date"]::-webkit-calendar-picker-indicator {
+            display: none;
+          }
+
+          .containers1 {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+          }
+
+          .containers2 {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 44px;
+
+            .container11 {
+              width: 628px;
+              display: flex;
+              gap: 48px;
+
+              div {
+                width: 100%;
+              }
+            }
+
+            .btn-edit {
+              width: 178px;
+              //width: 100%;
+              //max-width: 178px;
+              height: 52px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 15px 1px;
+              border-radius: 18px;
+
+              background: rgb(63, 82, 60);
+              color: white;
+              font-size: 20px;
+              font-weight: 600;
+              line-height: 27px;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    // Мої готелі
+    .hotels-content {
+      width: 100%;
+      max-width: 1285px;
+      //min-width: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      font-family: var(--font-primary);
+      white-space: nowrap;
+
+      .top {
+        width: 527px;
+        height: 124px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .title {
           height: 44px;
           font-size: 32px;
           font-weight: 700;
           line-height: 44px;
         }
 
-        .email {
-          height: 16px;
-          color: rgb(81, 81, 81);
-          font-size: 13px;
-          font-weight: 600;
-          line-height: 16px;
-        }
-      }
-
-      .container10 {
-        height: 620px;
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-
-        p {
-          height: 22px;
-          font-size: 16px;
-          font-weight: 700;
-          line-height: 22px;
-        }
-
-        input {
-          width: 100%;
-          min-width: 200px;
-          height: 56px;
-          padding: 9px 14px;
-          border-radius: 18px;
-          background: rgb(247, 247, 253);
-          color: var(--color-text);
-          font-family: var(--font-primary);
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 24px;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator {
-          display: none;
-        }
-
-        .containers1 {
-          width: 100%;
-          height: 80px;
+        .sort {
+          width: fit-content;
+          height: 124px;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          gap: 2px;
-        }
+          border-radius: 22px;
+          background: rgb(247, 247, 253);
 
-        .containers2 {
-          width: 100%;
-          height: 80px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-end;
-          gap: 44px;
-
-          .container11 {
-            width: 628px;
+          button {
+            height: 56px;
             display: flex;
-            gap: 48px;
+            flex-direction: row;
+            justify-content: center;
+            padding: 16px 19px;
+            font-size: 20px;
+            line-height: 24px;
+            gap: 6px;
 
-            div {
-              width: 100%;
+            img {
+              width: 24px;
+              height: 24px;
+            }
+            p:nth-of-type(1) {
+              font-family: var(--font-secondary);
+              font-weight: 600;
+            }
+            .sort-active {
+              font-family: var(--font-primary);
+              font-weight: 500;
             }
           }
-
-          .btn-edit {
-            width: 178px;
-            //width: 100%;
-            //max-width: 178px;
-            height: 52px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px 1px;
-            border-radius: 18px;
-
-            background: rgb(63, 82, 60);
-            color: white;
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 27px;
-            text-align: center;
-          }
         }
       }
-    }
-  }
 
-  // Мої готелі
-  .hotels-content {
-    position: absolute;
-    //width: 100%;
-    max-width: 1285px;
-    //min-width: 560px;
-    top: 137px;
-    left: 535px;
-    right: 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    font-family: var(--font-primary);
-    white-space: nowrap;
-
-    .top {
-      width: 527px;
-      height: 124px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-
-      .title {
-        height: 44px;
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 44px;
-      }
-
-      .sort {
-        width: fit-content;
-        height: 124px;
-        display: flex;
-        flex-direction: column;
-        border-radius: 22px;
-        background: rgb(247, 247, 253);
-
-        button {
-          height: 56px;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          padding: 16px 19px;
-          font-size: 20px;
-          line-height: 24px;
-          gap: 6px;
-
-          img {
-            width: 24px;
-            height: 24px;
-          }
-          p:nth-of-type(1) {
-            font-family: var(--font-secondary);
-            font-weight: 600;
-          }
-          .sort-active {
-            font-family: var(--font-primary);
-            font-weight: 500;
-          }
-        }
-      }
-    }
-
-    .hotels {
-      width: 100%;
-      min-width: 600px;
-      display: flex;
-      justify-content: flex-start;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-
-      .hotel {
+      .hotels {
         width: 100%;
-        height: 131px;
+        min-width: 600px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
+        flex-direction: column;
         align-items: center;
-        padding: 23px;
-        border-radius: 22px;
-        background: rgb(240, 240, 240);
+        gap: 14px;
 
-        .info {
-          width: fit-content;
+        .hotel {
+          width: 100%;
+          height: 131px;
           display: flex;
-          gap: 22px;
-
-          .img {
-            width: 140px;
-            height: 86px;
-            border-radius: 22px;
-            background: rgb(55, 55, 55);
-            background-size: cover;
-            //background-position: center;
-          }
+          justify-content: space-between;
+          align-items: center;
+          padding: 23px;
+          border-radius: 22px;
+          background: rgb(240, 240, 240);
 
           .info {
             width: fit-content;
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            gap: 22px;
 
-            .top-info {
+            .img {
+              width: 140px;
+              height: 86px;
+              border-radius: 22px;
+              background: rgb(55, 55, 55);
+              background-size: cover;
+              //background-position: center;
+            }
+
+            .info {
+              width: fit-content;
               display: flex;
               flex-direction: column;
+              gap: 12px;
 
-              .name {
-                font-family: var(--font-primary);
-                font-size: 20px;
-                font-weight: 700;
-                line-height: 27px;
-              }
-
-              div {
+              .top-info {
                 display: flex;
-                flex-direction: row;
-                gap: 6px;
+                flex-direction: column;
 
-                .city,
-                .address {
-                  color: var(--color-text);
-                  font-family: var(--font-secondary);
-                  font-size: 12px;
-                  font-weight: 600;
-                  line-height: 15px;
+                .name {
+                  font-family: var(--font-primary);
+                  font-size: 20px;
+                  font-weight: 700;
+                  line-height: 27px;
+                }
+
+                div {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 6px;
+
+                  .city,
+                  .address {
+                    color: var(--color-text);
+                    font-family: var(--font-secondary);
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 15px;
+                  }
                 }
               }
-            }
 
-            .category {
-              font-family: var(--font-primary);
-              font-size: 13px;
-              font-weight: 600;
-              line-height: 16px;
+              .category {
+                font-family: var(--font-primary);
+                font-size: 13px;
+                font-weight: 600;
+                line-height: 16px;
+              }
             }
           }
-        }
 
-        .actions {
-          width: 122px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 28px;
-
-          .btn-delete {
-            width: 24px;
-            height: 24px;
-          }
-          .btn-edit {
+          .actions {
             width: 122px;
-            padding: 10px 24px;
-            border-radius: 14px;
-            color: white;
-            font-family: var(--font-secondary);
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 15px;
-            background: rgb(63, 82, 60);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 28px;
+
+            .btn-delete {
+              width: 24px;
+              height: 24px;
+            }
+            .btn-edit {
+              width: 122px;
+              padding: 10px 24px;
+              border-radius: 14px;
+              color: white;
+              font-family: var(--font-secondary);
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 15px;
+              background: rgb(63, 82, 60);
+            }
           }
         }
       }
+
+
+      .bottom {
+
+      }
     }
 
-
-    .bottom {
-
-    }
-  }
-
-  // Відгуки
-  .reviews-content {
-    position: absolute;
-    //max-width: 1285px;
-    //min-width: 560px;
-    top: 137px;
-    left: 535px;
-    right: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 24px;
-    font-family: var(--font-primary);
-    white-space: nowrap;
-
-    .top {
-      width: 527px;
-      height: 124px;
+    // Відгуки
+    .reviews-content {
+      //max-width: 1285px;
+      //min-width: 560px;
       display: flex;
       flex-direction: column;
       gap: 24px;
+      font-family: var(--font-primary);
+      white-space: nowrap;
 
-      .title {
-        height: 44px;
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 44px;
-      }
-
-      .sort {
-        width: fit-content;
+      .top {
+        width: 527px;
         height: 124px;
         display: flex;
         flex-direction: column;
-        border-radius: 22px;
-        background: rgb(247, 247, 253);
+        gap: 24px;
 
-        button {
-          height: 56px;
+        .title {
+          height: 44px;
+          font-size: 32px;
+          font-weight: 700;
+          line-height: 44px;
+        }
+
+        .sort {
+          width: fit-content;
+          height: 124px;
           display: flex;
-          flex-direction: row;
-          justify-content: center;
-          padding: 16px 19px;
-          font-size: 20px;
-          line-height: 24px;
-          gap: 6px;
+          flex-direction: column;
+          border-radius: 22px;
+          background: rgb(247, 247, 253);
 
-          img {
-            width: 24px;
-            height: 24px;
-          }
-          p:nth-of-type(1) {
-            font-family: var(--font-secondary);
-            font-weight: 600;
-          }
-          .sort-active {
-            font-family: var(--font-primary);
-            font-weight: 500;
-          }
-        }
-      }
-    }
-
-    .reviews {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 21px;
-    }
-
-    @media (max-width: 1915px) {
-      .reviews {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 1500px) {
-      .reviews {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .review {
-      position: relative;
-      width: 414px;
-      //min-height: 222px;
-      display: flex;
-      flex-direction: column;
-      padding: 22px 23px;
-      border-radius: 22px;
-      box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-      font-family: var(--font-primary);
-      font-weight: 600;
-
-      .author {
-        height: 57px;
-        display: flex;
-        align-items: center;
-        gap: 19px;
-        overflow: hidden;
-
-        .image {
-          width: 67px;
-          border-radius: 100%;
-
-          img {
-            box-sizing: border-box;
-          }
-        }
-
-        .container9 {
-          width: 75%;
-
-          .name {
-            font-size: 20px;
-            line-height: 27px;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            text-wrap: wrap;
-          }
-
-          .stars-container {
-            width: 57px;
-            height: 28px;
+          button {
+            height: 56px;
             display: flex;
+            flex-direction: row;
             justify-content: center;
-            align-items: center;
-            border: 1px solid rgb(234, 232, 232);
-            border-radius: 30px;
+            padding: 16px 19px;
+            font-size: 20px;
+            line-height: 24px;
+            gap: 6px;
 
-            .container4 {
-              display: flex;
-              align-items: center;
-
-              .star {
-                width: 13px;
-                height: 13px;
-              }
-
-              .rating {
-                font-size: 16px;
-                line-height: 22px;
-              }
+            img {
+              width: 24px;
+              height: 24px;
+            }
+            p:nth-of-type(1) {
+              font-family: var(--font-secondary);
+              font-weight: 600;
+            }
+            .sort-active {
+              font-family: var(--font-primary);
+              font-weight: 500;
             }
           }
         }
       }
 
-      .description {
-        width: 369px;
-        margin-top: 24px;
-        font-size: 13px;
-        line-height: 16px;
-        //display: -webkit-box;
-        //-webkit-box-orient: vertical;
-        //-webkit-line-clamp: 5;
-        //overflow: hidden;
-        text-wrap: wrap;
+      .reviews {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 21px;
       }
 
-      .btn-delete {
-        position: absolute;
-        right: 22px;
-        width: 24px;
-        height: 24px;
+      @media (max-width: 1915px) {
+        .reviews {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
-    }
 
-    .bottom {
+      @media (max-width: 1500px) {
+        .reviews {
+          grid-template-columns: 1fr;
+        }
+      }
 
+      .review {
+        position: relative;
+        width: 414px;
+        //min-height: 222px;
+        display: flex;
+        flex-direction: column;
+        padding: 22px 23px;
+        border-radius: 22px;
+        box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+        font-family: var(--font-primary);
+        font-weight: 600;
+
+        .author {
+          height: 57px;
+          display: flex;
+          align-items: center;
+          gap: 19px;
+          overflow: hidden;
+
+          .image {
+            width: 67px;
+            border-radius: 100%;
+
+            img {
+              box-sizing: border-box;
+            }
+          }
+
+          .container9 {
+            width: 75%;
+
+            .name {
+              font-size: 20px;
+              line-height: 27px;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              text-wrap: wrap;
+            }
+
+            .stars-container {
+              width: 57px;
+              height: 28px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border: 1px solid rgb(234, 232, 232);
+              border-radius: 30px;
+
+              .container4 {
+                display: flex;
+                align-items: center;
+
+                .star {
+                  width: 13px;
+                  height: 13px;
+                }
+
+                .rating {
+                  font-size: 16px;
+                  line-height: 22px;
+                }
+              }
+            }
+          }
+        }
+
+        .description {
+          width: 369px;
+          margin-top: 24px;
+          font-size: 13px;
+          line-height: 16px;
+          //display: -webkit-box;
+          //-webkit-box-orient: vertical;
+          //-webkit-line-clamp: 5;
+          //overflow: hidden;
+          text-wrap: wrap;
+        }
+
+        .btn-delete {
+          position: absolute;
+          right: 22px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      .bottom {
+
+      }
     }
   }
+
 }
 
 

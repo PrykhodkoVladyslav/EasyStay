@@ -33,7 +33,7 @@ const MyHotels = () => {
                                     <div className="stars-container">
                                         <div className="container4">
                                             <img
-                                                src={getPublicResourceUrl("account/home/star.svg")}
+                                                src={getPublicResourceUrl("account/star.svg")}
                                                 alt=""
                                                 className="star"
                                             />
@@ -92,7 +92,7 @@ const MyHotels = () => {
                                     <div className="stars-container">
                                         <div className="container4">
                                             <img
-                                                src={getPublicResourceUrl("account/home/star.svg")}
+                                                src={getPublicResourceUrl("account/star.svg")}
                                                 alt="Зірки"
                                                 className="star"
                                             />
@@ -151,7 +151,7 @@ const MyHotels = () => {
                                     <div className="stars-container">
                                         <div className="container4">
                                             <img
-                                                src={getPublicResourceUrl("account/home/star.svg")}
+                                                src={getPublicResourceUrl("account/star.svg")}
                                                 alt="Зірки"
                                                 className="star"
                                             />

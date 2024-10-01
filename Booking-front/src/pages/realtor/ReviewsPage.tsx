@@ -39,7 +39,7 @@ const ReviewsPage = () => {
                             <p className="name">Марія</p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -73,7 +73,7 @@ const ReviewsPage = () => {
                             <p className="name">Олександра dsad as d asd dad s </p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -107,7 +107,7 @@ const ReviewsPage = () => {
                             <p className="name">Даніела</p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -137,7 +137,7 @@ const ReviewsPage = () => {
                             <p className="name">Марія</p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -165,7 +165,7 @@ const ReviewsPage = () => {
                             <p className="name">Даніела</p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -195,7 +195,7 @@ const ReviewsPage = () => {
                             <p className="name">Олександра dsad as d asd dad s </p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -229,7 +229,7 @@ const ReviewsPage = () => {
                             <p className="name">Олександра dsad as d asd dad s </p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -263,7 +263,7 @@ const ReviewsPage = () => {
                             <p className="name">Даніела</p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -293,7 +293,7 @@ const ReviewsPage = () => {
                             <p className="name">Олександра dsad as d asd dad s </p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -327,7 +327,7 @@ const ReviewsPage = () => {
                             <p className="name">Марія</p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />
@@ -355,7 +355,7 @@ const ReviewsPage = () => {
                             <p className="name">Олександра dsad as d asd dad s </p>
                             <div className="stars-container">
                                 <img
-                                    src={getPublicResourceUrl("account/home/star.svg")}
+                                    src={getPublicResourceUrl("account/star.svg")}
                                     alt=""
                                     className="star"
                                 />

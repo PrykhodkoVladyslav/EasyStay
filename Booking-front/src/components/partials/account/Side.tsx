@@ -33,40 +33,42 @@ const Side = () => {
     };
 
     return (
-        <div className="left-side">
-            <div className="head">
-                {user.photo ? (
-                    <img
-                        src={API_URL + `/images/800_${user.photo}`}
-                        alt=""
-                        className="photo"
-                    />
-                ) : (
-                    <img
-                        src={getPublicResourceUrl("account/no_user_photo.png")}
-                        alt="Немає фото"
-                        className="photo"
-                    />
-                )}
-                <p className="name">{displayName}</p>
-            </div>
+        <div className="side">
+            <div className="left-side">
+                <div className="head">
+                    {user.photo ? (
+                        <img
+                            src={API_URL + `/images/800_${user.photo}`}
+                            alt=""
+                            className="photo"
+                        />
+                    ) : (
+                        <img
+                            src={getPublicResourceUrl("account/no_user_photo.png")}
+                            alt="Немає фото"
+                            className="photo"
+                        />
+                    )}
+                    <p className="name">{displayName}</p>
+                </div>
 
-            <div className="content-bottom">
-                <div className="items">
-                    {buttons.map((button) => (
-                        <button
-                            key={button.name}
-                            className="item"
-                            onClick={() => handleButtonClick(button.name, button.path)}
-                            style={{
-                                height: activeButton === button.name ? "39px" : "28px",
-                                background: activeButton === button.name ? "rgb(63, 82, 60)" : "none",
-                                color: activeButton === button.name ? "white" : "black",
-                            }}
-                        >
-                            {button.name}
-                        </button>
-                    ))}
+                <div className="content-bottom">
+                    <div className="items">
+                        {buttons.map((button) => (
+                            <button
+                                key={button.name}
+                                className="item"
+                                onClick={() => handleButtonClick(button.name, button.path)}
+                                style={{
+                                    height: activeButton === button.name ? "39px" : "28px",
+                                    background: activeButton === button.name ? "rgb(63, 82, 60)" : "none",
+                                    color: activeButton === button.name ? "white" : "black",
+                                }}
+                            >
+                                {button.name}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

@@ -31,9 +31,17 @@ const Header = () => {
                 className="logo"
             />
 
+            <div className="center-section">
+                <button className="pages active">Кабінет</button>
+                <button className="pages">Мої готелі</button>
+                <button className="pages">Відгуки</button>
+                <button className="pages">Архів</button>
+                <button className="pages">Знижки</button>
+            </div>
+
             <div className="right-section">
                 <div>
-                    <Dropdown options={languageOptions} defaultOption="English"/>
+                    <Dropdown options={languageOptions} defaultOption="Українська"/>
                 </div>
 
                 <div className="user-section">

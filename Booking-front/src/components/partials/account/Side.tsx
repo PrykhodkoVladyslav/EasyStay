@@ -23,7 +23,8 @@ const Side = () => {
         { name: "Особисті дані", path: "personal-data" },
         { name: "Мої готелі", path: "hotels" },
         { name: "Відгуки", path: "reviews" },
-        { name: "Архів", path: "archived" }
+        { name: "Архів", path: "archived" },
+        { name: "Знижки", path: "discounts" },
     ];
 
     const handleButtonClick = (buttonName: string, buttonPath: string) => {
@@ -37,7 +38,7 @@ const Side = () => {
                 {user.photo ? (
                     <img
                         src={API_URL + `/images/800_${user.photo}`}
-                        alt={displayName}
+                        alt=""
                         className="photo"
                     />
                 ) : (
@@ -58,7 +59,8 @@ const Side = () => {
                             className="item"
                             onClick={() => handleButtonClick(button.name, button.path)}
                             style={{
-                                background: activeButton === button.name ? "rgb(63, 82, 60)" : "white",
+                                height: activeButton === button.name ? "39px" : "28px",
+                                background: activeButton === button.name ? "rgb(63, 82, 60)" : "none",
                                 color: activeButton === button.name ? "white" : "black",
                             }}
                         >

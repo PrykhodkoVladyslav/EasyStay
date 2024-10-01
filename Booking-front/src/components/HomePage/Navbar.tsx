@@ -1,5 +1,9 @@
 import React from 'react';
+import LanguageSwitcher  from "components/HomePage/LanguageSwitcher.tsx";
+
+
 const Navbar: React.FC = () => {
+
 
     return (
         <div>
@@ -17,9 +21,7 @@ const Navbar: React.FC = () => {
                     <a href="#tours">Тури</a>
                 </nav>
                 <div className="navbar-actions">
-                    <div className="language-switch">
-                    <button className="language-switch">▼</button>
-                    </div>
+                    <LanguageSwitcher></LanguageSwitcher>
                     <a><img  src="./public/icons/homepageSvg/bell.svg" className="icon-bell"></img></a>
                     <a><img src="./public/icons/homepageSvg/people.svg" className="icon-user"></img></a>
                 </div>

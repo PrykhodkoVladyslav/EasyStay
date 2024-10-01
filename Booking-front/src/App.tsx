@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "components/layouts/Layout";
 
-import HomePage from "pages/HomePage.tsx";
+
 import ProtectedRoute from "components/guards/ProtectedRoute";
 
 import LoginPage from "pages/auth/LoginPage";
@@ -11,6 +11,10 @@ import AuthLayout from "components/layouts/AuthLayout";
 import SuccessSendPage from "pages/auth/SuccessSendPage.tsx";
 
 import RealtorLayout from "components/layouts/RealtorLayout";
+
+
+import CustomerHomePage from "pages/customer/HomePage";
+
 
 import RealtorHomePage from "pages/realtor/HomePage";
 import RealtorDataPage from "pages/realtor/DataPage";
@@ -47,7 +51,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
-                    <Route index element={<HomePage />} />
+                    <Route index element={<CustomerHomePage />}/>
                 </Route>
 
                 <Route path="auth" element={<AuthLayout />}>

@@ -35,4 +35,6 @@ public interface IEasyStayDbContext {
 	DbSet<RealtorReview> RealtorReviews { get; set; }
 	DbSet<Chat> Chats { get; set; }
 	DbSet<Message> Messages { get; set; }
+	DbSet<Citizenship> Citizenships { get; set; }
+	DbSet<Gender> Genders { get; set; }
 }

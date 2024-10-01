@@ -43,6 +43,8 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	public DbSet<RealtorReview> RealtorReviews { get; set; }
 	public DbSet<Chat> Chats { get; set; }
 	public DbSet<Message> Messages { get; set; }
+	public DbSet<Citizenship> Citizenships { get; set; }
+	public DbSet<Gender> Genders { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);

@@ -10,11 +10,9 @@ import ForgotPage from "pages/auth/ForgotPage";
 import AuthLayout from "components/layouts/AuthLayout";
 import SuccessSendPage from "pages/auth/SuccessSendPage.tsx";
 
-import RealtorLayout from "components/layouts/RealtorLayout";
-
-
 import CustomerHomePage from "pages/customer/HomePage";
 
+import RealtorLayout from "components/layouts/RealtorLayout";
 
 import RealtorHomePage from "pages/realtor/HomePage";
 import RealtorDataPage from "pages/realtor/DataPage";
@@ -22,6 +20,10 @@ import RealtorHotelsPage from "pages/realtor/HotelsPage";
 import RealtorReviewsPage from "pages/realtor/ReviewsPage";
 import RealtorArchivedPage from "pages/realtor/ArchivedPage";
 import RealtorDiscountPage from "pages/realtor/DiscountsPage";
+
+import AddLayout from "components/layouts/AddLayout";
+import CategoriesListPage from "pages/realtor/add/CategoriesListPage";
+import AddHotelPage from "pages/realtor/add/HotelPage";
 
 import HotelsPage from "pages/realtor/hotel/HotelsPage";
 import HotelCreatePage from "pages/realtor/hotel/HotelCreatePage";
@@ -69,13 +71,22 @@ function App() {
                         <Route path="hotels" element={<RealtorHotelsPage />} />
                         <Route path="reviews" element={<RealtorReviewsPage />} />
                         <Route path="archived" element={<RealtorArchivedPage />} />
-                        <Route path="discounts" element={<RealtorDiscountPage />} />
-
+                        <Route path="edit/:id" element={<HotelEditPage />} />
                     </Route>
+
+                    <Route path="add" element={<AddLayout />}>
+                        <Route path="categories" element={<CategoriesListPage />} />
+
+                        <Route path="hotel" element={<AddHotelPage />} />
+
+                        {/*<Route path="apartment">*/}
+                        {/*<Route path="house">} />*/}
+                    </Route>
+
+
                     <Route path="hotels">
                         <Route path="list" element={<HotelsPage />} />
                         <Route path="create" element={<HotelCreatePage />} />
-                        <Route path="edit/:id" element={<HotelEditPage />} />
                         <Route path="archive" element={<HotelsArchivedPage />} />
                     </Route>
                 </Route>

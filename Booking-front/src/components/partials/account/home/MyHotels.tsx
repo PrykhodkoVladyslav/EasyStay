@@ -188,7 +188,7 @@ const MyHotels = () => {
                 </div>
             </div>
 
-            <div className="container8">
+            <div className="main-button">
                 <button>
                     Більше
                 </button>

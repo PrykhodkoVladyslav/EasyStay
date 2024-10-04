@@ -24,7 +24,6 @@ const Side = () => {
         { name: "Мої готелі", path: "hotels" },
         { name: "Відгуки", path: "reviews" },
         { name: "Архів", path: "archived" },
-        { name: "Знижки", path: "discounts" },
     ];
 
     const handleButtonClick = (buttonName: string, buttonPath: string) => {

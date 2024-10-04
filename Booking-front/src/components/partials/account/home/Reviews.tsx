@@ -19,7 +19,7 @@ const Reviews = () => {
                                 <p className="name">Марія</p>
                                 <div className="stars-container">
                                     <img
-                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                        src={getPublicResourceUrl("account/star.svg")}
                                         alt=""
                                         className="star"
                                     />
@@ -47,7 +47,7 @@ const Reviews = () => {
                                 <p className="name">Олександра dsad as d asd  dad s </p>
                                 <div className="stars-container">
                                     <img
-                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                        src={getPublicResourceUrl("account/star.svg")}
                                         alt=""
                                         className="star"
                                     />
@@ -78,7 +78,7 @@ const Reviews = () => {
                                 <p className="name">Даніела</p>
                                 <div className="stars-container">
                                     <img
-                                        src={getPublicResourceUrl("account/home/star.svg")}
+                                        src={getPublicResourceUrl("account/star.svg")}
                                         alt=""
                                         className="star"
                                     />
@@ -99,7 +99,7 @@ const Reviews = () => {
 
             </div>
 
-            <div className="container8">
+            <div className="main-button">
                 <button>
                     Більше
                 </button>

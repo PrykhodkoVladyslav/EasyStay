@@ -10,16 +10,25 @@ public class CreateRoomCommandHandler(
 
 	public async Task<long> Handle(CreateRoomCommand request, CancellationToken cancellationToken) {
 		var entity = new Room {
+			Name = request.Name,
 			Area = request.Area,
 			NumberOfRooms = request.NumberOfRooms,
-			Quantity = request.Quentity,
-			HotelId = request.HotelId
+			Quantity = request.Quantity,
+			HotelId = request.HotelId,
+			RoomTypeId = request.RoomTypeId
 		};
 
 		entity.RoomRentalPeriods = (request.RentalPeriodIds ?? [])
 			.Select(rpId => new RoomRentalPeriod {
 				Room = entity,
 				RentalPeriodId = rpId
+			})
+			.ToArray();
+
+		entity.RoomRoomAmenities = (request.RoomAmenityIds ?? [])
+			.Select(raId => new RoomRoomAmenity {
+				Room = entity,
+				RoomAmenityId = raId
 			})
 			.ToArray();
 

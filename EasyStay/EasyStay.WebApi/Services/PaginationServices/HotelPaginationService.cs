@@ -10,10 +10,11 @@ namespace EasyStay.WebApi.Services.PaginationServices;
 public class HotelPaginationService(
 	IEasyStayDbContext context,
 	IMapper mapper,
-	ITimeConverter timeConverter
+	ITimeConverter timeConverter,
+	ICurrentUserService currentUser
 ) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
 
-	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().OrderBy(h => h.Id);
+	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().AsSplitQuery().OrderBy(h => h.Id);
 
 	protected override IQueryable<Hotel> FilterQuery(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
 		if (filter.IsRandomItems == true) {
@@ -137,6 +138,9 @@ public class HotelPaginationService(
 
 		if (filter.RealtorId is not null)
 			query = query.Where(h => h.RealtorId == filter.RealtorId);
+
+		if (filter.OnlyOwn == true)
+			query = query.Where(h => h.RealtorId == currentUser.GetRequiredUserId());
 
 		if (filter.AllHotelAmenityIds is not null)
 			query = query.Where(

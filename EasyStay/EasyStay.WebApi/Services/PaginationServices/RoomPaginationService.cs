@@ -15,6 +15,9 @@ public class RoomPaginationService(
 	protected override IQueryable<Room> GetQuery() => context.Rooms.AsNoTracking().OrderBy(r => r.Id);
 
 	protected override IQueryable<Room> FilterQuery(IQueryable<Room> query, GetRoomsPageQuery filter) {
+		if (filter.Name is not null)
+			query = query.Where(r => r.Name.ToLower().Contains(filter.Name.ToLower()));
+
 		if (filter.Area is not null)
 			query = query.Where(r => r.Area == filter.Area);
 		if (filter.MinArea is not null)
@@ -39,17 +42,32 @@ public class RoomPaginationService(
 		if (filter.HotelId is not null)
 			query = query.Where(r => r.HotelId == filter.HotelId);
 
+		if (filter.RoomTypeId is not null)
+			query = query.Where(r => r.RoomTypeId == filter.RoomTypeId);
+
 		if (filter.AllRentalPeriodIds is not null)
 			query = query.Where(
 				r => filter.AllRentalPeriodIds.All(
 					rpId => r.RoomRentalPeriods.Any(rrp => rrp.RentalPeriodId == rpId)
 				)
 			);
-
 		if (filter.AnyRentalPeriodIds is not null)
 			query = query.Where(
 				r => filter.AnyRentalPeriodIds.Any(
 					rpId => r.RoomRentalPeriods.Any(rrp => rrp.RentalPeriodId == rpId)
+				)
+			);
+
+		if (filter.AllAmenityIds is not null)
+			query = query.Where(
+				r => filter.AllAmenityIds.All(
+					amenityId => r.RoomRoomAmenities.Any(ra => ra.RoomAmenityId == amenityId)
+				)
+			);
+		if (filter.AnyAmenityIds is not null)
+			query = query.Where(
+				r => filter.AnyAmenityIds.Any(
+					amenityId => r.RoomRoomAmenities.Any(ra => ra.RoomAmenityId == amenityId)
 				)
 			);
 

@@ -21,5 +21,5 @@ public class Room {
 
 	public ICollection<RoomRoomAmenity> RoomRoomAmenities { get; set; } = null!;
 
-
+	public ICollection<RoomVariant> RoomVariants { get; set; } = null!;
 }

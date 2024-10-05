@@ -43,6 +43,9 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	public DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
 	public DbSet<RoomAmenity> RoomAmenities { get; set; }
 	public DbSet<RoomRoomAmenity> RoomRoomAmenities { get; set; }
+	public DbSet<RoomVariant> RoomVariants { get; set; }
+	public DbSet<GuestInfo> GuestInfos { get; set; }
+	public DbSet<BedInfo> BedInfos { get; set; }
 	public DbSet<RealtorReview> RealtorReviews { get; set; }
 	public DbSet<Chat> Chats { get; set; }
 	public DbSet<Message> Messages { get; set; }

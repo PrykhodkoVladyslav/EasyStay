@@ -35,6 +35,9 @@ public interface IEasyStayDbContext {
 	DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
 	DbSet<RoomAmenity> RoomAmenities { get; set; }
 	DbSet<RoomRoomAmenity> RoomRoomAmenities { get; set; }
+	DbSet<RoomVariant> RoomVariants { get; set; }
+	DbSet<GuestInfo> GuestInfos { get; set; }
+	DbSet<BedInfo> BedInfos { get; set; }
 	DbSet<RealtorReview> RealtorReviews { get; set; }
 	DbSet<Chat> Chats { get; set; }
 	DbSet<Message> Messages { get; set; }

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace EasyStay.Application.MediatR.BedInfos.Commands;
+namespace EasyStay.Application.MediatR.BedInfos.Commands.Update;
 
-public class CreateBedInfoCommand : IRequest<long> {
+public class UpdateBedInfoCommand : IRequest {
 	public long RoomVariantId { get; set; }
 
 	public int SingleBedCount { get; set; }

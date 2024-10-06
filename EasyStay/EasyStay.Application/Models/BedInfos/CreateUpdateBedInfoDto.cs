@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
-using EasyStay.Application.MediatR.BedInfos.Commands;
+using EasyStay.Application.MediatR.BedInfos.Commands.Create;
+using EasyStay.Application.MediatR.BedInfos.Commands.Update;
 
 namespace EasyStay.Application.Models.BedInfos;
 
-public class CreateBedInfoDto : IMapWith<CreateBedInfoCommand> {
+public class CreateUpdateBedInfoDto : IMapWith<CreateBedInfoCommand>, IMapWith<UpdateBedInfoCommand> {
 	public int SingleBedCount { get; set; }
 
 	public int DoubleBedCount { get; set; }
@@ -18,6 +19,7 @@ public class CreateBedInfoDto : IMapWith<CreateBedInfoCommand> {
 
 
 	public void Mapping(Profile profile) {
-		profile.CreateMap<CreateBedInfoDto, CreateBedInfoCommand>();
+		profile.CreateMap<CreateUpdateBedInfoDto, CreateBedInfoCommand>();
+		profile.CreateMap<CreateUpdateBedInfoDto, UpdateBedInfoCommand>();
 	}
 }

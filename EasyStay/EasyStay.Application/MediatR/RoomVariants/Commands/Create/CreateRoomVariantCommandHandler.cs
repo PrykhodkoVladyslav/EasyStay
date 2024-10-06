@@ -1,4 +1,7 @@
-﻿using EasyStay.Application.Interfaces;
+﻿using AutoMapper;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.BedInfos.Commands.Create;
+using EasyStay.Application.MediatR.GuestInfos.Commands.Create;
 using EasyStay.Domain;
 using MediatR;
 
@@ -6,7 +9,8 @@ namespace EasyStay.Application.MediatR.RoomVariants.Commands.Create;
 
 public class CreateRoomVariantCommandHandler(
 	IEasyStayDbContext context,
-	IMediator mediator
+	IMediator mediator,
+	IMapper mapper
 ) : IRequestHandler<CreateRoomVariantCommand, long> {
 
 	public async Task<long> Handle(CreateRoomVariantCommand request, CancellationToken cancellationToken) {
@@ -22,8 +26,13 @@ public class CreateRoomVariantCommandHandler(
 		try {
 			await context.SaveChangesAsync(cancellationToken);
 
-			await mediator.Send(request.Guest, cancellationToken);
-			await mediator.Send(request.BedInfo, cancellationToken);
+			var guestCommand = mapper.Map<CreateGuestInfoCommand>(request.Guest);
+			guestCommand.RoomVariantId = entity.Id;
+			await mediator.Send(guestCommand, cancellationToken);
+
+			var bedInfo = mapper.Map<CreateBedInfoCommand>(request.BedInfo);
+			bedInfo.RoomVariantId = entity.Id;
+			await mediator.Send(bedInfo, cancellationToken);
 
 			await transaction.CommitAsync(cancellationToken);
 		}

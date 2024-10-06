@@ -2,7 +2,7 @@
 using EasyStay.Domain;
 using MediatR;
 
-namespace EasyStay.Application.MediatR.BedInfos.Commands;
+namespace EasyStay.Application.MediatR.BedInfos.Commands.Create;
 
 public class CreateBedInfoCommandHandler(
 	IEasyStayDbContext context

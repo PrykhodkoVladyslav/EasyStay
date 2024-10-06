@@ -1,7 +1,7 @@
 ﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace EasyStay.Application.MediatR.BedInfos.Commands;
+namespace EasyStay.Application.MediatR.BedInfos.Commands.Create;
 
 public class CreateBedInfoCommandValidator : AbstractValidator<CreateBedInfoCommand> {
 	public CreateBedInfoCommandValidator(IExistingEntityCheckerService existingEntityCheckerService) {

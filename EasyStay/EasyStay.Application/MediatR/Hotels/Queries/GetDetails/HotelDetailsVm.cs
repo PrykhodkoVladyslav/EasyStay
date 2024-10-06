@@ -6,6 +6,7 @@ using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
 using EasyStay.Application.MediatR.Languages.Queries.Shared;
+using EasyStay.Application.MediatR.Rooms.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
@@ -37,6 +38,8 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 	public IEnumerable<BreakfastVm> Breakfasts { get; set; } = null!;
 
 	public IEnumerable<LanguageVm> Languages { get; set; } = null!;
+
+	public IEnumerable<RoomVm> Rooms { get; set; } = null!;
 
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
 

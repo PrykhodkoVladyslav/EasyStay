@@ -2,14 +2,14 @@
 using EasyStay.Application.Models.GuestInfos;
 using MediatR;
 
-namespace EasyStay.Application.MediatR.RoomVariants.Commands.Create;
+namespace EasyStay.Application.MediatR.RoomVariants.Commands.Update;
 
-public class CreateRoomVariantCommand : IRequest<long> {
+public class UpdateRoomVariantCommand : IRequest {
+	public long Id { get; set; }
+
 	public decimal Price { get; set; }
 
 	public decimal? DiscountPrice { get; set; }
-
-	public long RoomId { get; set; }
 
 	public CreateUpdateGuestInfoDto Guest { get; set; } = null!;
 

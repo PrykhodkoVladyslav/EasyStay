@@ -30,14 +30,14 @@ public class RoomTypesController : BaseApiController {
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> Create([FromForm] CreateRoomTypeCommand command) {
+	public async Task<IActionResult> Create([FromBody] CreateRoomTypeCommand command) {
 		var id = await Mediator.Send(command);
 
 		return Ok(id);
 	}
 
 	[HttpPut]
-	public async Task<IActionResult> Update([FromForm] UpdateRoomTypeCommand command) {
+	public async Task<IActionResult> Update([FromBody] UpdateRoomTypeCommand command) {
 		await Mediator.Send(command);
 
 		return NoContent();

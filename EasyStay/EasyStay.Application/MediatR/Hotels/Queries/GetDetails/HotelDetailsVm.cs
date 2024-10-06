@@ -24,6 +24,8 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 	public TimeOnly DepartureTimeUtcFrom { get; set; }
 	public TimeOnly DepartureTimeUtcTo { get; set; }
 
+	public decimal? MinPrice { get; set; }
+
 	public bool IsArchived { get; set; }
 
 	public AddressVm Address { get; set; } = null!;
@@ -62,6 +64,14 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 			.ForMember(
 				dest => dest.DepartureTimeUtcTo,
 				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtcTo.DateTime))
+			)
+			.ForMember(
+				dest => dest.MinPrice,
+				opt => opt.MapFrom(
+					src => src.Rooms
+					.SelectMany(r => r.RoomVariants)
+					.Min(rv => (decimal?)(rv.DiscountPrice.HasValue ? Math.Min(rv.Price, rv.DiscountPrice.Value) : rv.Price))
+				)
 			)
 			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
 			.ForMember(

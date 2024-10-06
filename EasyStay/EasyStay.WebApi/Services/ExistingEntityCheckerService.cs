@@ -91,4 +91,25 @@ public class ExistingEntityCheckerService(
 
 	public Task<bool> IsCorrectGenderIdAsync(long id, CancellationToken cancellationToken) =>
 		context.Genders.AsNoTracking().AnyAsync(g => g.Id == id, cancellationToken);
+
+	public Task<bool> IsCorrectRoomTypeIdAsync(long id, CancellationToken cancellationToken) =>
+		context.RoomTypes.AnyAsync(rt => rt.Id == id, cancellationToken);
+
+	public async Task<bool> IsCorrectRoomAmenityIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken) {
+		if (ids is null)
+			return true;
+
+		var itemsFromDb = await context.RoomAmenities
+			.Select(ra => ra.Id)
+			.Where(id => ids.Contains(id))
+			.ToArrayAsync(cancellationToken);
+
+		return ids.All(itemsFromDb.Contains);
+	}
+
+	public Task<bool> IsCorrectRoomVariantIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
+		context.RoomVariants.Include(rv => rv.Room).ThenInclude(r => r.Hotel).AnyAsync(
+			rv => rv.Id == id && rv.Room.Hotel.RealtorId == currentUserService.GetRequiredUserId(),
+			cancellationToken
+		);
 }

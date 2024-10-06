@@ -57,6 +57,31 @@ namespace EasyStay.Persistence.Migrations
                     b.ToTable("Addresses", (string)null);
                 });
 
+            modelBuilder.Entity("EasyStay.Domain.BedInfo", b =>
+                {
+                    b.Property<long>("RoomVariantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("DoubleBedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ExtraBedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("KingsizeBedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SingleBedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SofaCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoomVariantId");
+
+                    b.ToTable("BedInfos", (string)null);
+                });
+
             modelBuilder.Entity("EasyStay.Domain.Breakfast", b =>
                 {
                     b.Property<long>("Id")
@@ -189,6 +214,22 @@ namespace EasyStay.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.GuestInfo", b =>
+                {
+                    b.Property<long>("RoomVariantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("AdultCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChildCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoomVariantId");
+
+                    b.ToTable("GuestInfos", (string)null);
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Hotel", b =>
@@ -604,17 +645,45 @@ namespace EasyStay.Persistence.Migrations
                     b.Property<long>("HotelId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
                     b.Property<int>("NumberOfRooms")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<long>("RoomTypeId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
 
+                    b.HasIndex("RoomTypeId");
+
                     b.ToTable("Rooms", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomAmenity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomAmenities", (string)null);
                 });
 
             modelBuilder.Entity("EasyStay.Domain.RoomRentalPeriod", b =>
@@ -630,6 +699,63 @@ namespace EasyStay.Persistence.Migrations
                     b.HasIndex("RentalPeriodId");
 
                     b.ToTable("RoomRentalPeriods", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomRoomAmenity", b =>
+                {
+                    b.Property<long>("RoomId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoomAmenityId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("RoomId", "RoomAmenityId");
+
+                    b.HasIndex("RoomAmenityId");
+
+                    b.ToTable("RoomRoomAmenities", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomTypes", (string)null);
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomVariant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<long>("RoomId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomVariants", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -782,6 +908,17 @@ namespace EasyStay.Persistence.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("EasyStay.Domain.BedInfo", b =>
+                {
+                    b.HasOne("EasyStay.Domain.RoomVariant", "RoomVariant")
+                        .WithOne("BedInfo")
+                        .HasForeignKey("EasyStay.Domain.BedInfo", "RoomVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoomVariant");
+                });
+
             modelBuilder.Entity("EasyStay.Domain.Chat", b =>
                 {
                     b.HasOne("EasyStay.Domain.Identity.Customer", "Customer")
@@ -810,6 +947,17 @@ namespace EasyStay.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.GuestInfo", b =>
+                {
+                    b.HasOne("EasyStay.Domain.RoomVariant", "RoomVariant")
+                        .WithOne("GuestInfo")
+                        .HasForeignKey("EasyStay.Domain.GuestInfo", "RoomVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoomVariant");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Hotel", b =>
@@ -972,7 +1120,15 @@ namespace EasyStay.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EasyStay.Domain.RoomType", "RoomType")
+                        .WithMany("Rooms")
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Hotel");
+
+                    b.Navigation("RoomType");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.RoomRentalPeriod", b =>
@@ -990,6 +1146,36 @@ namespace EasyStay.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("RentalPeriod");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomRoomAmenity", b =>
+                {
+                    b.HasOne("EasyStay.Domain.RoomAmenity", "RoomAmenity")
+                        .WithMany("RoomRoomAmenities")
+                        .HasForeignKey("RoomAmenityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EasyStay.Domain.Room", "Room")
+                        .WithMany("RoomRoomAmenities")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("RoomAmenity");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomVariant", b =>
+                {
+                    b.HasOne("EasyStay.Domain.Room", "Room")
+                        .WithMany("RoomVariants")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
                 });
@@ -1159,6 +1345,29 @@ namespace EasyStay.Persistence.Migrations
             modelBuilder.Entity("EasyStay.Domain.Room", b =>
                 {
                     b.Navigation("RoomRentalPeriods");
+
+                    b.Navigation("RoomRoomAmenities");
+
+                    b.Navigation("RoomVariants");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomAmenity", b =>
+                {
+                    b.Navigation("RoomRoomAmenities");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomType", b =>
+                {
+                    b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("EasyStay.Domain.RoomVariant", b =>
+                {
+                    b.Navigation("BedInfo")
+                        .IsRequired();
+
+                    b.Navigation("GuestInfo")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EasyStay.Domain.Identity.Customer", b =>

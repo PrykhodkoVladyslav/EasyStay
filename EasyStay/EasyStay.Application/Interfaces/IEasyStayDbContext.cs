@@ -30,8 +30,14 @@ public interface IEasyStayDbContext {
 	DbSet<HotelStaffLanguage> HotelStaffLanguages { get; set; }
 	DbSet<HotelPhoto> HotelPhotos { get; set; }
 	DbSet<Room> Rooms { get; set; }
+	DbSet<RoomType> RoomTypes { get; set; }
 	DbSet<RentalPeriod> RentalPeriods { get; set; }
 	DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
+	DbSet<RoomAmenity> RoomAmenities { get; set; }
+	DbSet<RoomRoomAmenity> RoomRoomAmenities { get; set; }
+	DbSet<RoomVariant> RoomVariants { get; set; }
+	DbSet<GuestInfo> GuestInfos { get; set; }
+	DbSet<BedInfo> BedInfos { get; set; }
 	DbSet<RealtorReview> RealtorReviews { get; set; }
 	DbSet<Chat> Chats { get; set; }
 	DbSet<Message> Messages { get; set; }

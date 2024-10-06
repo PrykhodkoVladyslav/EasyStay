@@ -33,10 +33,13 @@ public class CleanDataSeeder(
 
 		if (!await context.Citizenships.AnyAsync(cancellationToken))
 			await SeedCitizenshipsAsync(cancellationToken);
+
+		if (!await context.RoomAmenities.AnyAsync(cancellationToken))
+			await SeedRoomAmenitiesAsync(cancellationToken);
 	}
 
 	private async Task SeedUsersAsync(CancellationToken cancellationToken) {
-		var realtors = new List<Realtor> {
+		Realtor[] realtors = [
 			new()
 			{
 				FirstName = "Jane",
@@ -77,7 +80,7 @@ public class CleanDataSeeder(
 				UserName = "michael_johnson",
 				Email = "michael_johnson@gmail.com"
 			}
-		};
+		];
 
 		foreach (var r in realtors) {
 			var result = await userManager.CreateAsync(r, "12345678");
@@ -693,7 +696,7 @@ public class CleanDataSeeder(
 		await context.SaveChangesAsync(cancellationToken);
 	}
 
-	public async Task SeedGendersAsync(CancellationToken cancellationToken) {
+	private async Task SeedGendersAsync(CancellationToken cancellationToken) {
 		await context.Genders.AddRangeAsync([
 			new() {
 				Name = "Чоловік"
@@ -706,7 +709,7 @@ public class CleanDataSeeder(
 		await context.SaveChangesAsync(cancellationToken);
 	}
 
-	public async Task SeedCitizenshipsAsync(CancellationToken cancellationToken) {
+	private async Task SeedCitizenshipsAsync(CancellationToken cancellationToken) {
 		await context.Citizenships.AddRangeAsync([
 			new() {
 				Name = "Українець"
@@ -720,6 +723,43 @@ public class CleanDataSeeder(
 			new() {
 				Name = "Француз"
 			},
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedRoomAmenitiesAsync(CancellationToken cancellationToken) {
+		await context.RoomAmenities.AddRangeAsync([
+			new() {
+				Name = "Письмовий стіл та стілець"
+			},
+			new() {
+				Name = "Шафа або гардероб"
+			},
+			new() {
+				Name = "Бар"
+			},
+			new() {
+				Name = "Телевізор"
+			},
+			new() {
+				Name = "Телефон"
+			},
+			new() {
+				Name = "Кондиціонер"
+			},
+			new() {
+				Name = "Сейф"
+			},
+			new() {
+				Name = "Фен для волосся"
+			},
+			new() {
+				Name = "Зубна щітка та паста"
+			},
+			new() {
+				Name = "Рушники"
+			}
 		], cancellationToken);
 
 		await context.SaveChangesAsync(cancellationToken);

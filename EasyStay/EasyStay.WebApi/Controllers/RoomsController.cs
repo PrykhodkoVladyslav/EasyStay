@@ -41,7 +41,7 @@ public class RoomsController : BaseApiController {
 
 	[HttpPut]
 	[Authorize(Roles = "Realtor")]
-	public async Task<IActionResult> Update([FromForm] UpdateRoomCommand command) {
+	public async Task<IActionResult> Update([FromBody] UpdateRoomCommand command) {
 		await Mediator.Send(command);
 
 		return NoContent();

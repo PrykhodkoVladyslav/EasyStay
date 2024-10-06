@@ -28,6 +28,9 @@ public class GeneratedDataSeeder(
 
 		if (!await context.RoomRentalPeriods.AnyAsync(cancellationToken))
 			await SeedRoomRentalPeriodsAsync(cancellationToken);
+
+		if (!await context.RoomTypes.AnyAsync(cancellationToken))
+			await SeedRoomTypesAsync(cancellationToken);
 	}
 
 	private async Task SeedAddressesAsync(CancellationToken cancellationToken) {
@@ -192,6 +195,17 @@ public class GeneratedDataSeeder(
 
 		await context.SaveChangesAsync(cancellationToken);
 	}
+
+	private async Task SeedRoomTypesAsync(CancellationToken cancellationToken) {
+		var faker = new Faker<RoomType>()
+			.RuleFor(rt => rt.Name, faker => faker.Commerce.ProductName());
+
+		await context.RoomTypes.AddRangeAsync(faker.Generate(5), cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+
 
 	private static Task<byte[]> GetImageAsBytesAsync(HttpClient httpClient, string imageUrl)
 		=> httpClient.GetByteArrayAsync(imageUrl);

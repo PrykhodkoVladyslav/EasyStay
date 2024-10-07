@@ -1,3 +1,5 @@
+import {City} from "interfaces/city";
+
 export interface User {
     id: number;
     // Id
@@ -10,6 +12,36 @@ export interface User {
     photo: string;
     isLocked: boolean;
 }
+
+export interface RealtorInfo {
+    id: number;
+    // Id
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": number;
+    fullName: string;
+    email: string;
+    description: string;
+    phoneNumber: string;
+    dateOfBirth: Date;
+    address: string;
+    citizenship: string;
+    gender: Gender;
+    city: City;
+}
+
+export interface Gender {
+    id: number;
+    name: string;
+}
+
+// export interface GetCityzenship {
+//     id: number;
+//     name: string;
+// }
+//
+// export interface GenderInfo {
+//     id: number;
+//     name: string;
+// }
 
 export interface UserState {
     location: string;

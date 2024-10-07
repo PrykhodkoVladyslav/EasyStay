@@ -8,7 +8,7 @@ import {
     CreateAdmin,
     BlockUserRequest,
     UnlockUserRequest,
-    ISendResetPasswordEmailRequest, IResetPasswordRequest,
+    ISendResetPasswordEmailRequest, IResetPasswordRequest, RealtorInfo,
 } from "interfaces/user";
 
 export const userApi = createApi({
@@ -27,19 +27,10 @@ export const userApi = createApi({
             providesTags: ["User"],
         }),
 
-        // createAdmin: builder.mutation<LoginResponse, { email: string; password: string }>({
-        //     query: (data) => {
-        //         const formData = new FormData();
-        //         formData.append("email", data.email);
-        //         formData.append("password", data.password);
-        //         formData.append("role", "admin");
-        //         return {
-        //             url: "Registration",
-        //             method: "POST",
-        //             body: formData,
-        //         };
-        //     },
-        // }),
+        getRealtorsInformation: builder.query<RealtorInfo, number>({
+            query: (id) => "GetRealtorsInformation",
+            providesTags: ["User"],
+        }),
 
         signIn: builder.mutation<SignInResponse, SignInRequest>({
             query: (data) => {
@@ -137,6 +128,7 @@ export const userApi = createApi({
 export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
+    useGetRealtorsInformationQuery,
     useSignInMutation,
     useRegistrationMutation,
     useCreateAdminMutation,

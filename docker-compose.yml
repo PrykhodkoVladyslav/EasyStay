@@ -8,6 +8,7 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "5293:5293"
+      - "5000:5173"
 
   easystay-back-end:
     container_name: api-container

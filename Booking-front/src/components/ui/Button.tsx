@@ -23,7 +23,7 @@ const buttonVariants = cva("flex items-center justify-center rounded-md gap-1", 
         },
     },
     defaultVariants: {
-        variant: "primary",
+        // variant: "primary",
         size: "default",
     },
 });
@@ -43,6 +43,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         );
     },
 );
+
+
 
 
 // import { VariantProps, cva } from "class-variance-authority";

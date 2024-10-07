@@ -19,7 +19,6 @@ import RealtorDataPage from "pages/realtor/DataPage";
 import RealtorHotelsPage from "pages/realtor/HotelsPage";
 import RealtorReviewsPage from "pages/realtor/ReviewsPage";
 import RealtorArchivedPage from "pages/realtor/ArchivedPage";
-import RealtorDiscountPage from "pages/realtor/DiscountsPage";
 
 import AddLayout from "components/layouts/AddLayout";
 import CategoriesListPage from "pages/realtor/add/CategoriesListPage";

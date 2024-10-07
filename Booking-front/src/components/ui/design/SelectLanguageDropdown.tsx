@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { useState } from 'react';
+// import { FaChevronDown } from 'react-icons/fa';
+// import {getPublicResourceUrl} from "utils/publicAccessor.ts";
 
 interface DropdownProps {
     options: { full: string; abbr: string }[];
@@ -9,12 +9,12 @@ interface DropdownProps {
 
 const SelectLanguageDropdown: React.FC<DropdownProps> = ({ options, defaultOption }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(defaultOption || options[0].full);
+    const [selectedOption/*, setSelectedOption */] = useState(defaultOption || options[0].full);
 
-    const handleOptionClick = (option: { full: string; abbr: string }) => {
-        setSelectedOption(option.full);
-        setIsOpen(false);
-    };
+    // const handleOptionClick = (option: { full: string; abbr: string }) => {
+    //     setSelectedOption(option.full);
+    //     setIsOpen(false);
+    // };
 
     const selectedAbbr = options.find(option => option.full === selectedOption)?.abbr || '';
 

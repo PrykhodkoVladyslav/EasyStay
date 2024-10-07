@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {getPublicResourceUrl} from "utils/publicAccessor.ts";
 
 const HotelPage = () => {
@@ -41,8 +41,8 @@ const HotelPage = () => {
                             </div>
                             <div className="data">
                                 <p className="title">Категорія готелю</p>
-                                <select>
-                                    <option value="" disabled selected hidden>Вибрати</option>
+                                <select defaultValue="">
+                                    <option value="" disabled hidden>Вибрати</option>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -53,7 +53,7 @@ const HotelPage = () => {
                                 <div className="form-textarea">
                             <textarea
                                 placeholder="Текст"
-                                maxLength="4000"
+                                maxLength={4000}
                             ></textarea>
                                     <p className="counter">0/4000</p>
                                 </div>
@@ -70,8 +70,8 @@ const HotelPage = () => {
                         <div className="container-2">
                             <div className="data">
                                 <p className="title">Країна</p>
-                                <select>
-                                    <option value="" disabled selected hidden>Вибрати</option>
+                                <select defaultValue="">
+                                    <option value="" disabled hidden>Вибрати</option>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -79,8 +79,8 @@ const HotelPage = () => {
                             </div>
                             <div className="data">
                                 <p className="title">Місто</p>
-                                <select>
-                                    <option value="" disabled selected hidden>Вибрати</option>
+                                <select defaultValue="">
+                                    <option value="" disabled hidden>Вибрати</option>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -138,7 +138,7 @@ const HotelPage = () => {
                         <div className="container-4">
                             <div className="check-breakfast">
                                 <label htmlFor="yes">
-                                    <input type="radio" id="yes" value="yes" name="breakfast" checked/>
+                                    <input type="radio" id="yes" value="yes" name="breakfast"/>
                                     Так
                                 </label>
                                 <label htmlFor="no">

@@ -32,7 +32,7 @@ export const HotelCreateSchema = z.object({
         },
         { message: "Площа повинна бути більше 0" },
     ),
-    numberOfRooms: z.string().refine((val) => val > 0, "Кількість кімнат повинна бути більше 0"),
+    numberOfRooms: z.number().refine((val) => val > 0, "Кількість кімнат повинна бути більше 0"),
     isArchived: z.preprocess((val) => (val === "true" ? true : val === "false" ? false : val), z.boolean()),
     categoryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
         message: "Тип є обов'язковим",
@@ -65,7 +65,7 @@ export const HotelEditSchema = z.object({
         },
         { message: "Площа повинна бути більше 0" },
     ),
-    numberOfRooms: z.string().refine((val) => val > 0, "Кількість кімнат повинна бути більше 0"),
+    numberOfRooms: z.number().refine((val) => val > 0, "Кількість кімнат повинна бути більше 0"),
     isArchived: z.preprocess((val) => (val === "true" ? true : val === "false" ? false : val), z.boolean()),
     categoryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
         message: "Тип є обов'язковим",

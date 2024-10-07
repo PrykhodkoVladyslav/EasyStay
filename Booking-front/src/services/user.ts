@@ -60,7 +60,7 @@ export const userApi = createApi({
                 const formData = new FormData();
                 formData.append("FirstName", data.firstName);
                 formData.append("LastName", data.lastName);
-                if (data.image && data.image.length > 0) {
+                if (Array.isArray(data.image) && data.image.length > 0) {
                     formData.append("Image", data.image[0]);
                 }
                 formData.append("Email", data.email);
@@ -76,13 +76,13 @@ export const userApi = createApi({
             },
         }),
 
-        createAdmin: builder.mutation<CreateAdmin>({
-            query: (data) => {
+        createAdmin: builder.mutation<void, CreateAdmin>({
+            query: (data: CreateAdmin) => {
                 const formData = new FormData();
                 formData.append("FirstName", data.firstName);
                 formData.append("LastName", data.lastName);
-                if (data.image && data.image.length > 0) {
-                    formData.append("Image", data.image[0]);
+                if (data.image) {
+                    formData.append("Image", data.image);
                 }
                 formData.append("Email", data.email);
                 formData.append("UserName", data.username);

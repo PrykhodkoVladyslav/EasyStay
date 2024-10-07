@@ -3,9 +3,13 @@ import { CSS } from "@dnd-kit/utilities";
 import { IconTrash } from "@tabler/icons-react";
 
 type ImageSortableProps = {
-    remove: (name: string) => void;
-    file: File | string;
+    remove: (file: File) => void;
+    file: File;
     fileUrl: string;
+
+    // remove: (name: string) => void;
+    // file: File | string;
+    // fileUrl: string;
 };
 
 const ImageSortableContainer = (props: ImageSortableProps) => {
@@ -28,14 +32,16 @@ const ImageSortableContainer = (props: ImageSortableProps) => {
             <div className="relative">
                 <button
                     type="button"
-                    onClick={() => remove(typeof file === "string" ? file : file.name)}
+                    onClick={() => remove(file)}
+                    // onClick={() => remove(typeof file === "string" ? file : file.name)}
                     className="absolute -right-2 -top-2 rounded-full text-red-600 bg-white/80 cursor-pointer"
                 >
                     <IconTrash />
                 </button>
                 <img
                     className="h-28 w-28 object-contain"
-                    alt={typeof file === "string" ? file : file.name}
+                    alt={file.name}
+                    // alt={typeof file === "string" ? file : file.name}
                     src={fileUrl}
                 />
             </div>

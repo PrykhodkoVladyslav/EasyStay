@@ -15,7 +15,7 @@ const HotelsListPage: React.FC = () => {
     const role = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
     const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
 
-    const { data: hotelsData, isLoading, error, refetch } = role === 'Admin'
+    const { data: hotelsData, isLoading, error } = role === 'Admin'
         ? useGetAllHotelsQuery()
         : useGetRealtorHotelsPageQuery({ RealtorId: realtorId });
 
@@ -43,7 +43,7 @@ const HotelsListPage: React.FC = () => {
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
                         {role !== 'Admin' && (
-                            <th className="px-6 py-3 text-center" colSpan="3">Дії</th>
+                            <th className="px-6 py-3 text-center" colSpan={3}>Дії</th>
                         )}
                     </tr>
                     </thead>

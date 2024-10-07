@@ -42,7 +42,7 @@ const CitiesPage: React.FC = () => {
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Країна</th>
-                        <th className="px-6 py-3" colSpan="2"></th>
+                        <th className="px-6 py-3" colSpan={2}></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,24 +61,24 @@ const CitiesPage: React.FC = () => {
                             </td>
                             <td className="px-6 py-4">{city.country.name}</td>
                             <td className="px-6 py-3 text-center">
-                                <Button
+                                <button
                                     onClick={() => navigate(`/admin/cities/edit/${city.id}`)}
-                                    variant="icon"
-                                    size="iconmd"
+                                    // variant="icon"
+                                    // size="iconmd"
                                     title="Редагувати"
                                 >
                                     <IconEdit className="text-blue-500" />
-                                </Button>
+                                </button>
                             </td>
                             <td className="px-6 py-3 text-center">
-                                <Button
+                                <button
                                     onClick={() => handleDelete(city.id)}
-                                    variant="icon"
-                                    size="iconmd"
+                                    // variant="icon"
+                                    // size="iconmd"
                                     title="Видалити"
                                 >
                                     <IconTrash className="text-red-500" />
-                                </Button>
+                                </button>
                             </td>
                         </tr>
                     ))}

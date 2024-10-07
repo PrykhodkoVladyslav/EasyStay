@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 
 const LanguageSwitcher = () => {
-    const [selectedLanguage, setSelectedLanguage] = useState('En');
+    const [selectedLanguage, setSelectedLanguage] = useState<'Укр' | 'En'>('Укр');
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
-    const selectLanguage = (lang) => {
+    const selectLanguage = (lang: 'Укр' | 'En') => {
         setSelectedLanguage(lang);
         setIsOpen(false);
     };
@@ -22,8 +22,8 @@ const LanguageSwitcher = () => {
             </div>
             {isOpen && (
                 <div className="dropdown">
+                    <div onClick={() => selectLanguage('Укр')}>Ua</div>
                     <div onClick={() => selectLanguage('En')}>En</div>
-                    <div onClick={() => selectLanguage('Ua')}>Ua</div>
                 </div>
             )}
         </div>

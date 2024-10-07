@@ -56,17 +56,32 @@ const CityCreatePage: React.FC = () => {
         }
     };
 
-    const removeImage = (file: string) => {
-        setFiles([]);
+    const removeImage = (file: File) => {
+        setFiles(files.filter((x: File) => x.name !== file.name));
     };
+
+    // const removeImage = (file: string) => {
+    //     setFiles([]);
+    // };
 
     const onSubmit = handleSubmit(async (data) => {
         try {
+            if (!countriesData) {
+                showToast(`Дані про країни не завантажено!`, "error");
+                return;
+            }
+
+            const selectedCountry = countriesData?.find(country => country.id === Number(data.countryId));
+            if (!selectedCountry) {
+                showToast(`Країну не знайдено!`, "error");
+                return;
+            }
+
             await addCity({
                 name: data.name,
-                latitude: data.latitude,
-                longitude: data.longitude,
-                countryId: data.countryId,
+                latitude: Number(data.latitude),
+                longitude: Number(data.longitude),
+                country: selectedCountry,
                 image: files[0],
             }).unwrap();
 
@@ -76,6 +91,23 @@ const CityCreatePage: React.FC = () => {
             showToast(`Помилка при створенні міста!`, "error");
         }
     });
+
+    // const onSubmit = handleSubmit(async (data) => {
+    //     try {
+    //         await addCity({
+    //             name: data.name,
+    //             latitude: Number(data.latitude),
+    //             longitude: Number(data.longitude),
+    //             country: data.countryId,
+    //             image: files[0],
+    //         }).unwrap();
+    //
+    //         showToast(`Місто успішно створено!`, "success");
+    //         onReset();
+    //     } catch (err) {
+    //         showToast(`Помилка при створенні міста!`, "error");
+    //     }
+    // });
 
     const onReset = () => {
         reset();
@@ -155,7 +187,10 @@ const CityCreatePage: React.FC = () => {
 
                     <div>
                         <Label>Фото:</Label>
-                        <ImageUpload setFiles={setFiles} remove={removeImage} files={files}>
+                        <ImageUpload
+                            setFiles={setFiles}
+                            remove={removeImage}
+                            files={files}>
                             <Input
                                 {...register("image")}
                                 onChange={handleFileChange}
@@ -172,25 +207,25 @@ const CityCreatePage: React.FC = () => {
                     </div>
 
                     <div className="flex w-full items-center justify-center gap-5">
-                        <Button
+                        <button
                             disabled={isLoading}
-                            size="lg"
-                            type="submit"
+                            // size="lg"
+                            // type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <IconCirclePlus/>
                             Створити
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             disabled={isLoading}
-                            size="lg"
-                            type="button"
+                            // size="lg"
+                            // type="button"
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
                             <IconCircleX/>
                             Скинути
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </div>

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { getToken } from "store/slice/userSlice";
 import { IconEdit, IconTrash, IconArchive } from "@tabler/icons-react";
-import { Button } from "components/ui/Button.tsx";
+// import { Button } from "components/ui/Button.tsx";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,6 +12,7 @@ import {
     useSetArchiveStatusHotelMutation,
 } from "services/hotel.ts";
 import showToast from "utils/toastShow.ts";
+import {Hotel, Photo} from "interfaces/hotel";
 
 const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));
@@ -60,12 +61,12 @@ const HotelsPage: React.FC = () => {
                 Список Готелів
             </h1>
             <div className="flex justify-end mb-4">
-                <Button onClick={() => navigate("/realtor/hotels/create")} className="border">
+                <button onClick={() => navigate("/realtor/hotels/create")} className="border">
                     Додати новий готель
-                </Button>
-                <Button onClick={() => navigate("/realtor/hotels/archive")} className="border">
+                </button>
+                <button onClick={() => navigate("/realtor/hotels/archive")} className="border">
                     Архівовані готелі
-                </Button>
+                </button>
             </div>
             <div className="overflow-x-auto sm:rounded-lg">
                 <table className="text-sm font-bold min-w-full bg-white border text-left">
@@ -76,63 +77,63 @@ const HotelsPage: React.FC = () => {
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
                         {role !== 'Admin' && (
-                            <th className="px-6 py-3 text-center" colSpan="3">Дії</th>
+                            <th className="px-6 py-3 text-center" colSpan={3}>Дії</th>
                         )}
                     </tr>
                     </thead>
                     <tbody>
-                    {hotelsData?.data?.filter(hotel => !hotel.isArchived).map((hotel) => (
-                        <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
-                            {/*<td className="px-6 py-4">{hotel.id}</td>*/}
-                            <td className="px-6 py-4">{hotel.name}</td>
-                            <td className="px-6 py-4">
-                                {hotel.photos && hotel.photos.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 max-w-full">
-                                        {hotel.photos.map((photo, index) => (
-                                            <div key={index} className="w-20 h-20 flex-shrink-0">
-                                                <img
-                                                    src={`${API_URL}/images/800_${photo.name}`}
-                                                    alt={`${hotel.name} фото ${index + 1}`}
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </td>
-                            <td className="px-6 py-4">{hotel.category.name}</td>
-                            <td className="px-6 py-3 text-center">
-                                <Button
-                                    onClick={() => navigate(`/realtor/hotels/edit/${hotel.id}`)}
-                                    variant="icon"
-                                    size="iconmd"
-                                    title="Редагувати"
-                                >
-                                    <IconEdit className="text-blue-500"/>
-                                </Button>
-                            </td>
-                            <td className="px-6 py-3 text-center">
-                                <Button
-                                    onClick={() => handleDelete(hotel.id)}
-                                    variant="icon"
-                                    size="iconmd"
-                                    title="Видалити"
-                                >
-                                    <IconTrash className="text-red-500"/>
-                                </Button>
-                            </td>
-                            <td className="px-6 py-3 text-center">
-                                <Button
-                                    onClick={() => handleSetArchiveStatus(hotel.id)}
-                                    variant="icon"
-                                    size="iconmd"
-                                    title="Архівувати"
-                                >
-                                    <IconArchive className="text-yellow-500"/>
-                                </Button>
-                            </td>
-                        </tr>
-                    ))}
+                        {hotelsData?.filter(hotel => !hotel.isArchived).map((hotel: Hotel) => (
+                            <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
+                                {/*<td className="px-6 py-4">{hotel.id}</td>*/}
+                                <td className="px-6 py-4">{hotel.name}</td>
+                                <td className="px-6 py-4">
+                                    {hotel.photos && hotel.photos.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 max-w-full">
+                                            {hotel.photos.map((photo: Photo, index: number) => (
+                                                <div key={index} className="w-20 h-20 flex-shrink-0">
+                                                    <img
+                                                        src={`${API_URL}/images/800_${photo.name}`}
+                                                        alt={`${hotel.name} фото ${index + 1}`}
+                                                        className="h-full w-full object-cover"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </td>
+                                <td className="px-6 py-4">{hotel.category.name}</td>
+                                <td className="px-6 py-3 text-center">
+                                    <button
+                                        onClick={() => navigate(`/realtor/hotels/edit/${hotel.id}`)}
+                                        // variant="icon"
+                                        // size="iconmd"
+                                        title="Редагувати"
+                                    >
+                                        <IconEdit className="text-blue-500"/>
+                                    </button>
+                                </td>
+                                <td className="px-6 py-3 text-center">
+                                    <button
+                                        onClick={() => handleDelete(hotel.id)}
+                                        // variant="icon"
+                                        // size="iconmd"
+                                        title="Видалити"
+                                    >
+                                        <IconTrash className="text-red-500"/>
+                                    </button>
+                                </td>
+                                <td className="px-6 py-3 text-center">
+                                    <button
+                                        onClick={() => handleSetArchiveStatus(hotel.id)}
+                                        // variant="icon"
+                                        // size="iconmd"
+                                        title="Архівувати"
+                                    >
+                                        <IconArchive className="text-yellow-500"/>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

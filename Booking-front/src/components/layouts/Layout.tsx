@@ -1,5 +1,5 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Outlet /*, useLocation, useNavigate*/ } from "react-router-dom";
+// import { useEffect, useState } from "react";
 
 const Layout = () => {
     // ToDo: Видалити дану логіку, коли буде верстатися головна сторінка.

@@ -13,9 +13,12 @@ import React, { useEffect, useState } from "react";
 
 type ImageUploadMultiProps = {
     children: React.ReactNode;
-    remove: (name: string) => void;
-    files: (File | string)[];
-    setFiles: React.Dispatch<React.SetStateAction<(File | string)[]>>;
+    // remove: (name: string) => void;
+    remove: (file: File) => void;
+    // files: (string | File)[];
+    files: File[];
+    setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+    // setFiles: React.Dispatch<React.SetStateAction<(File | string)[]>>;
 };
 
 const ImageUpload = (props: ImageUploadMultiProps) => {
@@ -36,10 +39,10 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
 
         const { active, over } = e;
         const activeIndex = files.findIndex(
-            (file) => (typeof file === "string" ? file : file.name) === active.id
+            (file) => (file instanceof File ? file.name : file) === active.id
         );
         const overIndex = files.findIndex(
-            (file) => (typeof file === "string" ? file : file.name) === over.id
+            (file) => (file instanceof File ? file.name : file) === over.id
         );
 
         if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) return;
@@ -48,8 +51,30 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
         const [draggedFile] = newFiles.splice(activeIndex, 1);
         newFiles.splice(overIndex, 0, draggedFile);
 
-        setFiles(newFiles);
+        const filteredFiles = newFiles.filter((file): file is File => file instanceof File);
+
+        setFiles(filteredFiles);
     };
+
+    // const reOrderFilesArray = (e: DragEndEvent) => {
+    //     if (!e.over) return;
+    //
+    //     const { active, over } = e;
+    //     const activeIndex = files.findIndex(
+    //         (file) => (typeof file === "string" ? file : file.name) === active.id
+    //     );
+    //     const overIndex = files.findIndex(
+    //         (file) => (typeof file === "string" ? file : file.name) === over.id
+    //     );
+    //
+    //     if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) return;
+    //
+    //     const newFiles = [...files];
+    //     const [draggedFile] = newFiles.splice(activeIndex, 1);
+    //     newFiles.splice(overIndex, 0, draggedFile);
+    //
+    //     setFiles(newFiles);
+    // };
 
     useEffect(() => {
         const newFileUrls: { [key: string]: string } = {};
@@ -83,19 +108,19 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
             </div>
 
             <div className="flex flex-wrap gap-4">
+
                 <DndContext sensors={sensors} onDragEnd={reOrderFilesArray}>
                     <SortableContext
-                        items={files.map((file) => (typeof file === "string" ? file : file.name))}
+                        items={files.map((file) => file.name)}
                         strategy={horizontalListSortingStrategy}
                     >
-                        {files.map((file, index) => {
-                            const key = typeof file === "string" ? `string-${file}` : `file-${file.name}-${index}`;
-                            const fileUrl = fileUrls[typeof file === "string" ? file : file.name];
+                        {files.map((file) => {
+                            const fileUrl = fileUrls[file.name];
 
                             return (
                                 <ImageSortableContainer
                                     remove={remove}
-                                    key={key}
+                                    key={file.name}
                                     file={file}
                                     fileUrl={fileUrl}
                                 />
@@ -103,6 +128,27 @@ const ImageUpload = (props: ImageUploadMultiProps) => {
                         })}
                     </SortableContext>
                 </DndContext>
+
+                {/*<DndContext sensors={sensors} onDragEnd={reOrderFilesArray}>*/}
+                {/*    <SortableContext*/}
+                {/*        items={files.map((file) => (typeof file === "string" ? file : file.name))}*/}
+                {/*        strategy={horizontalListSortingStrategy}*/}
+                {/*    >*/}
+                {/*        {files.map((file, index) => {*/}
+                {/*            const key = typeof file === "string" ? `string-${file}` : `file-${file.name}-${index}`;*/}
+                {/*            const fileUrl = fileUrls[typeof file === "string" ? file : file.name];*/}
+
+                {/*            return (*/}
+                {/*                <ImageSortableContainer*/}
+                {/*                    remove={remove}*/}
+                {/*                    key={key}*/}
+                {/*                    file={file}*/}
+                {/*                    fileUrl={fileUrl}*/}
+                {/*                />*/}
+                {/*            );*/}
+                {/*        })}*/}
+                {/*    </SortableContext>*/}
+                {/*</DndContext>*/}
             </div>
         </div>
     );

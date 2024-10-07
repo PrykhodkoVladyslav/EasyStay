@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IconLock, IconLockOpen } from "@tabler/icons-react";
-import { Button } from "components/ui/Button.tsx";
+// import { Button } from "components/ui/Button.tsx";
 import { useGetAllCustomersQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { RootState } from "store/index.ts";
 import { getToken } from "store/slice/userSlice.ts";
 import ModalComponent from "components/ModalComponent";
 import showToast from "utils/toastShow.ts";
+import {User} from "interfaces/user";
 
 const CustomersListPage: React.FC = () => {
     const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();
@@ -52,7 +53,8 @@ const CustomersListPage: React.FC = () => {
     const handleUnlockUser = async (id: number) => {
         if (confirm("Ви впевнені, що хочете розблокувати цього користувача?")) {
             try {
-                await unlockUser(id).unwrap();
+                await unlockUser({ id }).unwrap();
+                // await unlockUser(id).unwrap();
                 showToast("Користувача розаблоковано", "success");
                 refetch();
             } catch (err) {
@@ -62,7 +64,7 @@ const CustomersListPage: React.FC = () => {
         }
     };
 
-    const customers = customersData?.data || [];
+    const customers = customersData || [];
 
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
@@ -81,7 +83,7 @@ const CustomersListPage: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {customers.map((user) => (
+                    {customers.map((user: User) => (
                         <tr key={user.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{user.firstName}</td>
                             <td className="px-6 py-4">{user.lastName}</td>
@@ -97,25 +99,25 @@ const CustomersListPage: React.FC = () => {
                             </td>
                             <td className="px-6 py-3">
                                 {user.isLocked ? (
-                                    <Button
+                                    <button
                                         onClick={() => handleUnlockUser(user.id)}
-                                        variant="icon"
-                                        size="iconmd"
+                                        // variant="icon"
+                                        // size="iconmd"
                                         title="Розблокувати"
                                         disabled={isUnblockLoading}
                                     >
                                         <IconLock className="text-red-500" />
-                                    </Button>
+                                    </button>
                                 ) : (
-                                    <Button
+                                    <button
                                         onClick={() => handleBlockUserClick(user.id)}
-                                        variant="icon"
-                                        size="iconmd"
+                                        // variant="icon"
+                                        // size="iconmd"
                                         title="Заблокувати"
                                         disabled={isBlockLoading}
                                     >
                                         <IconLockOpen className="text-green-500" />
-                                    </Button>
+                                    </button>
                                 )}
                             </td>
                         </tr>

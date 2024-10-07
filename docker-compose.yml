@@ -1,8 +1,17 @@
 services:
+  easystay-front-end:
+    container_name: client-container
+    image: easystay-client
+    restart: on-failure
+    build:
+      context: ./Booking-front
+      dockerfile: ./Dockerfile
+    ports:
+      - "5293:5293"
 
-  easystay:
+  easystay-back-end:
     container_name: api-container
-    image: easystay-app
+    image: easystay-api
     restart: on-failure
     build:
       context: ./EasyStay

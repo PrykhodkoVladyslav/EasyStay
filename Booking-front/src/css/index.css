@@ -31,7 +31,9 @@
     background-color: #e5e5e5;
     text-align: center;
     margin-top: 50px;
+    font-family: var(--font-primary);
     margin-bottom: 25px;
+    background-image: url('./public/images/Homepage/Union.png');
 }
 
 
@@ -42,9 +44,11 @@
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 15px;
     width: 230px;
-
+    font-weight: 700;
+    font-family: var(--font-primary);
+    color:#3F523C;
 }
 
 .cta-button:hover {
@@ -55,7 +59,7 @@
 .navbar {
 
     position: relative;
-    width: 100%;
+    max-width: 100%;
     height: 73.82px;
     top: 25px;
     display: flex;
@@ -64,7 +68,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 380px;
+    gap: 340px;
 
 
 }
@@ -72,6 +76,8 @@
 .navbar-logo {
     display: flex;
     align-items: center;
+    width: 183px;
+    height: 74px;
 }
 
 .navbar-logo img {
@@ -83,26 +89,28 @@
     margin: 20px;
     text-decoration: none;
     color: black;
-    font-weight: bold;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    font-size: 20px;
+}
+.navbar-menu a:hover {
+    background-color: #3F523C;
+    color:white;
+    border-radius: 20px;
+    transition: 0.5ms;
 }
 
 .navbar-actions {
     display: flex;
     align-items: center;
+    gap: 46px;
 }
 
-.language-switch {
-    background-color: #e5e5e5;
-    border: none;
-    padding: 5px 10px;
-    margin-right: 15px;
-    cursor: pointer;
-}
 
 .icon-bell,
 .icon-user {
-    font-size: 18px;
-    margin-left: 40px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }
 .hero-content2{
@@ -152,7 +160,9 @@
 }
 
 .arrow {
-    margin-left: 25px;
+    position: relative;
+    bottom: 15px;
+    left: 47px;
     color: black;
 }
 
@@ -183,8 +193,8 @@
     background-color: #4c6048;
     color: white;
     height: 359px;
-    width: 100%;
-
+    max-width: 100%;
+    font-family: var(--font-primary);
 
 }
 
@@ -267,13 +277,16 @@
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    margin-top:50px;
-    margin-bottom:50px;
+    margin-top:90px;
+    margin-bottom:90px;
     width: 1720px;
     height: 218px;
     background-color:#e5e5e5;
     border-radius: 20px;
-
+    font-family: var(--font-primary);
+    background-image: url('./public/images/Homepage/night.jpg');
+    background-size: cover;
+    background-position: center;
 }
 .discount-content{
     display: flex;
@@ -294,9 +307,13 @@
     border: none;
     font-size: 1em;
     cursor: pointer;
-    border-radius: 30px;
-    width: 230px;
+    border-radius: 15px;
+    width: 257px;
     height: 50px;
+    font-weight: 700;
+    font-size: 20px;
+    color: #3F523C;
+
 }
 .discount-content button:hover{
     background-color: #ddd;
@@ -316,10 +333,14 @@
     height: 520px;
 }
 .services-container h1{
-    font-size: 4em;
+    position: relative;
+    font-weight: 600;
+    font-size: 64px;
+    bottom: 10px;
 }
 
 .service-list {
+    padding: 20px 0px 0px 0px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -329,34 +350,45 @@
 }
 
 .service-item {
+    display: grid;
     background-color: #f5f5f5; /* Світло-сірий фон для кожного блоку */
     color: black; /* Чорний текст */
     padding: 20px;
     border-radius: 20px;
-    width: 270px; /* Фіксована ширина кожного блоку */
-    height: 300px;
+    width: 284px; /* Фіксована ширина кожного блоку */
+    height: 313px;
     text-align: center;
+    justify-content: center;
+    justify-items: center;
 }
 
 .service-icon {
-    font-size: 40px; /* Розмір іконки */
+    width: 100px;
+    height: 100px;
     margin-bottom: 10px;
 }
 
-h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+.service-item h3 {
+    margin-bottom: 5px;
+    font-weight: 800;
+    font-size: 24px;
+
 }
 
-p {
-    font-size: 14px;
+.service-item p {
+    font-size: 16px;
     margin-bottom: 20px;
+    width: 190px;
+    font-weight: 400;
 }
 
 .details-link {
+    padding: 15px 0px 0px 0px;
     color: #3F523C;
     text-decoration: none;
     font-weight: bold;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .details-link:hover {
@@ -378,7 +410,7 @@ p {
 /*TravelCarousel!!!!!!!!!*/
 
 .Carousel-conteiner{
-
+    font-family: var(--font-primary);
     width: 1720px;
     height: 784px;
     display: flex;
@@ -390,7 +422,7 @@ p {
     background-color: #333333;
     border-radius: 20px;
     margin: auto;
-    font-family: Arial, sans-serif;
+
 }
 .Carousel-conteiner2{
     width: 1720px;

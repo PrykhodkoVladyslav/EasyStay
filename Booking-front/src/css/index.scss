@@ -1406,22 +1406,68 @@
 
 //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss
 .all-conteiner {
+  font-family: var(--font-primary);
  width: 1720px;
-  height: 800px;
- margin: auto;
+  height: 700px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 40px;
+  margin-bottom: 100px;
   .first-discount{
     color:black;
     font-size: 6em;
 
   }
+  .sort-btn{
+    position: relative;
+    width: 414px;
+    height: 56px;
+    border-radius: 22px;
+    background: rgb(247, 247, 253);
+    display: flex;
+    flex-direction: row;
+    padding: 16px 19px 16px 19px;
+    align-items: center;
+    font-size: 1.2em;
+    font-family: "Nunito", system-ui;
+    bottom:20px;
+  }
+ .sidebar {
+   position: absolute;
+   height: 32px;
+   width: auto;
+   .menu {
+     display: flex;
+     list-style: none;
+     font-family: "Nunito", system-ui;
+     font-weight: 600;
+     transform: rotate(-90deg) translateX(-100%);
+     transform-origin: top left;
+
+     font-size: 1.1em;
+     &__item:not(:last-of-type) {
+       margin-right: 34px;
+
+     }
+     &__item:hover {
+       background-color: #3F523C;
+       color:white;
+     }
+     &__link {
+       text-decoration: none;
+       color: black;
+     }
+   }
+
+ }
   .hotels-reviews1 {
     position: relative;
-    width: 1720px;
+    width: 1590px;
     height: 505px;
     display: flex;
     flex-direction: column;
     gap: 58px;
-
+    left:135px;
 
     // Список готелів
     .hotels-container1 {
@@ -1620,8 +1666,157 @@
   }
 }
 
+.ticketComp {
+  position: relative;
+  width: 1720px;
+  height: 230px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-family: var(--font-primary);
+  .sidebar {
+    position: absolute;
+    height: 27px;
+    width: auto;
+
+    .menu {
+      display: flex;
+      list-style: none;
+      font-family: "Nunito", system-ui;
+      font-weight: 600;
+      font-size: 20px;
+      transform-origin: top left;
+
+      font-size: 1.1em;
+
+      &__item:not(:last-of-type) {
+        margin-right: 34px;
+
+      }
+      &__item{
+        display: flex;
+        justify-content: center;
+justify-items: center;
+      }
+      &__item:hover {
+        background-color: #3F523C;
+        color: white;
+        width: auto;
+        border-radius: 18px;
+        font-weight: 500;
+        font-size: 20px;
+      }
 
 
+    }
+
+  }
+
+  .all-conteiner {
+    position: relative;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    font-family: "Nunito", system-ui;
+    width: 1709px;
+    height: 190px;
+    top: 40px;
+    right:11px;
+    .trip-type {
+
+      position: relative;
+      display: flex;
+      gap: 112px;
+      font-weight: 800;
+      width: 489px;
+      height: 27px;
+      top:22px;
+      left:22px;
+      
+    }
+    .search-form {
+      position: relative;
+      display: flex;
+      width: 1665px;
+      height: 103px;
+      top:42px;
+      margin-right: auto;
+      margin-left: auto;
+
+      .search-input{
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        width: 538px;
+        height: 103px;
+        font-size: 20px;
+        background-color: white;
+        margin-right: 20px;
+        label {
+          padding: 8px 8px;
+          font-weight: 800;
+          margin-bottom: 5px;
+        }
+
+        input {
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 14px;
+          border: none;
+          outline: none;
+          font-weight: 1000;
+        }
+      }
+      .guests-input,
+      .date-input{
+        display: flex;
+        flex-direction: column;
+        width: 270px;
+        height: 103px;
+        background-color: white;
+        border-radius: 20px;
+        font-size: 20px;
+        margin-right: 10px;
+
+
+        label {
+          padding: 8px 8px;
+          font-weight: 800;
+          margin-bottom: 5px;
+        }
+
+        input {
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 14px;
+          border: none;
+          outline: none;
+          font-weight: 1000;
+        }
+
+      }
+
+      button {
+
+        display: flex;
+        gap:10px;
+        padding: 12px 70px;
+        background-color: #3F523C;
+        color: white;
+        font-size: 22px;
+        border-radius: 20px;
+        width: 270px;
+        height: 56px;
+        margin: auto;
+        &:hover {
+          background-color: #6b8e23;
+        }
+      }
+    }
+  }
+}
 
 
 

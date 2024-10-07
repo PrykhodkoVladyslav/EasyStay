@@ -8,6 +8,7 @@ export interface User {
     firstName: string;
     lastName: string;
     photo: string;
+    isLocked: boolean;
 }
 
 export interface UserState {

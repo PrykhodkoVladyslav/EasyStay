@@ -1,13 +1,11 @@
-import {IconLock, IconLockOpen, IconTrash} from "@tabler/icons-react";
-import { Button } from "components/ui/Button.tsx";
+import { IconLock, IconLockOpen } from "@tabler/icons-react";
+// import { Button } from "components/ui/Button.tsx";
 import { useGetAllRealtorsQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
-import { useSelector } from "react-redux";
-import { RootState } from "store/index.ts";
-import { getToken } from "store/slice/userSlice.ts";
 import ModalComponent from "components/ModalComponent";
 import { useState } from "react";
 import showToast from "utils/toastShow.ts";
+import {User} from "interfaces/user";
 
 const RealtorsListPage: React.FC = () => {
     const { data: realtorsData, isLoading, error, refetch } = useGetAllRealtorsQuery();
@@ -15,15 +13,6 @@ const RealtorsListPage: React.FC = () => {
     const [unlockUser, { isLoading: isUnblockLoading }] = useUnlockUserMutation();
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-    const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
-    const userRole = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
-    const isAdmin = userRole === "Admin";
-
-    if (!isAdmin) {
-        return <p>Ви не маєте доступу до цієї сторінки. Тільки адміністратори можуть переглядати список
-            користувачів.</p>;
-    }
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка завантаження даних</p>;
@@ -52,7 +41,8 @@ const RealtorsListPage: React.FC = () => {
     const handleUnlockUser = async (id: number) => {
         if (confirm("Ви впевнені, що хочете розблокувати цього користувача?")) {
             try {
-                await unlockUser(id).unwrap();
+                await unlockUser({ id }).unwrap();
+                // await unlockUser(id).unwrap();
                 showToast("Користувача розаблоковано", "success");
                 refetch();
             } catch (err) {
@@ -62,7 +52,7 @@ const RealtorsListPage: React.FC = () => {
         }
     };
 
-    const realtors = realtorsData?.data || [];
+    const realtors = realtorsData || [];
 
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
@@ -81,7 +71,7 @@ const RealtorsListPage: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {realtors?.map((user) => (
+                    {realtors?.map((user: User) => (
                         <tr key={user.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{user.firstName}</td>
                             <td className="px-6 py-4">{user.lastName}</td>
@@ -97,25 +87,25 @@ const RealtorsListPage: React.FC = () => {
                             </td>
                             <td className="px-6 py-3">
                                 {user.isLocked ? (
-                                    <Button
+                                    <button
                                         onClick={() => handleUnlockUser(user.id)}
-                                        variant="icon"
-                                        size="iconmd"
+                                        // variant="icon"
+                                        // size="iconmd"
                                         title="Розблокувати"
                                         disabled={isUnblockLoading}
                                     >
                                         <IconLock className="text-red-500"/>
-                                    </Button>
+                                    </button>
                                 ) : (
-                                    <Button
+                                    <button
                                         onClick={() => handleBlockUserClick(user.id)}
-                                        variant="icon"
-                                        size="iconmd"
+                                        // variant="icon"
+                                        // size="iconmd"
                                         title="Заблокувати"
                                         disabled={isBlockLoading}
                                     >
                                         <IconLockOpen className="text-green-500"/>
-                                    </Button>
+                                    </button>
                                 )}
                             </td>
                         </tr>

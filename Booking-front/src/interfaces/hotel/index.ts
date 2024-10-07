@@ -1,7 +1,6 @@
 import { City } from "interfaces/city";
 import { HotelCategories } from "interfaces/hotelCategories";
 // import { PaginationOptions } from "interfaces/hotel.ts";
-import { Photo } from "interfaces/photo";
 
 export interface Address {
     id: number;
@@ -24,6 +23,10 @@ export interface Hotel {
     realtor: Realtor;
     photos: Photo[];
     isArchived: boolean;
+}
+
+export interface Photo {
+    name: string;
 }
 
 export interface Realtor {

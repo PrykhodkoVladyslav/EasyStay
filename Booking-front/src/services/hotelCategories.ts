@@ -27,5 +27,5 @@ export const hotelCategoriesApi = createApi({
 
 export const {
     useGetAllHotelCategoriesQuery,
-    useGetPageHotelCategoriesQuery
+    // useGetPageHotelCategoriesQuery
 } = hotelCategoriesApi;

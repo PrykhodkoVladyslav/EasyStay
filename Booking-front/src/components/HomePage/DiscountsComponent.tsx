@@ -1,6 +1,4 @@
-import React from 'react';
 import {getPublicResourceUrl} from "utils/publicAccessor.ts";
-
 
 const DiscountsComponent = () => {
     return (

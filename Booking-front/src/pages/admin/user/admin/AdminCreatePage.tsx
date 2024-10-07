@@ -85,12 +85,18 @@ const AdminCreatePage: React.FC = () => {
                         <div key={id}>
                             <Label htmlFor={id} className="mb-1 text-sm block font-semibold">{label}</Label>
                             <Input
-                                {...register(id)}
+                                {...register(id as "email" | "firstName" | "lastName" | "password" | "username")}
                                 id={id}
                                 type={type}
                                 placeholder={placeholder}
                             />
-                            {errors[id] && <FormError className="text-red" errorMessage={errors[id].message} />}
+                            {errors[id as keyof typeof errors] && (
+                                <FormError
+                                    className="text-red"
+                                    errorMessage={errors[id as keyof typeof errors]?.message || ""}
+                                />
+                            )}
+                            {/*{errors[id] && <FormError className="text-red" errorMessage={errors[id].message} />}*/}
                         </div>
                     ))}
 

@@ -4,7 +4,7 @@ import { useAppSelector } from "store/hooks.ts";
 import { getUser } from "store/slice/userSlice.ts";
 import { Link } from "react-router-dom";
 
-import React, { useState } from "react";
+import React from "react";
 
 interface HeaderProps {
     sidebarOpen: boolean;
@@ -57,7 +57,8 @@ const AdminHeader: React.FC<HeaderProps> = (props) => {
                         {/*</div>*/}
 
                         {user ? (
-                            <UserCard customer={user} />
+                            <UserCard />
+                            // <UserCard user={user} />
                         ) : (
                             <Link
                                 to={"auth/register"}

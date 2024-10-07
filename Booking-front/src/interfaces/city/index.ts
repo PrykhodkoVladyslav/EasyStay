@@ -4,7 +4,17 @@ import { Country } from "interfaces/country";
 export interface City {
     id: number;
     name: string;
-    image: string;
+    image: File;
+    // image: string;
+    longitude: number;
+    latitude: number;
+    country: Country;
+}
+
+export interface CreateCity {
+    name: string;
+    image: File;
+    // image: string;
     longitude: number;
     latitude: number;
     country: Country;

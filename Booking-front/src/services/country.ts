@@ -1,9 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import { Country, GetCountryPageRequest } from "interfaces/country";
-import { Country } from "interfaces/Country";
+import { Country } from "interfaces/country";
 // import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import {City} from "interfaces/city";
+// import {City} from "interfaces/city";
 // import { createQueryString } from "utils/createQueryString.ts";
 
 export const countryApi = createApi({
@@ -49,7 +49,7 @@ export const countryApi = createApi({
         updateCountry: builder.mutation({
             query: (country: Country) => {
                 const countryFormData = new FormData();
-                countryFormData.append("Id", country.id);
+                countryFormData.append("Id", country.id.toString());
                 countryFormData.append("Name", country.name);
                 if (country.image) {
                     countryFormData.append("Image", country.image);
@@ -80,5 +80,5 @@ export const {
     useAddCountryMutation,
     useUpdateCountryMutation,
     useDeleteCountryMutation,
-    useGetPageCountriesQuery
+    // useGetPageCountriesQuery
 } = countryApi;

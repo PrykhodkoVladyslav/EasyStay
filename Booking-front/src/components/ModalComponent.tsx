@@ -2,7 +2,13 @@ import React from 'react';
 import Modal from 'react-modal';
 import DateTimePicker from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
-import moment from 'moment'; // Ensure you have moment installed
+import moment from 'moment';
+
+interface ModalComponentProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: (date: Date) => void;
+}
 
 const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onClose, onConfirm }) => {
     const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
@@ -36,12 +42,12 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onClose, onConf
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-lg font-semibold mb-4">Виберіть дату та час блокування</h2>
                 <DateTimePicker
-                    value={selectedDate ? moment(selectedDate) : null} // Convert Date to Moment if needed
+                    value={selectedDate ? moment(selectedDate) : undefined} // Convert Date to Moment if needed
                     onChange={(date) => {
-                        if (date && date.isValid()) {
+                        if (moment.isMoment(date) && date.isValid()) {
                             setSelectedDate(date.toDate()); // Convert Moment to Date
                         } else {
-                            console.error("Invalid date selected:", date);
+                            console.error("Вибрано невірну дату:", date);
                         }
                     }}
                     dateFormat="YYYY/MM/DD"

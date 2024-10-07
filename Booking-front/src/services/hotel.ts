@@ -49,7 +49,7 @@ export const hotelApi = createApi({
                 hotelFormData.append("Address.CityId", hotel.cityId?.toString());
                 hotelFormData.append("CategoryId", hotel.categoryId?.toString());
                 if (hotel.photos) {
-                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
+                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image as File));
                 }
 
                 return {
@@ -64,20 +64,20 @@ export const hotelApi = createApi({
         updateHotel: builder.mutation({
             query: (hotel: Hotel) => {
                 const hotelFormData = new FormData();
-                hotelFormData.append("Id", hotel.id);
+                hotelFormData.append("Id", hotel.id.toString());
                 hotelFormData.append("Name", hotel.name);
                 hotelFormData.append("Description", hotel.description);
-                hotelFormData.append("Area", hotel.area);
-                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
-                hotelFormData.append("IsArchived", hotel.isArchived);
+                hotelFormData.append("Area", hotel.area.toString());
+                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms.toString());
+                hotelFormData.append("IsArchived", hotel.isArchived.toString());
                 hotelFormData.append("Address.Street", hotel.address.street);
                 hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
-                hotelFormData.append("Address.Latitude", hotel.address.latitude);
-                hotelFormData.append("Address.Longitude", hotel.address.longitude);
-                hotelFormData.append("Address.CityId", hotel.cityId?.toString());
-                hotelFormData.append("CategoryId", hotel.categoryId?.toString());
+                hotelFormData.append("Address.Latitude", hotel.address.latitude.toString());
+                hotelFormData.append("Address.Longitude", hotel.address.longitude.toString());
+                hotelFormData.append("Address.CityId", hotel.address.city.id.toString());
+                hotelFormData.append("CategoryId", hotel.category.id.toString());
                 if (hotel.photos) {
-                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image));
+                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image as File));
                 }
 
                 return {

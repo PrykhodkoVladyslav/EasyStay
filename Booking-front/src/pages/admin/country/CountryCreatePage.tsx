@@ -22,6 +22,7 @@ const CountryCreatePage: React.FC = () => {
         formState: { errors },
     } = useForm<CountryCreateSchemaType>({ resolver: zodResolver(CountryCreateSchema) });
 
+    // const [files, setFiles] = useState<(File | string)[]>([]);
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -59,17 +60,32 @@ const CountryCreatePage: React.FC = () => {
         }
     };
 
-    const removeImage = (file: string) => {
-        setFiles(files.filter((x: File) => x.name !== file));
+    const removeImage = (file: File) => {
+        setFiles(files.filter((x: File) => x.name !== file.name));
     };
+
+    // const removeImage = (file: string) => {
+    //     setFiles(files.filter((x: File) => x.name !== file));
+    // };
 
     const onSubmit = handleSubmit(async (data) => {
         try {
             // console.log("Data: ", data);
+
+            if (files.length === 0) {
+                showToast(`Будь ласка, завантажте файл зображення.`, "error");
+                return;
+            }
+
             await create({
                 name: data.name,
                 image: files[0],
             }).unwrap();
+
+            // await create({
+            //     name: data.name,
+            //     image: files[0],
+            // }).unwrap();
 
             showToast(`Успішно створено нову країну!`, "success");
             onReset();
@@ -109,7 +125,10 @@ const CountryCreatePage: React.FC = () => {
                     <div>
                         <Label>Фото:</Label>
 
-                        <ImageUpload setFiles={setFiles} remove={removeImage} files={files}>
+                        <ImageUpload
+                            setFiles={setFiles}
+                            remove={removeImage}
+                            files={files}>
                             <Input
                                 {...register("image")}
                                 onChange={handleFileChange}

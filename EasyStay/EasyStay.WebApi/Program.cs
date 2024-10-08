@@ -7,6 +7,8 @@ using EasyStay.Application.MediatR.Breakfasts.Queries.GetPage;
 using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
 using EasyStay.Application.MediatR.Cities.Queries.GetPage;
 using EasyStay.Application.MediatR.Cities.Queries.Shared;
+using EasyStay.Application.MediatR.Citizenships.Queries.GetPage;
+using EasyStay.Application.MediatR.Citizenships.Queries.Shared;
 using EasyStay.Application.MediatR.Countries.Queries.GetPage;
 using EasyStay.Application.MediatR.Countries.Queries.Shared;
 using EasyStay.Application.MediatR.HotelAmenities.Queries.GetPage;
@@ -111,6 +113,7 @@ builder.Services.AddScoped<IPaginationService<RoomAmenityVm, GetRoomAmenitiesPag
 builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageCommand>, RealtorPaginationService>();
 builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
+builder.Services.AddScoped<IPaginationService<CitizenshipVm, GetCitizenshipsPageQuery>, CitizenshipPaginationService>();
 
 
 builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));

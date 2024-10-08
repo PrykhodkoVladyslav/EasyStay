@@ -64,3 +64,15 @@ export const ResetPasswordSchema = z.object({
 });
 
 export type ResetPasswordSchemaType = z.infer<typeof ResetPasswordSchema>;
+
+export const UpdateRealtorInformationSchema = z.object({
+    description: z.string().max(4000, "Опис не може перевищувати 4000 символів").optional(),
+    phoneNumber: z.string().optional(),
+    dateOfBirth: z.string().optional(),
+    // citizenshipId: z.number().optional(),
+    genderId: z.number().optional(),
+    address: z.string().optional(),
+    cityId: z.string().optional(),
+});
+
+export type UpdateRealtorInformationSchemaType = z.infer<typeof UpdateRealtorInformationSchema>;

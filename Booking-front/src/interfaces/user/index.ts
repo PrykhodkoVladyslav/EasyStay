@@ -1,4 +1,4 @@
-import {City} from "interfaces/city";
+import { City } from "interfaces/city";
 
 export interface User {
     id: number;
@@ -13,22 +13,34 @@ export interface User {
     isLocked: boolean;
 }
 
-export interface RealtorInfo {
-    id: number;
-    // Id
-    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": number;
+export interface IRealtorInformation {
     fullName: string;
     email: string;
     description: string;
     phoneNumber: string;
     dateOfBirth: Date;
+    citizenship: ICitizenship;
+    gender: IGender;
     address: string;
-    citizenship: string;
-    gender: Gender;
     city: City;
 }
 
-export interface Gender {
+export interface IUpdateRealtorInformation {
+    description: string;
+    phoneNumber: string;
+    dateOfBirth: Date;
+    citizenshipId: number;
+    genderId: number;
+    address: string;
+    cityId: number;
+}
+
+export interface ICitizenship {
+    id: number;
+    name: string;
+}
+
+export interface IGender {
     id: number;
     name: string;
 }

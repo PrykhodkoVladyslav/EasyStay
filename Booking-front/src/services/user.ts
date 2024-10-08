@@ -8,13 +8,17 @@ import {
     CreateAdmin,
     BlockUserRequest,
     UnlockUserRequest,
-    ISendResetPasswordEmailRequest, IResetPasswordRequest, RealtorInfo,
+    ISendResetPasswordEmailRequest,
+    IResetPasswordRequest,
+    IRealtorInformation,
+    IUpdateRealtorInformation,
+    // ICitizenship,
 } from "interfaces/user";
 
 export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: createBaseQuery("accounts"),
-    tagTypes: ["User"],
+    tagTypes: ["User", "Citizenships"],
 
     endpoints: (builder) => ({
         getAllCustomers: builder.query<User[], void>({
@@ -27,10 +31,15 @@ export const userApi = createApi({
             providesTags: ["User"],
         }),
 
-        getRealtorsInformation: builder.query<RealtorInfo, number>({
-            query: (id) => "GetRealtorsInformation",
+        getRealtorsInformation: builder.query<IRealtorInformation, void>({
+            query: () => "GetRealtorsInformation",
             providesTags: ["User"],
         }),
+
+        // getAllCitizenships: builder.query<ICitizenship[], void>({
+        //     query: () => "GetCitizenships",
+        //     providesTags: ["Citizenships"],
+        // }),
 
         signIn: builder.mutation<SignInResponse, SignInRequest>({
             query: (data) => {
@@ -99,6 +108,7 @@ export const userApi = createApi({
             }),
             invalidatesTags: ["User"],
         }),
+
         unlockUser: builder.mutation<void, UnlockUserRequest>({
             query: (id) => ({
                 url: `UnlockUserById/${id}`,
@@ -122,6 +132,16 @@ export const userApi = createApi({
                 body: data,
             }),
         }),
+
+        updateRealtorsInformation : builder.mutation<void, IUpdateRealtorInformation>({
+            query: (data) => {
+                return {
+                    url: "UpdateRealtorsInformation",
+                    method: "PATCH",
+                    body: data,
+                };
+            },
+        }),
     }),
 });
 
@@ -129,6 +149,7 @@ export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
     useGetRealtorsInformationQuery,
+    // useGetAllCitizenshipsQuery,
     useSignInMutation,
     useRegistrationMutation,
     useCreateAdminMutation,
@@ -136,4 +157,5 @@ export const {
     useUnlockUserMutation,
     useSendResetPasswordEmailMutation,
     useResetPasswordMutation,
+    useUpdateRealtorsInformationMutation,
 } = userApi;

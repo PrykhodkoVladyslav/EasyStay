@@ -24,7 +24,6 @@ import AddLayout from "components/layouts/AddLayout";
 import CategoriesListPage from "pages/realtor/add/CategoriesListPage";
 import AddHotelPage from "pages/realtor/add/HotelPage";
 
-import HotelsPage from "pages/realtor/hotel/HotelsPage";
 import HotelCreatePage from "pages/realtor/hotel/HotelCreatePage";
 import HotelEditPage from "pages/realtor/hotel/HotelEditPage";
 import HotelsArchivedPage from "pages/realtor/hotel/HotelsArchivedPage";
@@ -46,13 +45,18 @@ import CustomersListPage from "pages/admin/user/customer/CustomersListPage";
 import RealtorsListPage from "pages/admin/user/realtor/RealtorsListPage";
 import AdminCreatePage from "pages/admin/user/admin/AdminCreatePage";
 import ResetPasswordPage from "pages/auth/ResetPasswordPage.tsx";
+import CustomerLayout from "components/layouts/CustomerLayout.tsx";
+import HotelsPage from "pages/customer/HotelsPage.tsx";
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
-                    <Route index element={<CustomerHomePage />}/>
+                    <Route element={<CustomerLayout />}>
+                        <Route index element={<CustomerHomePage />} />
+                        <Route path="hotels" element={<HotelsPage />} />
+                    </Route>
                 </Route>
 
                 <Route path="auth" element={<AuthLayout />}>

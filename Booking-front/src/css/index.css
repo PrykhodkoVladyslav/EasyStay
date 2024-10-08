@@ -18,6 +18,7 @@
 .app {
     font-family: Arial, sans-serif;
 }
+
 .hero-section {
 
     display: flex;
@@ -37,7 +38,6 @@
 }
 
 
-
 .cta-button {
     background-color: white;
     border: none;
@@ -48,7 +48,7 @@
     width: 230px;
     font-weight: 700;
     font-family: var(--font-primary);
-    color:#3F523C;
+    color: #3F523C;
 }
 
 .cta-button:hover {
@@ -93,9 +93,10 @@
     font-family: var(--font-primary);
     font-size: 20px;
 }
+
 .navbar-menu a:hover {
     background-color: #3F523C;
-    color:white;
+    color: white;
     border-radius: 20px;
     transition: 0.5ms;
 }
@@ -113,12 +114,14 @@
     height: 24px;
     cursor: pointer;
 }
-.hero-content2{
+
+.hero-content2 {
 
 
     height: 329px;
     width: 876px;
 }
+
 .hero-content2 h1 {
     font-size: 6em;
     margin-bottom: 30px;
@@ -188,50 +191,6 @@
 }
 
 
-/*Footer!!!!!!!!!*/
-.footer {
-    background-color: #4c6048;
-    color: white;
-    height: 359px;
-    max-width: 100%;
-    font-family: var(--font-primary);
-
-}
-
-.footer-container {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-
-    width: 1776px;
-    height: 196px;
-    margin: auto;
-    top:78px;
-}
-
-.footer-section {
-    width: auto;
-    margin-left:30px;
-    margin-right: 30px;
-}
-
-.footer-section h4 {
-    margin-bottom: 10px;
-    font-size: 18px;
-}
-.footer-section h1 {
-
-    font-size: 15px;
-}
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section li {
-    margin-bottom: 5px;
-    font-size: 15px;
-}
 
 .subscribe-box {
     background-color: white;
@@ -245,7 +204,7 @@
     position: relative;
     border: none;
     border-radius: 20px;
-    color:black;
+    color: black;
     width: 195px;
     height: 55px;
     padding: 10px;
@@ -269,37 +228,37 @@
 }
 
 
-
-
-
 /*Discount!!!!!!!!!*/
-.discount{
+.discount {
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    margin-top:90px;
-    margin-bottom:90px;
+    margin-top: 90px;
+    margin-bottom: 90px;
     width: 1720px;
     height: 218px;
-    background-color:#e5e5e5;
+    background-color: #e5e5e5;
     border-radius: 20px;
     font-family: var(--font-primary);
     background-image: url('./public/images/Homepage/night.jpg');
     background-size: cover;
     background-position: center;
 }
-.discount-content{
+
+.discount-content {
     display: flex;
     margin: auto;
     height: 112px;
     width: 1466px;
 }
-.discount-content h1{
+
+.discount-content h1 {
     font-size: 2em;
     color: white;
     width: 720px;
 }
-.discount-content button{
+
+.discount-content button {
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 514px;
@@ -315,7 +274,8 @@
     color: #3F523C;
 
 }
-.discount-content button:hover{
+
+.discount-content button:hover {
     background-color: #ddd;
 }
 
@@ -332,7 +292,8 @@
     width: 1720px;
     height: 520px;
 }
-.services-container h1{
+
+.services-container h1 {
     position: relative;
     font-weight: 600;
     font-size: 64px;
@@ -409,7 +370,7 @@
 
 /*TravelCarousel!!!!!!!!!*/
 
-.Carousel-conteiner{
+.Carousel-conteiner {
     font-family: var(--font-primary);
     width: 1720px;
     height: 784px;
@@ -424,7 +385,8 @@
     margin: auto;
 
 }
-.Carousel-conteiner2{
+
+.Carousel-conteiner2 {
     width: 1720px;
     height: 704px;
     left: 0;
@@ -433,19 +395,21 @@
     bottom: -40px;
     background-color: #cccccc;
 }
-.Carousel-conteiner2 h1{
+
+.Carousel-conteiner2 h1 {
     position: relative;
     color: white;
     font-size: 4em;
     left: 46px;
 }
-.Carousel-conteiner3{
+
+.Carousel-conteiner3 {
     position: relative;
     width: 1620px;
     height: 547px;
     margin: auto;
     background-color: #515151;
-    bottom:12px;
+    bottom: 12px;
 }
 
 
@@ -462,13 +426,14 @@
     transition: background-color 0.3s ease;
 }
 
-.div-btn{
+.div-btn {
     width: 172px;
     height: 70px;
     margin: auto;
     position: relative;
     bottom: 10px;
 }
+
 .left-arrow {
     position: relative;
     background-color: #37422b;
@@ -493,9 +458,6 @@
     background-color: #f1f1f1;
     color: #333;
 }
-
-
-
 
 
 .arrow-icon {

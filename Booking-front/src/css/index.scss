@@ -248,6 +248,111 @@
   }
 }
 
+.customer-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+
+  }
+
+  .main {
+    flex: 1;
+  }
+
+}
+
+
+.footer {
+  width: 100%;
+  background-color: #4c6048;
+  color: white;
+  max-width: 100%;
+  font-family: var(--font-primary), system-ui;
+  padding: 78px 102px;
+
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .side-section {
+    width: 282px;
+  }
+
+  .footer-section {
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 22px;
+      letter-spacing: 0;
+
+      padding-bottom: 6px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 28px;
+      letter-spacing: 0;
+    }
+  }
+
+  .subscribe-box {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 55px;
+    border-radius: 20px;
+    border: none;
+    padding: 9px;
+
+    .subscribe-input {
+      border: none;
+      border-radius: 20px;
+      color: black;
+      width: 100%;
+      outline: none;
+      padding: 0;
+
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 28px;
+      letter-spacing: 0;
+    }
+
+    .subscribe-button {
+      color: white;
+      background-color: #4c6048;
+      border: none;
+      border-radius: 15px;
+
+      padding: 0 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .subscribe-button:hover {
+      background-color: #ccc;
+    }
+  }
+}
+
 // Акаунт Ріелтора
 .account-layout {
   position: relative;
@@ -2497,64 +2602,6 @@
           margin-bottom: 5px;
           font-size: 15px;
         }
-
-        .subscribe-box {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          align-items: center;
-          background-color: white;
-          width: 352px;
-          height: 55px;
-          border-radius: 20px;
-          border: none;
-        }
-
-        .subscribe-input {
-          border: none;
-          border-radius: 20px;
-          color: black;
-          width: 195px;
-          height: 55px;
-          padding: 10px;
-          outline: none;
-        }
-
-        .subscribe-button {
-          color: white;
-          background-color: #4c6048;
-          border: none;
-          border-radius: 15px;
-          width: 150px;
-          height: 35px;
-        }
-
-        @media (max-width: 1455px) {
-          .subscribe-box {
-            grid-template-columns: 1fr;
-            width: 220px;
-            height: 85px;
-            justify-content: center;
-            align-items: center;
-            padding: 0 10px;
-          }
-
-          .subscribe-input {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 35px;
-          }
-
-          .subscribe-button {
-            width: 100%;
-          }
-        }
-
-        .subscribe-button:hover {
-          background-color: #ccc;
-        }
-
       }
 
       button {

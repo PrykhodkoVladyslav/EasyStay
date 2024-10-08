@@ -5,6 +5,8 @@ using MediatR;
 namespace EasyStay.Application.MediatR.Rooms.Queries.GetPage;
 
 public class GetRoomsPageQuery : PaginationFilterDto, IRequest<PageVm<RoomVm>> {
+	public string? Name { get; set; }
+
 	public double? Area { get; set; }
 	public double? MinArea { get; set; }
 	public double? MaxArea { get; set; }
@@ -19,6 +21,11 @@ public class GetRoomsPageQuery : PaginationFilterDto, IRequest<PageVm<RoomVm>> {
 
 	public long? HotelId { get; set; }
 
+	public long? RoomTypeId { get; set; }
+
 	public IEnumerable<long>? AllRentalPeriodIds { get; set; } = null!;
 	public IEnumerable<long>? AnyRentalPeriodIds { get; set; } = null!;
+
+	public IEnumerable<long>? AllAmenityIds { get; set; } = null!;
+	public IEnumerable<long>? AnyAmenityIds { get; set; } = null!;
 }

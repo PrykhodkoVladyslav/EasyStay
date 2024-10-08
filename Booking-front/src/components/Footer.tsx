@@ -1,15 +1,13 @@
-
 const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-container">
-                <div className="footer-section">
+                <div className="footer-section side-section">
                     <img src="./public/logo/logo_white.svg" alt="EasyStay Logo" />
-                    <h1>Найкращі пропозиції житла</h1>
-                    <h1>Для комфортного відпочинку!</h1>
+                    <h2>Найкращі пропозиції житла для комфортного відпочинку!</h2>
                 </div>
                 <div className="footer-section">
-                    <h4>Загальна інформація</h4>
+                    <h3>Загальна інформація</h3>
                     <ul>
                         <li><a href="info">Про EasyStay</a></li>
                         <li><a href="info">Як ми працюємо</a></li>
@@ -20,7 +18,7 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="footer-section">
-                    <h4>Правила та налаштування</h4>
+                    <h3>Правила та налаштування</h3>
                     <ul>
                         <li><a href="info">Керуйте своїми подорожами</a></li>
                         <li><a href="info">Правила та умови</a></li>
@@ -31,7 +29,7 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="footer-section">
-                    <h4>Загальна інформація</h4>
+                    <h3>Загальна інформація</h3>
                     <ul>
                         <li><a href="info">Про EasyStay</a></li>
                         <li><a href="info">Як ми працюємо</a></li>
@@ -42,7 +40,7 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="footer-section">
-                    <h4>Правила та налаштування</h4>
+                    <h3>Правила та налаштування</h3>
                     <ul>
                         <li><a href="info">Керуйте своїми подорожами</a></li>
                         <li><a href="info">Правила та умови</a></li>
@@ -52,8 +50,8 @@ const Footer = () => {
                         <li><a href="info">Підтримка</a></li>
                     </ul>
                 </div>
-                <div className="footer-section">
-                    <h4>Отримувати новини про знижки</h4>
+                <div className="footer-section side-section">
+                    <h3>Отримувати новини про знижки</h3>
                     <div className="subscribe-box">
                         <input
                             type="email"

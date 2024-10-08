@@ -6,6 +6,7 @@ using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
 using EasyStay.Application.MediatR.Languages.Queries.Shared;
+using EasyStay.Application.MediatR.Rooms.Queries.Shared;
 using EasyStay.Domain;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
@@ -23,6 +24,8 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 	public TimeOnly DepartureTimeUtcFrom { get; set; }
 	public TimeOnly DepartureTimeUtcTo { get; set; }
 
+	public decimal? MinPrice { get; set; }
+
 	public bool IsArchived { get; set; }
 
 	public AddressVm Address { get; set; } = null!;
@@ -37,6 +40,8 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 	public IEnumerable<BreakfastVm> Breakfasts { get; set; } = null!;
 
 	public IEnumerable<LanguageVm> Languages { get; set; } = null!;
+
+	public IEnumerable<RoomVm> Rooms { get; set; } = null!;
 
 	public IEnumerable<HotelPhotoVm> Photos { get; set; } = null!;
 
@@ -59,6 +64,14 @@ public class HotelDetailsVm : IMapWith<Hotel> {
 			.ForMember(
 				dest => dest.DepartureTimeUtcTo,
 				opt => opt.MapFrom(src => TimeOnly.FromDateTime(src.DepartureTimeUtcTo.DateTime))
+			)
+			.ForMember(
+				dest => dest.MinPrice,
+				opt => opt.MapFrom(
+					src => src.Rooms
+					.SelectMany(r => r.RoomVariants)
+					.Min(rv => (decimal?)(rv.DiscountPrice.HasValue ? Math.Min(rv.Price, rv.DiscountPrice.Value) : rv.Price))
+				)
 			)
 			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
 			.ForMember(

@@ -38,8 +38,14 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	public DbSet<HotelStaffLanguage> HotelStaffLanguages { get; set; }
 	public DbSet<HotelPhoto> HotelPhotos { get; set; }
 	public DbSet<Room> Rooms { get; set; }
+	public DbSet<RoomType> RoomTypes { get; set; }
 	public DbSet<RentalPeriod> RentalPeriods { get; set; }
 	public DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
+	public DbSet<RoomAmenity> RoomAmenities { get; set; }
+	public DbSet<RoomRoomAmenity> RoomRoomAmenities { get; set; }
+	public DbSet<RoomVariant> RoomVariants { get; set; }
+	public DbSet<GuestInfo> GuestInfos { get; set; }
+	public DbSet<BedInfo> BedInfos { get; set; }
 	public DbSet<RealtorReview> RealtorReviews { get; set; }
 	public DbSet<Chat> Chats { get; set; }
 	public DbSet<Message> Messages { get; set; }

@@ -1,7 +1,6 @@
 import React from 'react';
 import LanguageSwitcher  from "components/HomePage/LanguageSwitcher.tsx";
 
-
 const Navbar: React.FC = () => {
 
 
@@ -10,7 +9,7 @@ const Navbar: React.FC = () => {
 
             <header className="navbar">
                 <div className="navbar-logo">
-                    <img  width="150%" src="./public/logo/logo_EasyStay.svg" alt="EasyStay Logo" />
+                    <img   src="./public/logo/logo_EasyStay.svg" alt="EasyStay Logo" />
 
                 </div>
                 <nav className="navbar-menu">

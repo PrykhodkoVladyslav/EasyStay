@@ -5,6 +5,7 @@ import Footer  from "components/Footer.tsx";
 import Services  from "components/HomePage/Services.tsx";
 import TravelCarousel  from "components/HomePage/TravelCarousel.tsx";
 import DiscountsComponent  from "components/HomePage/DiscountsComponent.tsx";
+import TicketsComponent  from "components/HomePage/TicketsComponent.tsx";
 
 
 const HomePage: React.FC = () => {
@@ -14,7 +15,7 @@ const HomePage: React.FC = () => {
             <div className="app">
                 <Navbar/>
 
-                <header className="hero-section">
+                <div className="hero-section">
                     <div className="hero-content">
                         <div className="hero-content2">
                         <h1>Відкривай цікаві</h1><h1>місця з нами</h1>
@@ -23,8 +24,8 @@ const HomePage: React.FC = () => {
                         <button className="cta-button">Шукати житло</button>
                     </div>
 
-                </header>
-
+                </div>
+                <TicketsComponent/>
                 <TravelCarousel/>
 
                 <DiscountsComponent/>

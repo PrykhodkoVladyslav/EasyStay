@@ -4,6 +4,17 @@ const DiscountsComponent = () => {
     return (
         <div className="all-conteiner">
             <h1 className="first-discount">Знижки</h1>
+            <button className="sort-btn"><img src="icons/homepageSvg/arrow.svg"></img>Сортувати за:</button>
+
+            <div className="sidebar">
+                <ul className="menu">
+                    <li className="menu__item"><a href="#" className="menu__link">Готелі</a></li>
+                    <li className="menu__item"><a href="#" className="menu__link">Апартаменти</a></li>
+                    <li className="menu__item"><a href="#" className="menu__link">Машини</a></li>
+                    <li className="menu__item"><a href="#" className="menu__link">Трансфери</a></li>
+                    <li className="menu__item"><a href="#" className="menu__link">Тури</a></li>
+                </ul>
+            </div>
 
 
         <div className="hotels-reviews1">
@@ -13,7 +24,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\photo_5460986432681272579_x.jpg"
+                                         src="public\images\Homepage\HiltonHotel.png"
                                          alt=""
                                     />
 
@@ -32,7 +43,7 @@ const DiscountsComponent = () => {
                                                         className="star1"
                                                     />
                                                     <p className="rating1">
-                                                        9.7
+                                                        8.3
                                                     </p>
 
                                                 </div>
@@ -63,7 +74,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\photo_5460986432681272579_x.jpg"
+                                         src="public\images\Homepage\RadissonBlu.png"
                                          alt=""
                                     />
 
@@ -82,13 +93,13 @@ const DiscountsComponent = () => {
                                                         className="star1"
                                                     />
                                                     <p className="rating1">
-                                                        9.7
+                                                        9.5
                                                     </p>
 
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="location1">Відень, Австрія</p>
+                                        <p className="location1">Київ, Україна</p>
 
 
                                     </div>
@@ -97,8 +108,8 @@ const DiscountsComponent = () => {
 
                                         <div className="container51">
                                             <div className="prices-container1">
-                                                <p className="price1">4599₴</p>
-                                                <p className="old-price1">7999₴</p>
+                                                <p className="price1">2999₴</p>
+                                                <p className="old-price1">6599₴</p>
                                             </div>
 
                                             <a href="/#hotel" className="button-Reserve">Забронювати</a>
@@ -112,7 +123,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\photo_5460986432681272579_x.jpg"
+                                         src="public\images\Homepage\AlicanteHills.png"
                                          alt=""
                                     />
 
@@ -137,7 +148,7 @@ const DiscountsComponent = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="location1">Відень, Австрія</p>
+                                        <p className="location1">Аліканте, Іспанія</p>
 
 
                                     </div>
@@ -146,8 +157,8 @@ const DiscountsComponent = () => {
 
                                         <div className="container51">
                                             <div className="prices-container1">
-                                                <p className="price1">4599₴</p>
-                                                <p className="old-price1">7999₴</p>
+                                                <p className="price1">6999₴</p>
+                                                <p className="old-price1">13399₴</p>
                                             </div>
 
                                             <a href="/#hotel" className="button-Reserve">Забронювати</a>
@@ -162,7 +173,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\photo_5460986432681272579_x.jpg"
+                                         src="public\images\Homepage\HotelBelle.png"
                                          alt=""
                                     />
 
@@ -181,13 +192,13 @@ const DiscountsComponent = () => {
                                                         className="star1"
                                                     />
                                                     <p className="rating1">
-                                                        9.7
+                                                        9.9
                                                     </p>
 
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="location1">Відень, Австрія</p>
+                                        <p className="location1">Руян, Франція</p>
 
 
                                     </div>
@@ -196,8 +207,8 @@ const DiscountsComponent = () => {
 
                                         <div className="container51">
                                             <div className="prices-container1">
-                                                <p className="price1">4599₴</p>
-                                                <p className="old-price1">7999₴</p>
+                                                <p className="price1">7999₴</p>
+                                                <p className="old-price1">15999₴</p>
                                             </div>
 
                                             <a href="/#hotel" className="button-Reserve">Забронювати</a>

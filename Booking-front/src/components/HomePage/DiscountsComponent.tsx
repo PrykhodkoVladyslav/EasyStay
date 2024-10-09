@@ -24,7 +24,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\HiltonHotel.png"
+                                         src="images\Homepage\HiltonHotel.png"
                                          alt=""
                                     />
 
@@ -74,7 +74,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\RadissonBlu.png"
+                                         src="images\Homepage\RadissonBlu.png"
                                          alt=""
                                     />
 
@@ -123,7 +123,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\AlicanteHills.png"
+                                         src="images\Homepage\AlicanteHills.png"
                                          alt=""
                                     />
 
@@ -173,7 +173,7 @@ const DiscountsComponent = () => {
                             <div className="item1">
                                 <div className="images-container1">
                                     <img className="image1"
-                                         src="public\images\Homepage\HotelBelle.png"
+                                         src="images\Homepage\HotelBelle.png"
                                          alt=""
                                     />
 

@@ -1,9 +1,11 @@
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+
 const Footer = () => {
     return (
-        <footer className="footer">
+        <footer className="main-footer">
             <div className="footer-container">
                 <div className="footer-section side-section">
-                    <img src="./public/logo/logo_white.svg" alt="EasyStay Logo" />
+                    <img src={getPublicResourceUrl("logo/Logo_white.svg")} alt="EasyStay Logo" />
                     <h2>Найкращі пропозиції житла для комфортного відпочинку!</h2>
                 </div>
                 <div className="footer-section">
@@ -52,13 +54,13 @@ const Footer = () => {
                 </div>
                 <div className="footer-section side-section">
                     <h3>Отримувати новини про знижки</h3>
-                    <div className="subscribe-box">
+                    <div className="footer-subscribe-box">
                         <input
                             type="email"
                             placeholder="Введіть ваш емейл"
-                            className="subscribe-input"
+                            className="footer-subscribe-input"
                         />
-                        <button className="subscribe-button">Підписатись</button>
+                        <button className="footer-subscribe-button">Підписатись</button>
                     </div>
                 </div>
             </div>

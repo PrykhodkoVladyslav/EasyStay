@@ -1,4 +1,5 @@
 import { City } from "interfaces/city";
+import {ICitizenship} from "interfaces/citizenship";
 
 export interface User {
     id: number;
@@ -35,21 +36,11 @@ export interface IUpdateRealtorInformation {
     cityId: number;
 }
 
-export interface ICitizenship {
-    id: number;
-    name: string;
-}
-
 export interface IGender {
     id: number;
     name: string;
 }
 
-// export interface GetCityzenship {
-//     id: number;
-//     name: string;
-// }
-//
 // export interface GenderInfo {
 //     id: number;
 //     name: string;

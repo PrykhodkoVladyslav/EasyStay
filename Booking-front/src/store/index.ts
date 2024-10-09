@@ -7,6 +7,7 @@ import { hotelApi } from "services/hotel.ts";
 import { hotelCategoriesApi } from "services/hotelCategories.ts";
 import { cityApi } from "services/city.ts";
 import { countryApi } from "services/country.ts";
+import {citizenshipApi} from "services/citizenship.ts";
 // import { bookingApi } from "services/booking.ts";
 // import { favoriteHotelsApi } from "services/favoriteHotels.ts";
 // import { reviewApi } from "services/review.ts";
@@ -21,6 +22,8 @@ export const store = configureStore({
         [hotelCategoriesApi.reducerPath]: hotelCategoriesApi.reducer,
         [cityApi.reducerPath]: cityApi.reducer,
         [countryApi.reducerPath]: countryApi.reducer,
+        [citizenshipApi.reducerPath]: citizenshipApi.reducer,
+
         // [roomApi.reducerPath]: roomApi.reducer,
         // [reviewApi.reducerPath]: reviewApi.reducer,
         // [bookingApi.reducerPath]: bookingApi.reducer,
@@ -34,6 +37,7 @@ export const store = configureStore({
             hotelCategoriesApi.middleware,
             cityApi.middleware,
             countryApi.middleware,
+            citizenshipApi.middleware,
             // reviewApi.middleware,
             // roomApi.middleware,
             // bookingApi.middleware,

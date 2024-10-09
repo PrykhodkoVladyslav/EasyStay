@@ -9,7 +9,8 @@ import FormError from "components/ui/FormError.tsx";
 import { useGetAllCountriesQuery } from "services/country.ts";
 import { UpdateRealtorInformationSchema, UpdateRealtorInformationSchemaType } from "interfaces/zod/user.ts";
 import showToast from "utils/toastShow.ts";
-// import { useGetAllCitizenshipsQuery } from "services/user.ts";
+import { useGetAllCitizenshipsQuery } from "services/citizenship.ts";
+import {City} from "interfaces/city";
 
 const DataPage = () => {
     const {
@@ -23,14 +24,16 @@ const DataPage = () => {
     });
 
     const user = useSelector(getUser);
-    const { data: realtorInfo, error, isLoading } = useGetRealtorsInformationQuery(user.id);
+    const { data: realtorInfo, error, isLoading } = useGetRealtorsInformationQuery();
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: countriesData } = useGetAllCountriesQuery();
-    // const { data: citizenshipsData } = useGetAllCitizenshipsQuery();
+    const { data: citizenshipsData } = useGetAllCitizenshipsQuery();
     const [updateRealtorsInformation ] = useUpdateRealtorsInformationMutation();
 
     const [selectedCountryId, setSelectedCountryId] = useState<number | null>(null);
-    const [filteredCities, setFilteredCities] = useState([]);
+    const [selectedCitizenshipId, setSelectedCitizenshipId] = useState<number | null>(null);
+    const [selectedGenderId, setSelectedGenderId] = useState<number | null>(null);
+    const [filteredCities, setFilteredCities] = useState<City[]>([]);
 
     const sortedCities = useMemo(() => {
         return citiesData ? [...citiesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
@@ -51,34 +54,50 @@ const DataPage = () => {
     useEffect(() => {
         if (realtorInfo) {
             const citizenship = realtorInfo.citizenship || {};
+            const gender = realtorInfo.gender || {};
             const city = realtorInfo.city || {};
             const country = realtorInfo.country || {};
             setSelectedCountryId(country.id || null);
+            setSelectedCitizenshipId(citizenship.id || null);
+            setSelectedGenderId(gender.id || null);
             setValue("description", realtorInfo.description || "");
             setValue("phoneNumber", realtorInfo.phoneNumber || "");
-            setValue("dateOfBirth", realtorInfo.dateOfBirth || "");
-            setValue("citizenshipId", citizenship.id || "");
-            setValue("genderId", realtorInfo.gender.id || "");
+            setValue("dateOfBirth", realtorInfo?.dateOfBirth ? new Date(realtorInfo.dateOfBirth).toISOString().split('T')[0] : "");
+            setValue("citizenshipId", citizenship.id);
+            setValue("genderId", gender.id);
             setValue("address", realtorInfo.address || "");
-            setValue("countryId", country.id || "");
+            setValue("countryId", city?.country?.id || "");
             setValue("cityId", city.id || "");
         }
     }, [realtorInfo, setValue]);
 
-    const handleCountryChange = (e) => {
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryId = Number(e.target.value);
         setSelectedCountryId(countryId);
         setValue("cityId", "");
     };
 
+    const handleCitizenshipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const citizenshipId = Number(e.target.value);
+        setSelectedCitizenshipId(citizenshipId);
+        setValue("citizenshipId", "");
+    };
+
+    const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const genderId = Number(e.target.value);
+        setSelectedGenderId(genderId);
+        setValue("genderId", "");
+    };
+
     const onSubmit = async (data: UpdateRealtorInformationSchemaType) => {
         try {
-            await updateRealtorsInformation({
+            const formattedData = {
                 ...data,
-                genderId: ,
-                citizenshipId: "1",
-            }).unwrap();
-            console.log(data);
+                dateOfBirth: new Date(data.dateOfBirth),
+            };
+
+            await updateRealtorsInformation(formattedData).unwrap();
+            // console.log(data);
 
             showToast(`Данні успішно оновлено!`, "success");
         } catch (error) {
@@ -88,7 +107,7 @@ const DataPage = () => {
 
     if (!user) { return null; }
     if (isLoading) { return <h2 className="flex items-center justify-center">Завантаження...</h2>; }
-    if (error) { return <p>Виникла помилка при отриманні даних: {error.message}</p>; }
+    if (error && 'status' in error) { return <p>Виникла помилка при отриманні даних: {error.status}</p>; }
 
     return (
         <div className="data-content">
@@ -97,8 +116,12 @@ const DataPage = () => {
 
                 <div className="data">
                     <div className="info">
-                        <p className="name">{realtorInfo.fullName}</p>
-                        <p className="email">{realtorInfo.email}</p>
+                        {realtorInfo && (
+                            <>
+                                <p className="name">{realtorInfo.fullName}</p>
+                                <p className="email">{realtorInfo.email}</p>
+                            </>
+                        )}
                     </div>
 
                     <div className="container10">
@@ -138,8 +161,7 @@ const DataPage = () => {
                                 title="Дата народження"
                                 type="date"
                                 placeholder="Введіть дату народження"
-                                min="1900-01-01"
-                                max="2020-01-01"
+                                max="9999-12-31"
                             />
                             {errors?.dateOfBirth && (
                                 <FormError className="text-red" errorMessage={errors?.dateOfBirth?.message as string} />
@@ -151,20 +173,20 @@ const DataPage = () => {
                             <select
                                 {...register("citizenshipId")}
                                 id="citizenshipId"
-                                // value={selectedCitizenshipId || ""}
-                                // onChange={handleCountryChange}
+                                value={selectedCitizenshipId || ""}
+                                onChange={handleCitizenshipChange}
                             >
                                 <option disabled value="">
                                     Виберіть громадянство
                                 </option>
-                                {/*{sortedCountries.map((country) => (*/}
-                                {/*    <option key={country.id} value={country.id}>*/}
-                                {/*        {country.name}*/}
-                                {/*    </option>*/}
-                                {/*))}*/}
+                                {citizenshipsData?.map((citizenship) => (
+                                    <option key={citizenship.id} value={citizenship.id}>
+                                        {citizenship.name}
+                                    </option>
+                                ))}
                             </select>
-                            {errors?.citizenship?.id && (
-                                <FormError className="text-red" errorMessage={errors?.citizenship?.message as string}/>
+                            {errors?.citizenshipId && (
+                                <FormError className="text-red" errorMessage={errors?.citizenshipId?.message as string}/>
                             )}
 
                         </div>
@@ -172,8 +194,9 @@ const DataPage = () => {
                         <div className="containers1">
                             <p>Стать</p>
                             <select
-                                {...register("gender.id")}
-                                defaultValue={realtorInfo.gender?.id || ""}
+                                {...register("genderId")}
+                                value={selectedGenderId || ""}
+                                onChange={handleGenderChange}
                             >
                                 <option disabled value="">
                                     Виберіть стать
@@ -181,8 +204,8 @@ const DataPage = () => {
                                 <option value={1}>Чоловік</option>
                                 <option value={2}>Жінка</option>
                             </select>
-                            {errors?.gender?.id && (
-                                <FormError className="text-red" errorMessage={errors?.gender?.id?.message as string}/>
+                            {errors?.genderId && (
+                                <FormError className="text-red" errorMessage={errors?.genderId?.message as string}/>
                             )}
                         </div>
 
@@ -203,7 +226,6 @@ const DataPage = () => {
                                 <div>
                                     <p>Країна</p>
                                     <select
-                                        {...register("countryId")}
                                         id="countryId"
                                         value={selectedCountryId || ""}
                                         onChange={handleCountryChange}
@@ -217,12 +239,6 @@ const DataPage = () => {
                                             </option>
                                         ))}
                                     </select>
-                                    {errors?.city?.country?.id && (
-                                        <FormError
-                                            className="text-red"
-                                            errorMessage={errors?.city?.country.id?.message as string}
-                                        />
-                                    )}
                                 </div>
                                 <div>
                                     <p>Місто</p>
@@ -234,16 +250,16 @@ const DataPage = () => {
                                         <option disabled value="">
                                             Виберіть місто
                                         </option>
-                                        {filteredCities.map((city) => (
+                                        {filteredCities.map((city: City) => (
                                             <option key={city.id} value={city.id}>
                                                 {city.name}
                                             </option>
                                         ))}
                                     </select>
-                                    {errors?.city?.id && (
+                                    {errors?.cityId && (
                                         <FormError
                                             className="text-red"
-                                            errorMessage={errors?.city?.idd?.message as string}
+                                            errorMessage={errors?.cityId?.message as string}
                                         />
                                     )}
                                 </div>

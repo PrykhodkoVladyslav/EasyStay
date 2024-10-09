@@ -66,13 +66,51 @@ export const ResetPasswordSchema = z.object({
 export type ResetPasswordSchemaType = z.infer<typeof ResetPasswordSchema>;
 
 export const UpdateRealtorInformationSchema = z.object({
-    description: z.string().max(4000, "Опис не може перевищувати 4000 символів").optional(),
-    phoneNumber: z.string().optional(),
-    dateOfBirth: z.string().optional(),
-    // citizenshipId: z.number().optional(),
-    genderId: z.number().optional(),
-    address: z.string().optional(),
-    cityId: z.string().optional(),
+    description: z.string()
+        .min(1, "Опис є обов'язковим полем")
+        .max(4000, "Опис не може перевищувати 4000 символів"),
+    phoneNumber: z
+        .string()
+        .min(1, "Номер телефону є обов'язковим полем")
+        .regex(/^\+\d{12}$/, "Невірний формат телефону. Використовуйте формат +XXXXXXXXXXXX"),
+    dateOfBirth: z
+        .string()
+        .refine((date) => date.length > 0, "Дата народження є обов'язковою")
+        .refine((date) => {
+            const parsedDate = new Date(date);
+            const minDate = new Date("1900-01-01");
+            return parsedDate >= minDate;
+        }, {
+            message: "Дата народження повинна бути після 01.01.1900",
+        })
+
+        .refine((date) => {
+            const parsedDate = new Date(date);
+            const today = new Date();
+            return parsedDate <= today;
+        }, {
+            message: "Невірна дата.",
+        })
+        .refine((date) => {
+            const parsedDate = new Date(date);
+            const today = new Date();
+            const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+            return parsedDate <= eighteenYearsAgo;
+        }, {
+            message: "Вам має бути 18 років або більше",
+        }),
+    citizenshipId: z.coerce
+        .number()
+        .min(1, "Громадянство є обов'язковим полем"),
+    genderId: z.coerce
+        .number()
+        .min(1, "Стать є обов'язковим полем"),
+    address: z
+        .string()
+        .min(1, "Адреса є обов'язковим полем"),
+    cityId: z.coerce
+        .number()
+        .min(1, "Місто є обов'язковим полем"),
 });
 
 export type UpdateRealtorInformationSchemaType = z.infer<typeof UpdateRealtorInformationSchema>;

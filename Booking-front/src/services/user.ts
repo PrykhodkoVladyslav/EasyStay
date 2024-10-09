@@ -12,7 +12,6 @@ import {
     IResetPasswordRequest,
     IRealtorInformation,
     IUpdateRealtorInformation,
-    // ICitizenship,
 } from "interfaces/user";
 
 export const userApi = createApi({
@@ -35,11 +34,6 @@ export const userApi = createApi({
             query: () => "GetRealtorsInformation",
             providesTags: ["User"],
         }),
-
-        // getAllCitizenships: builder.query<ICitizenship[], void>({
-        //     query: () => "GetCitizenships",
-        //     providesTags: ["Citizenships"],
-        // }),
 
         signIn: builder.mutation<SignInResponse, SignInRequest>({
             query: (data) => {
@@ -149,7 +143,6 @@ export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
     useGetRealtorsInformationQuery,
-    // useGetAllCitizenshipsQuery,
     useSignInMutation,
     useRegistrationMutation,
     useCreateAdminMutation,

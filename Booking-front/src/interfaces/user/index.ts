@@ -13,49 +13,6 @@ export interface User {
     isLocked: boolean;
 }
 
-export interface IRealtorInformation {
-    fullName: string;
-    email: string;
-    description?: string;
-    phoneNumber?: string;
-    dateOfBirth?: Date;
-    citizenship?: ICitizenship;
-    gender?: IGender;
-    address?: string;
-    country?: IRealtorInformationCountry;
-    city?: IRealtorInformationCity;
-}
-
-export interface IRealtorInformationCountry {
-    id: number;
-    name: string;
-}
-
-export interface IRealtorInformationCity {
-    id: number;
-    name: string;
-}
-
-export interface IUpdateRealtorInformation {
-    description: string;
-    phoneNumber: string;
-    dateOfBirth: Date;
-    citizenshipId: number;
-    genderId: number;
-    address: string;
-    cityId: number;
-}
-
-export interface IGender {
-    id: number;
-    name: string;
-}
-
-// export interface GenderInfo {
-//     id: number;
-//     name: string;
-// }
-
 export interface UserState {
     location: string;
     user: User | null;
@@ -107,4 +64,42 @@ export interface IResetPasswordRequest {
     email: string;
     token: string;
     newPassword: string;
+}
+
+export interface IRealtorInformation {
+    fullName: string;
+    email: string;
+    description?: string;
+    phoneNumber?: string;
+    dateOfBirth?: Date;
+    address?: string;
+    citizenship?: ICitizenship;
+    gender?: IGender;
+    country?: IRealtorInformationCountry;
+    city?: IRealtorInformationCity;
+}
+
+export interface IUpdateRealtorInformation {
+    description: string;
+    phoneNumber: string;
+    dateOfBirth: string;
+    citizenshipId: number;
+    genderId: number;
+    address: string;
+    cityId: number;
+}
+
+export interface IRealtorInformationCountry {
+    id: number;
+    name: string;
+}
+
+export interface IRealtorInformationCity {
+    id: number;
+    name: string;
+}
+
+export interface IGender {
+    id: number;
+    name: string;
 }

@@ -66,13 +66,14 @@ export const ResetPasswordSchema = z.object({
 export type ResetPasswordSchemaType = z.infer<typeof ResetPasswordSchema>;
 
 export const UpdateRealtorInformationSchema = z.object({
-    description: z.string()
+    description: z
+        .string()
         .min(1, "Опис є обов'язковим полем")
         .max(4000, "Опис не може перевищувати 4000 символів"),
     phoneNumber: z
         .string()
         .min(1, "Номер телефону є обов'язковим полем")
-        .regex(/^\+\d{12}$/, "Невірний формат телефону. Використовуйте формат +XXXXXXXXXXXX"),
+        .regex(/^\+\d{12}$/, "Використовуйте формат +XXXXXXXXXXXX"),
     dateOfBirth: z
         .string()
         .refine((date) => date.length > 0, "Дата народження є обов'язковою")
@@ -99,15 +100,15 @@ export const UpdateRealtorInformationSchema = z.object({
         }, {
             message: "Вам має бути 18 років або більше",
         }),
+    address: z
+        .string()
+        .min(1, "Адреса є обов'язковим полем"),
     citizenshipId: z.coerce
         .number()
         .min(1, "Громадянство є обов'язковим полем"),
     genderId: z.coerce
         .number()
         .min(1, "Стать є обов'язковим полем"),
-    address: z
-        .string()
-        .min(1, "Адреса є обов'язковим полем"),
     cityId: z.coerce
         .number()
         .min(1, "Місто є обов'язковим полем"),

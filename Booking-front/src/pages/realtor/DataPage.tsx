@@ -30,9 +30,9 @@ const DataPage = () => {
     const { data: citizenshipsData } = useGetAllCitizenshipsQuery();
     const [updateRealtorsInformation] = useUpdateRealtorsInformationMutation();
 
-    const [selectedCountryId, setSelectedCountryId] = useState<number | null>(null);
-    const [selectedCitizenshipId, setSelectedCitizenshipId] = useState<number | null>(null);
-    const [selectedGenderId, setSelectedGenderId] = useState<number | null>(null);
+    const [selectedCountryId, setSelectedCountryId] = useState<number>();
+    const [selectedCitizenshipId, setSelectedCitizenshipId] = useState<number>();
+    const [selectedGenderId, setSelectedGenderId] = useState<number>();
     const [filteredCities, setFilteredCities] = useState<City[]>([]);
 
     const sortedCities = useMemo(() => {
@@ -53,20 +53,16 @@ const DataPage = () => {
 
     useEffect(() => {
         if (realtorInfo) {
-            const citizenship = realtorInfo.citizenship || {};
-            const gender = realtorInfo.gender || {};
-            const city = realtorInfo.city || {};
-            const country = realtorInfo.country || {};
-            setSelectedCountryId(country.id || null);
-            setSelectedCitizenshipId(citizenship.id || null);
-            setSelectedGenderId(gender.id || null);
+            setSelectedCountryId(realtorInfo?.country?.id);
+            setSelectedCitizenshipId(realtorInfo?.citizenship?.id);
+            setSelectedGenderId(realtorInfo?.gender?.id);
             setValue("description", realtorInfo.description || "");
             setValue("phoneNumber", realtorInfo.phoneNumber || "");
             setValue("dateOfBirth", realtorInfo?.dateOfBirth ? new Date(realtorInfo.dateOfBirth).toISOString().split("T")[0] : "");
-            setValue("citizenshipId", citizenship.id);
-            setValue("genderId", gender.id);
             setValue("address", realtorInfo.address || "");
-            setValue("cityId", city.id);
+            setValue("citizenshipId", realtorInfo?.citizenship?.id as number);
+            setValue("genderId", realtorInfo?.gender?.id as number);
+            setValue("cityId", realtorInfo?.city?.id as number);
         }
     }, [realtorInfo, setValue]);
 
@@ -90,14 +86,7 @@ const DataPage = () => {
 
     const onSubmit = async (data: UpdateRealtorInformationSchemaType) => {
         try {
-            const formattedData = {
-                ...data,
-                dateOfBirth: new Date(data.dateOfBirth),
-            };
-
-            await updateRealtorsInformation(formattedData).unwrap();
-            // console.log(data);
-
+            await updateRealtorsInformation(data).unwrap();
             showToast(`Данні успішно оновлено!`, "success");
         } catch (error) {
             showToast(`Помилка при оновленні данних!`, "error");
@@ -146,11 +135,11 @@ const DataPage = () => {
                         <div className="containers1">
                             <p>Номер телефону</p>
                             <input className="text-input"
-                                   {...register("phoneNumber")}
-                                   id="phone"
-                                   title="Номер телефону"
-                                   type="text"
-                                   placeholder="Введіть Номер телефону"
+                                {...register("phoneNumber")}
+                                id="phone"
+                                title="Номер телефону"
+                                type="text"
+                                placeholder="Введіть Номер телефону"
                             />
                             {errors?.phoneNumber && (
                                 <FormError className="text-red" errorMessage={errors?.phoneNumber?.message as string} />
@@ -225,6 +214,9 @@ const DataPage = () => {
                                 type="text"
                                 placeholder="Введіть адресу"
                             />
+                            {errors?.address && (
+                                <FormError className="text-red" errorMessage={errors?.address?.message as string} />
+                            )}
                         </div>
 
                         <div className="containers2">

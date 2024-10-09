@@ -8,13 +8,16 @@ import {
     CreateAdmin,
     BlockUserRequest,
     UnlockUserRequest,
-    ISendResetPasswordEmailRequest, IResetPasswordRequest,
+    ISendResetPasswordEmailRequest,
+    IResetPasswordRequest,
+    IRealtorInformation,
+    IUpdateRealtorInformation,
 } from "interfaces/user";
 
 export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: createBaseQuery("accounts"),
-    tagTypes: ["User"],
+    tagTypes: ["User", "Citizenships"],
 
     endpoints: (builder) => ({
         getAllCustomers: builder.query<User[], void>({
@@ -27,19 +30,10 @@ export const userApi = createApi({
             providesTags: ["User"],
         }),
 
-        // createAdmin: builder.mutation<LoginResponse, { email: string; password: string }>({
-        //     query: (data) => {
-        //         const formData = new FormData();
-        //         formData.append("email", data.email);
-        //         formData.append("password", data.password);
-        //         formData.append("role", "admin");
-        //         return {
-        //             url: "Registration",
-        //             method: "POST",
-        //             body: formData,
-        //         };
-        //     },
-        // }),
+        getRealtorsInformation: builder.query<IRealtorInformation, void>({
+            query: () => "GetRealtorsInformation",
+            providesTags: ["User"],
+        }),
 
         signIn: builder.mutation<SignInResponse, SignInRequest>({
             query: (data) => {
@@ -108,6 +102,7 @@ export const userApi = createApi({
             }),
             invalidatesTags: ["User"],
         }),
+
         unlockUser: builder.mutation<void, UnlockUserRequest>({
             query: (id) => ({
                 url: `UnlockUserById/${id}`,
@@ -131,12 +126,23 @@ export const userApi = createApi({
                 body: data,
             }),
         }),
+
+        updateRealtorsInformation : builder.mutation<void, IUpdateRealtorInformation>({
+            query: (data) => {
+                return {
+                    url: "UpdateRealtorsInformation",
+                    method: "PATCH",
+                    body: data,
+                };
+            },
+        }),
     }),
 });
 
 export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
+    useGetRealtorsInformationQuery,
     useSignInMutation,
     useRegistrationMutation,
     useCreateAdminMutation,
@@ -144,4 +150,5 @@ export const {
     useUnlockUserMutation,
     useSendResetPasswordEmailMutation,
     useResetPasswordMutation,
+    useUpdateRealtorsInformationMutation,
 } = userApi;

@@ -51,10 +51,10 @@ const HotelPage = () => {
                             <div className="data">
                                 <p className="title">Опис</p>
                                 <div className="form-textarea">
-                            <textarea
-                                placeholder="Текст"
-                                maxLength={4000}
-                            ></textarea>
+                                    <textarea
+                                        placeholder="Текст"
+                                        maxLength={4000}
+                                    ></textarea>
                                     <p className="counter">0/4000</p>
                                 </div>
                             </div>

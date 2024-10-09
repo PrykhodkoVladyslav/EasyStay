@@ -16,7 +16,7 @@ const Side = () => {
         return null;
     }
 
-    const displayName = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.email || "Невідомий Юзер";
+    const displayName = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : "Невідомий Юзер";
 
     const buttons = [
         { name: "Головна", path: "" },

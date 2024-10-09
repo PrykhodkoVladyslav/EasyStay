@@ -1,107 +1,277 @@
-
+import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { getUser } from "store/slice/userSlice.ts";
+import { useGetRealtorsInformationQuery, useUpdateRealtorsInformationMutation } from "services/user.ts";
+import { useGetAllCitiesQuery } from "services/city.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import FormError from "components/ui/FormError.tsx";
+import { useGetAllCountriesQuery } from "services/country.ts";
+import { UpdateRealtorInformationSchema, UpdateRealtorInformationSchemaType } from "interfaces/zod/user.ts";
+import showToast from "utils/toastShow.ts";
+import { useGetAllCitizenshipsQuery } from "services/citizenship.ts";
+import { City } from "interfaces/city";
 
 const DataPage = () => {
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors },
+    } = useForm<UpdateRealtorInformationSchemaType>({
+        resolver: zodResolver(UpdateRealtorInformationSchema),
+    });
+
+    const user = useSelector(getUser);
+    const { data: realtorInfo, error, isLoading } = useGetRealtorsInformationQuery();
+    const { data: citiesData } = useGetAllCitiesQuery();
+    const { data: countriesData } = useGetAllCountriesQuery();
+    const { data: citizenshipsData } = useGetAllCitizenshipsQuery();
+    const [updateRealtorsInformation] = useUpdateRealtorsInformationMutation();
+
+    const [selectedCountryId, setSelectedCountryId] = useState<number>();
+    const [selectedCitizenshipId, setSelectedCitizenshipId] = useState<number>();
+    const [selectedGenderId, setSelectedGenderId] = useState<number>();
+    const [filteredCities, setFilteredCities] = useState<City[]>([]);
+
+    const sortedCities = useMemo(() => {
+        return citiesData ? [...citiesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
+    }, [citiesData]);
+
+    const sortedCountries = useMemo(() => {
+        return countriesData ? [...countriesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
+    }, [countriesData]);
+
+    useEffect(() => {
+        if (selectedCountryId) {
+            setFilteredCities(sortedCities.filter(city => city.country.id === selectedCountryId));
+        } else {
+            setFilteredCities([]);
+        }
+    }, [selectedCountryId, sortedCities]);
+
+    useEffect(() => {
+        if (realtorInfo) {
+            setSelectedCountryId(realtorInfo?.country?.id);
+            setSelectedCitizenshipId(realtorInfo?.citizenship?.id);
+            setSelectedGenderId(realtorInfo?.gender?.id);
+            setValue("description", realtorInfo.description || "");
+            setValue("phoneNumber", realtorInfo.phoneNumber || "");
+            setValue("dateOfBirth", realtorInfo?.dateOfBirth ? new Date(realtorInfo.dateOfBirth).toISOString().split("T")[0] : "");
+            setValue("address", realtorInfo.address || "");
+            setValue("citizenshipId", realtorInfo?.citizenship?.id as number);
+            setValue("genderId", realtorInfo?.gender?.id as number);
+            setValue("cityId", realtorInfo?.city?.id as number);
+        }
+    }, [realtorInfo, setValue]);
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const countryId = Number(e.target.value);
+        setSelectedCountryId(countryId);
+        setValue("cityId", countryId);
+    };
+
+    const handleCitizenshipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const citizenshipId = Number(e.target.value);
+        setSelectedCitizenshipId(citizenshipId);
+        setValue("citizenshipId", citizenshipId);
+    };
+
+    const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const genderId = Number(e.target.value);
+        setSelectedGenderId(genderId);
+        setValue("genderId", genderId);
+    };
+
+    const onSubmit = async (data: UpdateRealtorInformationSchemaType) => {
+        try {
+            await updateRealtorsInformation(data).unwrap();
+            showToast(`Данні успішно оновлено!`, "success");
+        } catch (error) {
+            showToast(`Помилка при оновленні данних!`, "error");
+        }
+    };
+
+    if (!user) {
+        return null;
+    }
+    if (isLoading) {
+        return <h2 className="flex items-center justify-center">Завантаження...</h2>;
+    }
+    if (error && "status" in error) {
+        return <p>Виникла помилка при отриманні даних: {error.status}</p>;
+    }
 
     return (
         <div className="data-content">
             <p className="title">Особисті дані</p>
+            <form onSubmit={handleSubmit(onSubmit)}>
 
-            <div className="data">
-                <div className="info">
-                    <p className="name">Дмитро Романчук</p>
-                    <p className="email">dmytro937@gmail.com</p>
-                </div>
+                <div className="data">
+                    <div className="info">
+                        {realtorInfo && (
+                            <>
+                                <p className="name">{realtorInfo.fullName}</p>
+                                <p className="email">{realtorInfo.email}</p>
+                            </>
+                        )}
+                    </div>
 
-                <div className="container10">
-                    <div className="containers1">
-                        <p>Номер телефону</p>
-                        <input className="text-input"
-                            id="phone"
-                            title="Номер телефону"
-                            type="number"
-                            placeholder="Введіть Номер телефону"
-                            // isError={Boolean(errors.firstName || firstNameError)}
-                            // errorMessage={errors?.firstName?.message || firstNameError}
-                            // showCross={showCross}
-                            // formRegisterReturn={register("firstName")}
-                        />
-
-                    </div>
-                    <div className="containers1">
-                        <p>Дата народження</p>
-                        <input
-                            className="text-input"
-                            id="birthdate"
-                            title="Дата народження"
-                            type="date"
-                            placeholder="Введіть дату народження"
-                            min="1900-01-01"
-                            max="2024-12-31"
-                        />
-
-                    </div>
-                    <div className="containers1">
-                        <p>Громадянство</p>
-                        <input
-                            className="text-input"
-                            id="Country"
-                            title="Громадянство"
-                            type="text"
-                            placeholder="Введіть громадянство"
-                        />
-                    </div>
-                    <div className="containers1">
-                        <p>Стать</p>
-                        <input
-                            className="text-input"
-                            id="gender"
-                            title="Стать"
-                            type="text"
-                            placeholder="Введіть стать"
-                        />
-                    </div>
-                    <div className="containers1">
-                        <p>Адресса</p>
-                        <input
-                            className="text-input"
-                            id="address"
-                            title="Адресса"
-                            type="text"
-                            placeholder="Введіть адрессу"
-                        />
-                    </div>
-                    <div className="containers2">
-                        <div className="container11">
-                            <div>
-                                <p>Країна/регіон</p>
-                                <input
-                                    className="text-input"
-                                       id="text"
-                                       title="Країна/регіон"
-                                       type="text"
-                                       placeholder="Введіть країну/регіон"
-                                />
-                            </div>
-                            <div>
-                                <p>Місто</p>
-                                <input
-                                    className="text-input"
-                                       id="text"
-                                       title="Місто"
-                                       type="text"
-                                       placeholder="Введіть місто"
-                                />
-                            </div>
+                    <div className="container10">
+                        <div className="containers1">
+                            <p>Опис</p>
+                            <textarea
+                                {...register("description")}
+                                placeholder="Текст"
+                                maxLength={4000}
+                            ></textarea>
+                            {errors?.description && (
+                                <FormError className="text-red" errorMessage={errors?.description?.message as string} />
+                            )}
+                            <p className="counter">{watch("description")?.length || 0}/4000</p>
                         </div>
 
-                        <button className="btn-edit">
-                            Редагувати
-                        </button>
+                        <div className="containers1">
+                            <p>Номер телефону</p>
+                            <input className="text-input"
+                                {...register("phoneNumber")}
+                                id="phone"
+                                title="Номер телефону"
+                                type="text"
+                                placeholder="Введіть Номер телефону"
+                            />
+                            {errors?.phoneNumber && (
+                                <FormError className="text-red" errorMessage={errors?.phoneNumber?.message as string} />
+                            )}
+                        </div>
+
+                        <div className="containers1">
+                            <p>Дата народження</p>
+                            <input
+                                className="text-input"
+                                {...register("dateOfBirth")}
+                                id="birthdate"
+                                title="Дата народження"
+                                type="date"
+                                placeholder="Введіть дату народження"
+                                max="9999-12-31"
+                            />
+                            {errors?.dateOfBirth && (
+                                <FormError className="text-red" errorMessage={errors?.dateOfBirth?.message as string} />
+                            )}
+                        </div>
+
+                        <div className="containers1">
+                            <p>Громадянство</p>
+                            <select
+                                {...register("citizenshipId")}
+                                id="citizenshipId"
+                                value={selectedCitizenshipId || ""}
+                                onChange={handleCitizenshipChange}
+                            >
+                                <option disabled value="">
+                                    Виберіть громадянство
+                                </option>
+                                {citizenshipsData?.map((citizenship) => (
+                                    <option key={citizenship.id} value={citizenship.id}>
+                                        {citizenship.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors?.citizenshipId && (
+                                <FormError className="text-red"
+                                           errorMessage={errors?.citizenshipId?.message as string} />
+                            )}
+
+                        </div>
+
+                        <div className="containers1">
+                            <p>Стать</p>
+                            <select
+                                {...register("genderId")}
+                                value={selectedGenderId || ""}
+                                onChange={handleGenderChange}
+                            >
+                                <option disabled value="">
+                                    Виберіть стать
+                                </option>
+                                <option value={1}>Чоловік</option>
+                                <option value={2}>Жінка</option>
+                            </select>
+                            {errors?.genderId && (
+                                <FormError className="text-red" errorMessage={errors?.genderId?.message as string} />
+                            )}
+                        </div>
+
+                        <div className="containers1">
+                            <p>Адреса</p>
+                            <input
+                                className="text-input"
+                                {...register("address")}
+                                id="address"
+                                title="Адреса"
+                                type="text"
+                                placeholder="Введіть адресу"
+                            />
+                            {errors?.address && (
+                                <FormError className="text-red" errorMessage={errors?.address?.message as string} />
+                            )}
+                        </div>
+
+                        <div className="containers2">
+                            <div className="container11">
+                                <div>
+                                    <p>Країна</p>
+                                    <select
+                                        id="countryId"
+                                        value={selectedCountryId || ""}
+                                        onChange={handleCountryChange}
+                                    >
+                                        <option disabled value="">
+                                            Виберіть країну
+                                        </option>
+                                        {sortedCountries.map((country) => (
+                                            <option key={country.id} value={country.id}>
+                                                {country.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <p>Місто</p>
+                                    <select
+                                        {...register("cityId")}
+                                        id="cityId"
+                                        value={watch("cityId") || ""}
+                                    >
+                                        <option disabled value="">
+                                            Виберіть місто
+                                        </option>
+                                        {filteredCities.map((city: City) => (
+                                            <option key={city.id} value={city.id}>
+                                                {city.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors?.cityId && (
+                                        <FormError
+                                            className="text-red"
+                                            errorMessage={errors?.cityId?.message as string}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+
+                            <button type="submit" className="btn-edit">
+                                Редагувати
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
-}
+};
 
 export default DataPage;

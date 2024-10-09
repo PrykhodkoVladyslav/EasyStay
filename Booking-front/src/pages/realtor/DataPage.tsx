@@ -1,7 +1,7 @@
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUser } from "store/slice/userSlice.ts";
-import {useGetRealtorsInformationQuery, useUpdateRealtorsInformationMutation} from "services/user.ts";
+import { useGetRealtorsInformationQuery, useUpdateRealtorsInformationMutation } from "services/user.ts";
 import { useGetAllCitiesQuery } from "services/city.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import { useGetAllCountriesQuery } from "services/country.ts";
 import { UpdateRealtorInformationSchema, UpdateRealtorInformationSchemaType } from "interfaces/zod/user.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetAllCitizenshipsQuery } from "services/citizenship.ts";
-import {City} from "interfaces/city";
+import { City } from "interfaces/city";
 
 const DataPage = () => {
     const {
@@ -28,7 +28,7 @@ const DataPage = () => {
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: countriesData } = useGetAllCountriesQuery();
     const { data: citizenshipsData } = useGetAllCitizenshipsQuery();
-    const [updateRealtorsInformation ] = useUpdateRealtorsInformationMutation();
+    const [updateRealtorsInformation] = useUpdateRealtorsInformationMutation();
 
     const [selectedCountryId, setSelectedCountryId] = useState<number | null>(null);
     const [selectedCitizenshipId, setSelectedCitizenshipId] = useState<number | null>(null);
@@ -62,31 +62,30 @@ const DataPage = () => {
             setSelectedGenderId(gender.id || null);
             setValue("description", realtorInfo.description || "");
             setValue("phoneNumber", realtorInfo.phoneNumber || "");
-            setValue("dateOfBirth", realtorInfo?.dateOfBirth ? new Date(realtorInfo.dateOfBirth).toISOString().split('T')[0] : "");
+            setValue("dateOfBirth", realtorInfo?.dateOfBirth ? new Date(realtorInfo.dateOfBirth).toISOString().split("T")[0] : "");
             setValue("citizenshipId", citizenship.id);
             setValue("genderId", gender.id);
             setValue("address", realtorInfo.address || "");
-            setValue("countryId", city?.country?.id || "");
-            setValue("cityId", city.id || "");
+            setValue("cityId", city.id);
         }
     }, [realtorInfo, setValue]);
 
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryId = Number(e.target.value);
         setSelectedCountryId(countryId);
-        setValue("cityId", "");
+        setValue("cityId", countryId);
     };
 
     const handleCitizenshipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const citizenshipId = Number(e.target.value);
         setSelectedCitizenshipId(citizenshipId);
-        setValue("citizenshipId", "");
+        setValue("citizenshipId", citizenshipId);
     };
 
     const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const genderId = Number(e.target.value);
         setSelectedGenderId(genderId);
-        setValue("genderId", "");
+        setValue("genderId", genderId);
     };
 
     const onSubmit = async (data: UpdateRealtorInformationSchemaType) => {
@@ -105,9 +104,15 @@ const DataPage = () => {
         }
     };
 
-    if (!user) { return null; }
-    if (isLoading) { return <h2 className="flex items-center justify-center">Завантаження...</h2>; }
-    if (error && 'status' in error) { return <p>Виникла помилка при отриманні даних: {error.status}</p>; }
+    if (!user) {
+        return null;
+    }
+    if (isLoading) {
+        return <h2 className="flex items-center justify-center">Завантаження...</h2>;
+    }
+    if (error && "status" in error) {
+        return <p>Виникла помилка при отриманні даних: {error.status}</p>;
+    }
 
     return (
         <div className="data-content">
@@ -186,7 +191,8 @@ const DataPage = () => {
                                 ))}
                             </select>
                             {errors?.citizenshipId && (
-                                <FormError className="text-red" errorMessage={errors?.citizenshipId?.message as string}/>
+                                <FormError className="text-red"
+                                           errorMessage={errors?.citizenshipId?.message as string} />
                             )}
 
                         </div>
@@ -205,7 +211,7 @@ const DataPage = () => {
                                 <option value={2}>Жінка</option>
                             </select>
                             {errors?.genderId && (
-                                <FormError className="text-red" errorMessage={errors?.genderId?.message as string}/>
+                                <FormError className="text-red" errorMessage={errors?.genderId?.message as string} />
                             )}
                         </div>
 
@@ -274,6 +280,6 @@ const DataPage = () => {
             </form>
         </div>
     );
-}
+};
 
 export default DataPage;

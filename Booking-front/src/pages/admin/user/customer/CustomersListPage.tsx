@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { IconLock, IconLockOpen } from "@tabler/icons-react";
-// import { Button } from "components/ui/Button.tsx";
 import { useGetAllCustomersQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
@@ -8,7 +7,7 @@ import { RootState } from "store/index.ts";
 import { getToken } from "store/slice/userSlice.ts";
 import ModalComponent from "components/ModalComponent";
 import showToast from "utils/toastShow.ts";
-import {User} from "interfaces/user";
+import { User } from "interfaces/user";
 
 const CustomersListPage: React.FC = () => {
     const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();

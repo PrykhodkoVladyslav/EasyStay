@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="footer">
             <div className="footer-container">
                 <div className="footer-section">
-                    <img  width="100%" src="./public/logo/logo_white.svg" alt="EasyStay Logo" />
+                    <img  width="100%" src="\logo\Logo_white.svg" alt="EasyStay Logo" />
                     <h1>Найкращі пропозиції житла</h1>
                     <h1>Для комфортного відпочинку!</h1>
                 </div>

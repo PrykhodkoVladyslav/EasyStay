@@ -1404,7 +1404,8 @@
 
 
 
-//SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss
+//HOME PAGE CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*Discounts component!!!!!!!!!*/
 .all-conteiner {
   font-family: var(--font-primary);
  width: 1720px;
@@ -1421,7 +1422,7 @@
   .sort-btn{
     position: relative;
     width: 414px;
-    height: 56px;
+    height: 46px;
     border-radius: 22px;
     background: rgb(247, 247, 253);
     display: flex;
@@ -1665,15 +1666,15 @@
     }
   }
 }
-
+/*Tickets components!!!!!!!!!*/
 .ticketComp {
   position: relative;
   width: 1720px;
   height: 230px;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 70px;
+  margin-bottom: 70px;
   font-family: var(--font-primary);
   .sidebar {
     position: absolute;
@@ -1697,7 +1698,7 @@
       &__item{
         display: flex;
         justify-content: center;
-justify-items: center;
+        justify-items: center;
       }
       &__item:hover {
         background-color: #3F523C;
@@ -1732,7 +1733,7 @@ justify-items: center;
       height: 27px;
       top:22px;
       left:22px;
-      
+
     }
     .search-form {
       position: relative;
@@ -1818,5 +1819,592 @@ justify-items: center;
   }
 }
 
+/*Hero-section!!!!!!!!!*/
+.hero-section {
+
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+  height: 667px;
+  width: 1720px;
+  border-radius: 20px;
+  background-color: #e5e5e5;
+  text-align: center;
+  margin-top: 50px;
+  font-family: var(--font-primary);
+  margin-bottom: 25px;
+  background-image: url('./images/Homepage/Union.png');
+
+
+  .cta-button {
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 230px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    color: #3F523C;
+  }
+
+  .cta-button:hover {
+    background-color: #ddd;
+  }
+  .hero-content2 {
+
+
+    height: 329px;
+    width: 876px;
+  }
+
+  .hero-content2 h1 {
+    font-size: 6em;
+    margin-bottom: 30px;
+    color: white;
+    height: 50px;
+  }
+
+  .hero-content2 p {
+    font-size: 1.37em;
+    color: white;
+    margin-top: 100px;
+    width: auto;
+  }
+}
+
+/*Navbar!!!!!!!!!*/
+.navbar {
+
+  position: relative;
+  max-width: 100%;
+  height: 73.82px;
+  top: 25px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 340px;
+
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    width: 183px;
+    height: 74px;
+  }
+
+  .navbar-logo img {
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .navbar-menu a {
+    margin: 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    font-size: 20px;
+  }
+
+  .navbar-menu a:hover {
+    background-color: #3F523C;
+    color: white;
+    border-radius: 20px;
+    transition: 0.5ms;
+  }
+
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 46px;
+  }
+
+
+  .icon-bell,
+  .icon-user {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+
+  .language-switcher {
+    display: inline-block;
+    position: relative;
+    background-color: #f3f3f3;
+    border-radius: 20px;
+    padding: 4px 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    width: 98px;
+    height: 37px;
+
+
+    .selected-language {
+
+      align-items: center;
+      justify-content: space-between;
+      background-color: #4f6b4b;
+      border-radius: 20px;
+      padding: 3px 13px;
+      color: white;
+      width: 46px;
+      height: 29px;
+    }
+
+    .arrow {
+      position: relative;
+      bottom: 15px;
+      left: 47px;
+      color: black;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      z-index: 10;
+    }
+
+    .dropdown div {
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .dropdown div:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+/*Footer!!!!!!!!!*/
+.footer {
+  background-color: #4c6048;
+  color: white;
+  height: 359px;
+  max-width: 100%;
+  font-family: var(--font-primary);
+
+
+  .footer-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    width: 1776px;
+    height: 196px;
+    margin: auto;
+    top: 78px;
+  }
+
+  .footer-section {
+    width: auto;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .footer-section h1 {
+
+    font-size: 15px;
+  }
+
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footer-section li {
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  .subscribe-box {
+    background-color: white;
+    width: 352px;
+    height: 55px;
+    border-radius: 20px;
+    border: none;
+  }
+
+  .subscribe-input {
+    position: relative;
+    border: none;
+    border-radius: 20px;
+    color: black;
+    width: 195px;
+    height: 55px;
+    padding: 10px;
+    outline: none;
+  }
+
+  .subscribe-button {
+    position: relative;
+    color: white;
+    background-color: #4c6048;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 150px;
+    height: 35px;
+
+  }
+
+  .subscribe-button:hover {
+    background-color: #ccc;
+  }
+}
+
+/*Discount!!!!!!!!!*/
+.discount {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 90px;
+  margin-bottom: 90px;
+  width: 1720px;
+  height: 218px;
+  background-color: #e5e5e5;
+  border-radius: 20px;
+  font-family: var(--font-primary);
+  background-image: url('./images/Homepage/night.jpg');
+  background-size: cover;
+  background-position: center;
+
+  .discount-content {
+    display: flex;
+    margin: auto;
+    height: 112px;
+    width: 1466px;
+
+
+    h1 {
+      font-size: 2em;
+      color: white;
+      width: 720px;
+    }
+
+    button {
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: 514px;
+      background-color: white;
+      border: none;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 15px;
+      width: 257px;
+      height: 50px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #3F523C;
+
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+  }
+}
+
+/*Services!!!!!!!!!*/
+.services-container {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #333;
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  font-family: var(--font-primary);
+  width: 1720px;
+  height: 520px;
+
+  h1 {
+    position: relative;
+    font-weight: 600;
+    font-size: 64px;
+    bottom: 10px;
+  }
+
+  .service-list {
+    padding: 20px 0px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 1720px;
+    margin: 0 auto;
+  }
+
+  .service-item {
+    display: grid;
+    background-color: #f5f5f5; /* Світло-сірий фон для кожного блоку */
+    color: black; /* Чорний текст */
+    padding: 20px;
+    border-radius: 20px;
+    width: 284px; /* Фіксована ширина кожного блоку */
+    height: 313px;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .service-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+
+  .service-item h3 {
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 24px;
+    font-family: "Montserrat", system-ui;
+  }
+
+  .service-item p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 190px;
+    font-weight: 400;
+  }
+
+  .details-link {
+    padding: 15px 0px 0px 0px;
+    color: #3F523C;
+    text-decoration: none;
+    font-weight: bold;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .details-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .service-list {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .service-item {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+/*Carousel!!!!!!!!!*/
+.Carousel-conteiner {
+  font-family: var(--font-primary);
+  width: 1720px;
+  height: 784px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333333;
+  border-radius: 20px;
+  margin: auto;
+
+  .Carousel-conteiner2 {
+    margin: auto;
+    width: 1720px;
+    height: 704px;
+    background-image: url("./icons/homepageSvg/line.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .Carousel-conteiner2 h1 {
+    position: relative;
+    color: white;
+    font-size: 64px;
+    font-weight: 600;
+    width: 648px;
+    height: 87px;
+    left: 48px;
+    bottom: 22px;
+  }
+
+
+  .Carousel-conteiner3 {
+    position: relative;
+    width: 1620px;
+    height: 547px;
+    margin: auto;
+    bottom: 12px;
+    opacity: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .CarItem1 {
+    display: flex;
+    flex-direction: column;
+    width: 299px;
+    height: 410px;
+    border-radius: 22px;
+    padding: 20px 20px 20px 20px;
+    margin-top: 30px;
+    background-image: url('./images/Homepage/propositionImages/Egypt.jpg');
+    background-position: center;
+    background-size: cover;
+    margin-right: 50px;
+  }
+  .CarItem2 {
+    display: flex;
+    flex-direction: column;
+    width: 345px;
+    height: 296px;
+    border-radius: 22px;
+    padding: 20px 20px 20px 20px;
+    margin-top: 200px;
+    background-image: url('./images/Homepage/propositionImages/Turkey.png');
+    background-position: center;
+    background-size: cover;
+  }
+  .CarItem3 {
+    display: flex;
+    flex-direction: column;
+    width: 345px;
+    height: 296px;
+    border-radius: 22px;
+    padding: 20px 20px 20px 20px;
+    margin-top: 40px;
+    background-image: url('./images/Homepage/propositionImages/Bali.png');
+    background-position: center;
+    background-size: cover;
+  }
+  .CarItem4 {
+    display: flex;
+    flex-direction: column;
+    width: 402px;
+    height: 547px;
+    border-radius: 22px;
+    padding: 20px 20px 20px 20px;
+    background-image: url('./images/Homepage/propositionImages/ShriLanka.png');
+    background-position: center;
+    background-size: cover;
+  }
+    .cost {
+      width: 78px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+  .Carousel-item h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    height: 29px;
+    font-family: "Montserrat", system-ui;
+  }
+
+  .Carousel-item p {
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    height: 29px;
+    font-family: "Montserrat", system-ui;
+    padding: 2px 0px 0px 0px;
+  }
+
+  .Carousel-item p1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    font-family: "Montserrat", system-ui;
+    padding: 0px 0px 0px 5px;
+  }
+
+  .Carousel-item button {
+    position: relative;
+    display: flex;
+    background: rgba(255, 255, 255, 0.5);
+    width: 53px;
+    height: 53px;
+    border-radius: 30px;
+    transform: rotate(-45deg);
+    margin-top: auto;
+    margin-left: auto;
+  }
+
+  .Carousel-item button:hover {
+    display: flex;
+    background: rgba(255, 255, 255);
+    transition: 0.2s;
+  }
+
+
+  .arrow-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .div-btn{
+    display: flex;
+    width: 142px;
+    height: 55px;
+    margin: auto;
+    position: relative;
+    bottom: 10px;
+    justify-content: space-between;
+  }
+  .left-arrow {
+    position: relative;
+    background-color: #37422b;
+    color: #fff;
+
+  }
+
+  .left-arrow:hover {
+    background-color: #f1f1f1;
+    fill: #3F523C;
+  }
+
+
+  .right-arrow {
+    background-color: #37422b;
+    color: #fff;
+    transform: rotate(180deg);
+  }
+
+  .right-arrow:hover {
+    background-color: #f1f1f1;
+
+  }
+
+
+  .arrow-icon {
+    transform: rotate(180deg);
+  }
+}
 
 

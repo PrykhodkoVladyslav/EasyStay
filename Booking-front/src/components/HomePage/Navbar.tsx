@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
 
             <header className="navbar">
                 <div className="navbar-logo">
-                    <img   src="./public/logo/logo_EasyStay.svg" alt="EasyStay Logo" />
+                    <img   src="./logo/logo_EasyStay.svg" alt="EasyStay Logo" />
 
                 </div>
                 <nav className="navbar-menu">
@@ -21,8 +21,8 @@ const Navbar: React.FC = () => {
                 </nav>
                 <div className="navbar-actions">
                     <LanguageSwitcher></LanguageSwitcher>
-                    <a><img  src="./public/icons/homepageSvg/bell.svg" className="icon-bell"></img></a>
-                    <a><img src="./public/icons/homepageSvg/people.svg" className="icon-user"></img></a>
+                    <a><img  src="./icons/homepageSvg/bell.svg" className="icon-bell"></img></a>
+                    <a><img src="./icons/homepageSvg/people.svg" className="icon-user"></img></a>
                 </div>
             </header>
 

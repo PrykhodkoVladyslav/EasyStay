@@ -33,11 +33,11 @@ const CustomerHeader = () => {
             </a>
 
             <div className="center-section">
-                <button className="pages active">Кабінет</button>
-                <button className="pages">Мої готелі</button>
-                <button className="pages">Відгуки</button>
-                <button className="pages">Архів</button>
-                <button className="pages">Знижки</button>
+                <button className="pages active">Готелі</button>
+                <button className="pages">Машини</button>
+                <button className="pages">Апартаменти</button>
+                <button className="pages">Трансфери</button>
+                <button className="pages">Тури</button>
             </div>
 
             <div className="right-section">

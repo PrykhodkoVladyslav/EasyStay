@@ -270,7 +270,6 @@
     .center-section {
       height: 45px;
       display: flex;
-      gap: 39px;
       font-size: 20px;
       line-height: 27px;
       font-family: var(--font-primary), system-ui;
@@ -278,9 +277,11 @@
       .pages {
         white-space: nowrap;
         font-weight: 600;
+        margin: 0 20px;
       }
 
       .active {
+        margin: 0 -6px;
         padding: 9px 26px;
         border-radius: 14px;
         color: white;

@@ -1,7 +1,35 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
+import { useContext, useEffect } from "react";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { useNavigate } from "react-router-dom";
 
 const CustomerHeader = () => {
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    const navigate = useNavigate();
+
+    const menuItemData = [
+        { name: "Готелі", href: "/hotels" },
+        { name: "Машини", href: "/" },
+        { name: "Апартаменти", href: "/" },
+        { name: "Трансфери", href: "/" },
+        { name: "Тури", href: "/" },
+    ];
+
+    const menuItems = menuItemData.map((item, index) => (
+        <button
+            key={index}
+            className={`pages ${item.name === activeMenuItemContext?.activePage ? "active" : ""}`}
+            onClick={() => navigate(item.href)}
+        >{item.name}</button>
+    ));
+
+    useEffect(() => {
+        activeMenuItemContext.setActivePage("Готелі");
+    });
+
     const languageOptions = [
         { full: "English", abbr: "En" },
         { full: "Українська", abbr: "Укр" },
@@ -24,7 +52,7 @@ const CustomerHeader = () => {
 
     return (
         <header className="header">
-            <a href={"/"}>
+            <a onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                 <img
                     src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
                     alt="EasyStay Logo"
@@ -33,11 +61,7 @@ const CustomerHeader = () => {
             </a>
 
             <div className="center-section">
-                <button className="pages active">Готелі</button>
-                <button className="pages">Машини</button>
-                <button className="pages">Апартаменти</button>
-                <button className="pages">Трансфери</button>
-                <button className="pages">Тури</button>
+                {menuItems}
             </div>
 
             <div className="right-section">

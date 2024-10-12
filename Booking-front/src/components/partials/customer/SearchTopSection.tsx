@@ -1,5 +1,7 @@
+import DatePickerModal from "components/partials/customer/DatePickerModal.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import { useState } from "react";
+
+import React, { useState } from "react";
 
 const SearchTopSection = () => {
     const [guests, setGuests] = useState(1);
@@ -20,21 +22,31 @@ const SearchTopSection = () => {
             </div>
             <div className="block middle-block">
                 <div className="title-container">
-                    <img className="icon-padding" src={getPublicResourceUrl("icons/calendar.svg")}
-                         alt="Magnifying glass" />
+                    <img
+                        className="icon-padding"
+                        src={getPublicResourceUrl("icons/calendar.svg")}
+                        alt="Magnifying glass"
+                    />
                     <p className="title">Прибуття</p>
                 </div>
 
-                <p className="date">5 жовтня <span>2024</span></p>
+                <p className="date">
+                    5 жовтня <span>2024</span>
+                </p>
             </div>
             <div className="block middle-block">
                 <div className="title-container">
-                    <img className="icon-padding" src={getPublicResourceUrl("icons/calendar.svg")}
-                         alt="Magnifying glass" />
+                    <img
+                        className="icon-padding"
+                        src={getPublicResourceUrl("icons/calendar.svg")}
+                        alt="Magnifying glass"
+                    />
                     <p className="title">Виїзд</p>
                 </div>
 
-                <p className="date">7 жовтня <span>2024</span></p>
+                <p className="date">
+                    7 жовтня <span>2024</span>
+                </p>
             </div>
             <div className="block middle-block">
                 <div className="title-container">
@@ -42,7 +54,12 @@ const SearchTopSection = () => {
                 </div>
                 <div className="guests">
                     <img className="guests-icon" src={getPublicResourceUrl("icons/adult.svg")} alt="Adult" />
-                    <input className="guests-input" type="number" value={guests} onChange={handleGuestsChange} />
+                    <input
+                        className="guests-input"
+                        type="number"
+                        value={guests}
+                        onChange={handleGuestsChange}
+                    />
                     <p className="guests-title">Дорослих</p>
                 </div>
             </div>
@@ -52,6 +69,8 @@ const SearchTopSection = () => {
                     <p className="button-title">Шукати</p>
                 </button>
             </div>
+
+            <DatePickerModal />
         </div>
     );
 };

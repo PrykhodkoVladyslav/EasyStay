@@ -2,6 +2,7 @@
 @import "../../node_modules/react-toastify/dist/ReactToastify.css";
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,6 +17,7 @@
   --font-primary: "Nunito";
   --font-secondary: "Montserrat";
   --font-roboto: "Roboto";
+  --font-lato: "Lato";
 
   --border-radius: 22px;
 }
@@ -399,6 +401,7 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    position: relative;
 
     p {
       cursor: default;
@@ -551,6 +554,126 @@
         font-size: 15px;
         font-weight: 700;
 
+      }
+    }
+  }
+
+  .date-picker-modal {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .date-picker-container {
+      padding: 8px 16px;
+      border-radius: 22px;
+      box-shadow: 0 4px 6.7px 0 rgba(0, 0, 0, 0.25);
+      background: rgb(247, 247, 253);
+
+      .selected-dates {
+        padding: 16px 32px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+
+        span {
+          color: rgb(81, 81, 81);
+          font-family: var(--font-lato), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 24px;
+        }
+
+        img {
+          padding: 0 10px;
+        }
+      }
+
+      .line {
+        width: 100%;
+        border: 1px solid rgb(240, 240, 240);
+      }
+
+      .months-container {
+        display: flex;
+        flex-direction: row;
+
+        .month-container {
+          padding: 4px 36px;
+
+          .month-name-container {
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .month-name {
+              color: rgb(63, 82, 60);
+              font-family: var(--font-lato), system-ui;
+              font-size: 20px;
+              font-weight: 600;
+              line-height: 24px;
+            }
+
+            .side-arrow-width {
+              width: 24px;
+            }
+
+            .side-arrow:hover {
+              cursor: pointer;
+            }
+          }
+        }
+
+        .day-names-container {
+          padding: 8px 0;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+
+          p {
+            padding: 2px 8px;
+          }
+
+          p:nth-child(n + 6) {
+            color: rgb(249, 50, 50);
+          }
+        }
+
+        .weeks-container {
+          display: flex;
+          flex-direction: column;
+
+          .week-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            padding: 4px 0;
+
+            .day-container {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              width: 42px;
+              height: 42px;
+
+              .day-number {
+                color: rgb(0, 0, 0);
+                font-family: var(--font-lato), system-ui;
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 22px;
+              }
+
+              .day-of-other-month {
+                color: rgb(165, 165, 165);
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -12,7 +12,7 @@ export const breakfastApi = createApi({
 
     endpoints: (builder) => ({
         getAllBreakfasts: builder.query<IBreakfast[], void>({
-            query: () => "GetAll",
+            query: () => "getAll",
             providesTags: ["Breakfasts"],
         }),
     })

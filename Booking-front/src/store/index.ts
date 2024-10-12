@@ -7,9 +7,10 @@ import { hotelApi } from "services/hotel.ts";
 import { hotelCategoriesApi } from "services/hotelCategories.ts";
 import { cityApi } from "services/city.ts";
 import { countryApi } from "services/country.ts";
-import {citizenshipApi} from "services/citizenship.ts";
-import {hotelAmenityApi} from "services/hotelAmenity.ts";
-import {breakfastApi} from "services/breakfast.ts";
+import { citizenshipApi } from "services/citizenship.ts";
+import { hotelAmenityApi } from "services/hotelAmenity.ts";
+import { breakfastApi } from "services/breakfast.ts";
+import { languageApi } from "services/language.ts";
 
 export const store = configureStore({
     reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
         [citizenshipApi.reducerPath]: citizenshipApi.reducer,
         [hotelAmenityApi.reducerPath]: hotelAmenityApi.reducer,
         [breakfastApi.reducerPath]: breakfastApi.reducer,
+        [languageApi.reducerPath]: languageApi.reducer,
 
     },
     middleware: (getDefaultMiddleware) =>
@@ -33,7 +35,8 @@ export const store = configureStore({
             countryApi.middleware,
             citizenshipApi.middleware,
             hotelAmenityApi.middleware,
-            breakfastApi.middleware
+            breakfastApi.middleware,
+            languageApi.middleware,
 
         ),
 });

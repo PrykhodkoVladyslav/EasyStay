@@ -35,7 +35,7 @@ export const hotelApi = createApi({
         }),
 
         getRealtorHotelsPage: builder.query<Hotel[], { RealtorId?: string }>({
-            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
+            query: ({ RealtorId }) => `getPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
             providesTags: ["Hotels"],
         }),
 
@@ -84,7 +84,7 @@ export const hotelApi = createApi({
 
         setArchiveStatusHotel: builder.mutation<void, SetArchiveStatusRequest>({
             query: ({ id, isArchived }) => ({
-                url: "SetArchiveStatus",
+                url: "setArchiveStatus",
                 method: "PATCH",
                 body: {
                     id,

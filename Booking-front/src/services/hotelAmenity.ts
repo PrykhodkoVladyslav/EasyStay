@@ -11,7 +11,7 @@ export const hotelAmenityApi = createApi({
 
     endpoints: (builder) => ({
         getAllHotelAmenities: builder.query<IHotelAmenity[], void>({
-            query: () => "GetAll",
+            query: () => "getAll",
             providesTags: ["HotelAmenities"],
         }),
     }),

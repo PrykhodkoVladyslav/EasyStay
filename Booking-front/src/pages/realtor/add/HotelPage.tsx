@@ -12,6 +12,7 @@ import {useGetAllCitiesQuery} from "services/city.ts";
 import {useGetAllCountriesQuery} from "services/country.ts";
 import {useGetAllHotelAmenitiesQuery} from "services/hotelAmenity.ts";
 import {useGetAllBreakfastsQuery} from "services/breakfast.ts";
+import {useGetAllLanguagesQuery} from "services/language.ts";
 
 const HotelPage = () => {
     const {
@@ -30,6 +31,7 @@ const HotelPage = () => {
     const { data: countriesData } = useGetAllCountriesQuery();
     const { data: hotelAmenitiesData } = useGetAllHotelAmenitiesQuery();
     const { data: breakfastsData } = useGetAllBreakfastsQuery();
+    const { data: languagesData } = useGetAllLanguagesQuery();
 
     const [createHotel] = useCreateHotelMutation();
 
@@ -353,8 +355,25 @@ const HotelPage = () => {
                         </div>
 
                         <div className="container-5">
-                            <label><input type="checkbox"/> Українська</label>
-                            <label><input type="checkbox"/> Англійська</label>
+                            {languagesData?.map((languages) => (
+                                <label key={languages.id}>
+                                    <input
+                                        type="checkbox"
+                                        value={languages.id}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedLanguages((prev) => [...prev, languages.id]);
+                                            } else {
+                                                setSelectedLanguages((prev) => prev.filter((id) => id !== languages.id));
+                                            }
+                                        }}
+                                    />
+                                    {languages.name}
+                                </label>
+                            ))}
+                            {errors?.languages && (
+                                <FormError className="text-red" errorMessage={errors?.languages?.message as string} />
+                            )}
                         </div>
                     </div>
 

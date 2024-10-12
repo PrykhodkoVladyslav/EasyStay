@@ -480,8 +480,13 @@
     }
 
     .middle-block {
-      width: 270px;
       min-width: 220px;
+    }
+
+    @media screen and (min-width: 1920px) {
+      .middle-block {
+        min-width: 270px;
+      }
     }
 
     .find-block {

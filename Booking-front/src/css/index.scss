@@ -354,7 +354,7 @@
   }
 }
 
-// Акаунт Ріелтора
+// Сторінка Ріелтора
 .account-layout {
   position: relative;
   width: 100%;
@@ -1542,7 +1542,7 @@
   }
 }
 
-// add сторінки
+// Категоріі
 .categories-container {
   width: 100%;
   display: flex;
@@ -1658,6 +1658,7 @@
   }
 }
 
+// Створення Готелю
 .add-hotel {
   display: flex;
   flex-direction: column;
@@ -1999,7 +2000,7 @@
               display: flex;
               justify-content: end;
               text-align: right;
-              color: var(--color-accent);
+              color: rgb(165, 165, 165);
               font-size: 12px;
               font-weight: 400;
               line-height: 16px;

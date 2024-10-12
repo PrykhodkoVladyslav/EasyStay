@@ -1,21 +1,89 @@
-import { useState } from 'react';
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import {useEffect, useMemo, useState} from 'react';
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateHotelMutation } from "services/hotel.ts";
+import {City} from "interfaces/city";
+import {UpdateRealtorInformationSchemaType} from "interfaces/zod/user.ts";
+import showToast from "utils/toastShow.ts";
+import {useGetAllHotelCategoriesQuery} from "services/hotelCategories.ts";
+import FormError from "components/ui/FormError.tsx";
+import {useGetAllCitiesQuery} from "services/city.ts";
+import {useGetAllCountriesQuery} from "services/country.ts";
+import {useGetAllHotelAmenitiesQuery} from "services/hotelAmenity.ts";
 
 const HotelPage = () => {
-    const [currentContainer, setCurrentContainer] = useState(1); // Контролюємо, який блок відображається
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors },
+    } = useForm/*<CreateHotelSchemaType>*/({
+        resolver: zodResolver(/*CreateHotelSchema*/),
+    });
+
+    const [currentContainer, setCurrentContainer] = useState(1);
+    const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
+    const { data: citiesData } = useGetAllCitiesQuery();
+    const { data: countriesData } = useGetAllCountriesQuery();
+    const { data: hotelAmenitiesData } = useGetAllHotelAmenitiesQuery();
+
+    const [createHotel] = useCreateHotelMutation();
+
+
+    const [selectedCountryId, setSelectedCountryId] = useState<number>();
+    const [filteredCities, setFilteredCities] = useState<City[]>([]);
+    const [selectedHotelAmenities, setSelectedHotelAmenities] = useState<number[]>([]);
+    const [selectedBreakfasts, setSelectedBreakfasts] = useState<number[]>([]);
+    const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
+    const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
+
+
+    const sortedCities = useMemo(() => {
+        return citiesData ? [...citiesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
+    }, [citiesData]);
+
+    const sortedCountries = useMemo(() => {
+        return countriesData ? [...countriesData].sort((a, b) => a.name.localeCompare(b.name)) : [];
+    }, [countriesData]);
+
+    useEffect(() => {
+        if (selectedCountryId) {
+            setFilteredCities(sortedCities.filter(city => city.country.id === selectedCountryId));
+        } else {
+            setFilteredCities([]);
+        }
+    }, [selectedCountryId, sortedCities]);
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const countryId = Number(e.target.value);
+        setSelectedCountryId(countryId);
+        setValue("cityId", countryId);
+    };
+
+    const onSubmit = async (/*data: CreateHotelSchemaType*/) => {
+        try {
+            await createHotel(data).unwrap();
+            showToast(`Готель успішно створено!`, "success");
+        } catch (error) {
+            showToast(`Помилка при створенні готелю!`, "error");
+        }
+    };
+
+    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setSelectedPhotos([...photos, ...Array.from(e.target.files)]);
+        }
+    };
 
     const nextContainer = () => {
         if (currentContainer === 1) {
             setCurrentContainer(2);
         } else {
-            // логіка API
-            handleSubmit();
+
+            // onSubmit();
         }
-    };
-
-    const handleSubmit = () => {
-
-        console.log("Дані відправлені на API");
     };
 
     return (
@@ -36,26 +104,51 @@ const HotelPage = () => {
                             <div className="data">
                                 <p className="title">Назва готелю</p>
                                 <input
+                                    {...register("name")}
                                     type="text"
-                                    placeholder="Назва"/>
+                                    id="name"
+                                    placeholder="Назва"
+                                />
+                                {errors?.name && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.name?.message as string} />
+                                )}
                             </div>
                             <div className="data">
                                 <p className="title">Категорія готелю</p>
-                                <select defaultValue="">
-                                    <option value="" disabled hidden>Вибрати</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select
+                                    {...register("categoryId")}
+                                    id="categoryId"
+                                    // value={selected || ""}
+                                    // onChange={handleCitizenshipChange}
+                                >
+                                    <option disabled value="">
+                                        Виберіть категорію
+                                    </option>
+                                    {hotelCategoriesData?.map((category) => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
+                                {errors?.categoryId && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.categoryId?.message as string} />
+                                )}
                             </div>
                             <div className="data">
                                 <p className="title">Опис</p>
                                 <div className="form-textarea">
                                     <textarea
+                                        {...register("description")}
                                         placeholder="Текст"
                                         maxLength={4000}
                                     ></textarea>
-                                    <p className="counter">0/4000</p>
+                                    {errors?.description && (
+                                        <FormError className="text-red"
+                                                   errorMessage={errors?.description?.message as string}/>
+                                    )}
+                                    <p className="counter">{watch("description")?.length || 0}/4000</p>
                                 </div>
                             </div>
                         </div>
@@ -70,45 +163,95 @@ const HotelPage = () => {
                         <div className="container-2">
                             <div className="data">
                                 <p className="title">Країна</p>
-                                <select defaultValue="">
-                                    <option value="" disabled hidden>Вибрати</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select
+                                    id="countryId"
+                                    value={selectedCountryId || ""}
+                                    onChange={handleCountryChange}
+                                >
+                                    <option disabled value="">
+                                        Виберіть країну
+                                    </option>
+                                    {sortedCountries.map((country) => (
+                                        <option key={country.id} value={country.id}>
+                                            {country.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="data">
                                 <p className="title">Місто</p>
-                                <select defaultValue="">
-                                    <option value="" disabled hidden>Вибрати</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select
+                                    {...register("address.cityId")}
+                                    id="address.cityId"
+                                    value={watch("address.cityId") || ""}
+                                >
+                                    <option disabled value="">
+                                        Виберіть місто
+                                    </option>
+                                    {filteredCities.map((city: City) => (
+                                        <option key={city.id} value={city.id}>
+                                            {city.name}
+                                        </option>
+                                    ))}
                                 </select>
+                                {errors?.address?.cityId && (
+                                    <FormError
+                                        className="text-red"
+                                        errorMessage={errors?.address?.cityId?.message as string}
+                                    />
+                                )}
                             </div>
                             <div className="data">
                                 <p className="title">Назва вулиці</p>
                                 <input
+                                    {...register("address.street")}
                                     type="text"
-                                    placeholder="Вулиця"/>
+                                    id="address.street"
+                                    placeholder="Вулиця"
+                                />
+                                {errors?.address?.street && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.address?.street?.message as string} />
+                                )}
                             </div>
                             <div className="data">
                                 <p className="title">Номер будинку</p>
                                 <input
+                                    {...register("address.houseNumber")}
                                     type="text"
-                                    placeholder="Номер будинку"/>
+                                    id="address.houseNumber"
+                                    placeholder="Номер будинку"
+                                />
+                                {errors?.address?.houseNumber && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.address?.houseNumber?.message as string} />
+                                )}
                             </div>
                             <div className="data">
                                 <p className="title">Поверх</p>
                                 <input
+                                    {...register("address.floor")}
                                     type="number"
-                                    placeholder="Поверх"/>
+                                    id="address.floor"
+                                    placeholder="Поверх"
+                                />
+                                {errors?.address?.floor && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.address?.floor?.message as string} />
+                                )}
                             </div>
                             <div className="data">
                                 <p className="title">Номер квартири / кімнати</p>
                                 <input
+                                    {...register("address.apartmentNumber")}
                                     type="text"
-                                    placeholder="Назва"/>
+                                    id="address.apartmentNumber"
+                                    placeholder="Назва"
+                                />
+                                {errors?.address?.apartmentNumber && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.address?.apartmentNumber?.message as string} />
+                                )}
                             </div>
                         </div>
                     </div>
@@ -120,12 +263,25 @@ const HotelPage = () => {
                         </div>
 
                         <div className="container-3">
-                            <label><input type="checkbox"/> Ресторан</label>
-                            <label><input type="checkbox"/> Фітнес-центр</label>
-                            <label><input type="checkbox"/> Обслуговування номерів</label>
-                            <label><input type="checkbox"/> Кондиціонер</label>
-                            <label><input type="checkbox"/> Бар</label>
-                            <label><input type="checkbox"/> Пляж</label>
+                            {hotelAmenitiesData?.map((hotelAmenity) => (
+                                <label key={hotelAmenity.id}>
+                                    <input
+                                        type="checkbox"
+                                        value={hotelAmenity.id}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedHotelAmenities((prev) => [...prev, hotelAmenity.id]);
+                                            } else {
+                                                setSelectedHotelAmenities((prev) => prev.filter((id) => id !== hotelAmenity.id));
+                                            }
+                                        }}
+                                    />
+                                    {hotelAmenity.name}
+                                </label>
+                            ))}
+                            {errors?.amenities && (
+                                <FormError className="text-red" errorMessage={errors?.amenities?.message as string} />
+                            )}
                         </div>
                     </div>
 
@@ -154,12 +310,6 @@ const HotelPage = () => {
                                     <label><input type="checkbox"/>
                                         <span>Типи сніданкусніданку сніданкусніданку</span></label>
                                     <label><input type="checkbox"/> <span>Типи сніданку сніданку</span></label>
-                                    <label><input type="checkbox"/> <span>Типи сніданкусніданку</span></label>
-                                    <label><input type="checkbox"/> <span>Типи сніданку</span></label>
-                                    <label><input type="checkbox"/>
-                                        <span>Типи сніданкусніданкусніданкусніданку</span></label>
-                                    <label><input type="checkbox"/> <span>Типи сніданку</span></label>
-                                    <label><input type="checkbox"/> <span>Типи сніданку сніданку сніданку</span></label>
                                 </div>
                             </div>
                         </div>
@@ -168,16 +318,12 @@ const HotelPage = () => {
                     <div className="pre-container">
                         <div className="top">
                             <div className="number">5</div>
-                            <p className="title">Чим можуть користуватися гості у цьому готелі?</p>
+                            <p className="title">Якими мовами говорите ви або ваш персонал?</p>
                         </div>
 
                         <div className="container-5">
                             <label><input type="checkbox"/> Українська</label>
                             <label><input type="checkbox"/> Англійська</label>
-                            <label><input type="checkbox"/> Німецька</label>
-                            <label><input type="checkbox"/> Французька</label>
-                            <label><input type="checkbox"/> Іспанська</label>
-                            <label><input type="checkbox"/> Польська</label>
                         </div>
                     </div>
 
@@ -264,77 +410,6 @@ const HotelPage = () => {
                                     </button>
                                 </div>
 
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
-
-                                <div className="photo">
-                                    <img src="" alt=""/>
-                                    <button className="btn-delete">
-                                        <img
-                                            src={getPublicResourceUrl("account/trash.svg")}
-                                            alt=""/>
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>

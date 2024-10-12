@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { /*CreateHotel,*/
-    Hotel,
+    IHotelCreate,
     // GetHotelPageRequest,
     // GetPageResponse,
     SetArchiveStatusRequest,
@@ -13,6 +13,18 @@ export const hotelApi = createApi({
     tagTypes: ["Hotels"],
 
     endpoints: (builder) => ({
+
+        createHotel: builder.mutation<void, IHotelCreate>({
+            query: (hotel) => ({
+                url: "create",
+                method: "POST",
+                body: hotel,
+            }),
+            invalidatesTags: ["Hotels"],
+        }),
+
+
+
         getHotel: builder.query<Hotel[], string>({
             query: (id) => `getById/${id}`,
         }),
@@ -33,33 +45,6 @@ export const hotelApi = createApi({
         //         return `getPage?${queryString}`;
         //     },
         // }),
-
-        addHotel: builder.mutation({
-            query: (hotel) => {
-                const hotelFormData = new FormData();
-                hotelFormData.append("Name", hotel.name);
-                hotelFormData.append("Description", hotel.description);
-                hotelFormData.append("Area", hotel.area);
-                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
-                hotelFormData.append("IsArchived", hotel.isArchived);
-                hotelFormData.append("Address.Street", hotel.address.street);
-                hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
-                hotelFormData.append("Address.Latitude", hotel.address.latitude);
-                hotelFormData.append("Address.Longitude", hotel.address.longitude);
-                hotelFormData.append("Address.CityId", hotel.cityId?.toString());
-                hotelFormData.append("CategoryId", hotel.categoryId?.toString());
-                if (hotel.photos) {
-                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image as File));
-                }
-
-                return {
-                    url: "create",
-                    method: "POST",
-                    body: hotelFormData,
-                };
-            },
-            invalidatesTags: ["Hotels"],
-        }),
 
         updateHotel: builder.mutation({
             query: (hotel: Hotel) => {
@@ -112,6 +97,8 @@ export const hotelApi = createApi({
 });
 
 export const {
+    useCreateHotelMutation,
+
     useGetHotelQuery,
     useGetAllHotelsQuery,
     useGetRealtorHotelsPageQuery,

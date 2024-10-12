@@ -2,32 +2,37 @@ import { City } from "interfaces/city";
 import { HotelCategories } from "interfaces/hotelCategories";
 // import { PaginationOptions } from "interfaces/hotel.ts";
 
-export interface Address {
+export interface IAddressCreate {
     id: number;
     street: string;
     houseNumber: string;
-    latitude: number;
-    longitude: number;
-    city: City;
+    floor?: number;
+    apartmentNumber?: string;
+    cityId: number;
 }
-export interface Hotel {
+
+export interface IHotelCreate {
     id: number;
     name: string;
     description: string;
-    // rating: number;
-    // reviews: number;
-    area: number;
-    numberOfRooms: number;
-    address: Address;
-    category: HotelCategories;
-    realtor: Realtor;
-    photos: Photo[];
-    isArchived: boolean;
+    arrivalTimeUtcFrom: string;
+    arrivalTimeUtcTo: string;
+    departureTimeUtcFrom: string;
+    departureTimeUtcTo: string;
+    isArchived?: boolean;
+    address: IAddressCreate;
+    categoryId: number;
+    hotelAmenityIds: number[];
+    breakfastIds: number[];
+    staffLanguageIds: number[];
+    photos: File[];
 }
 
-export interface Photo {
+export interface Photos {
     name: string;
 }
+
+
 
 export interface Realtor {
     id: number;

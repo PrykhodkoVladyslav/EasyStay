@@ -11,6 +11,7 @@ import FormError from "components/ui/FormError.tsx";
 import {useGetAllCitiesQuery} from "services/city.ts";
 import {useGetAllCountriesQuery} from "services/country.ts";
 import {useGetAllHotelAmenitiesQuery} from "services/hotelAmenity.ts";
+import {useGetAllBreakfastsQuery} from "services/breakfast.ts";
 
 const HotelPage = () => {
     const {
@@ -28,14 +29,15 @@ const HotelPage = () => {
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: countriesData } = useGetAllCountriesQuery();
     const { data: hotelAmenitiesData } = useGetAllHotelAmenitiesQuery();
+    const { data: breakfastsData } = useGetAllBreakfastsQuery();
 
     const [createHotel] = useCreateHotelMutation();
-
 
     const [selectedCountryId, setSelectedCountryId] = useState<number>();
     const [filteredCities, setFilteredCities] = useState<City[]>([]);
     const [selectedHotelAmenities, setSelectedHotelAmenities] = useState<number[]>([]);
     const [selectedBreakfasts, setSelectedBreakfasts] = useState<number[]>([]);
+    const [isBreakfast, setIsBreakfast] = useState(null);
     const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
     const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
 
@@ -62,13 +64,8 @@ const HotelPage = () => {
         setValue("cityId", countryId);
     };
 
-    const onSubmit = async (/*data: CreateHotelSchemaType*/) => {
-        try {
-            await createHotel(data).unwrap();
-            showToast(`Готель успішно створено!`, "success");
-        } catch (error) {
-            showToast(`Помилка при створенні готелю!`, "error");
-        }
+    const handleBreakfastChange = (event) => {
+        setIsBreakfast(event.target.value === "yes");
     };
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +80,15 @@ const HotelPage = () => {
         } else {
 
             // onSubmit();
+        }
+    };
+
+    const onSubmit = async (/*data: CreateHotelSchemaType*/) => {
+        try {
+            await createHotel(data).unwrap();
+            showToast(`Готель успішно створено!`, "success");
+        } catch (error) {
+            showToast(`Помилка при створенні готелю!`, "error");
         }
     };
 
@@ -294,11 +300,23 @@ const HotelPage = () => {
                         <div className="container-4">
                             <div className="check-breakfast">
                                 <label htmlFor="yes">
-                                    <input type="radio" id="yes" value="yes" name="breakfast"/>
+                                    <input
+                                        type="radio"
+                                        id="yes"
+                                        value="yes"
+                                        name="breakfast"
+                                        onChange={handleBreakfastChange}
+                                    />
                                     Так
                                 </label>
                                 <label htmlFor="no">
-                                    <input type="radio" id="no" value="no" name="breakfast"/>
+                                    <input
+                                        type="radio"
+                                        id="no"
+                                        value="no"
+                                        name="breakfast"
+                                        onChange={handleBreakfastChange}
+                                    />
                                     Ні
                                 </label>
                             </div>
@@ -306,10 +324,23 @@ const HotelPage = () => {
                             <div className="post-check">
                                 <p>Типи сніданку</p>
                                 <div className="breakfast">
-                                    <label><input type="checkbox"/> <span>Типи сніданку</span></label>
-                                    <label><input type="checkbox"/>
-                                        <span>Типи сніданкусніданку сніданкусніданку</span></label>
-                                    <label><input type="checkbox"/> <span>Типи сніданку сніданку</span></label>
+                                    {breakfastsData?.map((breakfast) => (
+                                        <label key={breakfast.id}>
+                                            <input
+                                                type="checkbox"
+                                                value={breakfast.id}
+                                                disabled={!isBreakfast}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setSelectedBreakfasts((prev) => [...prev, breakfast.id]);
+                                                    } else {
+                                                        setSelectedBreakfasts((prev) => prev.filter((id) => id !== breakfast.id));
+                                                    }
+                                                }}
+                                            />
+                                            <span>{breakfast.name}</span>
+                                        </label>
+                                    ))}
                                 </div>
                             </div>
                         </div>

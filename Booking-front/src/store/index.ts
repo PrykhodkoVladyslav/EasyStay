@@ -9,6 +9,7 @@ import { cityApi } from "services/city.ts";
 import { countryApi } from "services/country.ts";
 import {citizenshipApi} from "services/citizenship.ts";
 import {hotelAmenityApi} from "services/hotelAmenity.ts";
+import {breakfastApi} from "services/breakfast.ts";
 
 export const store = configureStore({
     reducer: {
@@ -21,7 +22,7 @@ export const store = configureStore({
         [citizenshipApi.reducerPath]: citizenshipApi.reducer,
         [hotelAmenityApi.reducerPath]: hotelAmenityApi.reducer,
         [breakfastApi.reducerPath]: breakfastApi.reducer,
-        
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

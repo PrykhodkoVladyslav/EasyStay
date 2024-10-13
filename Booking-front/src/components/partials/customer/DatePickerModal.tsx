@@ -1,5 +1,5 @@
 import VerticalPad from "components/ui/VerticalPad.tsx";
-import { addDays, addMonths, addWeeks, getDate, startOfMonth, startOfWeek } from "date-fns";
+import { addDays, addMonths, addWeeks, format, getDate, startOfMonth, startOfWeek } from "date-fns";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 
 import { useState } from "react";
@@ -21,9 +21,86 @@ const monthNamesByIndex: Record<number, string> = {
 
 const shortDayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
 
-const DatePickerModal = () => {
+interface IDatePickerModalProps {
+    onSelectionChange?: (from: Date | null, to: Date | null) => void;
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const DatePickerModal = (props: IDatePickerModalProps) => {
     const [showedMonth, setShowedMonth] = useState(new Date());
     const nextMonth = addMonths(showedMonth, 1);
+
+    const [selectedFirst, setSelectedFirst] = useState<Date | null>(null);
+    const [selectedSecond, setSelectedSecond] = useState<Date | null>(null);
+
+    const setDates = (first: Date | null, second: Date | null) => {
+        setSelectedFirst(first);
+        setSelectedSecond(second);
+
+        props.onSelectionChange?.(first, second ?? first);
+    };
+
+    const isSelectedDate = (date: Date) => {
+        if (selectedFirst !== null && selectedFirst.getTime() === date.getTime())
+            return true;
+        if (selectedSecond !== null && selectedSecond.getTime() === date.getTime())
+            return true;
+
+        return false;
+    };
+    const isInRange = (date: Date) => {
+        if (selectedFirst === null || selectedSecond === null)
+            return false;
+
+        return selectedFirst.getTime() < date.getTime() && date.getTime() < selectedSecond.getTime();
+    };
+    const setSelectedDate = (date: Date) => {
+        if (selectedFirst === null) {
+            setDates(date, null);
+        } else if (selectedSecond === null) {
+            if (selectedFirst.getTime() < date.getTime()) {
+                setDates(selectedFirst, date);
+            } else {
+                setDates(date, selectedFirst);
+            }
+        }
+    };
+    const unsetSelectedDate = (date: Date) => {
+        if (selectedFirst?.getTime() == date.getTime()) {
+            setSelectedFirst(selectedSecond);
+            setSelectedSecond(null);
+            setDates(selectedSecond, null);
+            return;
+        }
+
+        if (selectedSecond?.getTime() == date.getTime()) {
+            setDates(selectedFirst, null);
+            return;
+        }
+    };
+    const switchSelectedDay = (date: Date) => {
+        if (isSelectedDate(date)) {
+            unsetSelectedDate(date);
+        } else {
+            setSelectedDate(date);
+        }
+    };
+
+    const canShowDate = () => selectedFirst !== null || selectedSecond !== null;
+    const toStringDate = (date: Date) => format(date, "MM.dd");
+    const getDateFrom = () => {
+        if (selectedFirst === null)
+            return "";
+
+        return toStringDate(selectedFirst);
+    };
+    const getDateTo = () => {
+        if (selectedFirst === null)
+            return "";
+
+        return toStringDate(selectedSecond ?? selectedFirst);
+    };
 
     const getFirstDisplayDayOfMonth = (date: Date) => {
         const firstDayOfMonth = startOfMonth(date);
@@ -42,7 +119,9 @@ const DatePickerModal = () => {
                         const day = addDays(week, dayIndex);
 
                         return (
-                            <div key={dayIndex} className="day-container">
+                            <div key={dayIndex}
+                                 className={`day-container ${isSelectedDate(day) ? "day-container-selected" : ""} ${isInRange(day) ? "day-container-in-range" : ""}`}
+                                 onClick={() => switchSelectedDay(day)}>
                                 <p
                                     className={`day-number ${day.getMonth() !== date.getMonth() ? "day-of-other-month" : ""}`}
                                 >
@@ -62,13 +141,21 @@ const DatePickerModal = () => {
     const weeks1 = getWeeksOfMonth(showedMonth);
     const weeks2 = getWeeksOfMonth(nextMonth);
 
+    if (!props.isOpen) {
+        return null;
+    }
+
     return (
         <div className="date-picker-modal">
+            <div className="date-picker-background" onClick={props.onClose} />
+
             <div className="date-picker-container">
                 <div className="selected-dates">
-                    <span>11.08</span>
-                    <img src={getPublicResourceUrl("icons/calendar-arrow.svg")} alt="Arrow" />
-                    <span>15.08</span>
+                    {canShowDate() && <>
+                        <span>{getDateFrom()}</span>
+                        <img src={getPublicResourceUrl("icons/calendar-arrow.svg")} alt="Arrow" />
+                        <span>{getDateTo()}</span>
+                    </>}
                 </div>
 
                 <VerticalPad heightPx={16} />

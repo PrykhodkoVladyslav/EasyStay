@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import "./../../css/auth-layout.scss";
 
 const AuthLayout = () => {
     return (

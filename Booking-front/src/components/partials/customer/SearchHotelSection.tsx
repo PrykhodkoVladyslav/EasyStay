@@ -18,17 +18,32 @@ const nameOfMonthsInGenitiveCase: Record<number, string> = {
     11: "грудня",
 };
 
-const SearchTopSection = () => {
-    const [guests, setGuests] = useState(1);
+interface ISearchData {
+    city: string;
+    date?: {
+        from: Date;
+        to: Date;
+    };
+    adultGuests: number;
+}
+
+interface ISearchTopSectionProps {
+    onSearch?: (data: ISearchData) => void;
+}
+
+const SearchHotelSection = (props: ISearchTopSectionProps) => {
+    const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
     const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
+    const [adultGuests, setAdultGuests] = useState(1);
+
     const [isOpenedDatePicker, setIsOpenedDatePicker] = useState(false);
 
     const handleGuestsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
         if (value.length <= 1 && /^\d*$/.test(value)) {
-            setGuests(+value);
+            setAdultGuests(+value);
         }
     };
 
@@ -46,13 +61,26 @@ const SearchTopSection = () => {
 
     const isSelectedDates = () => selectedDateFrom !== null && selectedDateTo !== null;
 
-    console.log(isOpenedDatePicker);
+    const onSearch = () => {
+        const selectedDates = selectedDateFrom && selectedDateTo ? {
+            from: selectedDateFrom,
+            to: selectedDateTo,
+        } : undefined;
+
+        props.onSearch?.({
+            city,
+            date: selectedDates,
+            adultGuests,
+        });
+    };
 
     return (
         <div className="search-top-section">
             <div className="block city-block">
                 <p className="title">Куди</p>
-                <input type="text" className="city-input" placeholder="Введіть назву міста" />
+                <input type="text" className="city-input" placeholder="Введіть назву міста"
+                       value={city}
+                       onChange={(e) => setCity(e.target.value)} />
             </div>
             <div className="block middle-block date-block" onClick={() => setIsOpenedDatePicker(true)}>
                 <div className="title-container">
@@ -102,14 +130,14 @@ const SearchTopSection = () => {
                     <input
                         className="guests-input"
                         type="number"
-                        value={guests}
+                        value={adultGuests}
                         onChange={handleGuestsChange}
                     />
                     <p className="guests-title">Дорослих</p>
                 </div>
             </div>
             <div className="find-block">
-                <button className="find-button">
+                <button className="find-button" onClick={onSearch}>
                     <img src={getPublicResourceUrl("icons/magnifying-glass.svg")} alt="Magnifying glass" />
                     <p className="button-title">Шукати</p>
                 </button>
@@ -121,4 +149,4 @@ const SearchTopSection = () => {
     );
 };
 
-export default SearchTopSection;
+export default SearchHotelSection;

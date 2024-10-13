@@ -1,10 +1,10 @@
-import SearchTopSection from "components/partials/customer/SearchTopSection.tsx";
+import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 
 const HotelsPage = () => {
     return (
         <div className="hotels-page">
-            <SearchTopSection />
+            <SearchHotelSection />
 
             <VerticalPad heightPx={18} />
 

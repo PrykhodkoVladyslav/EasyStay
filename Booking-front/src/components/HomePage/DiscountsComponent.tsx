@@ -8,7 +8,7 @@ const DiscountsComponent = () => {
 
             <div className="sidebar">
                 <ul className="menu">
-                    <li className="menu__item"><a href="#" className="menu__link">Готелі</a></li>
+                    <li className="menu__item active"><a href="#1" className="menu__link">Готелі</a></li>
                     <li className="menu__item"><a href="#" className="menu__link">Апартаменти</a></li>
                     <li className="menu__item"><a href="#" className="menu__link">Машини</a></li>
                     <li className="menu__item"><a href="#" className="menu__link">Трансфери</a></li>

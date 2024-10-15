@@ -329,7 +329,6 @@
         font-family: var(--font-primary), system-ui;
         font-size: 15px;
         font-weight: 700;
-
       }
     }
 
@@ -454,6 +453,64 @@
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
+          }
+        }
+
+        .multiple-select {
+          .title-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .title {
+              color: rgb(0, 0, 0);
+              font-family: var(--font-primary), system-ui;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 33px;
+            }
+          }
+
+          .options-container {
+            padding: 18px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            gap: 6px;
+
+            .option {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+
+              img {
+                padding-right: 12px;
+              }
+
+              p {
+                color: rgb(33, 33, 33);
+                font-family: var(--font-primary), system-ui;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+              }
+            }
+          }
+
+          .hide-options {
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: center;
+
+            .title {
+              color: rgb(63, 82, 60);
+              font-family: var(--font-secondary), system-ui;
+              font-size: 16px;
+              font-weight: 600;
+              line-height: 20px;
+            }
           }
         }
       }
@@ -615,6 +672,9 @@
   }
 }
 
+.pointer {
+  cursor: pointer;
+}
 
 // Акаунт Ріелтора
 .account-layout {

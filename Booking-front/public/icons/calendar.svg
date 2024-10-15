@@ -1,0 +1,15 @@
+<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs/>
+    <rect id="Rectangle 25" x="3.000000" y="6.000000" rx="2.000000" width="18.000000" height="15.000000"
+          stroke="#3F523C" stroke-opacity="1.000000" stroke-width="1.500000"/>
+    <path id="Vector 3"
+          d="M3 10.25L21 10.25L21 11.75L3 11.75L3 10.25ZM3.02 11.73L3 11.75C2.58 11.75 2.25 11.42 2.25 11C2.25 10.58 2.58 10.25 3 10.25L3.02 10.27L3.02 11.73ZM20.98 10.27L21 10.25C21.41 10.25 21.75 10.58 21.75 11C21.75 11.42 21.41 11.75 21 11.75L20.98 11.73L20.98 10.27Z"
+          fill="#3F523C" fill-opacity="1.000000" fill-rule="evenodd"/>
+    <path id="Vector 4"
+          d="M9 15.25L15 15.25L15 16.75L9 16.75L9 15.25ZM9.02 16.73L9 16.75C8.58 16.75 8.25 16.42 8.25 16C8.25 15.58 8.58 15.25 9 15.25L9.02 15.27L9.02 16.73ZM14.98 15.27L15 15.25C15.41 15.25 15.75 15.58 15.75 16C15.75 16.42 15.41 16.75 15 16.75L14.98 16.73L14.98 15.27Z"
+          fill="#3F523C" fill-opacity="1.000000" fill-rule="evenodd"/>
+    <path id="Line 1" d="M8 3L8 7" stroke="#3F523C" stroke-opacity="1.000000" stroke-width="1.500000"
+          stroke-linecap="round"/>
+    <path id="Line 2" d="M16 3L16 7" stroke="#3F523C" stroke-opacity="1.000000" stroke-width="1.500000"
+          stroke-linecap="round"/>
+</svg>

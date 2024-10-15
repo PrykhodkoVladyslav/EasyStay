@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth-layout {
+  // Variables
+  --active-button-text: #515151;
+  --text-input-input-color-default: #F7F7FD;
+  --text-input-input-color-default-border: #F7F7FD;
+  --text-input-input-password-color-default: #000000;
+  --text-input-input-color-error: #FFF5F5;
+  --text-input-input-color-error-border: #FFD8D8;
+  --red-error: #FF0000;
+  --green: #3F523C;
+  --nunito-font: "Nunito";
+
+  // Root styles
+  display: flex;
+  font-family: var(--nunito-font), system-ui;
+
+  // Classes
+  .half-width {
+    width: 50%;
+  }
+
+  .auth-image-container {
+    padding-left: 10px;
+    padding-top: 26px;
+    padding-bottom: 26px;
+    display: flex;
+    justify-content: left;
+    height: 100vh;
+  }
+
+  .auth-image {
+    height: 100%;
+    width: 90%;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+
+  .auth-header-block {
+    padding-top: 66px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-header {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 48px;
+    text-align: center;
+  }
+
+  .auth-logo {
+    width: 183px;
+    height: 74px;
+  }
+
+  .text-input-container {
+
+  }
+
+  .text-input-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .text-input-error {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--active-button-text);
+  }
+
+  .base-text-input-input {
+    padding: 16px 20px;
+    border-radius: 18px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .text-input-input-default {
+    background-color: var(--text-input-input-color-default);
+    border: 1px solid var(--text-input-input-color-default-border);
+
+    color: var(--active-button-text);
+  }
+
+  .text-input-input-error {
+    background-color: var(--text-input-input-color-error);
+    border: 1px solid var(--text-input-input-color-error-border);
+
+    color: var(--active-button-text);
+  }
+
+  .text-input-input-password-default {
+    background-color: var(--text-input-input-color-default);
+    border: 1px solid var(--text-input-input-color-default-border);
+
+    color: var(--text-input-input-password-color-default);
+  }
+
+  .text-input-input-password-error {
+    background-color: var(--text-input-input-color-error);
+    border: 1px solid var(--text-input-input-color-error-border);
+
+    color: var(--active-button-text);
+  }
+
+  .cross-padding {
+    padding-left: 32px;
+  }
+
+  .eye-padding {
+    padding-right: 52px;
+  }
+
+  .text-input-input-container {
+    position: relative;
+  }
+
+  .text-input-error-icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .text-input-password-icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .login-error-message {
+    color: var(--red-error);
+    font-family: var(--nunito-font), system-ui;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+  }
+
+  .forgot-password {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .signIn-register-button {
+    width: 230px;
+    height: 46px;
+    padding: 8px 16px 8px 16px;
+    border-radius: 18px;
+    background-color: var(--green);
+    color: white;
+
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: center;
+  }
+
+  .login-register-offer {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+  }
+
+  .login-register-offer-link {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    padding-left: 8px;
+  }
+
+  .radiobutton-item {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .radiobutton-icon {
+    width: 24px;
+    height: 24px;
+
+    margin-right: 8px;
+  }
+
+  .radiobutton-title-default {
+    color: black;
+  }
+
+  .radiobutton-title-error {
+    color: var(--red-error);
+  }
+
+  .header-layout {
+    display: flex;
+  }
+
+  .header-logo {
+    width: 183px;
+    height: 74px;
+    gap: 0;
+    opacity: 0;
+  }
+
+  .header {
+    width: 1721px;
+    height: 74px;
+    top: 29px;
+    left: 99px;
+    gap: 348px;
+    opacity: 0;
+  }
+}

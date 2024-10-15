@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import Services from "components/HomePage/Services.tsx";
 import TravelCarousel from "components/HomePage/TravelCarousel.tsx";
 import DiscountsComponent from "components/HomePage/DiscountsComponent.tsx";
-import TicketsComponent from "components/HomePage/TicketsComponent.tsx";
+import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 
 const HomePage: React.FC = () => {
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage(undefined);
+    });
 
     return (
         <div className="app">
@@ -20,7 +27,7 @@ const HomePage: React.FC = () => {
                 </div>
 
             </div>
-            <TicketsComponent />
+            <SearchHotelSection />
             <TravelCarousel />
 
             <DiscountsComponent />

@@ -1,4 +1,5 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import "../css/footer.scss";
 
 const Footer = () => {
     return (

@@ -1,4 +1,4 @@
-import { ActivePageOnHeaderContextType } from "components/contexts/ActivePageOnHeaderContextType.ts";
+import { ActivePageOnHeaderContextType } from "./ActivePageOnHeaderContextType.ts";
 import React from "react";
 
 export const ActivePageOnHeaderContext = React.createContext<ActivePageOnHeaderContextType | null>(null);

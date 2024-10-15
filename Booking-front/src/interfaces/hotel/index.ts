@@ -22,17 +22,15 @@ export interface IHotelCreate {
     isArchived?: boolean;
     address: IAddressCreate;
     categoryId: number;
-    hotelAmenityIds: number[];
-    breakfastIds: number[];
-    staffLanguageIds: number[];
+    hotelAmenityIds?: number[];
+    breakfastIds?: number[];
+    staffLanguageIds?: number[];
     photos: File[];
 }
 
 export interface Photos {
     name: string;
 }
-
-
 
 export interface Realtor {
     id: number;
@@ -43,27 +41,6 @@ export interface SetArchiveStatusRequest {
     isArchived: boolean;
 }
 
-// export interface HotelAddressCity {
-//     id?: number;
-//     name?: string;
-//     longitude?: number;
-//     latitude?: number;
-//     minLongitude?: number;
-//     maxLongitude?: number;
-//     minLatitude?: number;
-//     maxLatitude?: number;
-//     countryId?: number;
-// }
-
-// export interface HotelAddress {
-//     id?: number;
-//     street?: string;
-//     houseNumber?: string;
-//     country?: HotelAddressCity;
-//     latitude?: string;
-//     longitude?: string;
-// }
-//
 // export interface GetHotelPageRequest extends PaginationOptions {
 //     userId?: number;
 //     name?: string;
@@ -73,13 +50,4 @@ export interface SetArchiveStatusRequest {
 //     maxRating?: number;
 //     typeId?: number;
 //     address?: HotelAddress;
-// }
-//
-// export interface CreateHotel {
-//     name: string;
-//     cityId: number;
-//     categoryId: string;
-//     description: string;
-//     address: HotelAddress;
-//     photos: File[];
 // }

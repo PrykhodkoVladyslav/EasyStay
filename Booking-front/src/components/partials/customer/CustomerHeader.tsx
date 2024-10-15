@@ -27,7 +27,7 @@ const CustomerHeader = () => {
     ));
 
     useEffect(() => {
-        activeMenuItemContext.setActivePage("Готелі");
+        activeMenuItemContext?.setActivePage("Готелі");
     });
 
     const languageOptions = [

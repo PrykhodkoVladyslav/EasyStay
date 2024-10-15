@@ -12,7 +12,7 @@ import {
 const HomePage: React.FC = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
     useEffect(() => {
-        activeMenuItemContext.setActivePage(undefined);
+        activeMenuItemContext?.setActivePage(undefined);
     });
 
     return (

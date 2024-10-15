@@ -332,6 +332,132 @@
 
       }
     }
+
+    .hotels-container {
+      display: flex;
+      flex-direction: row;
+
+      .filter-hotels-section {
+        width: 370px;
+        border-radius: 22px;
+        background: rgb(240, 240, 240);
+        padding: 24px;
+
+        .title-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          p {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-primary), system-ui;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 44px;
+          }
+
+          button {
+            padding: 9px 18px 9px 18px;
+            border-radius: 14px;
+            background: rgb(63, 82, 60);
+            color: rgb(255, 255, 255);
+            font-family: var(--font-secondary), system-ui;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 15px;
+          }
+        }
+
+        .price-container {
+          .price-title {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-secondary), system-ui;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 29px;
+          }
+
+          .price-input-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .price-input {
+              border-radius: 14px;
+              padding: 10px 22px;
+              box-shadow: 0 0 2.4px 0 rgba(97, 97, 97, 0.13);
+              background: rgb(255, 255, 255);
+              display: flex;
+              flex-direction: row;
+              justify-content: left;
+              align-items: center;
+              width: 138px;
+
+              .price-input-title {
+                color: rgb(81, 81, 81);
+                font-family: var(--font-primary), system-ui;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+                padding-right: 8px;
+              }
+
+              .price-input-value {
+                color: rgb(0, 0, 0);
+                font-family: var(--font-secondary), system-ui;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 20px;
+                text-align: left;
+                outline: none;
+              }
+
+              .price-input-value-input {
+                width: 100%;
+              }
+
+              input::-webkit-outer-spin-button,
+              input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+
+              input[type=number] {
+                -moz-appearance: textfield;
+              }
+            }
+          }
+
+          .price-range-input-track {
+            border-radius: 2px;
+          }
+
+          .price-range-input-price-container {
+            position: relative;
+            width: 100%;
+          }
+
+          .price-range-input-image {
+            width: 100%;
+          }
+
+          .price-range-input-price {
+            position: absolute;
+            color: rgb(255, 255, 255);
+            font-family: var(--font-secondary), system-ui;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 15px;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+          }
+        }
+      }
+    }
   }
 
   .date-picker-modal {
@@ -2359,6 +2485,7 @@
         background-color: #3F523C;
         color: white;
       }
+
       &__link {
         text-decoration: none;
         color: black;
@@ -2396,6 +2523,7 @@
         .items1 {
           display: flex;
           gap: 23px;
+
           .item1 {
             max-width: 379px;
             height: 505px;
@@ -2694,9 +2822,8 @@
     }
 
 
-    }
+  }
 }
-
 
 
 /*Discount!!!!!!!!!*/
@@ -2720,11 +2847,11 @@
   .discount-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;  // Забезпечує простір між заголовком і кнопкою
-    flex-direction: row;  // Вирівнювання по горизонталі
+    justify-content: space-between; // Забезпечує простір між заголовком і кнопкою
+    flex-direction: row; // Вирівнювання по горизонталі
     width: 100%;
     height: auto;
-     // Відступи для країв
+    // Відступи для країв
 
     h1 {
       font-size: 32px;
@@ -2760,7 +2887,7 @@
     max-height: 139px;
 
 
-    .discount-content  {
+    .discount-content {
       margin: auto;
       width: 90%;
     }
@@ -2773,13 +2900,14 @@
 
   }
 }
+
 @media (max-width: 1240px) {
   .discount {
     margin: 60px auto;
     max-height: 111px;
 
 
-    .discount-content  {
+    .discount-content {
       margin: auto;
       width: 90%;
     }
@@ -2792,13 +2920,14 @@
 
   }
 }
+
 @media (max-width: 1000px) {
   .discount {
     margin: 50px auto;
     max-height: 89px;
     padding: 20px 50px 20px 50px;
 
-    .discount-content  {
+    .discount-content {
       margin: auto;
       width: 80%;
     }
@@ -2811,13 +2940,14 @@
 
   }
 }
+
 @media (max-width: 760px) {
   .discount {
     margin: 40px auto;
     max-height: 71px;
 
 
-    .discount-content  {
+    .discount-content {
       margin: auto;
       width: 90%;
     }
@@ -2829,13 +2959,14 @@
 
   }
 }
+
 @media (max-width: 520px) {
   .discount {
     margin: 40px auto;
     max-height: 71px;
 
 
-    .discount-content  {
+    .discount-content {
       margin: auto;
       width: 90%;
     }
@@ -2858,6 +2989,7 @@
   padding: 40px 50px 40px 50px;
   border-radius: 20px;
   font-family: var(--font-primary);
+
   h1 {
     position: relative;
     font-weight: 600;

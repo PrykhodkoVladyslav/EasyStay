@@ -23,7 +23,7 @@ export const hotelApi = createApi({
         }),
 
         getRealtorHotelsPage: builder.query<Hotel[], { RealtorId?: string }>({
-            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
+            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
             providesTags: ["Hotels"],
         }),
 
@@ -108,6 +108,11 @@ export const hotelApi = createApi({
             }),
             invalidatesTags: ["Hotels"],
         }),
+
+        getMaxHotelPrice: builder.query<number, void>({
+            query: () => "GetMaxPrice",
+            providesTags: ["Hotels"],
+        }),
     }),
 });
 
@@ -119,4 +124,5 @@ export const {
     useUpdateHotelMutation,
     useDeleteHotelMutation,
     useSetArchiveStatusHotelMutation,
+    useGetMaxHotelPriceQuery,
 } = hotelApi;

@@ -58,8 +58,8 @@ public class HotelVm : IMapWith<Hotel> {
 				dest => dest.MinPrice,
 				opt => opt.MapFrom(
 					src => src.Rooms
-					.SelectMany(r => r.RoomVariants)
-					.Min(rv => (decimal?)(rv.DiscountPrice.HasValue ? Math.Min(rv.Price, rv.DiscountPrice.Value) : rv.Price))
+						.SelectMany(r => r.RoomVariants)
+						.Min(rv => (decimal?)(rv.DiscountPrice ?? rv.Price))
 				)
 			)
 			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))

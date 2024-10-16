@@ -1,6 +1,5 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useState } from "react";
-import VerticalPad from "components/ui/VerticalPad.tsx";
 
 export interface IMultipleSelectOption {
     id: number;
@@ -48,8 +47,6 @@ const MultipleSelect = (props: IMultipleSelectProps) => {
                     <p className="title">Сховати</p>
                     <img src={getPublicResourceUrl("icons/multipleSelect/expand-up.svg")} alt="expand" />
                 </div>
-
-                <VerticalPad heightPx={12} />
             </>}
         </div>
     );

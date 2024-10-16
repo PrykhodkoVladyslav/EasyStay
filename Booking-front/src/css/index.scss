@@ -337,10 +337,13 @@
       flex-direction: row;
 
       .filter-hotels-section {
+        display: flex;
+        flex-direction: column;
         width: 370px;
         border-radius: 22px;
         background: rgb(240, 240, 240);
         padding: 24px;
+        gap: 44px;
 
         .title-container {
           display: flex;

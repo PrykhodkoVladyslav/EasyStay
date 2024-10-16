@@ -4,6 +4,7 @@ using EasyStay.Application.MediatR.Hotels.Commands.SetArchiveStatus;
 using EasyStay.Application.MediatR.Hotels.Commands.Update;
 using EasyStay.Application.MediatR.Hotels.Queries.GetAll;
 using EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
+using EasyStay.Application.MediatR.Hotels.Queries.GetMaxPrice;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,5 +63,12 @@ public class HotelsController : BaseApiController {
 		await Mediator.Send(command);
 
 		return NoContent();
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> GetMaxPrice() {
+		var maxPrice = await Mediator.Send(new GetMaxPriceCommand());
+
+		return Ok(maxPrice);
 	}
 }

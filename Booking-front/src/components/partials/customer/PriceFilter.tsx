@@ -36,8 +36,7 @@ function PriceFilter(props: IPriceFilterProps) {
     };
 
     useEffect(() => {
-        if (requiredPrices[1] > maxPrice)
-            setPrices([0, maxPrice]);
+        setPrices([0, maxPrice]);
     }, [maxPrice]);
 
     useEffect(() => {
@@ -117,7 +116,7 @@ function PriceFilter(props: IPriceFilterProps) {
                     {isDragged && <div
                         style={{
                             position: "absolute",
-                            bottom: "-40px",
+                            bottom: "-38px",
                             height: "32px",
                             width: "58px",
                         }}
@@ -131,6 +130,8 @@ function PriceFilter(props: IPriceFilterProps) {
                 </div>
             )}
         />
+
+        <VerticalPad heightPx={44} />
     </div>;
 }
 

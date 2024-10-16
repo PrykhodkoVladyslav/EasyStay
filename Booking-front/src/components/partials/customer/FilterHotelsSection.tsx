@@ -1,9 +1,9 @@
-import VerticalPad from "components/ui/VerticalPad.tsx";
 import PriceFilter from "components/partials/customer/PriceFilter.tsx";
 import MultipleSelect, { IMultipleSelectOption } from "components/partials/customer/MultipleSelect.tsx";
 import { useEffect, useState } from "react";
 import { useGetAllHotelAmenitiesQuery } from "services/hotelAmenity.ts";
 import { useGetAllRoomAmenitiesQuery } from "services/roomAmenity.ts";
+import { useGetMaxHotelPriceQuery } from "services/hotel.ts";
 
 const defaultRatingOptions = [
     {
@@ -62,7 +62,43 @@ const defaultRatingOptions = [
     },
 ];
 
+const defaultBedTypeOptions = [
+    {
+        id: 1,
+        name: "Одномісне ліжко",
+        isSelected: false,
+    },
+    {
+        id: 2,
+        name: "Двомісне ліжко",
+        isSelected: false,
+    },
+    {
+        id: 3,
+        name: "Додаткове ліжко",
+        isSelected: false,
+    },
+    {
+        id: 4,
+        name: "Диван ліжко",
+        isSelected: false,
+    },
+    {
+        id: 5,
+        name: "Кінгсайз",
+        isSelected: false,
+    },
+];
+
 const FilterHotelsSection = () => {
+    const defaultMaxPrice = 10000;
+
+    const { data: maxPriceData } = useGetMaxHotelPriceQuery();
+    const [maxPrice, setMaxPrice] = useState(defaultMaxPrice);
+    useEffect(() => {
+        setMaxPrice(maxPriceData ?? defaultMaxPrice);
+    }, [maxPriceData]);
+
     const { data: hotelConvenienceData } = useGetAllHotelAmenitiesQuery();
     const [hotelConvenienceOptions, setHotelConvenienceOptions] = useState<IMultipleSelectOption[]>([]);
     useEffect(() => {
@@ -76,7 +112,6 @@ const FilterHotelsSection = () => {
 
         setHotelConvenienceOptions(newOptions);
     }, [hotelConvenienceData]);
-
     const onHotelConvenienceOptionClick = (id: number) => {
         const opt = hotelConvenienceOptions.map(o => {
             if (o.id === id)
@@ -89,7 +124,6 @@ const FilterHotelsSection = () => {
     };
 
     const [ratingOptions, setRatingOptions] = useState(defaultRatingOptions);
-
     const onRatingOptionClick = (id: number) => {
         const opt = ratingOptions.map(o => {
             o.isSelected = o.id === id ? !o.isSelected : false;
@@ -112,7 +146,6 @@ const FilterHotelsSection = () => {
 
         setRoomConvenienceOptions(newOptions);
     }, [roomConvenienceData]);
-
     const onRoomConvenienceOptionClick = (id: number) => {
         const opt = roomConvenienceOptions.map(o => {
             if (o.id === id)
@@ -124,17 +157,46 @@ const FilterHotelsSection = () => {
         setRoomConvenienceOptions(opt);
     };
 
+    const [bedTypeOptions, setBedTypeOptions] = useState(defaultBedTypeOptions);
+    const onBedTypeOptionClick = (id: number) => {
+        const opt = bedTypeOptions.map(o => {
+            if (o.id === id)
+                o.isSelected = !o.isSelected;
+
+            return o;
+        });
+
+        setBedTypeOptions(opt);
+    };
+
     const reset = () => {
+        // ToDo Reset price
+
         setHotelConvenienceOptions(hotelConvenienceOptions.map(o => {
             o.isSelected = false;
             return o;
         }));
 
-        setRatingOptions(defaultRatingOptions);
+        setRatingOptions(ratingOptions.map(o => {
+            return {
+                id: o.id,
+                name: o.name,
+                isSelected: false,
+                rating: o.rating,
+            };
+        }));
 
         setRoomConvenienceOptions(roomConvenienceOptions.map(o => {
             o.isSelected = false;
             return o;
+        }));
+
+        setBedTypeOptions(bedTypeOptions.map(o => {
+            return {
+                id: o.id,
+                name: o.name,
+                isSelected: false,
+            };
         }));
     };
 
@@ -145,25 +207,19 @@ const FilterHotelsSection = () => {
                 <button onClick={reset}>Скинути</button>
             </div>
 
-            <VerticalPad heightPx={40} />
-
-            <PriceFilter maxPrice={10000} />
-
-            <VerticalPad heightPx={86} />
+            <PriceFilter maxPrice={maxPrice} />
 
             <MultipleSelect title="Зручності" options={hotelConvenienceOptions}
                             onOptionClick={onHotelConvenienceOptionClick} />
 
-            <VerticalPad heightPx={32} />
-
             <MultipleSelect title="Оцінка за відгуками" options={ratingOptions} onOptionClick={onRatingOptionClick} />
-
-            <VerticalPad heightPx={32} />
 
             <MultipleSelect title="Зручності в номері" options={roomConvenienceOptions}
                             onOptionClick={onRoomConvenienceOptionClick} />
 
-            <VerticalPad heightPx={32} />
+            <MultipleSelect title="Тип ліжка" options={bedTypeOptions} onOptionClick={onBedTypeOptionClick} />
+
+
         </div>
     );
 };

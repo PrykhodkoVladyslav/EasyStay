@@ -2,30 +2,33 @@ import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useState } from "react";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 
+export interface IMultipleSelectOption {
+    id: number;
+    name: string;
+    isSelected: boolean;
+}
+
 interface IMultipleSelectProps {
     title: string;
-    options: { id: number, name: string, isSelected: boolean }[];
+    options: IMultipleSelectOption[];
     onOptionClick?: (id: number) => void;
 }
 
 const MultipleSelect = (props: IMultipleSelectProps) => {
     const [isHidden, setIsHidden] = useState(false);
 
-    const hide = () => setIsHidden(true);
-    const show = () => setIsHidden(false);
+    const switchVisibility = () => setIsHidden(oldValue => !oldValue);
 
     const checkedIcon = getPublicResourceUrl("icons/multipleSelect/checked.svg");
     const uncheckedIcon = getPublicResourceUrl("icons/multipleSelect/unchecked.svg");
 
     return (
         <div className="multiple-select">
-            <div className="title-container">
+            <div className="title-container pointer" onClick={switchVisibility}>
                 <p className="title">{props.title}</p>
                 {isHidden
-                    ? <img src={getPublicResourceUrl("icons/multipleSelect/hidden.svg")} alt="hidden"
-                           onClick={show} className="pointer" />
-                    : <img src={getPublicResourceUrl("icons/multipleSelect/expand-down.svg")} alt="expand"
-                           onClick={hide} className="pointer" />
+                    ? <img src={getPublicResourceUrl("icons/multipleSelect/hidden.svg")} alt="hidden" />
+                    : <img src={getPublicResourceUrl("icons/multipleSelect/expand-down.svg")} alt="expand" />
                 }
             </div>
 
@@ -41,7 +44,7 @@ const MultipleSelect = (props: IMultipleSelectProps) => {
                     })}
                 </div>
 
-                <div className="hide-options pointer" onClick={hide}>
+                <div className="hide-options pointer" onClick={switchVisibility}>
                     <p className="title">Сховати</p>
                     <img src={getPublicResourceUrl("icons/multipleSelect/expand-up.svg")} alt="expand" />
                 </div>

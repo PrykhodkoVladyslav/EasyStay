@@ -78,7 +78,7 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
         <div className="search-top-section">
             <div className="block city-block">
                 <p className="title">Куди</p>
-                <input type="text" className="city-input" placeholder="Введіть назву міста"
+                <input type="text" className="city-input" placeholder="Назва міста"
                        value={city}
                        onChange={(e) => setCity(e.target.value)} />
             </div>

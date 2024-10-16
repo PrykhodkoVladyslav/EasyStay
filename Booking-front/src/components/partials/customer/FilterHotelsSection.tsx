@@ -5,6 +5,7 @@ import { useGetAllHotelAmenitiesQuery } from "services/hotelAmenity.ts";
 import { useGetAllRoomAmenitiesQuery } from "services/roomAmenity.ts";
 import { useGetMaxHotelPriceQuery } from "services/hotel.ts";
 import NumericUpDown from "components/partials/customer/NumericUpDown.tsx";
+import { useGetAllLanguagesQuery } from "services/language.ts";
 
 const defaultRatingOptions = [
     {
@@ -101,6 +102,7 @@ interface IFilter {
     rating?: number;
     bedType?: number;
     numberOfRooms?: number;
+    languages: number[];
 }
 
 interface IFilterHotelsSectionProps {
@@ -211,6 +213,30 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
         setNumberOfRoomsString(value);
     };
 
+    const { data: languageData } = useGetAllLanguagesQuery();
+    const [languageOptions, setLanguageOptions] = useState<IMultipleSelectOption[]>([]);
+    useEffect(() => {
+        const newOptions = (languageData ?? []).map(l => {
+            return {
+                id: l.id,
+                name: l.name,
+                isSelected: false,
+            };
+        });
+
+        setLanguageOptions(newOptions);
+    }, [languageData]);
+    const onLanguageOptionClick = (id: number) => {
+        const opt = languageOptions.map(o => {
+            if (o.id === id)
+                o.isSelected = !o.isSelected;
+
+            return o;
+        });
+
+        setLanguageOptions(opt);
+    };
+
     useEffect(() => {
         props.onChange?.({
             prices: {
@@ -222,8 +248,9 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
             roomAmenities: roomConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
             bedType: bedTypeOptions.filter(o => o.isSelected).find(o => o.isSelected)?.id,
             numberOfRooms: numberOfRooms === 0 ? undefined : numberOfRooms,
+            languages: languageOptions.filter(o => o.isSelected).map(o => o.id),
         });
-    }, [minPriceValue, maxPriceValue, hotelConvenienceOptions, ratingOptions, roomConvenienceOptions, bedTypeOptions, numberOfRooms]);
+    }, [minPriceValue, maxPriceValue, hotelConvenienceOptions, ratingOptions, roomConvenienceOptions, bedTypeOptions, numberOfRooms, languageOptions]);
 
     const reset = () => {
         setMinPriceValue(0);
@@ -257,6 +284,14 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
         }));
 
         setNumberOfRoomsString("0");
+
+        setLanguageOptions(languageOptions.map(o => {
+            return {
+                id: o.id,
+                name: o.name,
+                isSelected: false,
+            };
+        }));
     };
 
     return (
@@ -286,6 +321,8 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
                 onChange={changeNumberString}
                 onChangeNumber={setNumberOfRooms}
             />
+
+            <MultipleSelect title="Мова персоналу" options={languageOptions} onOptionClick={onLanguageOptionClick} />
         </div>
     );
 };

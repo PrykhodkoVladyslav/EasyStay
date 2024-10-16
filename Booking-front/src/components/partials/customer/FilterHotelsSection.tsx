@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useGetAllHotelAmenitiesQuery } from "services/hotelAmenity.ts";
 import { useGetAllRoomAmenitiesQuery } from "services/roomAmenity.ts";
 import { useGetMaxHotelPriceQuery } from "services/hotel.ts";
+import NumericUpDown from "components/partials/customer/NumericUpDown.tsx";
 
 const defaultRatingOptions = [
     {
@@ -90,11 +91,33 @@ const defaultBedTypeOptions = [
     },
 ];
 
-const FilterHotelsSection = () => {
+interface IFilter {
+    prices?: {
+        minPrice: number;
+        maxPrice: number;
+    };
+    hotelAmenities: number[];
+    roomAmenities: number[];
+    rating?: number;
+    bedType?: number;
+    numberOfRooms?: number;
+}
+
+interface IFilterHotelsSectionProps {
+    onChange?: (filter: IFilter) => void;
+}
+
+const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
     const defaultMaxPrice = 10000;
 
     const { data: maxPriceData } = useGetMaxHotelPriceQuery();
     const [maxPrice, setMaxPrice] = useState(defaultMaxPrice);
+    const [minPriceValue, setMinPriceValue] = useState<number | null>(0);
+    const [maxPriceValue, setMaxPriceValue] = useState<number | null>(defaultMaxPrice);
+    const pricesChanged = (minPrice: number | null, maxPrice: number | null) => {
+        setMinPriceValue(minPrice);
+        setMaxPriceValue(maxPrice);
+    };
     useEffect(() => {
         setMaxPrice(maxPriceData ?? defaultMaxPrice);
     }, [maxPriceData]);
@@ -169,8 +192,42 @@ const FilterHotelsSection = () => {
         setBedTypeOptions(opt);
     };
 
+    const [numberOfRoomsString, setNumberOfRoomsString] = useState<string | undefined>("0");
+    const [numberOfRooms, setNumberOfRooms] = useState(0);
+    const changeNumberString = (value: string | undefined) => {
+        if (value) {
+            if (/^0[1-9]+/.test(value)) {
+                setNumberOfRoomsString(value.replace(/^0+/, ""));
+                return;
+            }
+
+            if ((+value > 99)) {
+                setNumberOfRoomsString("99");
+                return;
+            }
+        }
+
+
+        setNumberOfRoomsString(value);
+    };
+
+    useEffect(() => {
+        props.onChange?.({
+            prices: {
+                minPrice: minPriceValue ?? 0,
+                maxPrice: maxPriceValue ?? maxPriceData ?? defaultMaxPrice,
+            },
+            hotelAmenities: hotelConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
+            rating: ratingOptions.find(o => o.isSelected)?.rating,
+            roomAmenities: roomConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
+            bedType: bedTypeOptions.filter(o => o.isSelected).find(o => o.isSelected)?.id,
+            numberOfRooms: numberOfRooms === 0 ? undefined : numberOfRooms,
+        });
+    }, [minPriceValue, maxPriceValue, hotelConvenienceOptions, ratingOptions, roomConvenienceOptions, bedTypeOptions, numberOfRooms]);
+
     const reset = () => {
-        // ToDo Reset price
+        setMinPriceValue(0);
+        setMaxPriceValue(maxPriceData ?? defaultMaxPrice);
 
         setHotelConvenienceOptions(hotelConvenienceOptions.map(o => {
             o.isSelected = false;
@@ -198,6 +255,8 @@ const FilterHotelsSection = () => {
                 isSelected: false,
             };
         }));
+
+        setNumberOfRoomsString("0");
     };
 
     return (
@@ -207,7 +266,8 @@ const FilterHotelsSection = () => {
                 <button onClick={reset}>Скинути</button>
             </div>
 
-            <PriceFilter maxPrice={maxPrice} />
+            <PriceFilter maxPrice={maxPrice} minPriceValue={minPriceValue} maxPriceValue={maxPriceValue}
+                         onChange={pricesChanged} />
 
             <MultipleSelect title="Зручності" options={hotelConvenienceOptions}
                             onOptionClick={onHotelConvenienceOptionClick} />
@@ -219,7 +279,13 @@ const FilterHotelsSection = () => {
 
             <MultipleSelect title="Тип ліжка" options={bedTypeOptions} onOptionClick={onBedTypeOptionClick} />
 
-
+            <NumericUpDown
+                title="Кількість кімнат"
+                valueTitle="Кількість"
+                value={numberOfRoomsString}
+                onChange={changeNumberString}
+                onChangeNumber={setNumberOfRooms}
+            />
         </div>
     );
 };

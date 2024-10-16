@@ -516,6 +516,84 @@
             }
           }
         }
+
+        .numeric-up-down {
+          .title-container {
+            .title {
+              color: rgb(0, 0, 0);
+              font-family: var(--font-primary), system-ui;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: 33px;
+            }
+          }
+
+          .value-container {
+            .value {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+
+              .title {
+                color: rgb(0, 0, 0);
+                font-family: var(--font-primary), system-ui;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+              }
+
+              .up-down-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                padding: 12px;
+                border-radius: 10px;
+                box-shadow: 0 0 2.4px 0 rgba(0, 0, 0, 0.13);
+                background: rgb(255, 255, 255);
+
+                img {
+                  cursor: pointer;
+                }
+
+                input {
+                  color: rgb(55, 55, 55);
+                  font-family: var(--font-primary), system-ui;
+                  font-size: 20px;
+                  font-weight: 600;
+                  line-height: 27px;
+                  height: 27px;
+
+                  text-align: center;
+                  width: 84px;
+                  border: 0;
+                  outline: 0;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: center;
+                }
+
+                input:focus {
+                  outline: none !important;
+                }
+
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+
+                /* Firefox */
+                input[type=number] {
+                  -moz-appearance: textfield;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

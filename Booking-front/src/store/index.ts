@@ -12,6 +12,7 @@ import { hotelAmenityApi } from "services/hotelAmenity.ts";
 import { roomAmenityApi } from "services/roomAmenity.ts";
 import { languageApi } from "services/language.ts";
 import { breakfastApi } from "services/breakfast.ts";
+import { genderApi } from "services/gender.ts";
 
 export const store = configureStore({
     reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
         [roomAmenityApi.reducerPath]: roomAmenityApi.reducer,
         [languageApi.reducerPath]: languageApi.reducer,
         [breakfastApi.reducerPath]: breakfastApi.reducer,
+        [genderApi.reducerPath]: genderApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -39,6 +41,7 @@ export const store = configureStore({
             roomAmenityApi.middleware,
             languageApi.middleware,
             breakfastApi.middleware,
+            genderApi.middleware,
         ),
 });
 

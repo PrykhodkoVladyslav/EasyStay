@@ -11,6 +11,7 @@ import { UpdateRealtorInformationSchema, UpdateRealtorInformationSchemaType } fr
 import showToast from "utils/toastShow.ts";
 import { useGetAllCitizenshipsQuery } from "services/citizenship.ts";
 import { City } from "interfaces/city";
+import { useGetAllGendersQuery } from "services/gender.ts";
 
 const DataPage = () => {
     const {
@@ -28,6 +29,7 @@ const DataPage = () => {
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: countriesData } = useGetAllCountriesQuery();
     const { data: citizenshipsData } = useGetAllCitizenshipsQuery();
+    const { data: gendersData } = useGetAllGendersQuery();
     const [updateRealtorsInformation] = useUpdateRealtorsInformationMutation();
 
     const [selectedCountryId, setSelectedCountryId] = useState<number>();
@@ -135,11 +137,11 @@ const DataPage = () => {
                         <div className="containers1">
                             <p>Номер телефону</p>
                             <input className="text-input"
-                                {...register("phoneNumber")}
-                                id="phone"
-                                title="Номер телефону"
-                                type="text"
-                                placeholder="Введіть Номер телефону"
+                                   {...register("phoneNumber")}
+                                   id="phone"
+                                   title="Номер телефону"
+                                   type="text"
+                                   placeholder="Введіть Номер телефону"
                             />
                             {errors?.phoneNumber && (
                                 <FormError className="text-red" errorMessage={errors?.phoneNumber?.message as string} />
@@ -196,8 +198,11 @@ const DataPage = () => {
                                 <option disabled value="">
                                     Виберіть стать
                                 </option>
-                                <option value={1}>Чоловік</option>
-                                <option value={2}>Жінка</option>
+                                {gendersData?.map((gender) => (
+                                    <option key={gender.id} value={gender.id}>
+                                        {gender.name}
+                                    </option>
+                                ))}
                             </select>
                             {errors?.genderId && (
                                 <FormError className="text-red" errorMessage={errors?.genderId?.message as string} />

@@ -12,7 +12,8 @@ import {
     useSetArchiveStatusHotelMutation,
 } from "services/hotel.ts";
 import showToast from "utils/toastShow.ts";
-import {Hotel, Photo} from "interfaces/hotel";
+import {IPhoto} from "interfaces/hotel";
+import { IHotel } from "interfaces/hotel/IHotel.ts";
 
 const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));
@@ -82,14 +83,14 @@ const HotelsPage: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                        {hotelsData?.filter(hotel => !hotel.isArchived).map((hotel: Hotel) => (
+                        {hotelsData?.filter(hotel => !hotel.isArchived).map((hotel: IHotel) => (
                             <tr key={hotel.id} className="bg-white border-b hover:bg-gray-50">
                                 {/*<td className="px-6 py-4">{hotel.id}</td>*/}
                                 <td className="px-6 py-4">{hotel.name}</td>
                                 <td className="px-6 py-4">
                                     {hotel.photos && hotel.photos.length > 0 && (
                                         <div className="flex flex-wrap gap-2 max-w-full">
-                                            {hotel.photos.map((photo: Photo, index: number) => (
+                                            {hotel.photos.map((photo: IPhoto, index: number) => (
                                                 <div key={index} className="w-20 h-20 flex-shrink-0">
                                                     <img
                                                         src={`${API_URL}/images/800_${photo.name}`}

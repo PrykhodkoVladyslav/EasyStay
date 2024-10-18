@@ -82,6 +82,20 @@ public class HotelPaginationService(
 			query = query.Where(h => h.DepartureTimeUtcTo <= dateTimeOffset);
 		}
 
+		if (filter.MinPrice is not null)
+			query = query.Where(
+				h => h.Rooms
+					.SelectMany(r => r.RoomVariants)
+					.Any(rv => (rv.DiscountPrice ?? rv.Price) >= filter.MinPrice.Value)
+			);
+
+		if (filter.MaxPrice is not null)
+			query = query.Where(
+				h => h.Rooms
+					.SelectMany(r => r.RoomVariants)
+					.Any(rv => (rv.DiscountPrice ?? rv.Price) <= filter.MaxPrice.Value)
+			);
+
 		// ToDo: Add a real rating when there are reviews
 		if (filter.MinRating is not null)
 			query = query.Where(h => 9.3F >= filter.MinRating);

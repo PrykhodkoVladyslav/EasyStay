@@ -1,6 +1,7 @@
 import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import FilterHotelsSection from "components/partials/customer/FilterHotelsSection.tsx";
+import HotelsSection from "components/partials/customer/HotelsSection.tsx";
 
 const HotelsPage = () => {
     return (
@@ -20,6 +21,7 @@ const HotelsPage = () => {
             <div className="hotels-container">
                 <FilterHotelsSection />
 
+                <HotelsSection />
             </div>
 
             <VerticalPad heightPx={110} />

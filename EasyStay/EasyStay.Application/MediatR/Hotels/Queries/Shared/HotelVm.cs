@@ -31,6 +31,7 @@ public class HotelVm : IMapWith<Hotel> {
 	public HotelCategoryVm Category { get; set; } = null!;
 
 	public long RealtorId { get; set; }
+	public RealtorShortInfoVm Realtor { get; set; } = null!;
 
 	public IEnumerable<HotelAmenityVm> HotelAmenities { get; set; } = null!;
 

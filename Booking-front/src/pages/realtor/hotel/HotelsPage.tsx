@@ -12,8 +12,8 @@ import {
     useSetArchiveStatusHotelMutation,
 } from "services/hotel.ts";
 import showToast from "utils/toastShow.ts";
-import {IPhoto} from "interfaces/hotel";
 import { IHotel } from "interfaces/hotel/IHotel.ts";
+import IPhoto from "interfaces/hotel/IPhoto.ts";
 
 const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));

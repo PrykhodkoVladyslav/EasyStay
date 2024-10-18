@@ -2310,7 +2310,7 @@
 /*Discounts component!!!!!!!!!*/
 .all-conteiner {
   font-family: var(--font-primary), system-ui;
-  height: 700px;
+  min-height: 700px;
   margin-top: 40px;
   margin-bottom: 100px;
 
@@ -2367,25 +2367,14 @@
 
   }
 
-  .hotels-reviews1 {
-    position: relative;
-    height: 505px;
-    display: flex;
-    flex-direction: column;
-    gap: 58px;
-    left: 135px;
-
-    // Список готелів
-    .hotels-container1 {
-      width: 100%;
-      min-height: 505px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
       .container11 {
+        display: flex;
         width: 100%;
-        gap: 24px;
+        position: relative;
+        height: auto;
+        margin-left: 50px;
+        min-height: 505px;
 
         .title1 {
           font-family: var(--font-primary), system-ui;
@@ -2394,8 +2383,14 @@
         }
 
         .items1 {
+          position: relative;
           display: flex;
-          gap: 23px;
+          flex-wrap: wrap;
+          justify-content: space-between; /* Або space-between, якщо хочете, щоб між першою і останньою карткою не було відступів */
+          padding: 0px 50px 0px 0px;
+          width: 100%;
+          height: auto;
+          gap: 24px;
           .item1 {
             max-width: 379px;
             height: 505px;
@@ -2568,8 +2563,7 @@
         }
       }
     }
-  }
-}
+
 
 /*Hero-section!!!!!!!!!*/
 .hero-section {
@@ -2937,15 +2931,16 @@
   align-items: center;
   background-color: #333333;
   border-radius: 20px;
-  margin: auto;
+  margin-top: 30px;
+  padding: 22px 48px 22px 50.5px;
 
   .Carousel-conteiner2 {
-    margin: auto;
     height: 704px;
     width: 100%;
     background-image: url("./icons/homepageSvg/line.svg");
     background-position: center;
     background-size: 100%;
+    background-repeat: no-repeat;
   }
 
   .Carousel-conteiner2 h1 {
@@ -2955,16 +2950,12 @@
     font-weight: 600;
     width: 648px;
     height: 87px;
-    left: 48px;
-    bottom: 22px;
   }
 
 
   .Carousel-conteiner3 {
     position: relative;
-    width: 1620px;
     height: 547px;
-    margin: auto;
     bottom: 12px;
     opacity: 100%;
     display: flex;
@@ -2976,6 +2967,7 @@
     flex-direction: column;
     width: 299px;
     height: 410px;
+    min-width: 140px;
     border-radius: 22px;
     padding: 20px 20px 20px 20px;
     margin-top: 30px;
@@ -2990,9 +2982,11 @@
     flex-direction: column;
     width: 345px;
     height: 296px;
+    min-width: 170px;
     border-radius: 22px;
     padding: 20px 20px 20px 20px;
     margin-top: 200px;
+    margin-right: 50px;
     background-image: url('./images/Homepage/propositionImages/Turkey.png');
     background-position: center;
     background-size: cover;
@@ -3003,9 +2997,11 @@
     flex-direction: column;
     width: 345px;
     height: 296px;
+    min-width: 130px;
     border-radius: 22px;
     padding: 20px 20px 20px 20px;
     margin-top: 40px;
+    margin-right: 50px;
     background-image: url('./images/Homepage/propositionImages/Bali.png');
     background-position: center;
     background-size: cover;
@@ -3016,12 +3012,14 @@
     flex-direction: column;
     width: 402px;
     height: 547px;
+    min-width: 180px;
     border-radius: 22px;
     padding: 20px 20px 20px 20px;
     background-image: url('./images/Homepage/propositionImages/ShriLanka.png');
     background-position: center;
     background-size: cover;
   }
+
 
   .cost {
     width: 78px;
@@ -3072,11 +3070,67 @@
     background: rgba(255, 255, 255);
     transition: 0.2s;
   }
+  @media (max-width: 1480px) {
+    .CarItem1 {
+      height: 310px;
+    }
+    .CarItem2 {
+      height: 200px;
+    }
 
+    .CarItem3 {
+      height: 200px;
+    }
+
+    .CarItem4 {
+      height: 447px;
+    }
+    .Carousel-conteiner2 h1 {
+      font-size: 54px;
+    }
+    .Carousel-item button {
+
+      width: 43px;
+      height: 43px;
+    }
+
+
+  }
+  @media (max-width: 1240px) {
+    .CarItem1 {
+      height: 210px;
+    }
+    .CarItem2 {
+      height: 150px;
+    }
+    .Carousel-conteiner2 h1 {
+      font-size: 44px;
+    }
+    .CarItem3 {
+      height: 150px;
+    }
+
+    .CarItem4 {
+      height: 347px;
+    }
+
+    .Carousel-conteiner2 {
+      height: 404px;
+
+    }
+    .Carousel-conteiner3 {
+      height: 400px;
+    }
+    .Carousel-item button {
+
+      width: 33px;
+      height: 33px;
+    }
+  }
 
   .arrow-btn {
-    width: 55px;
-    height: 55px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -3089,8 +3143,8 @@
 
   .div-btn {
     display: flex;
-    width: 142px;
-    height: 55px;
+    width: 172px;
+    height: 70px;
     margin: auto;
     position: relative;
     bottom: 10px;

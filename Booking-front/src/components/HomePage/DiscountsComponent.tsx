@@ -17,8 +17,7 @@ const DiscountsComponent = () => {
             </div>
 
 
-        <div className="hotels-reviews1">
-          <div className="hotels-container1">
+
                     <div className="container11">
                         <div className="items1">
                             <div className="item1">
@@ -221,8 +220,7 @@ const DiscountsComponent = () => {
                         </div>
 
                     </div>
-          </div>
-        </div>
+
         </div>
 
     );

@@ -82,6 +82,10 @@ public class HotelPaginationService(
 			query = query.Where(h => h.DepartureTimeUtcTo <= dateTimeOffset);
 		}
 
+		// ToDo: Add a real rating when there are reviews
+		if (filter.MinRating is not null)
+			query = query.Where(h => 9.3F >= filter.MinRating);
+
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);
 

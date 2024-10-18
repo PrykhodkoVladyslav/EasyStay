@@ -26,6 +26,8 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 	public TimeOnly? MinDepartureTimeUtcTo { get; set; }
 	public TimeOnly? MaxDepartureTimeUtcTo { get; set; }
 
+	public float? MinRating { get; set; }
+
 	public bool? IsArchived { get; set; }
 
 	public HotelAddressFilterDto? Address { get; set; }

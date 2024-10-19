@@ -32,6 +32,57 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
+        createHotel: builder.mutation<void, IHotelCreate>({
+            query: (hotel) => {
+                const hotelFormData = new FormData();
+
+                hotelFormData.append("Name", hotel.name);
+                hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("ArrivalTimeUtcFrom", hotel.arrivalTimeUtcFrom);
+                hotelFormData.append("ArrivalTimeUtcTo", hotel.arrivalTimeUtcTo);
+                hotelFormData.append("DepartureTimeUtcFrom", hotel.departureTimeUtcFrom);
+                hotelFormData.append("DepartureTimeUtcTo", hotel.departureTimeUtcTo);
+                hotelFormData.append("IsArchived", String(hotel.isArchived));
+                hotelFormData.append("CategoryId", String(hotel.categoryId));
+                hotelFormData.append("Address.street", hotel.address.street);
+                hotelFormData.append("Address.houseNumber", hotel.address.houseNumber);
+                hotelFormData.append("Address.floor", String(hotel.address.floor));
+                hotelFormData.append("Address.apartmentNumber", String(hotel.address.apartmentNumber));
+                hotelFormData.append("Address.cityId", String(hotel.address.cityId));
+
+                if (hotel.hotelAmenityIds) {
+                    hotel.hotelAmenityIds.forEach((hotelAmenityId) => {
+                        hotelFormData.append("hotelAmenityIds[]", String(hotelAmenityId));
+                    });
+                }
+
+                if (hotel.breakfastIds) {
+                    hotel.breakfastIds.forEach((breakfastId) => {
+                        hotelFormData.append("breakfastIds[]", String(breakfastId));
+                    });
+                }
+
+                if (hotel.staffLanguageIds) {
+                    hotel.staffLanguageIds.forEach((staffLanguageId) => {
+                        hotelFormData.append("staffLanguageIds[]", String(staffLanguageId));
+                    });
+                }
+
+                if (hotel.photos) {
+                    hotel.photos.forEach((photo) => {
+                        hotelFormData.append("photos", photo);
+                    });
+                }
+
+                return {
+                    url: "create",
+                    method: "POST",
+                    body: hotelFormData,
+                }
+            },
+            invalidatesTags: ["Hotels"],
+        }),
+
         // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
         //     query: (params) => {
         //         const queryString = createQueryString(params as Record<string, any>);
@@ -125,6 +176,7 @@ export const {
     useGetHotelsPageQuery,
     useGetHotelQuery,
     useGetRealtorHotelsPageQuery,
+    useCreateHotelMutation,
     // useCreateHotelMutation,
     // useUpdateHotelMutation,
     useDeleteHotelMutation,

@@ -8,3 +8,11 @@ export interface IAddress {
     longitude: number;
     city: City;
 }
+
+export interface IAddressCreate {
+    street: string;
+    houseNumber: string;
+    floor?: number;
+    apartmentNumber?: string;
+    cityId: number;
+}

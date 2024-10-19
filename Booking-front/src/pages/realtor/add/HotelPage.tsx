@@ -108,6 +108,7 @@ const HotelPage = () => {
             hotelAmenityIds: selectedHotelAmenities,
             breakfastIds: selectedBreakfasts,
             staffLanguageIds: selectedLanguages,
+            photos: selectedPhotos,
         }
         console.log(hoteldata);
 
@@ -138,7 +139,7 @@ const HotelPage = () => {
                                         <p className="title">Назва готелю</p>
                                         <input
                                             {...register("name")}
-                                            value="2"
+                                            value="2dqwqwd"
                                             type="text"
                                             id="name"
                                             placeholder="Назва"
@@ -174,7 +175,7 @@ const HotelPage = () => {
                                         <div className="form-textarea">
                                         <textarea
                                             {...register("description")}
-                                            value="2"
+                                            value="2dqwqwddqsdqsdqdsqqdqsqqwdqdq"
                                             placeholder="Текст"
                                             maxLength={4000}
                                         ></textarea>
@@ -515,52 +516,52 @@ const HotelPage = () => {
                     </div>
                 )}
 
-                {currentContainer === 2 && (
-                    <div className="add-hotel-page-2">
-                        <div className="top">
-                            <p className="title">Додайте фотографії готелю</p>
-                            <p className="description">
-                                <span>Завантажте принаймні 5 фото свого помешкання.</span>
-                                Чим більше фотографій ви завантажите, тим більші ваші шанси отримати бронювання. Ви
-                                завжди
-                                можете додати більше фото згодом.
-                            </p>
-                        </div>
+                {/*{currentContainer === 2 && (*/}
+                {/*    <div className="add-hotel-page-2">*/}
+                {/*        <div className="top">*/}
+                {/*            <p className="title">Додайте фотографії готелю</p>*/}
+                {/*            <p className="description">*/}
+                {/*                <span>Завантажте принаймні 5 фото свого помешкання.</span>*/}
+                {/*                Чим більше фотографій ви завантажите, тим більші ваші шанси отримати бронювання. Ви*/}
+                {/*                завжди*/}
+                {/*                можете додати більше фото згодом.*/}
+                {/*            </p>*/}
+                {/*        </div>*/}
 
-                        <div className="photo-container">
-                            <label className="add-photo" htmlFor="photo">
-                                <div className="inner">
-                                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото"/>
-                                    <input
-                                        id="photo"
-                                        type="file"
-                                        name="photo"
-                                        multiple
-                                        onChange={handlePhotoChange}
-                                    />
-                                    <span>Завантажити фото</span>
-                                </div>
-                            </label>
+                {/*        <div className="photo-container">*/}
+                {/*            <label className="add-photo" htmlFor="photo">*/}
+                {/*                <div className="inner">*/}
+                {/*                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото"/>*/}
+                {/*                    <input*/}
+                {/*                        id="photo"*/}
+                {/*                        type="file"*/}
+                {/*                        name="photo"*/}
+                {/*                        multiple*/}
+                {/*                        onChange={handlePhotoChange}*/}
+                {/*                    />*/}
+                {/*                    <span>Завантажити фото</span>*/}
+                {/*                </div>*/}
+                {/*            </label>*/}
 
-                            <div className="right-section">
-                                <p className="title">Ваші фото</p>
-                                <div className="photos">
-                                    {selectedPhotos.map((photo, index) => (
-                                        <div key={index} className="photo">
-                                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`}/>
-                                            <button className="btn-delete" onClick={() => handleDeletePhoto(index)}>
-                                                <img
-                                                    src={getPublicResourceUrl("account/trash.svg")}
-                                                    alt="Видалити фото"
-                                                />
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                {/*            <div className="right-section">*/}
+                {/*                <p className="title">Ваші фото</p>*/}
+                {/*                <div className="photos">*/}
+                {/*                    {selectedPhotos.map((photo, index) => (*/}
+                {/*                        <div key={index} className="photo">*/}
+                {/*                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`}/>*/}
+                {/*                            <button className="btn-delete" onClick={() => handleDeletePhoto(index)}>*/}
+                {/*                                <img*/}
+                {/*                                    src={getPublicResourceUrl("account/trash.svg")}*/}
+                {/*                                    alt="Видалити фото"*/}
+                {/*                                />*/}
+                {/*                            </button>*/}
+                {/*                        </div>*/}
+                {/*                    ))}*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*)}*/}
 
                 <button
                     className="main-button"

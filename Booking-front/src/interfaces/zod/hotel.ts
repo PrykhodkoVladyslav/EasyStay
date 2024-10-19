@@ -19,7 +19,6 @@ export const HotelCreateSchema = z.object({
     departureTimeUtcFrom: z.string().min(1, "Час виїзду є обов'язковим").optional(),
     departureTimeUtcTo: z.string().min(1, "Час виїзду є обов'язковим").optional(),
     isArchived: z.boolean().optional(),
-    // isArchived: z.preprocess((val) => (val === "true" ? true : val === "false" ? false : val), z.boolean()),
     address: AddressSchema,
     categoryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
         message: "Тип є обов'язковим",
@@ -28,7 +27,20 @@ export const HotelCreateSchema = z.object({
     breakfastIds: z.array(z.any().optional()).optional(),
     staffLanguageIds: z.array(z.any().optional()).optional(),
     photos: z
-        .array(z.instanceof(File))
+        .any()
+        .transform((files) => (files ? Array.from(files) : []))
+        .refine((files: File[]) => files.length > 0, `Мінімальна кількість фото - 1`)
+        .refine((files: File[]) => files.length <= 10, `Максимальна кількість фото - 10`)
+        .refine(
+            (files: File[]) => files.length === 0 || files.every((file) => file.size <= MAX_FILE_SIZE),
+            `Максимальний розмір файлу - 5MB`,
+        )
+        .refine(
+            (files: File[]) =>
+                files.length === 0 || files.every((file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)),
+            "Приймаються лише файли у форматах .jpg, .jpeg, .png та .webp",
+        ),
+        // .array(z.instanceof(File))
 
         // .instanceof(File)
         // .array()

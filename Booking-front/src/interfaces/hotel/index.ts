@@ -25,7 +25,7 @@ export interface IHotelCreate {
     hotelAmenityIds?: number[];
     breakfastIds?: number[];
     staffLanguageIds?: number[];
-    photos: File[];
+    photos: Photos;
 }
 
 export interface Photos {

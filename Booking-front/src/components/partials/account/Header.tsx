@@ -36,7 +36,6 @@ const Header = () => {
                 <button className="pages">Мої готелі</button>
                 <button className="pages">Відгуки</button>
                 <button className="pages">Архів</button>
-                <button className="pages">Знижки</button>
             </div>
 
             <div className="right-section">

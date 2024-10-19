@@ -83,7 +83,7 @@ export const userApi = createApi({
                 formData.append("Password", data.password);
 
                 return {
-                    url: "CreateAdmin",
+                    url: "createAdmin",
                     method: "POST",
                     body: formData,
                 };
@@ -93,7 +93,7 @@ export const userApi = createApi({
 
         blockUser: builder.mutation<void, BlockUserRequest>({
             query: ({ id, lockoutEndUtc }) => ({
-                url: "BlockUserById",
+                url: "blockUserById",
                 method: "PATCH",
                 body: {
                     id,
@@ -105,7 +105,7 @@ export const userApi = createApi({
 
         unlockUser: builder.mutation<void, UnlockUserRequest>({
             query: (id) => ({
-                url: `UnlockUserById/${id}`,
+                url: `unlockUserById/${id}`,
                 method: "PATCH",
             }),
             invalidatesTags: ["User"],
@@ -113,7 +113,7 @@ export const userApi = createApi({
 
         sendResetPasswordEmail: builder.mutation<void, ISendResetPasswordEmailRequest>({
             query: (data) => ({
-                url: "SendResetPasswordEmail",
+                url: "sendResetPasswordEmail",
                 method: "POST",
                 body: data,
             }),
@@ -121,7 +121,7 @@ export const userApi = createApi({
 
         resetPassword: builder.mutation<void, IResetPasswordRequest>({
             query: (data) => ({
-                url: "ResetPassword",
+                url: "resetPassword",
                 method: "POST",
                 body: data,
             }),
@@ -130,7 +130,7 @@ export const userApi = createApi({
         updateRealtorsInformation : builder.mutation<void, IUpdateRealtorInformation>({
             query: (data) => {
                 return {
-                    url: "UpdateRealtorsInformation",
+                    url: "updateRealtorsInformation",
                     method: "PATCH",
                     body: data,
                 };

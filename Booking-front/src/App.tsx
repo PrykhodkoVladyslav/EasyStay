@@ -13,7 +13,6 @@ import SuccessSendPage from "pages/auth/SuccessSendPage.tsx";
 import CustomerHomePage from "pages/customer/HomePage";
 
 import RealtorLayout from "components/layouts/RealtorLayout";
-
 import RealtorHomePage from "pages/realtor/HomePage";
 import RealtorDataPage from "pages/realtor/DataPage";
 import RealtorHotelsPage from "pages/realtor/HotelsPage";
@@ -29,14 +28,11 @@ import HotelEditPage from "pages/realtor/hotel/HotelEditPage";
 import HotelsArchivedPage from "pages/realtor/hotel/HotelsArchivedPage";
 
 import AdminLayout from "components/layouts/AdminLayout";
-
 import HotelsListPage from "pages/admin/hotel/HotelsListPage";
 import HotelsArchivedListPage from "pages/admin/hotel/HotelsArchivedListPage";
-
 import CountriesPage from "pages/admin/country/CountriesPage";
 import CountryCreatePage from "pages/admin/country/CountryCreatePage";
 import CountryEditPage from "pages/admin/country/CountryEditPage";
-
 import CitiesPage from "pages/admin/city/CitiesPage";
 import CityCreatePage from "pages/admin/city/CityCreatePage";
 import CityEditPage from "pages/admin/city/CityEditPage";
@@ -47,6 +43,7 @@ import AdminCreatePage from "pages/admin/user/admin/AdminCreatePage";
 import ResetPasswordPage from "pages/auth/ResetPasswordPage.tsx";
 import CustomerLayout from "components/layouts/CustomerLayout.tsx";
 import HotelsPage from "pages/customer/HotelsPage.tsx";
+import HotelPage from "pages/customer/HotelPage.tsx";
 
 function App() {
     return (
@@ -56,6 +53,7 @@ function App() {
                     <Route element={<CustomerLayout />}>
                         <Route index element={<CustomerHomePage />} />
                         <Route path="hotels" element={<HotelsPage />} />
+                        <Route path="hotel" element={<HotelPage />} />
                     </Route>
                 </Route>
 

@@ -915,6 +915,122 @@
       }
     }
   }
+
+  .hotel-page {
+    margin-top: 45px;
+
+    .hotel-section {
+      display: flex;
+      width: 725px;
+      gap: 125px;
+
+      .pages-info {
+        display: flex;
+        flex-direction: column;
+        gap: 34px;
+
+        .pages {
+          display: flex;
+          gap: 42px;
+          white-space: nowrap;
+          font-family: var(--font-primary), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+        }
+
+        .hotel-info {
+          display: flex;
+          flex-direction: column;
+          gap: 64px;
+
+          .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .name-favorite {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 20px;
+
+              .name-rating {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .name {
+                  font-family: var(--font-primary), system-ui;
+                  font-size: 28px;
+                  font-weight: 700;
+                  line-height: 38px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-wrap: wrap;
+                }
+
+                .stars-container {
+                  height: 28px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  border: 1px solid rgb(234, 232, 232);
+                  border-radius: 30px;
+
+                  .container4 {
+                    display: flex;
+                    align-items: center;
+
+                    .star {
+                      width: 13px;
+                      height: 13px;
+                    }
+
+                    .rating {
+                      font-family: var(--font-primary), system-ui;
+                      font-size: 16px;
+                      font-weight: 600;
+                      line-height: 22px;
+                    }
+                  }
+                }
+              }
+
+              .btn-favorite {
+                width: 24px;
+                height: 24px;
+                img {
+                  width: 24px;
+                  height: 24px;
+                  object-fit: cover;
+                }
+              }
+            }
+          }
+
+          .main {
+
+          }
+
+          .bottom {
+
+          }
+        }
+      }
+
+      .photos {
+
+      }
+
+
+    }
+
+
+  }
 }
 
 .pointer {
@@ -2109,7 +2225,7 @@
   }
 }
 
-// add сторінки
+// Категоріі
 .categories-container {
   width: 100%;
   display: flex;
@@ -2225,6 +2341,7 @@
   }
 }
 
+// Створення Готелю
 .add-hotel {
   display: flex;
   flex-direction: column;
@@ -2566,7 +2683,7 @@
               display: flex;
               justify-content: end;
               text-align: right;
-              color: var(--color-accent);
+              color: rgb(165, 165, 165);
               font-size: 12px;
               font-weight: 400;
               line-height: 16px;
@@ -2724,7 +2841,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto 0 125px;
+    margin: 60px auto 0 125px;
     padding: 15px 71px;
     border-radius: 18px;
     background: var(--color-primary);

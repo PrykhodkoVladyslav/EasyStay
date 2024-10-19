@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import { IHotel } from "interfaces/hotel/IHotel.ts";
+import { IHotel, IHotelCreate } from "interfaces/hotel/IHotel.ts";
 import { ISetArchiveStatusRequest } from "interfaces/hotel/ISetArchiveStatusRequest.ts";
 import IHotelDetails from "interfaces/hotel/IHotelDetails.ts";
 import IPage from "interfaces/page/IPage.ts";
@@ -29,6 +29,57 @@ export const hotelApi = createApi({
         getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
             query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
             providesTags: ["Hotels"],
+        }),
+
+        createHotel: builder.mutation<void, IHotelCreate>({
+            query: (hotel) => {
+                const hotelFormData = new FormData();
+
+                hotelFormData.append("Name", hotel.name);
+                hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("ArrivalTimeUtcFrom", hotel.arrivalTimeUtcFrom);
+                hotelFormData.append("ArrivalTimeUtcTo", hotel.arrivalTimeUtcTo);
+                hotelFormData.append("DepartureTimeUtcFrom", hotel.departureTimeUtcFrom);
+                hotelFormData.append("DepartureTimeUtcTo", hotel.departureTimeUtcTo);
+                hotelFormData.append("IsArchived", String(hotel.isArchived));
+                hotelFormData.append("CategoryId", String(hotel.categoryId));
+                hotelFormData.append("Address.street", hotel.address.street);
+                hotelFormData.append("Address.houseNumber", hotel.address.houseNumber);
+                hotelFormData.append("Address.floor", String(hotel.address.floor));
+                hotelFormData.append("Address.apartmentNumber", String(hotel.address.apartmentNumber));
+                hotelFormData.append("Address.cityId", String(hotel.address.cityId));
+
+                if (hotel.hotelAmenityIds) {
+                    hotel.hotelAmenityIds.forEach((hotelAmenityId) => {
+                        hotelFormData.append("hotelAmenityIds[]", String(hotelAmenityId));
+                    });
+                }
+
+                if (hotel.breakfastIds) {
+                    hotel.breakfastIds.forEach((breakfastId) => {
+                        hotelFormData.append("breakfastIds[]", String(breakfastId));
+                    });
+                }
+
+                if (hotel.staffLanguageIds) {
+                    hotel.staffLanguageIds.forEach((staffLanguageId) => {
+                        hotelFormData.append("staffLanguageIds[]", String(staffLanguageId));
+                    });
+                }
+
+                if (hotel.photos) {
+                    hotel.photos.forEach((photo) => {
+                        hotelFormData.append("photos", photo);
+                    });
+                }
+
+                return {
+                    url: "create",
+                    method: "POST",
+                    body: hotelFormData,
+                }
+            },
+            invalidatesTags: ["Hotels"],
         }),
 
         // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
@@ -93,6 +144,13 @@ export const hotelApi = createApi({
         //     invalidatesTags: ["Hotels"],
         // }),
 
+        // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
+        //     query: (params) => {
+        //         const queryString = createQueryString(params as Record<string, any>);
+        //         return `getPage?${queryString}`;
+        //     },
+        // }),
+
         deleteHotel: builder.mutation({
             query: (id: number) => ({
                 url: `delete/${id}`,
@@ -125,6 +183,7 @@ export const {
     useGetHotelsPageQuery,
     useGetHotelQuery,
     useGetRealtorHotelsPageQuery,
+    useCreateHotelMutation,
     // useCreateHotelMutation,
     // useUpdateHotelMutation,
     useDeleteHotelMutation,

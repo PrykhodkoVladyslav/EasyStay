@@ -11,7 +11,7 @@ export const citizenshipApi = createApi({
 
     endpoints: (builder) => ({
         getAllCitizenships: builder.query<ICitizenship[], void>({
-            query: () => "GetAll",
+            query: () => "getAll",
             providesTags: ["Citizenships"],
         }),
     }),

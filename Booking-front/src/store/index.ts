@@ -9,8 +9,10 @@ import { cityApi } from "services/city.ts";
 import { countryApi } from "services/country.ts";
 import { citizenshipApi } from "services/citizenship.ts";
 import { hotelAmenityApi } from "services/hotelAmenity.ts";
-import { breakfastApi } from "services/breakfast.ts";
+import { roomAmenityApi } from "services/roomAmenity.ts";
 import { languageApi } from "services/language.ts";
+import { breakfastApi } from "services/breakfast.ts";
+import { genderApi } from "services/gender.ts";
 
 export const store = configureStore({
     reducer: {
@@ -22,9 +24,10 @@ export const store = configureStore({
         [countryApi.reducerPath]: countryApi.reducer,
         [citizenshipApi.reducerPath]: citizenshipApi.reducer,
         [hotelAmenityApi.reducerPath]: hotelAmenityApi.reducer,
-        [breakfastApi.reducerPath]: breakfastApi.reducer,
+        [roomAmenityApi.reducerPath]: roomAmenityApi.reducer,
         [languageApi.reducerPath]: languageApi.reducer,
-
+        [breakfastApi.reducerPath]: breakfastApi.reducer,
+        [genderApi.reducerPath]: genderApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -35,9 +38,10 @@ export const store = configureStore({
             countryApi.middleware,
             citizenshipApi.middleware,
             hotelAmenityApi.middleware,
-            breakfastApi.middleware,
+            roomAmenityApi.middleware,
             languageApi.middleware,
-
+            breakfastApi.middleware,
+            genderApi.middleware,
         ),
 });
 

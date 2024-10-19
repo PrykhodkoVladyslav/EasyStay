@@ -22,6 +22,8 @@ public class HotelVm : IMapWith<Hotel> {
 
 	public decimal? MinPrice { get; set; }
 
+	public float Rating { get; set; }
+
 	public bool IsArchived { get; set; }
 
 	public AddressVm Address { get; set; } = null!;
@@ -29,6 +31,7 @@ public class HotelVm : IMapWith<Hotel> {
 	public HotelCategoryVm Category { get; set; } = null!;
 
 	public long RealtorId { get; set; }
+	public RealtorShortInfoVm Realtor { get; set; } = null!;
 
 	public IEnumerable<HotelAmenityVm> HotelAmenities { get; set; } = null!;
 
@@ -58,10 +61,12 @@ public class HotelVm : IMapWith<Hotel> {
 				dest => dest.MinPrice,
 				opt => opt.MapFrom(
 					src => src.Rooms
-					.SelectMany(r => r.RoomVariants)
-					.Min(rv => (decimal?)(rv.DiscountPrice.HasValue ? Math.Min(rv.Price, rv.DiscountPrice.Value) : rv.Price))
+						.SelectMany(r => r.RoomVariants)
+						.Min(rv => (decimal?)(rv.DiscountPrice ?? rv.Price))
 				)
 			)
+			// ToDo: Add a real rating when there are reviews
+			.ForMember(dest => dest.Rating, opt => opt.MapFrom(src => 9.3F))
 			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
 			.ForMember(
 				dest => dest.HotelAmenities,

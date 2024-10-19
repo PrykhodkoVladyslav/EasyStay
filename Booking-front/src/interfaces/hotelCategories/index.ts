@@ -1,4 +1,4 @@
-export interface HotelCategories {
+export interface HotelCategory {
     id: number;
     name: string;
 }

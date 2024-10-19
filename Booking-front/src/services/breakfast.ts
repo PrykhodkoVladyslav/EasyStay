@@ -1,19 +1,19 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import {IBreakfast} from "interfaces/breakfast";
+import IBreakfast from "interfaces/breakfast/IBreakfast.ts";
 
 export const breakfastApi = createApi({
-    reducerPath: "breakfastsApi",
+    reducerPath: "breakfastApi",
     baseQuery: createBaseQuery("breakfasts"),
     tagTypes: ["Breakfasts"],
 
-    endpoints: (builder) => ({
-        getAllBreakfasts: builder.query<IBreakfast[], void>({
+    endpoints: (build) => ({
+        getAllBreakfasts: build.query<IBreakfast[], void>({
             query: () => "getAll",
             providesTags: ["Breakfasts"],
         }),
-    })
-})
+    }),
+});
 
 export const {
     useGetAllBreakfastsQuery,

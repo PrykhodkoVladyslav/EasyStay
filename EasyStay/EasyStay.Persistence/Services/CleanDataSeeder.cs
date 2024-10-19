@@ -36,6 +36,12 @@ public class CleanDataSeeder(
 
 		if (!await context.RoomAmenities.AnyAsync(cancellationToken))
 			await SeedRoomAmenitiesAsync(cancellationToken);
+
+		if (!await context.Languages.AnyAsync(cancellationToken))
+			await SeedLanguagesAsync(cancellationToken);
+
+		if (!await context.Breakfasts.AnyAsync(cancellationToken))
+			await SeedBreakfastsAsync(cancellationToken);
 	}
 
 	private async Task SeedUsersAsync(CancellationToken cancellationToken) {
@@ -760,6 +766,62 @@ public class CleanDataSeeder(
 			new() {
 				Name = "Рушники"
 			}
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedLanguagesAsync(CancellationToken cancellationToken) {
+		await context.Languages.AddRangeAsync([
+			new() {
+				Name = "Українська"
+			},
+			new() {
+				Name = "Англійська"
+			},
+			new() {
+				Name = "Німецька"
+			},
+			new() {
+				Name = "Іспанська"
+			},
+			new() {
+				Name = "Французька"
+			},
+			new() {
+				Name = "Італійська"
+			},
+			new() {
+				Name = "Китайська"
+			},
+			new() {
+				Name = "Польська"
+			},
+			new() {
+				Name = "Сербська"
+			}
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedBreakfastsAsync(CancellationToken cancellationToken) {
+		await context.Breakfasts.AddRangeAsync([
+			new() {
+				Name = "Континентальний сніданок"
+			},
+			new() {
+				Name = "Англійський сніданок"
+			},
+			new() {
+				Name = "Американський сніданок"
+			},
+			new() {
+				Name = "Шведський стіл (Buffet)"
+			},
+			new() {
+				Name = "Вегетаріанський сніданок"
+			},
 		], cancellationToken);
 
 		await context.SaveChangesAsync(cancellationToken);

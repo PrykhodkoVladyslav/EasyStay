@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import { GetHotelPageRequest } from "interfaces/hotel";
-import { HotelCategories } from "interfaces/hotelCategories";
+import { HotelCategory } from "interfaces/hotelCategories";
 // import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
 // import { createQueryString } from "utils/createQueryString.ts";
@@ -11,7 +11,7 @@ export const hotelCategoriesApi = createApi({
     tagTypes: ["HotelsCategories"],
 
     endpoints: (builder) => ({
-        getAllHotelCategories: builder.query<HotelCategories[], void>({
+        getAllHotelCategories: builder.query<HotelCategory[], void>({
             query: () => "getAll",
             providesTags: ["HotelsCategories"],
         }),

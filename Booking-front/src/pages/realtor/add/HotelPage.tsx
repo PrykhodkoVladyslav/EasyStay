@@ -12,18 +12,31 @@ import { useGetAllHotelAmenitiesQuery } from "services/hotelAmenity.ts";
 import { useGetAllBreakfastsQuery } from "services/breakfast.ts";
 import { useGetAllLanguagesQuery } from "services/language.ts";
 import { useCreateHotelMutation } from "services/hotel.ts";
-import { HotelCreateSchema, HotelCreateSchemaType } from "interfaces/zod/hotel.ts";
+import { HotelCreatePage1Schema, HotelCreateSchemaType, HotelCreateSchema } from "interfaces/zod/hotel.ts";
+// import { useNavigate } from "react-router-dom";
 
 const HotelPage = () => {
+    const [currentContainer, setCurrentContainer] = useState(1);
+    // const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
         setValue,
+        trigger,
         watch,
         formState: { errors },
     } = useForm<HotelCreateSchemaType>({
-        resolver: zodResolver(HotelCreateSchema),
-        // resolver: zodResolver(currentContainer === 1 ? page1Schema : finalSchema*/),
+        // resolver: zodResolver(HotelCreateSchema),
+        resolver: zodResolver(currentContainer === 1 ? HotelCreatePage1Schema : HotelCreateSchema),
+        defaultValues: {
+            hotelAmenityIds: [],
+            staffLanguageIds: [],
+            arrivalTimeUtcFrom: "00:00:00",
+            arrivalTimeUtcTo: "00:00:00",
+            departureTimeUtcFrom: "00:00:00",
+            departureTimeUtcTo: "00:00:00",
+        },
     });
 
     const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
@@ -34,11 +47,10 @@ const HotelPage = () => {
     const { data: languagesData } = useGetAllLanguagesQuery();
     const [createHotel] = useCreateHotelMutation();
 
-    const [currentContainer, setCurrentContainer] = useState(1);
     const [selectedCountryId, setSelectedCountryId] = useState<number>();
     const [filteredCities, setFilteredCities] = useState<City[]>([]);
     const [selectedHotelAmenities, setSelectedHotelAmenities] = useState<number[]>([]);
-    const [isBreakfast, setIsBreakfast] = useState(null);
+    const [isBreakfast, setIsBreakfast] = useState<boolean>(false);
     const [selectedBreakfasts, setSelectedBreakfasts] = useState<number[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
     const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
@@ -62,12 +74,12 @@ const HotelPage = () => {
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryId = Number(e.target.value);
         setSelectedCountryId(countryId);
-        setValue("cityId", countryId);
+        setValue("address.cityId", String(countryId));
     };
 
-    const handleBreakfastChange = (event) => {
-        setIsBreakfast(event.target.value === "yes");
-        if (event.target.value === "no") {
+    const handleBreakfastChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsBreakfast(e.target.value === "yes");
+        if (e.target.value === "no") {
             setValue("breakfastIds", []);
         }
     };
@@ -75,7 +87,6 @@ const HotelPage = () => {
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files);
-            console.log(filesArray);  // Debugging to check if files are processed as an array
             setSelectedPhotos([...selectedPhotos, ...filesArray]);
         }
     };
@@ -84,24 +95,18 @@ const HotelPage = () => {
         setSelectedPhotos(selectedPhotos.filter((_, i) => i !== index));
     };
 
-    const nextContainer = (data) => {
-        if (currentContainer === 1) {
-            setCurrentContainer(2);
-        } else {
-
-            onSubmit(data);
+    const nextContainer = async () => {
+        const isValid = await trigger();
+        if (isValid) {
+            if (currentContainer < 2) {
+                setCurrentContainer(currentContainer + 1);
+            } else {
+                handleSubmit(onSubmit)();
+            }
         }
     };
 
-    // const nextContainer = async () => {
-    //     const isValid = await methods.trigger();
-    //     if (isValid) {
-    //         setCurrentContainer((prev) => prev + 1);
-    //     }
-    // };
-
     const onSubmit = async (data: HotelCreateSchemaType) => {
-        console.log(data.photos);
         const hoteldata = {
             ...data,
             isArchived: false,
@@ -109,11 +114,22 @@ const HotelPage = () => {
             breakfastIds: selectedBreakfasts,
             staffLanguageIds: selectedLanguages,
             photos: selectedPhotos,
+            arrivalTimeUtcFrom: data.arrivalTimeUtcFrom || '',
+            arrivalTimeUtcTo: data.arrivalTimeUtcTo || '',
+            departureTimeUtcFrom: data.departureTimeUtcFrom || '',
+            departureTimeUtcTo: data.departureTimeUtcTo || '',
+            categoryId: Number(data.categoryId) || 0,
+            address: {
+                ...data.address,
+                floor: data.address.floor ? Number(data.address.floor) : 0,
+                cityId: Number(data.address.cityId) || 0,
+            },
         }
         console.log(hoteldata);
 
         try {
             await createHotel(hoteldata).unwrap();
+            // navigate(`/hotel/${hoteldata.id}`);
             showToast(`Готель успішно створено!`, "success");
         } catch (error) {
             showToast(`Помилка при створенні готелю!`, "error");
@@ -139,7 +155,6 @@ const HotelPage = () => {
                                         <p className="title">Назва готелю</p>
                                         <input
                                             {...register("name")}
-                                            value="2dqwqwd"
                                             type="text"
                                             id="name"
                                             placeholder="Назва"
@@ -175,7 +190,6 @@ const HotelPage = () => {
                                         <div className="form-textarea">
                                         <textarea
                                             {...register("description")}
-                                            value="2dqwqwddqsdqsdqdsqqdqsqqwdqdq"
                                             placeholder="Текст"
                                             maxLength={4000}
                                         ></textarea>
@@ -240,7 +254,6 @@ const HotelPage = () => {
                                         <p className="title">Назва вулиці</p>
                                         <input
                                             {...register("address.street")}
-                                            value="2"
                                             type="text"
                                             id="address.street"
                                             placeholder="Вулиця"
@@ -254,7 +267,6 @@ const HotelPage = () => {
                                         <p className="title">Номер будинку</p>
                                         <input
                                             {...register("address.houseNumber")}
-                                            value="2"
                                             type="text"
                                             id="address.houseNumber"
                                             placeholder="Номер будинку"
@@ -434,8 +446,13 @@ const HotelPage = () => {
                                                     {...register("arrivalTimeUtcFrom")}
                                                     type="time"
                                                     step="1"
-                                                    value="00:00:00"
                                                 />
+                                                {errors?.arrivalTimeUtcFrom && (
+                                                    <FormError
+                                                        className="text-red"
+                                                        errorMessage={errors?.arrivalTimeUtcFrom?.message as string}
+                                                    />
+                                                )}
                                             </div>
                                             <div className="from-to">
                                                 <p>До</p>
@@ -443,8 +460,13 @@ const HotelPage = () => {
                                                     {...register("arrivalTimeUtcTo")}
                                                     type="time"
                                                     step="1"
-                                                    value="00:00:00"
                                                 />
+                                                {errors?.arrivalTimeUtcTo && (
+                                                    <FormError
+                                                        className="text-red"
+                                                        errorMessage={errors?.arrivalTimeUtcTo?.message as string}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -458,8 +480,13 @@ const HotelPage = () => {
                                                     {...register("departureTimeUtcFrom")}
                                                     type="time"
                                                     step="1"
-                                                    value="00:00:00"
                                                 />
+                                                {errors?.departureTimeUtcFrom && (
+                                                    <FormError
+                                                        className="text-red"
+                                                        errorMessage={errors?.departureTimeUtcFrom?.message as string}
+                                                    />
+                                                )}
                                             </div>
                                             <div className="from-to">
                                                 <p>До</p>
@@ -467,13 +494,32 @@ const HotelPage = () => {
                                                     {...register("departureTimeUtcTo")}
                                                     type="time"
                                                     step="1"
-                                                    value="00:00:00"
                                                 />
+                                                {errors?.departureTimeUtcTo && (
+                                                    <FormError
+                                                        className="text-red"
+                                                        errorMessage={errors?.departureTimeUtcTo?.message as string}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {currentContainer === 2 && (
+                    <div className="add-hotel-page-2">
+                        <div className="top">
+                            <p className="title">Додайте фотографії готелю</p>
+                            <p className="description">
+                                <span>Завантажте принаймні 5 фото свого помешкання.</span>
+                                Чим більше фотографій ви завантажите, тим більші ваші шанси отримати бронювання. Ви
+                                завжди
+                                можете додати більше фото згодом.
+                            </p>
                         </div>
 
                         <div className="photo-container">
@@ -508,65 +554,18 @@ const HotelPage = () => {
                                     ))}
                                 </div>
                             </div>
-                            {errors?.photos && (
-                                <FormError className="text-red"
-                                           errorMessage={errors?.photos?.message as string}/>
-                            )}
                         </div>
+                        {errors?.photos && (
+                            <FormError className="text-red flex justify-end"
+                                       errorMessage={errors?.photos?.message as string}/>
+                        )}
                     </div>
                 )}
 
-                {/*{currentContainer === 2 && (*/}
-                {/*    <div className="add-hotel-page-2">*/}
-                {/*        <div className="top">*/}
-                {/*            <p className="title">Додайте фотографії готелю</p>*/}
-                {/*            <p className="description">*/}
-                {/*                <span>Завантажте принаймні 5 фото свого помешкання.</span>*/}
-                {/*                Чим більше фотографій ви завантажите, тим більші ваші шанси отримати бронювання. Ви*/}
-                {/*                завжди*/}
-                {/*                можете додати більше фото згодом.*/}
-                {/*            </p>*/}
-                {/*        </div>*/}
-
-                {/*        <div className="photo-container">*/}
-                {/*            <label className="add-photo" htmlFor="photo">*/}
-                {/*                <div className="inner">*/}
-                {/*                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото"/>*/}
-                {/*                    <input*/}
-                {/*                        id="photo"*/}
-                {/*                        type="file"*/}
-                {/*                        name="photo"*/}
-                {/*                        multiple*/}
-                {/*                        onChange={handlePhotoChange}*/}
-                {/*                    />*/}
-                {/*                    <span>Завантажити фото</span>*/}
-                {/*                </div>*/}
-                {/*            </label>*/}
-
-                {/*            <div className="right-section">*/}
-                {/*                <p className="title">Ваші фото</p>*/}
-                {/*                <div className="photos">*/}
-                {/*                    {selectedPhotos.map((photo, index) => (*/}
-                {/*                        <div key={index} className="photo">*/}
-                {/*                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`}/>*/}
-                {/*                            <button className="btn-delete" onClick={() => handleDeletePhoto(index)}>*/}
-                {/*                                <img*/}
-                {/*                                    src={getPublicResourceUrl("account/trash.svg")}*/}
-                {/*                                    alt="Видалити фото"*/}
-                {/*                                />*/}
-                {/*                            </button>*/}
-                {/*                        </div>*/}
-                {/*                    ))}*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*)}*/}
-
                 <button
                     className="main-button"
-                    // onClick={nextContainer}
-                    type="submit"
+                    onClick={nextContainer}
+                    type="button"
                 >
                     Далі
                 </button>

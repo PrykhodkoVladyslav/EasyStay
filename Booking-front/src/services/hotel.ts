@@ -3,7 +3,7 @@ import { /*CreateHotel,*/
     IHotelCreate,
     // GetHotelPageRequest,
     // GetPageResponse,
-    SetArchiveStatusRequest,
+    // SetArchiveStatusRequest,
 } from "interfaces/hotel";
 import { createBaseQuery } from "utils/apiUtils.ts";
 
@@ -15,29 +15,71 @@ export const hotelApi = createApi({
     endpoints: (builder) => ({
 
         createHotel: builder.mutation<void, IHotelCreate>({
-            query: (hotel) => ({
-                url: "create",
-                method: "POST",
-                body: hotel,
-            }),
+            query: (hotel) => {
+                const hotelFormData = new FormData();
+
+                hotelFormData.append("Name", hotel.name);
+                hotelFormData.append("Description", hotel.description);
+                hotelFormData.append("ArrivalTimeUtcFrom", hotel.arrivalTimeUtcFrom);
+                hotelFormData.append("ArrivalTimeUtcTo", hotel.arrivalTimeUtcTo);
+                hotelFormData.append("DepartureTimeUtcFrom", hotel.departureTimeUtcFrom);
+                hotelFormData.append("DepartureTimeUtcTo", hotel.departureTimeUtcTo);
+                hotelFormData.append("IsArchived", String(hotel.isArchived));
+                hotelFormData.append("CategoryId", String(hotel.categoryId));
+                hotelFormData.append("Address.street", hotel.address.street);
+                hotelFormData.append("Address.houseNumber", hotel.address.houseNumber);
+                hotelFormData.append("Address.floor", String(hotel.address.floor));
+                hotelFormData.append("Address.apartmentNumber", String(hotel.address.apartmentNumber));
+                hotelFormData.append("Address.cityId", String(hotel.address.cityId));
+
+                if (hotel.hotelAmenityIds) {
+                    hotel.hotelAmenityIds.forEach((hotelAmenityId) => {
+                        hotelFormData.append("hotelAmenityIds[]", String(hotelAmenityId));
+                    });
+                }
+
+                if (hotel.breakfastIds) {
+                    hotel.breakfastIds.forEach((breakfastId) => {
+                        hotelFormData.append("breakfastIds[]", String(breakfastId));
+                    });
+                }
+
+                if (hotel.staffLanguageIds) {
+                    hotel.staffLanguageIds.forEach((staffLanguageId) => {
+                        hotelFormData.append("staffLanguageIds[]", String(staffLanguageId));
+                    });
+                }
+
+                if (hotel.photos) {
+                    hotel.photos.forEach((photo) => {
+                        hotelFormData.append("photos", photo);
+                    });
+                }
+
+                return {
+                    url: "create",
+                    method: "POST",
+                    body: hotelFormData,
+                }
+            },
             invalidatesTags: ["Hotels"],
         }),
 
 
 
-        getHotel: builder.query<Hotel[], string>({
-            query: (id) => `getById/${id}`,
-        }),
-
-        getAllHotels: builder.query<Hotel[], void>({
-            query: () => "getAll",
-            providesTags: ["Hotels"],
-        }),
-
-        getRealtorHotelsPage: builder.query<Hotel[], { RealtorId?: string }>({
-            query: ({ RealtorId }) => `getPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
-            providesTags: ["Hotels"],
-        }),
+        // getHotel: builder.query<Hotel[], string>({
+        //     query: (id) => `getById/${id}`,
+        // }),
+        //
+        // getAllHotels: builder.query<Hotel[], void>({
+        //     query: () => "getAll",
+        //     providesTags: ["Hotels"],
+        // }),
+        //
+        // getRealtorHotelsPage: builder.query<Hotel[], { RealtorId?: string }>({
+        //     query: ({ RealtorId }) => `getPage?${RealtorId ? `RealtorId=${RealtorId}` : ''}`,
+        //     providesTags: ["Hotels"],
+        // }),
 
         // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
         //     query: (params) => {
@@ -46,64 +88,64 @@ export const hotelApi = createApi({
         //     },
         // }),
 
-        updateHotel: builder.mutation({
-            query: (hotel: Hotel) => {
-                const hotelFormData = new FormData();
-                hotelFormData.append("Id", hotel.id.toString());
-                hotelFormData.append("Name", hotel.name);
-                hotelFormData.append("Description", hotel.description);
-                hotelFormData.append("Area", hotel.area.toString());
-                hotelFormData.append("NumberOfRooms", hotel.numberOfRooms.toString());
-                hotelFormData.append("IsArchived", hotel.isArchived.toString());
-                hotelFormData.append("Address.Street", hotel.address.street);
-                hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
-                hotelFormData.append("Address.Latitude", hotel.address.latitude.toString());
-                hotelFormData.append("Address.Longitude", hotel.address.longitude.toString());
-                hotelFormData.append("Address.CityId", hotel.address.city.id.toString());
-                hotelFormData.append("CategoryId", hotel.category.id.toString());
-                if (hotel.photos) {
-                    Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image as File));
-                }
-
-                return {
-                    url: "update",
-                    method: "PUT",
-                    body: hotelFormData,
-                };
-            },
-            invalidatesTags: ["Hotels"],
-        }),
-
-        deleteHotel: builder.mutation({
-            query: (id: number) => ({
-                url: `delete/${id}`,
-                method: "DELETE",
-            }),
-            invalidatesTags: ["Hotels"],
-        }),
-
-        setArchiveStatusHotel: builder.mutation<void, SetArchiveStatusRequest>({
-            query: ({ id, isArchived }) => ({
-                url: "setArchiveStatus",
-                method: "PATCH",
-                body: {
-                    id,
-                    IsArchived: isArchived,
-                },
-            }),
-            invalidatesTags: ["Hotels"],
-        }),
+        // updateHotel: builder.mutation({
+        //     query: (hotel: Hotel) => {
+        //         const hotelFormData = new FormData();
+        //         hotelFormData.append("Id", hotel.id.toString());
+        //         hotelFormData.append("Name", hotel.name);
+        //         hotelFormData.append("Description", hotel.description);
+        //         hotelFormData.append("Area", hotel.area.toString());
+        //         hotelFormData.append("NumberOfRooms", hotel.numberOfRooms.toString());
+        //         hotelFormData.append("IsArchived", hotel.isArchived.toString());
+        //         hotelFormData.append("Address.Street", hotel.address.street);
+        //         hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
+        //         hotelFormData.append("Address.Latitude", hotel.address.latitude.toString());
+        //         hotelFormData.append("Address.Longitude", hotel.address.longitude.toString());
+        //         hotelFormData.append("Address.CityId", hotel.address.city.id.toString());
+        //         hotelFormData.append("CategoryId", hotel.category.id.toString());
+        //         if (hotel.photos) {
+        //             Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image as File));
+        //         }
+        //
+        //         return {
+        //             url: "update",
+        //             method: "PUT",
+        //             body: hotelFormData,
+        //         };
+        //     },
+        //     invalidatesTags: ["Hotels"],
+        // }),
+        //
+        // deleteHotel: builder.mutation({
+        //     query: (id: number) => ({
+        //         url: `delete/${id}`,
+        //         method: "DELETE",
+        //     }),
+        //     invalidatesTags: ["Hotels"],
+        // }),
+        //
+        // setArchiveStatusHotel: builder.mutation<void, SetArchiveStatusRequest>({
+        //     query: ({ id, isArchived }) => ({
+        //         url: "setArchiveStatus",
+        //         method: "PATCH",
+        //         body: {
+        //             id,
+        //             IsArchived: isArchived,
+        //         },
+        //     }),
+        //     invalidatesTags: ["Hotels"],
+        // }),
     }),
 });
 
 export const {
     useCreateHotelMutation,
 
-    useGetHotelQuery,
-    useGetAllHotelsQuery,
-    useGetRealtorHotelsPageQuery,
-    useAddHotelMutation,
-    useUpdateHotelMutation,
-    useDeleteHotelMutation,
-    useSetArchiveStatusHotelMutation,
+    // useGetHotelQuery,
+    // useGetAllHotelsQuery,
+    // useGetRealtorHotelsPageQuery,
+    // useAddHotelMutation,
+    // useUpdateHotelMutation,
+    // useDeleteHotelMutation,
+    // useSetArchiveStatusHotelMutation,
 } = hotelApi;

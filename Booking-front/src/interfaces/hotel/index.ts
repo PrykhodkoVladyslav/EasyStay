@@ -1,9 +1,6 @@
-import { City } from "interfaces/city";
-import { HotelCategories } from "interfaces/hotelCategories";
 // import { PaginationOptions } from "interfaces/hotel.ts";
 
 export interface IAddressCreate {
-    id: number;
     street: string;
     houseNumber: string;
     floor?: number;
@@ -12,7 +9,6 @@ export interface IAddressCreate {
 }
 
 export interface IHotelCreate {
-    id: number;
     name: string;
     description: string;
     arrivalTimeUtcFrom: string;
@@ -25,11 +21,7 @@ export interface IHotelCreate {
     hotelAmenityIds?: number[];
     breakfastIds?: number[];
     staffLanguageIds?: number[];
-    photos: Photos;
-}
-
-export interface Photos {
-    name: string;
+    photos: File[];
 }
 
 export interface Realtor {

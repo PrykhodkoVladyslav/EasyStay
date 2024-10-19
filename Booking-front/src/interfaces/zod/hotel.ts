@@ -1,5 +1,5 @@
 import { ACCEPTED_IMAGE_MIME_TYPES, MAX_FILE_SIZE } from "constants/index.ts";
-import {number, z} from "zod";
+import { z } from "zod";
 
 export const AddressSchema = z.object({
     street: z.string().min(1, "Вулиця є обов'язковою"),
@@ -11,7 +11,7 @@ export const AddressSchema = z.object({
     }),
 });
 
-export const HotelCreateSchema = z.object({
+export const HotelCreatePage1Schema = z.object({
     name: z.string().min(1, "Назва є обов'язковою"),
     description: z.string().min(1, "Опис є обов'язковим"),
     arrivalTimeUtcFrom: z.string().min(1, "Час прибуття є обов'язковим").optional(),
@@ -26,31 +26,19 @@ export const HotelCreateSchema = z.object({
     hotelAmenityIds: z.array(z.any().optional()).optional(),
     breakfastIds: z.array(z.any().optional()).optional(),
     staffLanguageIds: z.array(z.any().optional()).optional(),
+});
+
+const HotelCreatePage2Schema = z.object({
     photos: z
         .any()
         .transform((files) => (files ? Array.from(files) : []))
-        .refine((files: File[]) => files.length > 0, `Мінімальна кількість фото - 1`)
-        .refine((files: File[]) => files.length <= 10, `Максимальна кількість фото - 10`)
-        .refine(
-            (files: File[]) => files.length === 0 || files.every((file) => file.size <= MAX_FILE_SIZE),
-            `Максимальний розмір файлу - 5MB`,
-        )
-        .refine(
-            (files: File[]) =>
-                files.length === 0 || files.every((file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)),
-            "Приймаються лише файли у форматах .jpg, .jpeg, .png та .webp",
-        ),
-        // .array(z.instanceof(File))
+        // .refine((files: File[]) => files.length > 5, `Мінімальна кількість фото - 5`)
 
-        // .instanceof(File)
-        // .array()
-
-        // .object({
-        //     array: z.array(z.instanceof(File)),
-        // })
-
-        // .min(1, `Мінімальна кількість фото - 1`)
-        // .max(10, `Максимальна кількість фото - 10`)
+        // .refine((files: File[]) => files.length <= 10, `Максимальна кількість фото - 10`)
+        // .refine(
+        //     (files: File[]) => files.length === 0 || files.every((file) => file.size <= MAX_FILE_SIZE),
+        //     `Максимальний розмір файлу - 5MB`,
+        // )
         // .refine(
         //     (files: File[]) =>
         //         files.length === 0 || files.every((file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)),
@@ -58,46 +46,9 @@ export const HotelCreateSchema = z.object({
         // ),
 });
 
+export const HotelCreateSchema = HotelCreatePage1Schema.and(HotelCreatePage2Schema);
+
 export type HotelCreateSchemaType = z.infer<typeof HotelCreateSchema>;
-
-const HotelCreatePage1Schema = z.object({
-    name: z.string().min(1, "Назва є обов'язковою"),
-    description: z.string().min(1, "Опис є обов'язковим"),
-    arrivalTimeUtcFrom: z.string().min(1, "Час прибуття є обов'язковим"),
-    arrivalTimeUtcTo: z.string().min(1, "Час прибуття є обов'язковим"),
-    departureTimeUtcFrom: z.string().min(1, "Час виїзду є обов'язковим"),
-    departureTimeUtcTo: z.string().min(1, "Час виїзду є обов'язковим"),
-    isArchived: z.preprocess((val) => (val === "true" ? true : val === "false" ? false : val), z.boolean()),
-    address: AddressSchema,
-    categoryId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
-        message: "Тип є обов'язковим",
-    }),
-    hotelAmenityIds: z.array(z.any().optional()).optional(),
-    breakfastIds: z.array(z.any().optional()).optional(),
-    staffLanguageIds: z.array(z.any().optional()).optional(),
-    // hotelAmenityIds: z.array(z.string().transform(val => Number(val))),
-    // breakfastIds: z.array(z.string().transform(val => Number(val))),
-    // staffLanguageIds: z.array(z.string().transform(val => Number(val))),
-});
-
-const HotelCreatePage2Schema = z.object({
-    photos: z
-        .array(z.instanceof(File))
-        .min(1, `Мінімальна кількість фото - 1`)
-        .max(10, `Максимальна кількість фото - 10`)
-        .refine(
-            (files: File[]) => files.length === 0 || files.every((file) => file.size <= MAX_FILE_SIZE),
-            `Максимальний розмір файлу - 5MB`,
-        )
-        .refine(
-            (files: File[]) =>
-                files.length === 0 || files.every((file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)),
-            "Приймаються лише файли у форматах .jpg, .jpeg, .png та .webp",
-        ),
-});
-
-const finalSchema = HotelCreatePage1Schema.and(HotelCreatePage2Schema);
-
 
 
 

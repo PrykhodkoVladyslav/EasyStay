@@ -1,4 +1,4 @@
-import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
+// import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
 import {getPublicResourceUrl} from "utils/publicAccessor.ts";
 
 const HotelPage = () => {

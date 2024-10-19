@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import { IHotel } from "interfaces/hotel/IHotel.ts";
+import { IHotel, IHotelCreate } from "interfaces/hotel/IHotel.ts";
 import { ISetArchiveStatusRequest } from "interfaces/hotel/ISetArchiveStatusRequest.ts";
 import IHotelDetails from "interfaces/hotel/IHotelDetails.ts";
 import IPage from "interfaces/page/IPage.ts";
@@ -151,6 +151,14 @@ export const hotelApi = createApi({
         //         return `getPage?${queryString}`;
         //     },
         // }),
+
+        deleteHotel: builder.mutation({
+            query: (id: number) => ({
+                url: `delete/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Hotels"],
+        }),
 
         setArchiveStatusHotel: builder.mutation<void, ISetArchiveStatusRequest>({
             query: ({ id, isArchived }) => ({

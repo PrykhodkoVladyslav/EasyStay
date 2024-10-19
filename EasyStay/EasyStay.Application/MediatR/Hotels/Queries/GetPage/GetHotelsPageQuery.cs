@@ -31,6 +31,8 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public float? MinRating { get; set; }
 
+	public bool? HasAnyRoomVariant { get; set; }
+
 	public bool? IsArchived { get; set; }
 
 	public HotelAddressFilterDto? Address { get; set; }

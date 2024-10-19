@@ -18,7 +18,7 @@ const nameOfMonthsInGenitiveCase: Record<number, string> = {
     11: "грудня",
 };
 
-interface ISearchData {
+export interface ISearchData {
     city: string;
     date?: {
         from: Date;

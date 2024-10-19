@@ -8,6 +8,7 @@ import NumericUpDown from "components/partials/customer/NumericUpDown.tsx";
 import { useGetAllLanguagesQuery } from "services/language.ts";
 import { useGetAllBreakfastsQuery } from "services/breakfast.ts";
 import { useGetAllGendersQuery } from "services/gender.ts";
+import { debounce } from "lodash";
 
 const defaultRatingOptions = [
     {
@@ -94,7 +95,7 @@ const defaultBedTypeOptions = [
     },
 ];
 
-interface IFilter {
+export interface IFilter {
     prices?: {
         minPrice: number;
         maxPrice: number;
@@ -102,7 +103,7 @@ interface IFilter {
     hotelAmenities: number[];
     roomAmenities: number[];
     rating?: number;
-    bedType?: number;
+    bedTypes: number[];
     numberOfRooms?: number;
     languages: number[];
     breakfasts: number[];
@@ -186,7 +187,7 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
         setRoomConvenienceOptions(opt);
     };
 
-    const [bedTypeOptions, setBedTypeOptions] = useState(defaultBedTypeOptions);
+    const [bedTypeOptions, setBedTypesOptions] = useState(defaultBedTypeOptions);
     const onBedTypeOptionClick = (id: number) => {
         const opt = bedTypeOptions.map(o => {
             if (o.id === id)
@@ -195,7 +196,7 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
             return o;
         });
 
-        setBedTypeOptions(opt);
+        setBedTypesOptions(opt);
     };
 
     const [numberOfRoomsString, setNumberOfRoomsString] = useState<string | undefined>("0");
@@ -290,21 +291,29 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
     };
 
     useEffect(() => {
-        props.onChange?.({
-            prices: {
-                minPrice: minPriceValue ?? 0,
-                maxPrice: maxPriceValue ?? maxPriceData ?? defaultMaxPrice,
-            },
-            hotelAmenities: hotelConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
-            rating: ratingOptions.find(o => o.isSelected)?.rating,
-            roomAmenities: roomConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
-            bedType: bedTypeOptions.filter(o => o.isSelected).find(o => o.isSelected)?.id,
-            numberOfRooms: numberOfRooms === 0 ? undefined : numberOfRooms,
-            languages: languageOptions.filter(o => o.isSelected).map(o => o.id),
-            breakfasts: breakfastOptions.filter(o => o.isSelected).map(o => o.id),
-            genders: genderOptions.filter(o => o.isSelected).map(o => o.id),
-        });
-    }, [props, minPriceValue, maxPriceValue, maxPriceData, hotelConvenienceOptions, ratingOptions, roomConvenienceOptions, bedTypeOptions, numberOfRooms, languageOptions, breakfastOptions, genderOptions]);
+        const debouncedOnChange = debounce(() => {
+            props.onChange?.({
+                prices: {
+                    minPrice: minPriceValue ?? 0,
+                    maxPrice: maxPriceValue ?? maxPriceData ?? defaultMaxPrice,
+                },
+                hotelAmenities: hotelConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
+                rating: ratingOptions.find(o => o.isSelected)?.rating,
+                roomAmenities: roomConvenienceOptions.filter(o => o.isSelected).map(o => o.id),
+                bedTypes: bedTypeOptions.filter(o => o.isSelected).map(o => o.id),
+                numberOfRooms: numberOfRooms === 0 ? undefined : numberOfRooms,
+                languages: languageOptions.filter(o => o.isSelected).map(o => o.id),
+                breakfasts: breakfastOptions.filter(o => o.isSelected).map(o => o.id),
+                genders: genderOptions.filter(o => o.isSelected).map(o => o.id),
+            });
+        }, 100);
+
+        debouncedOnChange();
+
+        return () => {
+            debouncedOnChange.cancel();
+        };
+    }, [minPriceValue, maxPriceValue, maxPriceData, hotelConvenienceOptions, ratingOptions, roomConvenienceOptions, bedTypeOptions, numberOfRooms, languageOptions, breakfastOptions, genderOptions]);
 
     const reset = () => {
         setMinPriceValue(0);
@@ -329,7 +338,7 @@ const FilterHotelsSection = (props: IFilterHotelsSectionProps) => {
             return o;
         }));
 
-        setBedTypeOptions(bedTypeOptions.map(o => {
+        setBedTypesOptions(bedTypeOptions.map(o => {
             return {
                 id: o.id,
                 name: o.name,

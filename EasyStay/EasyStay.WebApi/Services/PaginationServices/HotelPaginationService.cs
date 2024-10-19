@@ -100,6 +100,9 @@ public class HotelPaginationService(
 		if (filter.MinRating is not null)
 			query = query.Where(h => 9.3F >= filter.MinRating);
 
+		if (filter.HasAnyRoomVariant == true)
+			query = query.Where(h => h.Rooms.SelectMany(r => r.RoomVariants).Any());
+
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);
 

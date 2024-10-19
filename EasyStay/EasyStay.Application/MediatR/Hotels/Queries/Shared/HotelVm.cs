@@ -21,6 +21,7 @@ public class HotelVm : IMapWith<Hotel> {
 	public TimeOnly DepartureTimeUtcTo { get; set; }
 
 	public decimal? MinPrice { get; set; }
+	public decimal? MaxPrice { get; set; }
 
 	public float Rating { get; set; }
 
@@ -63,6 +64,14 @@ public class HotelVm : IMapWith<Hotel> {
 					src => src.Rooms
 						.SelectMany(r => r.RoomVariants)
 						.Min(rv => (decimal?)(rv.DiscountPrice ?? rv.Price))
+				)
+			)
+			.ForMember(
+				dest => dest.MaxPrice,
+				opt => opt.MapFrom(
+					src => src.Rooms
+						.SelectMany(r => r.RoomVariants)
+						.Max(rv => (decimal?)(rv.DiscountPrice ?? rv.Price))
 				)
 			)
 			// ToDo: Add a real rating when there are reviews

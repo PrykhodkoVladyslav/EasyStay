@@ -13,6 +13,7 @@ export interface IHotel {
     departureTimeUtcFrom: string;
     departureTimeUtcTo: string;
     minPrice?: number;
+    maxPrice?: number;
     rating: number;
     isArchived: boolean;
     address: IAddress;

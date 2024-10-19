@@ -4,8 +4,7 @@ import { IHotel } from "interfaces/hotel/IHotel.ts";
 import { ISetArchiveStatusRequest } from "interfaces/hotel/ISetArchiveStatusRequest.ts";
 import IHotelDetails from "interfaces/hotel/IHotelDetails.ts";
 import IPage from "interfaces/page/IPage.ts";
-import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
-import queryString from "query-string";
+import IHotelsPageQuery, { toQueryFromIHotelsPageQuery } from "interfaces/hotel/IHotelsPageQuery.ts";
 
 export const hotelApi = createApi({
     reducerPath: "hotelApi",
@@ -19,7 +18,7 @@ export const hotelApi = createApi({
         }),
 
         getHotelsPage: builder.query<IPage<IHotel>, IHotelsPageQuery>({
-            query: (query) => `GetPage?${queryString.stringify(query)}`,
+            query: (query) => `GetPage?${toQueryFromIHotelsPageQuery(query)}`,
             providesTags: ["Hotels"],
         }),
 

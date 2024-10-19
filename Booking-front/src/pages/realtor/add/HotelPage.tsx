@@ -121,7 +121,7 @@ const HotelPage = () => {
             categoryId: Number(data.categoryId) || 0,
             address: {
                 ...data.address,
-                floor: data.address.floor ? Number(data.address.floor) : 0,
+                floor: data.address.floor || '',
                 cityId: Number(data.address.cityId) || 0,
             },
         }

@@ -1,7 +1,3 @@
-// import { useSelector } from "react-redux";
-// import { RootState } from "store";
-// import { getToken } from "store/slice/userSlice";
-// import { IconEdit, IconTrash, IconArchive } from "@tabler/icons-react";
 // import { Button } from "components/ui/Button.tsx";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +10,10 @@ import {
 import showToast from "utils/toastShow.ts";
 import { IHotel } from "interfaces/hotel/IHotel.ts";
 import IPhoto from "interfaces/hotel/IPhoto.ts";
+import {IconArchive, IconEdit, IconTrash} from "@tabler/icons-react";
+import {getToken} from "store/slice/userSlice.ts";
+import {useSelector} from "react-redux";
+import {RootState} from "store/index.ts";
 
 const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));

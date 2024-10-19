@@ -12,7 +12,7 @@ export interface IAddress {
 export interface IAddressCreate {
     street: string;
     houseNumber: string;
-    floor?: number;
+    floor?: string;
     apartmentNumber?: string;
     cityId: number;
 }

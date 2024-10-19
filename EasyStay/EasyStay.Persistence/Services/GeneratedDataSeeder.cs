@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.RoomVariants.Queries.Shared;
 using EasyStay.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,11 +27,20 @@ public class GeneratedDataSeeder(
 		if (!await context.RealtorReviews.AnyAsync(cancellationToken))
 			await SeedRealtorReviewsAsync(cancellationToken);
 
+		if (!await context.RoomTypes.AnyAsync(cancellationToken))
+			await SeedRoomTypesAsync(cancellationToken);
+
+		if (!await context.Rooms.AnyAsync(cancellationToken))
+			await SeedRoomsAsync(cancellationToken);
+
 		if (!await context.RoomRentalPeriods.AnyAsync(cancellationToken))
 			await SeedRoomRentalPeriodsAsync(cancellationToken);
 
-		if (!await context.RoomTypes.AnyAsync(cancellationToken))
-			await SeedRoomTypesAsync(cancellationToken);
+		if (!await context.RoomRoomAmenities.AnyAsync(cancellationToken))
+			await SeedRoomRoomAmenitiesAsync(cancellationToken);
+
+		if (!await context.RoomVariants.AnyAsync(cancellationToken))
+			await SeedRoomVariantsAsync(cancellationToken);
 	}
 
 	private async Task SeedAddressesAsync(CancellationToken cancellationToken) {
@@ -105,7 +115,7 @@ public class GeneratedDataSeeder(
 				ArrivalTimeUtcTo = GetRandomTimeUtc(faker),
 				DepartureTimeUtcFrom = GetRandomTimeUtc(faker),
 				DepartureTimeUtcTo = GetRandomTimeUtc(faker),
-				IsArchived = random.Next(0, 2) == 1,
+				IsArchived = faker.Random.Bool(0.1F),
 				AddressId = address,
 				HotelCategoryId = faker.PickRandom(categoryIds),
 				RealtorId = faker.PickRandom(userIds)
@@ -175,32 +185,127 @@ public class GeneratedDataSeeder(
 		await context.SaveChangesAsync(cancellationToken);
 	}
 
-	private async Task SeedRoomRentalPeriodsAsync(CancellationToken cancellationToken) {
-		Faker faker = new Faker();
-
-		var rooms = await context.Rooms.ToArrayAsync(cancellationToken);
-		var rentalPeriodIds = await context.RentalPeriods.Select(rp => rp.Id).ToArrayAsync(cancellationToken);
-
-		foreach (var room in rooms) {
-			var randomRentalPeriodIds = faker.PickRandom(rentalPeriodIds, faker.Random.Int(1, 3));
-			room.RoomRentalPeriods ??= [];
-
-			foreach (var rentalPeriodId in randomRentalPeriodIds) {
-				room.RoomRentalPeriods.Add(new RoomRentalPeriod {
-					RoomId = room.Id,
-					RentalPeriodId = rentalPeriodId
-				});
-			}
-		}
-
-		await context.SaveChangesAsync(cancellationToken);
-	}
-
 	private async Task SeedRoomTypesAsync(CancellationToken cancellationToken) {
 		var faker = new Faker<RoomType>()
 			.RuleFor(rt => rt.Name, faker => faker.Commerce.ProductName());
 
 		await context.RoomTypes.AddRangeAsync(faker.Generate(5), cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedRoomsAsync(CancellationToken cancellationToken) {
+		var roomTypes = context.RoomTypes.ToArray();
+
+		var hotelsId = await context.Hotels
+			.Select(h => h.Id)
+			.ToArrayAsync(cancellationToken);
+
+		foreach (var hotelId in hotelsId) {
+			var faker = new Faker<Room>()
+			.RuleFor(r => r.Name, faker => faker.Commerce.ProductName())
+			.RuleFor(r => r.Area, faker => faker.Random.Double(10, 100))
+			.RuleFor(r => r.NumberOfRooms, faker => faker.Random.Int(1, 5))
+			.RuleFor(r => r.Quantity, faker => faker.Random.Int(1, 10))
+			.RuleFor(r => r.HotelId, _ => hotelId)
+			.RuleFor(r => r.RoomTypeId, faker => faker.PickRandom(roomTypes).Id);
+
+			var rooms = faker.GenerateBetween(1, 4);
+			await context.Rooms.AddRangeAsync(rooms, cancellationToken);
+		}
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedRoomRentalPeriodsAsync(CancellationToken cancellationToken) {
+		var rooms = await context.Rooms.ToArrayAsync(cancellationToken);
+		var rentalPeriodIds = await context.RentalPeriods
+			.Select(rp => rp.Id)
+			.ToArrayAsync(cancellationToken);
+
+		foreach (var room in rooms) {
+			var faker = new Faker<RoomRentalPeriod>()
+				.RuleFor(rrp => rrp.RoomId, _ => room.Id)
+				.RuleFor(rrp => rrp.RentalPeriodId, faker => faker.PickRandom(rentalPeriodIds));
+
+			var roomRentalPeriods = faker.GenerateBetween(1, 3).DistinctBy(rrp => rrp.RentalPeriodId);
+
+			await context.RoomRentalPeriods.AddRangeAsync(roomRentalPeriods, cancellationToken);
+		}
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedRoomRoomAmenitiesAsync(CancellationToken cancellationToken) {
+		var rooms = await context.Rooms.ToArrayAsync(cancellationToken);
+		var roomAmenityIds = await context.RoomAmenities
+			.Select(ra => ra.Id)
+			.ToArrayAsync(cancellationToken);
+
+		foreach (var room in rooms) {
+			var faker = new Faker<RoomRoomAmenity>()
+				.RuleFor(rra => rra.RoomId, _ => room.Id)
+				.RuleFor(rra => rra.RoomAmenityId, faker => faker.PickRandom(roomAmenityIds));
+
+			var roomRentalPeriods = faker.GenerateBetween(0, 10).DistinctBy(rra => rra.RoomAmenityId);
+
+			await context.RoomRoomAmenities.AddRangeAsync(roomRentalPeriods, cancellationToken);
+		}
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedRoomVariantsAsync(CancellationToken cancellationToken) {
+		var roomIds = await context.Rooms
+			.Select(r => r.Id)
+			.ToArrayAsync(cancellationToken);
+
+		var giFaker = new Faker<GuestInfo>()
+			.RuleFor(gi => gi.AdultCount, faker => faker.Random.Int(1, 3))
+			.RuleFor(gi => gi.ChildCount, faker => faker.Random.Int(0, 3));
+
+		var biFaker = new Faker<BedInfo>()
+			.RuleFor(bi => bi.SingleBedCount, faker => faker.Random.Int(1, 3))
+			.RuleFor(bi => bi.DoubleBedCount, faker => faker.Random.Int(0, 2))
+			.RuleFor(bi => bi.ExtraBedCount, faker => faker.Random.Int(0, 1))
+			.RuleFor(bi => bi.SofaCount, faker => faker.Random.Int(0, 2))
+			.RuleFor(bi => bi.KingsizeBedCount, faker => faker.Random.Int(0, 1));
+
+		var rvFaker = new Faker<RoomVariant>()
+			.RuleFor(rv => rv.Price, faker => faker.Random.Decimal(0, 10000))
+			.RuleFor(
+				rv => rv.DiscountPrice,
+				(faker, rv) => faker.Random.Bool(0.75F)
+					? faker.Random.Decimal(0, rv.Price)
+					: null
+			)
+			.RuleFor(
+				rv => rv.GuestInfo,
+				(faker, rv) => {
+					var guestInfo = giFaker.Generate();
+					rv.GuestInfo = guestInfo;
+					guestInfo.RoomVariant = rv;
+					return guestInfo;
+				}
+			)
+			.RuleFor(
+				rv => rv.BedInfo,
+				(faker, rv) => {
+					var bedInfo = biFaker.Generate();
+					rv.BedInfo = bedInfo;
+					bedInfo.RoomVariant = rv;
+					return bedInfo;
+				}
+			);
+
+		foreach (var roomId in roomIds) {
+			var roomVariants = rvFaker.GenerateBetween(1, 3);
+
+			foreach (var roomVariant in roomVariants)
+				roomVariant.RoomId = roomId;
+
+			await context.RoomVariants.AddRangeAsync(roomVariants, cancellationToken);
+		}
 
 		await context.SaveChangesAsync(cancellationToken);
 	}

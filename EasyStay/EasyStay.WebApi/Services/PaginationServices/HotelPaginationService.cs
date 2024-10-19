@@ -205,6 +205,24 @@ public class HotelPaginationService(
 				)
 			);
 
+		if (filter.AllRoomAmenityIds is not null)
+			query = query.Where(
+				h => h.Rooms.Any(
+					r => filter.AllRoomAmenityIds.All(
+						raId => r.RoomRoomAmenities.Any(rra => rra.RoomAmenityId == raId)
+					)
+				)
+			);
+
+		if (filter.AnyRoomAmenityIds is not null)
+			query = query.Where(
+				h => h.Rooms.Any(
+					r => filter.AnyRoomAmenityIds.Any(
+						raId => r.RoomRoomAmenities.Any(rra => rra.RoomAmenityId == raId)
+					)
+				)
+			);
+
 		return query;
 	}
 }

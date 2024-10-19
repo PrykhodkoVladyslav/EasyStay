@@ -111,7 +111,7 @@ function PriceFilter(props: IPriceFilterProps) {
                         <div className="price-range-input-price-container">
                             <img className="price-range-input-image" src={getPublicResourceUrl("icons/price-mark.svg")}
                                  alt="Price mark" />
-                            <p className="price-range-input-price">${requiredPrices[index]}</p>
+                            <p className="price-range-input-price">${requiredPrices[index].toFixed(0)}</p>
                         </div>
                     </div>}
                 </div>

@@ -49,10 +49,20 @@ export default interface IHotelsPageQuery extends IPaginationFilter {
 
     allLanguageIds?: number[];
     anyLanguageIds?: number[];
+
+    allRoomAmenityIds?: number[];
+    anyRoomAmenityIds?: number[];
 }
 
 export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
     const queryItems: { key: string, value: string }[] = [];
+    const queryArrayItems: string[] = [];
+
+    if (query.pageIndex != undefined)
+        queryItems.push({ key: "pageIndex", value: query.pageIndex.toString() });
+
+    if (query.pageSize != undefined)
+        queryItems.push({ key: "pageSize", value: query.pageSize.toString() });
 
     if (query.name)
         queryItems.push({ key: "name", value: query.name });
@@ -100,7 +110,7 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
     if (query.hasAnyRoomVariant)
         queryItems.push({ key: "hasAnyRoomVariant", value: query.hasAnyRoomVariant.toString() });
 
-    if (query.isArchived)
+    if (query.isArchived != undefined)
         queryItems.push({ key: "isArchived", value: query.isArchived.toString() });
 
     if (query.address) {
@@ -161,10 +171,10 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
     if (query.realtorId)
         queryItems.push({ key: "realtorId", value: query.realtorId.toString() });
 
-    if (query.onlyOwn)
+    if (query.onlyOwn != undefined)
         queryItems.push({ key: "onlyOwn", value: query.onlyOwn.toString() });
 
-    if (query.isRandomItems)
+    if (query.isRandomItems != undefined)
         queryItems.push({ key: "isRandomItems", value: query.isRandomItems.toString() });
 
     const arrayToQuery = (arr: number[], key: string) => {
@@ -172,40 +182,26 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
     };
 
     if (query.allHotelAmenityIds && query.allHotelAmenityIds?.length !== 0)
-        queryItems.push({
-            key: "allHotelAmenityIds",
-            value: arrayToQuery(query.allHotelAmenityIds, "allHotelAmenityIds"),
-        });
-
+        queryArrayItems.push(arrayToQuery(query.allHotelAmenityIds, "allHotelAmenityIds"));
     if (query.anyHotelAmenityIds && query.anyHotelAmenityIds?.length !== 0)
-        queryItems.push({
-            key: "anyHotelAmenityIds",
-            value: arrayToQuery(query.anyHotelAmenityIds, "anyHotelAmenityIds"),
-        });
+        queryArrayItems.push(arrayToQuery(query.anyHotelAmenityIds, "anyHotelAmenityIds"));
 
     if (query.allBreakfastIds && query.allBreakfastIds?.length !== 0)
-        queryItems.push({
-            key: "allBreakfastIds",
-            value: arrayToQuery(query.allBreakfastIds, "allBreakfastIds"),
-        });
-
+        queryArrayItems.push(arrayToQuery(query.allBreakfastIds, "allBreakfastIds"));
     if (query.anyBreakfastIds && query.anyBreakfastIds?.length !== 0)
-        queryItems.push({
-            key: "anyBreakfastIds",
-            value: arrayToQuery(query.anyBreakfastIds, "anyBreakfastIds"),
-        });
+        queryArrayItems.push(arrayToQuery(query.anyBreakfastIds, "anyBreakfastIds"));
 
     if (query.allLanguageIds && query.allLanguageIds?.length !== 0)
-        queryItems.push({
-            key: "allLanguageIds",
-            value: arrayToQuery(query.allLanguageIds, "allLanguageIds"),
-        });
-
+        queryArrayItems.push(arrayToQuery(query.allLanguageIds, "allLanguageIds"));
     if (query.anyLanguageIds && query.anyLanguageIds?.length !== 0)
-        queryItems.push({
-            key: "anyLanguageIds",
-            value: arrayToQuery(query.anyLanguageIds, "anyLanguageIds"),
-        });
+        queryArrayItems.push(arrayToQuery(query.anyLanguageIds, "anyLanguageIds"));
 
-    return queryItems.map(item => `${item.key}=${item.value}`).join("&");
+    if (query.allRoomAmenityIds && query.allRoomAmenityIds?.length !== 0)
+        queryArrayItems.push(arrayToQuery(query.allRoomAmenityIds, "allRoomAmenityIds"));
+    if (query.anyRoomAmenityIds && query.anyRoomAmenityIds?.length !== 0)
+        queryArrayItems.push(arrayToQuery(query.anyRoomAmenityIds, "anyRoomAmenityIds"));
+
+    return queryItems.map(item => `${item.key}=${item.value}`)
+        .concat(queryArrayItems)
+        .join("&");
 }

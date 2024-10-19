@@ -14,14 +14,14 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
             pageIndex: pageIndex,
             pageSize: 18,
             isArchived: false,
-            hasAnyRoomVariant: props?.filter?.minPrice == undefined ? true : undefined,
+            hasAnyRoomVariant: props.filter?.maxPrice == undefined ? true : undefined,
         };
     };
 
     const [filter, setFilter] = useState<IHotelsPageQuery>(buildFilter());
     useEffect(() => {
         setFilter(buildFilter());
-    }, [props.filter]);
+    }, [props.filter, pageIndex]);
 
     const { data: hotelsPageData } = useGetHotelsPageQuery(filter);
 

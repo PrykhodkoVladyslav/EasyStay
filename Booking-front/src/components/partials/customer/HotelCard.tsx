@@ -36,7 +36,7 @@ const HotelCard = (props: { item: IHotel }) => {
 
                 {item.minPrice && item.maxPrice
                     ? <p className="price">
-                        ${item.minPrice}-{item.maxPrice}
+                        ${item.minPrice.toFixed(2)}-{item.maxPrice.toFixed(2)}
                     </p>
                     : null}
             </div>

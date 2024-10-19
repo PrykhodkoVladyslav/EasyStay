@@ -43,7 +43,7 @@ const HotelsPage = () => {
             minPrice,
             maxPrice,
             allHotelAmenityIds: hotelAmenities,
-
+            allRoomAmenityIds: roomAmenities,
             minRating: rating,
 
             allLanguageIds: languages,

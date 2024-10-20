@@ -1,5 +1,7 @@
 import IPaginationFilter from "interfaces/page/IPaginationFilter.ts";
 import IHotelAddressFilter from "interfaces/hotel/IHotelAddressFilter.ts";
+import IHotelFreeDatePeriod from "interfaces/hotel/IHotelFreeDatePeriod.ts";
+import IHotelBedInfoFilter from "interfaces/hotel/IHotelBedInfoFilter.ts";
 
 export default interface IHotelsPageQuery extends IPaginationFilter {
     name?: string;
@@ -29,9 +31,15 @@ export default interface IHotelsPageQuery extends IPaginationFilter {
 
     hasAnyRoomVariant?: boolean;
 
+    minNumberOfRooms?: number;
+
+    minAdultGuests?: number;
+
+    freePeriod?: IHotelFreeDatePeriod;
+
     isArchived?: boolean;
 
-    address: IHotelAddressFilter;
+    address?: IHotelAddressFilter;
 
     categoryId?: number;
 
@@ -52,6 +60,10 @@ export default interface IHotelsPageQuery extends IPaginationFilter {
 
     allRoomAmenityIds?: number[];
     anyRoomAmenityIds?: number[];
+
+    allowedRealtorGenders?: number[];
+
+    bedInfo?: IHotelBedInfoFilter;
 }
 
 export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
@@ -109,6 +121,17 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
 
     if (query.hasAnyRoomVariant)
         queryItems.push({ key: "hasAnyRoomVariant", value: query.hasAnyRoomVariant.toString() });
+
+    if (query.minNumberOfRooms)
+        queryItems.push({ key: "minNumberOfRooms", value: query.minNumberOfRooms.toString() });
+
+    if (query.minAdultGuests)
+        queryItems.push({ key: "minAdultGuests", value: query.minAdultGuests.toString() });
+
+    if (query.freePeriod) {
+        queryItems.push({ key: "freePeriod.from", value: query.freePeriod.from });
+        queryItems.push({ key: "freePeriod.to", value: query.freePeriod.to });
+    }
 
     if (query.isArchived != undefined)
         queryItems.push({ key: "isArchived", value: query.isArchived.toString() });
@@ -200,6 +223,28 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
         queryArrayItems.push(arrayToQuery(query.allRoomAmenityIds, "allRoomAmenityIds"));
     if (query.anyRoomAmenityIds && query.anyRoomAmenityIds?.length !== 0)
         queryArrayItems.push(arrayToQuery(query.anyRoomAmenityIds, "anyRoomAmenityIds"));
+
+    if (query.allowedRealtorGenders && query.allowedRealtorGenders?.length !== 0)
+        queryArrayItems.push(arrayToQuery(query.allowedRealtorGenders, "allowedRealtorGenders"));
+
+    if (query.bedInfo) {
+        const { hasSingleBed, hasDoubleBed, hasExtraBed, hasSofa, hasKingsizeBed } = query.bedInfo;
+
+        if (hasSingleBed)
+            queryItems.push({ key: "bedInfo.hasSingleBed", value: hasSingleBed.toString() });
+
+        if (hasDoubleBed)
+            queryItems.push({ key: "bedInfo.hasDoubleBed", value: hasDoubleBed.toString() });
+
+        if (hasExtraBed)
+            queryItems.push({ key: "bedInfo.hasExtraBed", value: hasExtraBed.toString() });
+
+        if (hasSofa)
+            queryItems.push({ key: "bedInfo.hasSofa", value: hasSofa.toString() });
+
+        if (hasKingsizeBed)
+            queryItems.push({ key: "bedInfo.hasKingsizeBed", value: hasKingsizeBed.toString() });
+    }
 
     return queryItems.map(item => `${item.key}=${item.value}`)
         .concat(queryArrayItems)

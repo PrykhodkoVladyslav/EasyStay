@@ -27,10 +27,17 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
 
     const [hotels, setHotels] = useState(hotelsPageData?.data ?? []);
     const [itemAvailable, setItemAvailable] = useState(hotelsPageData?.itemsAvailable ?? 0);
+    const [pagesAvailable, setPagesAvailable] = useState(hotelsPageData?.pagesAvailable ?? 0);
     useEffect(() => {
         setHotels(hotelsPageData?.data ?? []);
         setItemAvailable(hotelsPageData?.itemsAvailable ?? 0);
-    }, [hotelsPageData, itemAvailable]);
+        setPagesAvailable(hotelsPageData?.pagesAvailable ?? 0);
+    }, [hotelsPageData]);
+
+    useEffect(() => {
+        if (pageIndex > 0 && pageIndex >= pagesAvailable)
+            setPageIndex(Math.max(pagesAvailable - 1, 0));
+    }, [pageIndex, pagesAvailable]);
 
     const cityName = filter.address?.city?.name;
     const foundMessage = cityName ? `${cityName}: знайдено помешкань: ${itemAvailable}` : `Знайдено помешкань: ${itemAvailable}`;

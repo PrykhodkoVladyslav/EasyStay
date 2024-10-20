@@ -4,6 +4,7 @@ import FilterHotelsSection, { IFilter } from "components/partials/customer/Filte
 import HotelsSection from "components/partials/customer/HotelsSection.tsx";
 import { useState } from "react";
 import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
+import { format } from "date-fns";
 
 const HotelsPage = () => {
     const [sideFilters, setSideFilters] = useState<IFilter>({
@@ -21,13 +22,24 @@ const HotelsPage = () => {
         const cityName = topFilters.city;
         const dateFrom = topFilters.date?.from;
         const dateTo = topFilters.date?.to;
-        const adultGuests = topFilters.adultGuests;
+        const freeDatePeriod = dateFrom && dateTo ? {
+            from: format(dateFrom, "yyyy-MM-dd"),
+            to: format(dateTo, "yyyy-MM-dd"),
+        } : undefined;
+        const adultGuests = topFilters.adultGuests || undefined;
         const minPrice = sideFilters.prices?.minPrice;
         const maxPrice = sideFilters.prices?.maxPrice;
         const hotelAmenities = sideFilters.hotelAmenities;
         const roomAmenities = sideFilters.roomAmenities;
         const rating = sideFilters.rating;
         const bedTypes = sideFilters.bedTypes;
+        const bedInfo = {
+            hasSingleBed: bedTypes.includes(1),
+            hasDoubleBed: bedTypes.includes(2),
+            hasExtraBed: bedTypes.includes(3),
+            hasSofa: bedTypes.includes(4),
+            hasKingsizeBed: bedTypes.includes(5),
+        };
         const numberOfRooms = sideFilters.numberOfRooms;
         const languages = sideFilters.languages;
         const breakfasts = sideFilters.breakfasts;
@@ -39,16 +51,18 @@ const HotelsPage = () => {
                     name: cityName,
                 },
             },
-
+            freePeriod: freeDatePeriod,
+            minAdultGuests: adultGuests,
             minPrice,
             maxPrice,
             allHotelAmenityIds: hotelAmenities,
             allRoomAmenityIds: roomAmenities,
             minRating: rating,
-
+            bedInfo,
+            minNumberOfRooms: numberOfRooms,
             allLanguageIds: languages,
             allBreakfastIds: breakfasts,
-
+            allowedRealtorGenders: genders,
         });
     };
 

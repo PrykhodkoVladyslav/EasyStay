@@ -103,6 +103,16 @@ public class HotelPaginationService(
 		if (filter.HasAnyRoomVariant == true)
 			query = query.Where(h => h.Rooms.SelectMany(r => r.RoomVariants).Any());
 
+		if (filter.MinNumberOfRooms is not null)
+			query = query.Where(h => h.Rooms.Any(r => r.NumberOfRooms >= filter.MinNumberOfRooms));
+
+		if (filter.MinAdultGuests is not null)
+			query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.GuestInfo.AdultCount >= filter.MinAdultGuests)));
+
+		if (filter.FreePeriod is not null) {
+			// ToDo: Realize this filter
+		}
+
 		if (filter.IsArchived is not null)
 			query = query.Where(h => h.IsArchived == filter.IsArchived);
 
@@ -222,6 +232,30 @@ public class HotelPaginationService(
 					)
 				)
 			);
+
+		if (filter.AllowedRealtorGenders is not null)
+			query = query.Where(
+				h => h.Realtor.GenderId.HasValue && filter.AllowedRealtorGenders.Contains(h.Realtor.GenderId.Value)
+			);
+
+		if (filter.BedInfo is not null) {
+			var bedInfo = filter.BedInfo;
+
+			if (bedInfo.HasSingleBed is not null)
+				query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.BedInfo.SingleBedCount > 0)));
+
+			if (bedInfo.HasDoubleBed is not null)
+				query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.BedInfo.DoubleBedCount > 0)));
+
+			if (bedInfo.HasExtraBed is not null)
+				query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.BedInfo.ExtraBedCount > 0)));
+
+			if (bedInfo.HasSofa is not null)
+				query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.BedInfo.SofaCount > 0)));
+
+			if (bedInfo.HasKingsizeBed is not null)
+				query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.BedInfo.KingsizeBedCount > 0)));
+		}
 
 		return query;
 	}

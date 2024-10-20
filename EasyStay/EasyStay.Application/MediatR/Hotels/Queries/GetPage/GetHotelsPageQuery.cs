@@ -33,6 +33,12 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public bool? HasAnyRoomVariant { get; set; }
 
+	public int? MinNumberOfRooms { get; set; }
+
+	public int? MinAdultGuests { get; set; }
+
+	public HotelFreeDatePeriod? FreePeriod { get; set; }
+
 	public bool? IsArchived { get; set; }
 
 	public HotelAddressFilterDto? Address { get; set; }
@@ -56,4 +62,8 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public IEnumerable<long>? AllRoomAmenityIds { get; set; } = null!;
 	public IEnumerable<long>? AnyRoomAmenityIds { get; set; } = null!;
+
+	public IEnumerable<long>? AllowedRealtorGenders { get; set; } = null!;
+
+	public HotelBedInfoFilterDto? BedInfo { get; set; }
 }

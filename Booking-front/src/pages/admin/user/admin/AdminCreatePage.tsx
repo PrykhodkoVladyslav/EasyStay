@@ -1,28 +1,15 @@
-import {zodResolver} from "@hookform/resolvers/zod";
-import {IconCirclePlus, IconCircleX} from "@tabler/icons-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IconCirclePlus, IconCircleX } from "@tabler/icons-react";
 import { Button } from "components/ui/Button.tsx";
 import { Input } from "components/ui/Input.tsx";
 import Label from "components/ui/Label.tsx";
 import FormError from "components/ui/FormError.tsx";
 import { useCreateAdminMutation } from "services/user.ts";
-import { RootState } from "store/index.ts";
-import { getToken } from "store/slice/userSlice.ts";
 import showToast from "utils/toastShow.ts";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { CreateAdminSchemaType, CreateAdminSchema, } from "interfaces/zod/user.ts";
+import { CreateAdminSchemaType, CreateAdminSchema } from "interfaces/zod/user.ts";
 
 const AdminCreatePage: React.FC = () => {
-    const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
-    const userRole = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
-    const isAdmin = userRole === "Admin";
-
-    if (!isAdmin) {
-        return <p>Ви не маєте доступу до цієї сторінки. Тільки адміністратори можуть переглядати список
-            користувачів.</p>;
-    }
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateAdminSchemaType>({
         resolver: zodResolver(CreateAdminSchema),
     });
@@ -78,8 +65,18 @@ const AdminCreatePage: React.FC = () => {
                     {[
                         { id: "firstName", label: "Ім'я", type: "text", placeholder: "Введіть ім'я" },
                         { id: "lastName", label: "Прізвище", type: "text", placeholder: "Введіть прізвище" },
-                        { id: "email", label: "Електронна пошта", type: "email", placeholder: "Введіть електронну адресу" },
-                        { id: "username", label: "Ім'я користувача", type: "text", placeholder: "Введіть ім'я користувача" },
+                        {
+                            id: "email",
+                            label: "Електронна пошта",
+                            type: "email",
+                            placeholder: "Введіть електронну адресу",
+                        },
+                        {
+                            id: "username",
+                            label: "Ім'я користувача",
+                            type: "text",
+                            placeholder: "Введіть ім'я користувача",
+                        },
                         { id: "password", label: "Пароль", type: "password", placeholder: "Введіть пароль" },
                     ].map(({ id, label, type, placeholder }) => (
                         <div key={id}>
@@ -107,7 +104,7 @@ const AdminCreatePage: React.FC = () => {
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus/>
+                            <IconCirclePlus />
                             Зареєструвати
                         </Button>
                         <Button
@@ -117,7 +114,7 @@ const AdminCreatePage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX/>
+                            <IconCircleX />
                             Скинути
                         </Button>
                     </div>

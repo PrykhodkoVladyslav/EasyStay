@@ -5,9 +5,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY EasyStay.sln ./
 
-COPY Booking/*.csproj ./Booking/
-COPY Model/*.csproj ./Model/
-
 COPY EasyStay.Domain/*.csproj ./EasyStay.Domain/
 COPY EasyStay.Application/*.csproj ./EasyStay.Application/
 COPY EasyStay.Persistence/*.csproj ./EasyStay.Persistence/

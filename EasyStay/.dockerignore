@@ -3,11 +3,6 @@
 /.idea/
 
 # Build files
-/Booking/bin/
-/Booking/obj/
-/Model/bin/
-/Model/obj/
-
 /EasyStay.Application/bin/
 /EasyStay.Application/obj/
 /EasyStay.Domain/bin/
@@ -20,9 +15,7 @@
 /EasyStay.WebApi/obj/
 
 # Development appsettings.json
-/Booking/appsettings.Development.json
 /EasyStay.WebApi/appsettings.Development.json
 
 # API data
-/Booking/Data/
 /EasyStay.WebApi/Data/

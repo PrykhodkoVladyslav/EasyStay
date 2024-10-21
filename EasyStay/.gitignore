@@ -284,9 +284,7 @@ package-lock.json
 
 
 # Development appsettings.json
-/Booking/appsettings.Development.json
 /EasyStay.WebApi/appsettings.Development.json
 
 # API data
-/Booking/Data/
 /EasyStay.WebApi/Data/

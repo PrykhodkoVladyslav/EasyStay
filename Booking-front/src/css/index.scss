@@ -758,6 +758,44 @@
             }
           }
         }
+
+        .pagination-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+
+          .pagination-item{
+            color: rgb(0, 0, 0);
+            font-family: var(--font-primary), system-ui;
+            font-size: 20px;
+            font-weight: 600;
+
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+          }
+
+          .page {
+            margin: 0 6px;
+          }
+
+          .page-selected {
+            color: rgb(255, 255, 255);
+            border-radius: 5px;
+
+            background: rgb(63, 82, 60);
+          }
+
+          .arrow {
+            margin: 0 16px;
+          }
+        }
       }
     }
   }
@@ -1003,6 +1041,7 @@
               .btn-favorite {
                 width: 24px;
                 height: 24px;
+
                 img {
                   width: 24px;
                   height: 24px;

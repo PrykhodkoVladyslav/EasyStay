@@ -4,6 +4,7 @@ import { useGetHotelsPageQuery } from "services/hotel.ts";
 import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
 import { useEffect, useState } from "react";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
+import Pagination from "rc-pagination";
 
 const orderOptions = [
     { key: "Rating", value: "рейтинг" },
@@ -70,6 +71,43 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
             <div className="hotels-list">
                 {hotels.map(item => <HotelCard key={item.id} item={item} />)}
             </div>
+
+            <VerticalPad heightPx={60} />
+
+            <Pagination
+                className="pagination-container"
+                current={pageIndex + 1}
+                total={pagesAvailable}
+                onChange={(pageNumber) => setPageIndex(pageNumber - 1)}
+                pageSize={1}
+                itemRender={(current, type, originalElement) => {
+                    if (type === "prev") {
+                        return <img className="pagination-item arrow"
+                                    src={getPublicResourceUrl("icons/pagination/prev.svg")}
+                                    alt="prev arrow" />;
+                    }
+
+                    if (type === "next") {
+                        return <img className="pagination-item arrow"
+                                    src={getPublicResourceUrl("icons/pagination/next.svg")}
+                                    alt="next arrow" />;
+                    }
+
+                    if (type === "page") {
+                        const classNames = "pagination-item page";
+                        const activeClassNames = `${classNames} page-selected`;
+                        return <div
+                            className={pageIndex + 1 === current ? activeClassNames : classNames}
+                        >{current}</div>;
+                    }
+
+                    if (type === "jump-prev" || type === "jump-next") {
+                        return <div className="pagination-item page">...</div>;
+                    }
+
+                    return originalElement;
+                }}
+            />
         </div>
     );
 };

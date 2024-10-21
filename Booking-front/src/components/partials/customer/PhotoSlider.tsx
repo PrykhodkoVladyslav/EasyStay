@@ -17,9 +17,9 @@ const PhotoSlider = (props: IPhotoSliderProps) => {
             <div className="centered-container">
                 <div className="slide-container">
                     {Array.from({ length: photos.length }, (_, index) => index).map((photoIndex) => (
-                        <div
-                            className={`slider-item pointer ${selectedPhotoIndex === photoIndex ? "slider-item-selected" : ""}`}
-                            onClick={() => setSelectedPhotoIndex(photoIndex)} />
+                        <div key={photoIndex}
+                             className={`slider-item pointer ${selectedPhotoIndex === photoIndex ? "slider-item-selected" : ""}`}
+                             onClick={() => setSelectedPhotoIndex(photoIndex)} />
                     ))}
                 </div>
             </div>

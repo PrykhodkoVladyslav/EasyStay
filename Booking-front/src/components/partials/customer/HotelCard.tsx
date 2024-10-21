@@ -22,10 +22,8 @@ const HotelCard = (props: { item: IHotel }) => {
                 <div className="title-rating-container">
                     <p className="title no-wrap">{item.name}</p>
                     <div className="rating-container">
-                        <div className="rating-inner-container">
-                            <img src={getPublicResourceUrl("icons/star.svg")} alt="star" />
-                            <p className="rating">{item.rating.toFixed(1)}</p>
-                        </div>
+                        <img src={getPublicResourceUrl("icons/star.svg")} alt="star" />
+                        <p className="rating">{item.rating.toFixed(1)}</p>
                     </div>
                 </div>
 

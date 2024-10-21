@@ -5,8 +5,18 @@ import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
 import { useEffect, useState } from "react";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 
+const orderOptions = [
+    { key: "Rating", value: "рейтинг" },
+    { key: "Category", value: "категорія" },
+    { key: "City", value: "місто" },
+    { key: "RoomsCount", value: "кількість кімнат" },
+];
+
 const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
     const [pageIndex, setPageIndex] = useState(0);
+
+    const [orderIndex, setOrderIndex] = useState(0);
+    const nextOrder = () => setOrderIndex((orderIndex + 1 === orderOptions.length) ? 0 : orderIndex + 1);
 
     const buildFilter = (): IHotelsPageQuery => {
         return {
@@ -15,13 +25,14 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
             pageSize: 18,
             isArchived: false,
             hasAnyRoomVariant: props.filter?.maxPrice == undefined ? true : undefined,
+            orderBy: orderOptions[orderIndex].key,
         };
     };
 
     const [filter, setFilter] = useState<IHotelsPageQuery>(buildFilter());
     useEffect(() => {
         setFilter(buildFilter());
-    }, [props.filter, pageIndex]);
+    }, [props.filter, pageIndex, orderIndex]);
 
     const { data: hotelsPageData } = useGetHotelsPageQuery(filter);
 
@@ -41,16 +52,16 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
 
     const cityName = filter.address?.city?.name;
     const foundMessage = cityName ? `${cityName}: знайдено помешкань: ${itemAvailable}` : `Знайдено помешкань: ${itemAvailable}`;
-    const orderName = "наші рекомендації";
 
     return (
         <div className="hotels-section">
             <div>
                 <p className="found-message">{foundMessage}</p>
                 <VerticalPad heightPx={16} />
-                <button className="order-by-button">
+                <button className="order-by-button" onClick={nextOrder}>
                     <img src={getPublicResourceUrl("icons/order.svg")} alt="order" />
-                    <p className="order-title">Сортувати за: <span className="order-name">{orderName}</span></p>
+                    <p className="order-title">Сортувати за: <span
+                        className="order-name">{orderOptions[orderIndex].value}</span></p>
                 </button>
             </div>
 

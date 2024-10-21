@@ -45,6 +45,8 @@ export default interface IHotelsPageQuery extends IPaginationFilter {
 
     realtorId?: number;
 
+    orderBy?: string;
+
     onlyOwn?: boolean;
 
     isRandomItems?: boolean;
@@ -193,6 +195,9 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
 
     if (query.realtorId)
         queryItems.push({ key: "realtorId", value: query.realtorId.toString() });
+
+    if (query.orderBy)
+        queryItems.push({ key: "orderBy", value: query.orderBy });
 
     if (query.onlyOwn != undefined)
         queryItems.push({ key: "onlyOwn", value: query.onlyOwn.toString() });

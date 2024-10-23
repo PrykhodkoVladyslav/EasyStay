@@ -11,5 +11,9 @@ internal class HotelAmenityEntityTypeConfiguration : IEntityTypeConfiguration<Ho
 		builder.Property(ha => ha.Name)
 			.HasMaxLength(255)
 			.IsRequired();
+
+		builder.Property(ha => ha.Image)
+			.HasMaxLength(255)
+			.IsRequired();
 	}
 }

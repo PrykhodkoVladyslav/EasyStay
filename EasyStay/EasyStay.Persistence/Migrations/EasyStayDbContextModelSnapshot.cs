@@ -299,7 +299,12 @@ namespace EasyStay.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.HasKey("Id");
+					b.Property<string>("Image")
+						.IsRequired()
+						.HasMaxLength(255)
+						.HasColumnType("character varying(255)");
+
+					b.HasKey("Id");
 
                     b.ToTable("HotelAmenities", (string)null);
                 });

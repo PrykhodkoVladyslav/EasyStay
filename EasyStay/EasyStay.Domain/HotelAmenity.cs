@@ -5,5 +5,7 @@ public class HotelAmenity {
 
 	public string Name { get; set; } = null!;
 
+	public string Image { get; set; } = null!;
+
 	public ICollection<HotelHotelAmenity> HotelHotelAmenities { get; set; } = null!;
 }

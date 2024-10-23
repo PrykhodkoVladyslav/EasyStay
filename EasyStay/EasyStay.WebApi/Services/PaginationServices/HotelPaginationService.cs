@@ -34,7 +34,7 @@ public class HotelPaginationService(
 			query = query.Where(h => h.Name.ToLower().Contains(filter.Name.ToLower()));
 
 		if (filter.Description is not null)
-			query = query.Where(h => h.Name.ToLower().Contains(filter.Description.ToLower()));
+			query = query.Where(h => h.Description.ToLower().Contains(filter.Description.ToLower()));
 
 		if (filter.ArrivalTimeUtcFrom.HasValue) {
 			var dateTimeOffset = timeConverter.ToDateTimeOffsetFromUtcTimeOnly(filter.ArrivalTimeUtcFrom.Value);

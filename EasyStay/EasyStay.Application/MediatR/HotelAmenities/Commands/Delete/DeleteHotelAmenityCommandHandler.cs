@@ -5,7 +5,8 @@ using MediatR;
 namespace EasyStay.Application.MediatR.HotelAmenities.Commands.Delete;
 
 public class DeleteHotelAmenityCommandHandler(
-	IEasyStayDbContext context
+	IEasyStayDbContext context,
+	IImageService imageService
 ) : IRequestHandler<DeleteHotelAmenityCommand> {
 
 	public async Task Handle(DeleteHotelAmenityCommand request, CancellationToken cancellationToken) {
@@ -14,5 +15,7 @@ public class DeleteHotelAmenityCommandHandler(
 
 		context.HotelAmenities.Remove(entity);
 		await context.SaveChangesAsync(cancellationToken);
+
+		imageService.DeleteImageIfExists(entity.Image);
 	}
 }

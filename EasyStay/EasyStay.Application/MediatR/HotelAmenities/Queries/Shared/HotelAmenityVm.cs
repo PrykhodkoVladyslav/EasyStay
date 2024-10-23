@@ -9,6 +9,8 @@ public class HotelAmenityVm : IMapWith<HotelAmenity> {
 
 	public string Name { get; set; } = null!;
 
+	public string Image { get; set; } = null!;
+
 
 
 	public void Mapping(Profile profile) {

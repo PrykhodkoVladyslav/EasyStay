@@ -20,7 +20,7 @@ public class CreateCountryCommandHandler(
 		try {
 			await context.SaveChangesAsync(cancellationToken);
 		}
-		catch (Exception) {
+		catch {
 			imageService.DeleteImageIfExists(entity.Image);
 			throw;
 		}

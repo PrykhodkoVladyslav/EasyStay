@@ -1,11 +1,9 @@
 import { IconLock, IconLockOpen } from "@tabler/icons-react";
-// import { Button } from "components/ui/Button.tsx";
 import { useGetAllRealtorsQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import ModalComponent from "components/ModalComponent";
 import { useState } from "react";
 import showToast from "utils/toastShow.ts";
-import {User} from "interfaces/user";
 
 const RealtorsListPage: React.FC = () => {
     const { data: realtorsData, isLoading, error, refetch } = useGetAllRealtorsQuery();
@@ -30,7 +28,6 @@ const RealtorsListPage: React.FC = () => {
                 showToast("Користувача заблоковано", "success");
                 refetch();
             } catch (err) {
-                // console.error("Помилка при блокуванні користувача:", err);
                 showToast("Не вдалося заблокувати користувача", "error");
             } finally {
                 setModalOpen(false);
@@ -42,17 +39,15 @@ const RealtorsListPage: React.FC = () => {
         if (confirm("Ви впевнені, що хочете розблокувати цього користувача?")) {
             try {
                 await unlockUser({ id }).unwrap();
-                // await unlockUser(id).unwrap();
                 showToast("Користувача розаблоковано", "success");
                 refetch();
             } catch (err) {
-                // console.error("Помилка при розблокуванні користувача:", err);
                 showToast("Не вдалося розблокувати користувача", "error");
             }
         }
     };
 
-    const realtors = realtorsData || [];
+    const realtors = realtorsData?.data ?? [];
 
     return (
         <div className="container mx-auto mt-5 max-w-4xl mx-auto">
@@ -71,7 +66,7 @@ const RealtorsListPage: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {realtors?.map((user: User) => (
+                    {realtors.map(user => (
                         <tr key={user.id} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4">{user.firstName}</td>
                             <td className="px-6 py-4">{user.lastName}</td>
@@ -94,7 +89,7 @@ const RealtorsListPage: React.FC = () => {
                                         title="Розблокувати"
                                         disabled={isUnblockLoading}
                                     >
-                                        <IconLock className="text-red-500"/>
+                                        <IconLock className="text-red-500" />
                                     </button>
                                 ) : (
                                     <button
@@ -104,7 +99,7 @@ const RealtorsListPage: React.FC = () => {
                                         title="Заблокувати"
                                         disabled={isBlockLoading}
                                     >
-                                        <IconLockOpen className="text-green-500"/>
+                                        <IconLockOpen className="text-green-500" />
                                     </button>
                                 )}
                             </td>

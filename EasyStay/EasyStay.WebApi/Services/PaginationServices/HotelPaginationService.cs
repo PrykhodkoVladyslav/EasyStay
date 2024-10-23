@@ -21,7 +21,13 @@ public class HotelPaginationService(
 			query = query.OrderBy(h => Guid.NewGuid());
 		}
 		else {
-			query = query.OrderBy(h => h.Id);
+			query = filter.OrderBy switch {
+				"Category" => query.OrderBy(h => h.HotelCategory.Name),
+				"Rating" => query.OrderByDescending(h => h.Id), // ToDo: Add a real rating when there are reviews
+				"City" => query.OrderBy(h => h.Address.City.Name),
+				"RoomsCount" => query.OrderBy(h => h.Rooms.Min(r => r.NumberOfRooms)),
+				_ => query.OrderBy(h => h.Id),
+			};
 		}
 
 		if (filter.Name is not null)

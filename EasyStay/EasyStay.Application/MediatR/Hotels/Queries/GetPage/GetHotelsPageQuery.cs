@@ -49,6 +49,8 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public bool? OnlyOwn { get; set; }
 
+	public string? OrderBy { get; set; }
+
 	public bool? IsRandomItems { get; set; }
 
 	public IEnumerable<long>? AllHotelAmenityIds { get; set; } = null!;

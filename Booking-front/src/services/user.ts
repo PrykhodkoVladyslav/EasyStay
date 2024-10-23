@@ -1,7 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
 import {
-    User,
     SignInResponse,
     SignInRequest,
     Registration,
@@ -13,6 +12,9 @@ import {
     IRealtorInformation,
     IUpdateRealtorInformation,
 } from "interfaces/user";
+import ICustomer from "interfaces/user/ICustomer.ts";
+import IPage from "interfaces/page/IPage.ts";
+import IRealtor from "interfaces/user/IRealtor.ts";
 
 export const userApi = createApi({
     reducerPath: "userApi",
@@ -20,12 +22,12 @@ export const userApi = createApi({
     tagTypes: ["User", "Citizenships"],
 
     endpoints: (builder) => ({
-        getAllCustomers: builder.query<User[], void>({
+        getAllCustomers: builder.query<IPage<ICustomer>, void>({
             query: () => "GetCustomerPage",
             providesTags: ["User"],
         }),
 
-        getAllRealtors: builder.query<User[], void>({
+        getAllRealtors: builder.query<IPage<IRealtor>, void>({
             query: () => "GetRealtorPage",
             providesTags: ["User"],
         }),
@@ -104,8 +106,8 @@ export const userApi = createApi({
         }),
 
         unlockUser: builder.mutation<void, UnlockUserRequest>({
-            query: (id) => ({
-                url: `unlockUserById/${id}`,
+            query: (request) => ({
+                url: `unlockUserById/${request.id}`,
                 method: "PATCH",
             }),
             invalidatesTags: ["User"],
@@ -127,7 +129,7 @@ export const userApi = createApi({
             }),
         }),
 
-        updateRealtorsInformation : builder.mutation<void, IUpdateRealtorInformation>({
+        updateRealtorsInformation: builder.mutation<void, IUpdateRealtorInformation>({
             query: (data) => {
                 return {
                     url: "updateRealtorsInformation",

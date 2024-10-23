@@ -658,6 +658,7 @@
           }
 
           .photo-slider {
+            position: relative;
             width: 100%;
             height: 240px;
             border-radius: 22px;
@@ -667,6 +668,38 @@
               width: 100%;
               height: 100%;
               object-fit: cover;
+            }
+
+            .centered-container {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+
+              .slide-container {
+                position: absolute;
+                bottom: 14px;
+
+                z-index: 10;
+                padding: 3px;
+                border-radius: 6px;
+                background: rgb(55, 55, 55);
+
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 3px;
+
+                .slider-item {
+                  background: rgb(165, 165, 165);
+                  padding: 3px;
+                  border-radius: 3px;
+                }
+
+                .slider-item-selected {
+                  background: rgb(255, 255, 255);
+                  padding: 3px 6px;
+                }
+              }
             }
           }
 
@@ -698,21 +731,19 @@
                 border: 1px solid rgb(234, 232, 232);
                 border-radius: 12px;
                 padding: 4px 8px;
-                width: 60px;
+                min-width: 56px;
 
-                .rating-inner-container {
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: flex-start;
-                  align-items: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
 
-                  .rating {
-                    color: rgb(0, 0, 0);
-                    font-family: var(--font-primary), system-ui;
-                    font-size: 16px;
-                    font-weight: 600;
-                    line-height: 22px;
-                  }
+                .rating {
+                  color: rgb(0, 0, 0);
+                  font-family: var(--font-primary), system-ui;
+                  font-size: 16px;
+                  font-weight: 600;
+                  line-height: 22px;
                 }
               }
             }
@@ -756,6 +787,44 @@
               font-weight: 600;
               line-height: 34px;
             }
+          }
+        }
+
+        .pagination-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+
+          .pagination-item {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-primary), system-ui;
+            font-size: 20px;
+            font-weight: 600;
+
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+          }
+
+          .page {
+            margin: 0 6px;
+          }
+
+          .page-selected {
+            color: rgb(255, 255, 255);
+            border-radius: 5px;
+
+            background: rgb(63, 82, 60);
+          }
+
+          .arrow {
+            margin: 0 16px;
           }
         }
       }
@@ -1009,41 +1078,17 @@
               }
 
               .btn-favorite {
-                flex-shrink: 0;
+                width: 24px;
+                height: 24px;
+
                 img {
+                  width: 24px;
+                  height: 24px;
                   object-fit: cover;
                 }
               }
             }
-
-            .location {
-              img {
-                object-fit: cover;
-              }
-              display: flex;
-              align-items: center;
-              color: var(--color-text);
-              font-family: var(--font-secondary), system-ui;
-              font-size: 16px;
-              font-weight: 500;
-              line-height: 20px;
-              white-space: pre;
-            }
           }
-
-          .amenities {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            row-gap: 6px;
-
-            .amenity {
-              display: flex;
-              align-items: center;
-              gap: 12px;
-
-              img {
-                object-fit: cover;
-              }
 
               p {
                 color: var(--color-text);

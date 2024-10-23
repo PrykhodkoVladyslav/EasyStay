@@ -6,6 +6,14 @@ import VerticalPad from "components/ui/VerticalPad.tsx";
 const HotelCard = (props: { item: IHotel }) => {
     const item = props.item;
 
+    const hasPrice = (item.minPrice && item.maxPrice) != undefined;
+    const minPrice = Math.ceil(item.minPrice ?? 0);
+    const maxPrice = Math.ceil(item.maxPrice ?? 0);
+
+    const priceString = minPrice !== maxPrice
+        ? `${minPrice} - ${maxPrice}`
+        : `${minPrice}`;
+
     return (
         <div className="hotel-item">
             <PhotoSlider photos={item.photos.map(p => p.name)} />
@@ -14,10 +22,8 @@ const HotelCard = (props: { item: IHotel }) => {
                 <div className="title-rating-container">
                     <p className="title no-wrap">{item.name}</p>
                     <div className="rating-container">
-                        <div className="rating-inner-container">
-                            <img src={getPublicResourceUrl("icons/star.svg")} alt="star" />
-                            <p className="rating">{item.rating.toFixed(1)}</p>
-                        </div>
+                        <img src={getPublicResourceUrl("icons/star.svg")} alt="star" />
+                        <p className="rating">{item.rating.toFixed(1)}</p>
                     </div>
                 </div>
 
@@ -34,11 +40,10 @@ const HotelCard = (props: { item: IHotel }) => {
 
                 <VerticalPad heightPx={22} />
 
-                {item.minPrice && item.maxPrice
-                    ? <p className="price">
-                        ${item.minPrice.toFixed(2)}-{item.maxPrice.toFixed(2)}
-                    </p>
-                    : null}
+                {hasPrice &&
+                    <p className="price">
+                        ${priceString}
+                    </p>}
             </div>
         </div>
     );

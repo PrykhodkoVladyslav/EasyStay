@@ -53,7 +53,7 @@ function App() {
                     <Route element={<CustomerLayout />}>
                         <Route index element={<CustomerHomePage />} />
                         <Route path="hotels" element={<HotelsPage />} />
-                        <Route path="hotel" element={<HotelPage />} />
+                        <Route path="hotel/:id" element={<HotelPage />} />
                     </Route>
                 </Route>
 

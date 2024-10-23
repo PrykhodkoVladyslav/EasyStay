@@ -165,11 +165,11 @@ const HotelPage = () => {
                         </button>
 
                         <button className="photo-more">
-                            <p>+<span>2</span> фото</p>
                             <img
                                 src=""
                                 alt=""
                             />
+                            <p>+<span>2</span> фото</p>
                         </button>
 
                     </div>

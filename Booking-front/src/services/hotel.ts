@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
-import { IHotel, IHotelCreate } from "interfaces/hotel/IHotel.ts";
+import { IHotel } from "interfaces/hotel/IHotel.ts";
+import { IHotelCreate } from "interfaces/hotel/IHotelCreate.ts";
 import { ISetArchiveStatusRequest } from "interfaces/hotel/ISetArchiveStatusRequest.ts";
 import IHotelDetails from "interfaces/hotel/IHotelDetails.ts";
 import IPage from "interfaces/page/IPage.ts";

@@ -43,4 +43,5 @@ public interface IEasyStayDbContext {
 	DbSet<Message> Messages { get; set; }
 	DbSet<Citizenship> Citizenships { get; set; }
 	DbSet<Gender> Genders { get; set; }
+	DbSet<BankCard> BankCards { get; set; }
 }

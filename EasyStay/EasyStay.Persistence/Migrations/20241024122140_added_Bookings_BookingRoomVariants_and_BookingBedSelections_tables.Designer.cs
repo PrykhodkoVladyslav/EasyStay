@@ -3,6 +3,7 @@ using System;
 using EasyStay.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EasyStay.Persistence.Migrations
 {
     [DbContext(typeof(EasyStayDbContext))]
-    partial class EasyStayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241024122140_added_Bookings_BookingRoomVariants_and_BookingBedSelections_tables")]
+    partial class added_Bookings_BookingRoomVariants_and_BookingBedSelections_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

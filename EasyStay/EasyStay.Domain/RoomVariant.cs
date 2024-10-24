@@ -13,4 +13,6 @@ public class RoomVariant {
 	public GuestInfo GuestInfo { get; set; } = null!;
 
 	public BedInfo BedInfo { get; set; } = null!;
+
+	public ICollection<BookingRoomVariant> BookingRoomVariants { get; set; } = null!;
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EasyStay.Persistence.EntityTypeConfigurations;
 
-public class RoomRentalPeriodTypeConfiguration : IEntityTypeConfiguration<RoomRentalPeriod> {
+internal class RoomRentalPeriodTypeConfiguration : IEntityTypeConfiguration<RoomRentalPeriod> {
 	public void Configure(EntityTypeBuilder<RoomRentalPeriod> builder) {
 		builder.ToTable("RoomRentalPeriods");
 

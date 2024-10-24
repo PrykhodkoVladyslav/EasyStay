@@ -44,4 +44,7 @@ public interface IEasyStayDbContext {
 	DbSet<Citizenship> Citizenships { get; set; }
 	DbSet<Gender> Genders { get; set; }
 	DbSet<BankCard> BankCards { get; set; }
+	DbSet<Booking> Bookings { get; set; }
+	DbSet<BookingRoomVariant> BookingRoomVariants { get; set; }
+	DbSet<BookingBedSelection> BookingBedSelections { get; set; }
 }

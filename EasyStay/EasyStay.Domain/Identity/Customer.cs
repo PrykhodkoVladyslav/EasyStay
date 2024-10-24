@@ -6,4 +6,6 @@ public class Customer : User {
 	public ICollection<Chat> Chats { get; set; } = null!;
 
 	public ICollection<BankCard> BankCards { get; set; } = null!;
+
+	public ICollection<Booking> Bookings { get; set; } = null!;
 }

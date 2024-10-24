@@ -15,4 +15,6 @@ public class BankCard {
 
 	public long? CustomerId { get; set; }
 	public Customer? Customer { get; set; }
+
+	public ICollection<Booking> Bookings { get; set; } = null!;
 }

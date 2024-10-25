@@ -63,6 +63,9 @@ public class ExistingEntityCheckerService(
 		return ids.All(breakfastsFromDb.Contains);
 	}
 
+	public Task<bool> IsCorrectRoomIdAsync(long id, CancellationToken cancellationToken) =>
+		context.Rooms.AnyAsync(r => r.Id == id, cancellationToken);
+
 	public Task<bool> IsCorrectRoomIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
 		 context.Rooms
 			.Include(r => r.Hotel)
@@ -107,9 +110,27 @@ public class ExistingEntityCheckerService(
 		return ids.All(itemsFromDb.Contains);
 	}
 
+	public Task<bool> IsCorrectRoomVariantIdAsync(long id, CancellationToken cancellationToken) =>
+		context.RoomVariants.AnyAsync(rv => rv.Id == id, cancellationToken);
+
+	public async Task<bool> IsCorrectRoomVariantIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken) {
+		if (ids is null)
+			return true;
+
+		var itemsFromDb = await context.RoomVariants
+			.Select(rv => rv.Id)
+			.Where(id => ids.Contains(id))
+			.ToArrayAsync(cancellationToken);
+
+		return ids.All(itemsFromDb.Contains);
+	}
+
 	public Task<bool> IsCorrectRoomVariantIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
 		context.RoomVariants.Include(rv => rv.Room).ThenInclude(r => r.Hotel).AnyAsync(
 			rv => rv.Id == id && rv.Room.Hotel.RealtorId == currentUserService.GetRequiredUserId(),
 			cancellationToken
 		);
+
+	public Task<bool> IsCorrectBankCardIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
+		context.BankCards.AnyAsync(b => b.Id == id && b.CustomerId == currentUserService.GetRequiredUserId(), cancellationToken);
 }

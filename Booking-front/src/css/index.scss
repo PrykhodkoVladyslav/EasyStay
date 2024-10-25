@@ -3197,10 +3197,14 @@
   margin-top: 50px;
   font-family: var(--font-primary);
   margin-bottom: 25px;
-  background-image: url('./images/Homepage/Union.png');
-  background-size: cover;
-  background-position: center;
-
+ position: relative;
+  .imgHero{
+    object-fit: cover;
+    position: absolute;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+  }
   .cta-button {
     background-color: white;
     border: none;
@@ -3212,6 +3216,8 @@
     font-weight: 700;
     font-family: var(--font-primary);
     color: #3F523C;
+    position: relative;
+    z-index: 1;
   }
 
   .cta-button:hover {
@@ -3220,7 +3226,8 @@
 
   .hero-content2 {
 
-
+    position: relative;
+    z-index: 1;
     height: 329px;
     width: 876px;
   }
@@ -3319,17 +3326,23 @@
   border-radius: 20px;
 
   font-family: var(--font-primary);
-  background-image: url('./images/Homepage/night.jpg');
-  background-size: cover;
-  background-position: center;
-
   margin: 90px auto;
-  // Використовується для адаптації до різних екранів
+  position: relative;
 
   min-height: 218px;
   padding: 53px 127px 53px 127px;
 
+  .imgDisk{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    border-radius: 20px;
+  }
   .discount-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between; // Забезпечує простір між заголовком і кнопкою
@@ -3582,7 +3595,7 @@
 
   .Carousel-conteiner3 {
     position: relative;
-    width: 1620px;
+    width: 100%;
     height: 547px;
     margin: auto;
     bottom: 12px;
@@ -3592,61 +3605,97 @@
   }
 
   .CarItem1 {
-    display: flex;
-    flex-direction: column;
     width: 299px;
     height: 410px;
     min-width: 140px;
     border-radius: 22px;
-    padding: 20px 20px 20px 20px;
     margin-top: 30px;
-    background-image: url('./images/Homepage/propositionImages/Egypt.jpg');
-    background-position: center;
-    background-size: cover;
     margin-right: 50px;
+    position: relative;
+
+    .CarItemContent{
+      padding: 20px 20px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .imgItem1 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+    }
   }
 
   .CarItem2 {
-    display: flex;
-    flex-direction: column;
     width: 345px;
     height: 296px;
     min-width: 170px;
     border-radius: 22px;
-    padding: 20px 20px 20px 20px;
     margin-top: 200px;
     margin-right: 50px;
-    background-image: url('./images/Homepage/propositionImages/Turkey.png');
-    background-position: center;
-    background-size: cover;
+    position: relative;
+
+    .CarItemContent{
+      padding: 20px 20px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .imgItem2 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+    }
   }
 
   .CarItem3 {
-    display: flex;
-    flex-direction: column;
     width: 345px;
     height: 296px;
     min-width: 130px;
     border-radius: 22px;
-    padding: 20px 20px 20px 20px;
     margin-top: 40px;
     margin-right: 50px;
-    background-image: url('./images/Homepage/propositionImages/Bali.png');
-    background-position: center;
-    background-size: cover;
+    position: relative;
+
+    .CarItemContent{
+      padding: 20px 20px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .imgItem3 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+    }
   }
 
   .CarItem4 {
-    display: flex;
-    flex-direction: column;
     width: 402px;
     height: 547px;
     min-width: 180px;
     border-radius: 22px;
-    padding: 20px 20px 20px 20px;
-    background-image: url('./images/Homepage/propositionImages/ShriLanka.png');
-    background-position: center;
-    background-size: cover;
+    position: relative;
+
+    .CarItemContent{
+      padding: 20px 20px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .imgItem4 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+    }
   }
 
 
@@ -3655,6 +3704,8 @@
     height: 20px;
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
   .Carousel-item h3 {
@@ -3663,6 +3714,8 @@
     color: white;
     height: 29px;
     font-family: "Montserrat", system-ui;
+    position: relative;
+    z-index: 1;
   }
 
   .Carousel-item p {
@@ -3672,6 +3725,8 @@
     height: 29px;
     font-family: "Montserrat", system-ui;
     padding: 2px 0px 0px 0px;
+    position: relative;
+    z-index: 1;
   }
 
   .Carousel-item p1 {
@@ -3680,10 +3735,11 @@
     color: white;
     font-family: "Montserrat", system-ui;
     padding: 0px 0px 0px 5px;
+    position: relative;
+    z-index: 1;
   }
 
   .Carousel-item button {
-    position: relative;
     display: flex;
     background: rgba(255, 255, 255, 0.5);
     width: 53px;
@@ -3692,6 +3748,8 @@
     transform: rotate(-45deg);
     margin-top: auto;
     margin-left: auto;
+    position: relative;
+    z-index: 1;
   }
 
   .Carousel-item button:hover {

@@ -14,7 +14,7 @@ public class HotelPaginationService(
 	ICurrentUserService currentUser
 ) : BasePaginationService<Hotel, HotelVm, GetHotelsPageQuery>(mapper) {
 
-	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().AsSplitQuery().OrderBy(h => h.Id);
+	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().AsSplitQuery();
 
 	protected override IQueryable<Hotel> FilterQuery(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
 		if (filter.IsRandomItems == true) {
@@ -116,7 +116,16 @@ public class HotelPaginationService(
 			query = query.Where(h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.GuestInfo.AdultCount >= filter.MinAdultGuests)));
 
 		if (filter.FreePeriod is not null) {
-			// ToDo: Realize this filter
+			var period = filter.FreePeriod;
+
+			query = query.Where(
+				h => h.Rooms.Sum(r => r.Quantity)
+					> h.Rooms
+						.SelectMany(r => r.RoomVariants)
+						.SelectMany(rv => rv.BookingRoomVariants)
+						.Where(brv => (period.From <= brv.Booking.DateTo) && (period.To >= brv.Booking.DateFrom))
+						.Sum(brv => brv.Quantity)
+			);
 		}
 
 		if (filter.IsArchived is not null)

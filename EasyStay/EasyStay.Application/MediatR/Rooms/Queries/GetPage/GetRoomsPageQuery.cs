@@ -1,4 +1,5 @@
 ﻿using EasyStay.Application.MediatR.Rooms.Queries.Shared;
+using EasyStay.Application.Models.Date;
 using EasyStay.Application.Models.Pagination;
 using MediatR;
 
@@ -18,6 +19,8 @@ public class GetRoomsPageQuery : PaginationFilterDto, IRequest<PageVm<RoomVm>> {
 	public int? Quantity { get; set; }
 	public int? MinQuantity { get; set; }
 	public int? MaxQuantity { get; set; }
+
+	public FreeDatePeriod? FreePeriod { get; set; }
 
 	public long? HotelId { get; set; }
 

@@ -39,6 +39,17 @@ public class RoomPaginationService(
 		if (filter.MaxQuantity is not null)
 			query = query.Where(r => r.Quantity <= filter.MaxQuantity);
 
+		if (filter.FreePeriod is not null) {
+			var period = filter.FreePeriod;
+
+			query = query.Where(
+				r => r.Quantity > r.RoomVariants
+					.SelectMany(rv => rv.BookingRoomVariants)
+					.Where(brv => (period.From <= brv.Booking.DateTo) && (period.To >= brv.Booking.DateFrom))
+					.Sum(brv => brv.Quantity)
+			);
+		}
+
 		if (filter.HotelId is not null)
 			query = query.Where(r => r.HotelId == filter.HotelId);
 

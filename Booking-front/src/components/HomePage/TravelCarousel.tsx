@@ -1,5 +1,4 @@
 import {getPublicResourceUrl} from "utils/publicAccessor.ts";
-import React from "react";
 
 const TravelCarousel = () => {
     return (

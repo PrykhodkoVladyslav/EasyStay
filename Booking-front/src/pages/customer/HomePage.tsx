@@ -7,6 +7,7 @@ import SearchHotelSection from "components/partials/customer/SearchHotelSection.
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import {getPublicResourceUrl} from "utils/publicAccessor.ts";
 
 
 const HomePage: React.FC = () => {
@@ -18,6 +19,7 @@ const HomePage: React.FC = () => {
     return (
         <div className="app">
             <div className="hero-section">
+                <img className="imgHero" src={getPublicResourceUrl("images/Homepage/Union.png")}></img>
                 <div className="hero-content">
                     <div className="hero-content2">
                         <h1>Відкривай цікаві</h1><h1>місця з нами</h1>
@@ -36,6 +38,7 @@ const HomePage: React.FC = () => {
             <Services />
 
             <div className="discount">
+                <img className="imgDisk" src={getPublicResourceUrl("images/Homepage/night.jpg")}></img>
                 <div className="discount-content">
                     <h1>Отримайте постійну знижку -10% на деякі пропозиції після реєстрації</h1>
                     <button>Зареєструватись</button>

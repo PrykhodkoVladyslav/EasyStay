@@ -22,13 +22,13 @@ const HomePage: React.FC = () => {
     return (
         <div className="app">
             <div className="hero-section">
-                <img className="imgHero" src={getPublicResourceUrl("images/Homepage/Union.png")}></img>
+                <img className="imgHero" src={getPublicResourceUrl("images/Homepage/Union.png")} alt="hero" />
                 <div className="hero-content">
                     <div className="hero-content2">
                         <h1>Відкривай цікаві</h1><h1>місця з нами</h1>
                         <p>Легкий спосіб знайти унікальні місця для відпочинку та насолоди – приєднуйся до нас!</p>
                     </div>
-                    <button className="cta-button">Шукати житло</button>
+                    <button className="cta-button" onClick={() => navigate("/hotels")}>Шукати житло</button>
                 </div>
 
             </div>

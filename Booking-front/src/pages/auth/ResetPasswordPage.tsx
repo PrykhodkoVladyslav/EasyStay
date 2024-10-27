@@ -9,9 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const ResetPasswordPage = () => {
+    const navigate = useNavigate();
+
     const [message, setMessage] = useState("");
 
     const [resetPassword, { isLoading }] = useResetPasswordMutation();
@@ -47,7 +49,8 @@ const ResetPasswordPage = () => {
 
                     <VerticalPad heightPx={10} />
 
-                    <a className="login-register-offer-link" href="/auth/login">На сторінку входу</a>
+                    <a className="login-register-offer-link pointer"
+                       onClick={() => navigate("/auth/login")}>На сторінку входу</a>
                 </>
                 : <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
                     <TextInput

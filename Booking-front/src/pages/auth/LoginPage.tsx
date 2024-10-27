@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     isError={!!error} />
 
-                <a href="/auth/forgot">
+                <a onClick={() => navigate("/auth/forgot")} className="pointer">
                     <p className="absolute right-0 bottom-0">Забули пароль?</p>
                 </a>
             </div>
@@ -87,8 +87,10 @@ const LoginPage: React.FC = () => {
 
             <VerticalPad heightPx={8} />
 
-            <p className="login-register-offer">У вас немає аканту?<a className="login-register-offer-link"
-                                                                      href="/auth/register">Зареєструватись</a></p>
+            <p className="login-register-offer">
+                У вас немає аканту?<a className="login-register-offer-link pointer"
+                                      onClick={() => navigate("/auth/register")}>Зареєструватись</a>
+            </p>
         </form>
     );
 };

@@ -1,12 +1,19 @@
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import { getToken } from "store/slice/userSlice";
 import { Button } from "components/ui/Button.tsx";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import {
     useGetAllHotelsQuery,
+    useGetRealtorHotelsPageQuery,
 } from "services/hotel.ts";
 
 const HotelsListPage: React.FC = () => {
+    const token = useSelector((state: RootState) => getToken(state));
+
     const { data: hotelsData, isLoading, error } = useGetAllHotelsQuery();
+
     const navigate = useNavigate();
 
     if (isLoading) return <p>Завантаження...</p>;

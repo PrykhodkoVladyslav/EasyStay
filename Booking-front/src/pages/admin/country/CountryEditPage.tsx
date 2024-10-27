@@ -36,7 +36,7 @@ const CountryEditPage: React.FC = () => {
 
     useEffect(() => {
         if (countryData) {
-            const country = countryData[0];
+            const country = Array.isArray(countryData) ? countryData[0] : countryData;
             setValue("name", country.name);
             if (country.image) {
                 fetch(API_URL + `/images/1200_${country.image}`)
@@ -71,9 +71,8 @@ const CountryEditPage: React.FC = () => {
     }, [files, setValue]);
 
     useEffect(() => {
-        if (countryData && countryData.length > 0) {
-            const country = countryData[0];
-
+        if (countryData) {
+            const country = Array.isArray(countryData) ? countryData[0] : countryData;
             if (country.image) {
                 fetch(API_URL + `/images/1200_${country.image}`)
                     .then((response) => response.blob())
@@ -87,21 +86,19 @@ const CountryEditPage: React.FC = () => {
         }
     }, [countryData]);
 
-    // useEffect(() => {
-    //     if (countryData?.image) {
-    //         fetch(API_URL + `/images/1200_${countryData.image}`)
-    //             .then((response) => response.blob())
-    //             .then((blob) => {
-    //                 const fileFromApi = new File([blob], 'country_image.jpg', {
-    //                     type: 'image/jpeg',
-    //                 });
-    //                 // const fileFromApi = new File([blob], image.name, {
-    //                 //     type: blob.type,
-    //                 // });
-    //                 setFiles([fileFromApi]);
-    //             });
-    //     }
-    // }, [countryData])
+    useEffect(() => {
+        if (countryData) {
+            const country = Array.isArray(countryData) ? countryData[0] : countryData;
+            fetch(API_URL + `/images/1200_${country.image}`)
+                .then((response) => response.blob())
+                .then((blob) => {
+                    const fileFromApi = new File([blob], 'country_image.jpg', {
+                        type: 'image/jpeg',
+                    });
+                    setFiles([fileFromApi]);
+                });
+        }
+    }, [countryData])
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -130,24 +127,11 @@ const CountryEditPage: React.FC = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            const formData = new FormData();
-            formData.append("name", data.name);
-
-            if (files.length === 0) {
-                showToast(`Будь ласка, завантажте файл зображення.`, "error");
-                return;
-            }
-
             await updateCountry({
                 id: Number(id),
                 name: data.name,
                 image: files[0],
             }).unwrap();
-
-            // await updateCountry({
-            //     id: Number(id),
-            //     ...formData,
-            // }).unwrap();
 
             showToast(`Країну успішно оновлено!`, "success");
             refetch();
@@ -156,22 +140,6 @@ const CountryEditPage: React.FC = () => {
             showToast(`Помилка при оновленні країни!`, "error");
         }
     });
-
-    // const onSubmit = handleSubmit(async (data) => {
-    //     try {
-    //         await updateCountry({
-    //             id: Number(id),
-    //             name: data.name,
-    //             image: files[0],
-    //         }).unwrap();
-    //
-    //         showToast(`Країну успішно оновлено!`, "success");
-    //         refetch();
-    //         navigate("/admin/countries/list");
-    //     } catch (err) {
-    //         showToast(`Помилка при оновленні країни!`, "error");
-    //     }
-    // });
 
     const onReset = () => {
         reset();

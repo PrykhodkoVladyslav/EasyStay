@@ -2,9 +2,12 @@ import { IHotel } from "interfaces/hotel/IHotel.ts";
 import PhotoSlider from "components/partials/customer/PhotoSlider.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import { useNavigate } from "react-router-dom";
 
 const HotelCard = (props: { item: IHotel }) => {
     const item = props.item;
+
+    const navigate = useNavigate();
 
     const hasPrice = (item.minPrice && item.maxPrice) != undefined;
     const minPrice = Math.ceil(item.minPrice ?? 0);
@@ -15,7 +18,7 @@ const HotelCard = (props: { item: IHotel }) => {
         : `${minPrice}`;
 
     return (
-        <div className="hotel-item">
+        <div className="hotel-item" onClick={() => navigate(`/hotel/${item.id}`)}>
             <PhotoSlider photos={item.photos.map(p => p.name)} />
 
             <div className="hotel-info-container">

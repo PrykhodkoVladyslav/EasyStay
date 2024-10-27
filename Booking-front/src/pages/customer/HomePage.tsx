@@ -7,7 +7,8 @@ import SearchHotelSection from "components/partials/customer/SearchHotelSection.
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { useNavigate } from "react-router-dom";
 
 
 const HomePage: React.FC = () => {
@@ -15,6 +16,8 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         activeMenuItemContext?.setActivePage(undefined);
     });
+
+    const navigate = useNavigate();
 
     return (
         <div className="app">
@@ -38,10 +41,11 @@ const HomePage: React.FC = () => {
             <Services />
 
             <div className="discount">
-                <img className="imgDisk" src={getPublicResourceUrl("images/Homepage/night.jpg")}></img>
+                <img className="imgDisk" src={getPublicResourceUrl("images/Homepage/night.jpg")}
+                     alt="discount background"></img>
                 <div className="discount-content">
                     <h1>Отримайте постійну знижку -10% на деякі пропозиції після реєстрації</h1>
-                    <button>Зареєструватись</button>
+                    <button onClick={() => navigate("/auth/register")}>Зареєструватись</button>
                 </div>
             </div>
         </div>

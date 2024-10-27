@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
     );
 
-    // Close on click outside
+    // Закривання при натисканні ззовні
     useEffect(() => {
         const clickHandler = (event: MouseEvent) => {
             if (!sidebar.current || !trigger.current) return;
@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         return () => document.removeEventListener("click", clickHandler);
     }, [sidebarOpen, setSidebarOpen]);
 
-    // Store sidebar expanded state in localStorage
+    // Зберігання розгорнутого стану бічної панелі у localStorage
     useEffect(() => {
         localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
         if (sidebarExpanded) {
@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
     return (
         <div>
-            {/* Sidebar backdrop (mobile only) */}
+            {/* Фон бічної панелі (тільки для мобільних) */}
             <div
                 className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
                     sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                 aria-hidden="true"
             ></div>
 
-            {/* Sidebar */}
+            {/* Бічна панель */}
             <div
                 id="sidebar"
                 ref={sidebar}
@@ -76,9 +76,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                     sidebarOpen ? "translate-x-0" : "-translate-x-64"
                 }`}
             >
-                {/* Sidebar header */}
+                {/* Заголовок бічної панелі */}
                 <div className="flex flex-col justify-between mb-10 pr-3 sm:px-2 gap-5">
-                    {/* Close button */}
+                    {/* Кнопка закриття */}
                     <button
                         ref={trigger}
                         className="lg:hidden text-slate-500 hover:text-slate-400"
@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                         </svg>
                     </button>
 
-                    {/* Links */}
+                    {/* Посилання */}
                     <div className="space-y-8 -mx-2">
                         {/* Pages group */}
                         <div>
@@ -217,13 +217,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                             </ul>
                         </div>
 
-                        {/* More group */}
+                        {/* Більше груп */}
                         <div>
                             <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
                                 <hr className={"lg:hidden lg:sidebar-expanded:block 2xl:block"}/>
                             </h3>
                             <ul className="mt-3">
-                                {/* Authentication */}
+                                {/* Авторизація */}
                                 <SidebarLinkGroup activecondition={pathname.includes("auth")}>
                                     {(handleClick, open) => (
                                         <>
@@ -239,8 +239,8 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
                                                 Авторизація
                                                 <SidebarChevronDown open={open} />
                                             </SidebarLinkGroupTitle>
-                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/adminAuth/login", label: "Вхід" }]} />
-                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/register", label: "Реєстрація" }]} />
+                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/auth/login", label: "Вхід" }]} />
+                                            <SidebarLinkGroupMenu open={open} links={[{ to: "/auth/register", label: "Реєстрація" }]} />
                                         </>
                                     )}
                                 </SidebarLinkGroup>

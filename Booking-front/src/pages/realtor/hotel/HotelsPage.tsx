@@ -2,7 +2,6 @@
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import {
-    useGetAllHotelsQuery,
     useGetRealtorHotelsPageQuery,
     useDeleteHotelMutation,
     useSetArchiveStatusHotelMutation,
@@ -18,12 +17,9 @@ import {RootState} from "store/index.ts";
 const HotelsPage: React.FC = () => {
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
-    const role = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;
     const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
 
-    const { data: hotelsData, isLoading, error, refetch } = role === 'Admin'
-        ? useGetAllHotelsQuery()
-        : useGetRealtorHotelsPageQuery({ RealtorId: realtorId });
+    const { data: hotelsData, isLoading, error, refetch } = useGetRealtorHotelsPageQuery({ RealtorId: realtorId });
 
     const [deleteHotel] = useDeleteHotelMutation();
     const [setArchiveStatusHotel] = useSetArchiveStatusHotelMutation();
@@ -77,9 +73,7 @@ const HotelsPage: React.FC = () => {
                         <th className="px-6 py-3">Назва</th>
                         <th className="px-6 py-3">Зображення</th>
                         <th className="px-6 py-3">Категорія</th>
-                        {role !== 'Admin' && (
-                            <th className="px-6 py-3 text-center" colSpan={3}>Дії</th>
-                        )}
+                        <th className="px-6 py-3 text-center" colSpan={3}>Дії</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -15,6 +15,8 @@ public class RealtorVm : IMapWith<Realtor> {
 
 	public string Photo { get; set; } = null!;
 
+	public string? Description { get; set; }
+
 	public double Rating { get; set; }
 
 

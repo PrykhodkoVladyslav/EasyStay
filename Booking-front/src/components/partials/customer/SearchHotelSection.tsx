@@ -29,9 +29,10 @@ export interface ISearchData {
 
 interface ISearchTopSectionProps {
     onSearch?: (data: ISearchData) => void;
+    showCityInput?: boolean;
 }
 
-const SearchHotelSection = (props: ISearchTopSectionProps) => {
+const SearchHotelSection = ({ props, showCityInput = true }: ISearchTopSectionProps) => {
     const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
     const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
@@ -76,12 +77,15 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
 
     return (
         <div className="search-top-section">
-            <div className="block city-block">
-                <p className="title">Куди</p>
-                <input type="text" className="city-input" placeholder="Назва міста"
-                       value={city}
-                       onChange={(e) => setCity(e.target.value)} />
-            </div>
+            {showCityInput && (
+                <div className="block city-block">
+                    <p className="title">Куди</p>
+                    <input type="text" className="city-input" placeholder="Назва міста"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    />
+                </div>
+            )}
             <div className="block middle-block date-block" onClick={() => setIsOpenedDatePicker(true)}>
                 <div className="title-container">
                     <img

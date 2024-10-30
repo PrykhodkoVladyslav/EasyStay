@@ -13,11 +13,11 @@ import { useGetAllBreakfastsQuery } from "services/breakfast.ts";
 import { useGetAllLanguagesQuery } from "services/language.ts";
 import { useCreateHotelMutation } from "services/hotel.ts";
 import { HotelCreatePage1Schema, HotelCreateSchemaType, HotelCreateSchema } from "interfaces/zod/hotel.ts";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HotelPage = () => {
     const [currentContainer, setCurrentContainer] = useState(1);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -125,10 +125,11 @@ const HotelPage = () => {
                 cityId: Number(data.address.cityId) || 0,
             },
         }
-        console.log(hoteldata);
+        // console.log(hoteldata);
 
         try {
             await createHotel(hoteldata).unwrap();
+            navigate(`/realtor/hotels`);
             // navigate(`/hotel/${hoteldata.id}`);
             showToast(`Готель успішно створено!`, "success");
         } catch (error) {

@@ -35,6 +35,7 @@
     .logo {
       width: 183px;
       height: 74px;
+      min-width: 74px;
     }
 
     .center-section {
@@ -276,6 +277,8 @@
         border-radius: 18px;
         background: rgb(63, 82, 60);
         color: white;
+        //width: 100%;
+        //max-width: 270px;
         width: 270px;
         height: 56px;
 
@@ -991,7 +994,6 @@
     padding-bottom: 92px;
 
     .hotel-section {
-      //border: 1px solid #000;
       display: flex;
       gap: 6.5vw;
       padding-bottom: 105px;
@@ -1005,18 +1007,36 @@
 
         .pages {
           display: flex;
-          gap: 42px;
+          gap: 0.5vw;
           white-space: nowrap;
           font-family: var(--font-primary), system-ui;
           font-size: 14px;
           font-weight: 500;
           line-height: 28px;
+
+          a {
+            padding: 3px 14px;
+            border-radius: 18px;
+            transition: background-color 0.3s, color 0.3s;
+          }
+
+          a:hover {
+            color: white;
+            background-color: var(--color-primary);
+          }
         }
 
         .hotel-info {
           display: flex;
           flex-direction: column;
           gap: 64px;
+
+          .title {
+            font-family: var(--font-secondary), system-ui;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 44px;
+          }
 
           .top {
             display: flex;
@@ -1101,26 +1121,92 @@
             }
           }
 
-          .amenities {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            row-gap: 6px;
+          .middle-block {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
 
-            .amenity {
-              display: flex;
-              align-items: center;
-              gap: 12px;
+            .amenities {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              row-gap: 6px;
 
-              img {
-                object-fit: cover;
+              .amenity {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                img {
+                  width: 24px;
+                  height: 24px;
+                  object-fit: cover;
+                }
+
+                p {
+                  color: var(--color-text);
+                  font-family: var(--font-secondary), system-ui;
+                  font-size: 12px;
+                  font-weight: 500;
+                  line-height: 15px;
+                }
               }
+            }
+
+            .breakfasts {
+              display: flex;
+              flex-direction: column;
+              font-family: var(--font-secondary), system-ui;
+              font-size: 14px;
+              font-weight: 500;
+              color: var(--color-text);
+
+              p {
+                font-size: 14px;
+              }
+
+              div {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                img {
+                  width: 24px;
+                  height: 24px;
+                  object-fit: cover;
+                }
+              }
+            }
+
+            .languages {
+              display: flex;
+              flex-direction: column;
+              font-family: var(--font-secondary), system-ui;
+              font-size: 14px;
+              font-weight: 500;
+              color: var(--color-text);
+
+              ul {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+
+                li {
+                  font-size: 12px;
+                  color: var(--color-text);
+                }
+              }
+            }
+
+            .timing-info {
+              display: flex;
+              flex-direction: column;
+              font-family: var(--font-secondary), system-ui;
+              font-size: 14px;
+              font-weight: 500;
+              color: var(--color-text);
 
               p {
                 color: var(--color-text);
-                font-family: var(--font-secondary), system-ui;
-                font-size: 12px;
-                font-weight: 500;
-                line-height: 15px;
               }
             }
           }
@@ -1200,6 +1286,7 @@
       .photos {
         width: 100%;
         max-width: 870px;
+        min-width: 200px;
         display: flex;
         flex-direction: column;
         gap: 18px;
@@ -1210,6 +1297,7 @@
           object-fit: cover;
           border-radius: 18px;
           background: rgb(217, 217, 217);
+          cursor: pointer;
         }
 
         .first-photo {
@@ -1218,13 +1306,14 @@
 
         .row-photos {
           display: flex;
-          justify-content: space-between;
-          gap: 18px;
+          justify-content: start;
+          gap: 1vw;
           width: 100%;
           height: 120px;
 
-          button {
+          div {
             width: 100%;
+            max-width: 204px;
           }
 
           img {
@@ -1258,10 +1347,87 @@
           height: 183px;
         }
       }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        backdrop-filter: blur(5px);
+
+        .modal-content {
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          border: 3px solid rgb(87, 119, 83);
+          max-height: 90%;
+          width: 100%;
+          max-width: 1200px;
+          overflow-y: auto;
+          position: relative;
+
+          @media (max-width: 1240px) {
+            max-width: 800px;
+          }
+
+          @media (max-width: 900px) {
+            max-width: 400px;
+          }
+
+          .close-button {
+            color: var(--color-primary);
+            position: absolute;
+            top: -20px;
+            right: 0;
+            font-size: 36px;
+            background: none;
+            border: none;
+            z-index: 100;
+          }
+
+          .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            align-items: center;
+            justify-items: center;
+            gap: 10px;
+
+            .modal-photo {
+              width: 100%;
+              border-radius: 8px;
+              cursor: pointer;
+              transition: transform 0.3s;
+
+              &:hover {
+                transform: scale(1.05);
+              }
+            }
+          }
+        }
+      }
     }
 
     .search-rooms {
       padding-bottom: 32px;
+
+      .search {
+        width: 100%;
+        max-width: 1100px;
+
+        .find-button {
+          border-radius: 18px;
+          background: rgb(63, 82, 60);
+          color: white;
+          width: 12vw;
+          max-width: 220px;
+        }
+      }
 
       .rooms {
 
@@ -1321,22 +1487,18 @@
             border-right: 1px solid var(--color-secondary);
           }
 
-          td:not(:first-child):not(:last-child) {
-            //min-height: 300px;
-          }
-
           td .cols {
             display: flex;
             flex-direction: column;
             padding: 17px;
             width: 100%;
-            min-height: 280px;
+            min-height: 350px;
             border-bottom: 1px solid var(--color-secondary);
           }
 
           @media (max-width: 1430px) {
             td .cols {
-              min-height: 350px;
+              min-height: 500px;
             }
           }
 
@@ -1357,7 +1519,7 @@
               margin-bottom: 14px;
             }
 
-            .warning {
+            .rooms-left {
               color: rgb(249, 50, 50);
               font-family: var(--font-secondary), system-ui;
               font-size: 10px;
@@ -1379,7 +1541,6 @@
                 font-size: 12px;
                 font-weight: 500;
                 line-height: 15px;
-                white-space: nowrap;
               }
             }
           }
@@ -1393,6 +1554,11 @@
 
             img {
               width: 24px;
+            }
+
+            .child {
+              padding-top: 4px;
+              width: 18px;
             }
           }
 
@@ -1447,15 +1613,20 @@
           .advantages .cols{
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 10px;
             font-family: var(--font-secondary), system-ui;
             font-size: 12px;
             font-weight: 500;
             line-height: 15px;
-            color: rgb(0, 130, 53);
 
             p {
+              color: rgb(0, 130, 53);
               padding-top: 3px;
+            }
+
+            span {
+              color: black;
+              font-weight: 600;
             }
 
             li {
@@ -1466,6 +1637,17 @@
               width: 24px;
               height: 24px;
               padding-right: 3px;
+            }
+
+            .rental-periods {
+              p {
+                color: black;
+              }
+
+              ul {
+                color: rgb(0, 130, 53);
+              }
+
             }
           }
 
@@ -2114,12 +2296,6 @@
 
       // Готелі та відгуки
       .hotels-reviews {
-        //width: 100%;
-        //width: auto;
-        //width: 1292px;
-        //max-width: 1292px;
-        //min-width: 560px;
-        //height: 995px;
         margin-top: 34px;
         display: flex;
         flex-direction: column;
@@ -2127,7 +2303,6 @@
 
         // Список готелів
         .hotels-container {
-          //width: 100%;
           min-height: 584px;
           display: flex;
           flex-direction: column;
@@ -2159,7 +2334,6 @@
           }
 
           .hotel {
-            //max-width: 413px;
             width: 413px;
             height: 453px;
             border-radius: var(--border-radius);
@@ -2191,9 +2365,6 @@
                   width: 57px;
                   height: 6px;
                   display: flex;
-                  //flex-direction: row;
-                  //justify-content: flex-start;
-                  //align-items: center;
                   gap: 3px;
 
                   .slide {
@@ -2336,6 +2507,7 @@
                     display: flex;
                     align-items: flex-end;
                     gap: 3px;
+                    white-space: pre;
 
                     .price {
                       color: rgb(0, 0, 0);
@@ -2343,11 +2515,18 @@
                       font-size: 28px;
                       font-weight: 600;
                       line-height: 34px;
+
+                      span {
+                        padding-top: 10px;
+                        font-family: Inter;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 17px;
+                      }
                     }
 
                     .old-price {
                       position: relative;
-                      //display: inline-block;
                       margin-right: 3px;
                       color: var(--color-accent);
                       font-family: var(--font-secondary), system-ui;
@@ -2848,16 +3027,32 @@
             height: 24px;
           }
 
+          .rooms-action {
+            display: flex;
+            gap: 12px;
+          }
+
           .btn-edit {
-            width: 122px;
             padding: 10px 24px;
-            border-radius: 14px;
+            border-radius: 12px;
             color: white;
             font-family: var(--font-secondary), system-ui;
             font-size: 12px;
             font-weight: 600;
             line-height: 15px;
             background: var(--color-primary);
+          }
+
+          .btn-rooms {
+            padding: 10px 24px;
+            box-sizing: border-box;
+            border: 1px solid rgb(63, 82, 60);
+            border-radius: 12px;
+            color: var(--font-primary);
+            font-family: var(--font-secondary), system-ui;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 15px;
           }
         }
       }
@@ -2871,8 +3066,6 @@
 
   // Відгуки
   .reviews-content {
-    //max-width: 1285px;
-    //min-width: 560px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -3022,10 +3215,6 @@
         margin-top: 24px;
         font-size: 13px;
         line-height: 16px;
-        //display: -webkit-box;
-        //-webkit-box-orient: vertical;
-        //-webkit-line-clamp: 5;
-        //overflow: hidden;
         text-wrap: wrap;
       }
 
@@ -4065,7 +4254,6 @@
   }
 }
 
-
 /*Discount!!!!!!!!!*/
 .discount {
   display: flex;
@@ -4126,7 +4314,6 @@
   }
 }
 
-
 @media (max-width: 1480px) {
   .discount {
     margin: 70px auto;
@@ -4147,7 +4334,6 @@
   }
 }
 
-
 @media (max-width: 1240px) {
   .discount {
     margin: 60px auto;
@@ -4167,7 +4353,6 @@
 
   }
 }
-
 
 @media (max-width: 1000px) {
   .discount {
@@ -4616,5 +4801,3 @@
     transform: rotate(180deg);
   }
 }
-
-

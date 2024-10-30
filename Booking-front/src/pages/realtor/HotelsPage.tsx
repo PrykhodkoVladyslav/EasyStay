@@ -49,14 +49,18 @@ const HotelsPage = () => {
                                 src={getPublicResourceUrl("account/trash.svg")}
                                 alt=""/>
                         </button>
-                        <button className="btn-edit">Редагувати</button>
+
+                        <div className="rooms-action">
+                            <button className="btn-rooms">Номери</button>
+                            <button className="btn-edit">Редагувати</button>
+                        </div>
                     </div>
                 </div>
                 <div className="hotel">
                     <div className="info">
                         <div className="img"></div>
                         <div className="info">
-                            <div className="top-info">
+                        <div className="top-info">
                                 <p className="name">Radisson Blu Hotel</p>
                                 <div>
                                     <p className="city">Відень</p>

@@ -55,11 +55,11 @@ const ReviewsPage = () => {
                         дуже чистою та дуже добре мебльованою. Ціна була дуже хорошою.
                     </p>
 
-                    <button className="btn-delete">
-                        <img
-                            src={getPublicResourceUrl("account/trash.svg")}
-                            alt=""/>
-                    </button>
+                    {/*<button className="btn-delete">*/}
+                    {/*    <img*/}
+                    {/*        src={getPublicResourceUrl("account/trash.svg")}*/}
+                    {/*        alt=""/>*/}
+                    {/*</button>*/}
                 </div>
                 <div className="review">
                     <div className="author">

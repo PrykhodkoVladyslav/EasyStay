@@ -1,36 +1,75 @@
+import { useParams } from "react-router-dom";
 import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { useGetHotelQuery } from "services/hotel.ts";
+import { getApiImageUrl } from "utils/apiImageAccessor.ts";
+import { useEffect, useState } from "react";
 
 const HotelPage = () => {
+    const { id } = useParams();
+    const { data: hotelData, isLoading, error } = useGetHotelQuery(id);
+    const [selectedQuantities, setSelectedQuantities] = useState<{ [roomId: number]: { [variantId: number]: number } }>({});
 
+    if (isLoading) return <p>Завантаження...</p>;
+    if (error) return <p>Помилка при завантаженні даних готелю</p>;
+
+    const handleSelectChange = (roomId: number, variantId: number, selectedQuantity: number) => {
+        setSelectedQuantities((prevSelectedQuantities) => {
+            const roomSelections = prevSelectedQuantities[roomId] || {};
+            return {
+                ...prevSelectedQuantities,
+                [roomId]: {
+                    ...roomSelections,
+                    [variantId]: selectedQuantity,
+                },
+            };
+        });
+    };
+
+    const getRemainingQuantity = (roomId: number) => {
+        const room = hotelData.rooms.find((r: any) => r.id === roomId);
+        if (!room) return 0;
+
+        const selectedForRoom = selectedQuantities[roomId] || {};
+        const usedQuantity = Object.values(selectedForRoom).reduce((sum, qty) => sum + qty, 0);
+
+        return Math.max(room.quantity - usedQuantity, 0);
+    };
+
+    const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    console.log(hotelData);
+
+    const photos = hotelData?.photos || [];
 
     return (
         <div className="hotel-page">
 
             <div className="hotel-section">
                 <div className="pages-info">
-                    <div className="pages">
-                        <a>Типи номерів</a>
-                        <a>Відгуки</a>
-                        <a>Питання</a>
-                        <a>Зручності</a>
-                        <a>Інформація</a>
+                    <div className="pages" id="pages">
+                        <a href="#rooms" onClick={handleScroll('rooms')}>Типи номерів</a>
+                        <a href="#reviews" onClick={handleScroll('reviews')}>Відгуки</a>
+                        <a href="#questions" onClick={handleScroll('questions')}>Питання</a>
+                        <a href="#pages" onClick={handleScroll('pages')}>Зручності</a>
+                        <a href="#info" onClick={handleScroll('info')}>Інформація</a>
                     </div>
 
                     <div className="hotel-info">
                         <div className="top">
                             <div className="name-favorite">
                                 <div className="name-rating">
-                                    <p className="name">Radisson Blu Hotel</p>
+                                    <p className="name">{hotelData.name}</p>
                                     <div className="rating">
                                         <img
                                             src={getPublicResourceUrl("account/star.svg")}
                                             alt=""
                                             className="star"
                                         />
-                                        <p>
-                                            9.7
-                                        </p>
+                                        <p>{hotelData.rating}</p>
                                     </div>
                                 </div>
 
@@ -47,138 +86,92 @@ const HotelPage = () => {
                                     src={getPublicResourceUrl("icons/location.svg")}
                                     alt=""
                                 />
-                                <p className="city">Барселона</p>
+                                <p className="city">{hotelData.address.city.name}</p>
                                 <p>, </p>
-                                <p className="country"> Іспанія</p>
+                                <p className="country"> {hotelData.address.city.country.name}</p>
                                 <p> / </p>
-                                <p className="address">Carrer de Johann Sebastian Bach, 18</p>
+                                <p className="address">{hotelData.address.street}, {hotelData.address.houseNumber}</p>
                             </div>
                         </div>
 
-                        <div className="amenities">
-                            <div className="amenity">
-                                <img
-                                    src={getPublicResourceUrl("icons/amenitiesSvg/city-view.svg")}
-                                    alt=""
-                                />
-                                <p>Вид на місто</p>
+                        {hotelData.hotelAmenities.length > 0 && (
+                            <div className="amenities" id="info">
+                                {hotelData.hotelAmenities.map((amenity) => (
+                                    <div key={amenity.id} className="amenity">
+                                        <img
+                                            src={getApiImageUrl(amenity.image, 800)}
+                                            alt={amenity.name}
+                                        />
+                                        <p>{amenity.name}</p>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="amenity">
-                                <img
-                                    src={getPublicResourceUrl("icons/amenitiesSvg/bath.svg")}
-                                    alt=""
-                                />
-                                <p>Ванна кімната у номері</p>
-                            </div>
-                            <div className="amenity">
-                                <img
-                                    src={getPublicResourceUrl("icons/amenitiesSvg/air-conditioner.svg")}
-                                    alt=""
-                                />
-                                <p>Кондиціонер</p>
-                            </div>
-                            <div className="amenity">
-                                <img
-                                    src={getPublicResourceUrl("icons/amenitiesSvg/city-view.svg")}
-                                    alt=""
-                                />
-                                <p>Вид на місто</p>
-                            </div>
-                        </div>
+                        )}
 
-                        <p className="description">
-                            У помешканні Messe-Congress Central with balcony, розміщеному приблизно за менше ніж 1 км
-                            від пам'ятки "Конференц-центр Messe Wien", до розпорядження гостей комфортне перебування з
-                            красивим видом на басейн. Також для зручності гостей тераса та балкон. У помешканні
-                            Messe-Congress Central with balcony, яке розміщено за 14 хв. ходьби від пам'ятки "Віденський
-                            парк Пратер", доступний безкоштовний Wi-Fi.
-                            <br/>
-                            <br/>
-                            Це помешкання (апартаменти) складається зі спалень (1), вітальнi, повністю обладнаної кухні
-                            з холодильником і кавоваркою, а також ванних кімнат (1) з душем та безкоштовними
-                            туалетно-косметичними засобами. У цьому помешканні для зручності гостей є постільна білизна
-                            та рушники.
-                            <br/>
-                            <br/>
-                            Працівники стійки реєстрації говорять такими мовами – німецька, англійська, іврит та
-                            російська – і нададуть гостям необхідні поради про околиці помешкання. Помешкання
-                            Messe-Congress Central with balcony розміщено за 2,9 км від пам'ятки "Стадіон Ернста
-                            Хаппеля". Найближчий аеропорт до помешкання Messe-Congress Central with balcony – Аеропорт
-                            Відень-Швехат, що розташований за 19 км.
-                            <br/>
-                            <br/>
-                            Це місце розташування особливо подобається індивідуальним мандрівникам – вони оцінили його
-                            на 9,0 для подорожі наодинці.
-                        </p>
+                        <p className="description" id="description">{hotelData.description}</p>
 
                         <div className="bottom">
                             <p className="title-about">Про власника</p>
 
                             <div className="realtor-rating">
-                                <p className="name">Дмитро Романчук</p>
+                                <p className="name">{hotelData.realtor.firstName} {hotelData.realtor.lastName}</p>
 
                                 <div className="rating">
                                     <img
                                         src={getPublicResourceUrl("account/star.svg")}
                                         alt=""
                                     />
-                                    <p>9.7</p>
+                                    <p>{hotelData.realtor.rating.toFixed(1)}</p>
                                 </div>
                             </div>
 
-                            <p className="description">З багаторічним досвідом у сфері нерухомості, я пропоную широкий
-                                вибір комфортних апартаментів та будинків у найкращих локаціях.</p>
+                            <p className="description">{hotelData.realtor.description}</p>
                         </div>
                     </div>
                 </div>
 
                 <div className="photos">
+                    {/* Перша фотографія */}
+                    {photos[0] && (
+                        <img
+                            src={getApiImageUrl(photos[0].name, 800)}
+                            alt="1"
+                            className="first-photo"
+                        />
+                    )}
 
-                    <img
-                        src=""
-                        alt=""
-                        className="first-photo"
-                    />
-
+                    {/* 4 фото та більше */}
                     <div className="row-photos">
+                        {photos.slice(1, 4).map((photo, index) => (
+                            <button key={index + 2}>
+                                <img
+                                    src={getApiImageUrl(photo.name, 800)}
+                                    alt={`${index + 2}`}
+                                />
+                            </button>
+                        ))}
 
-                        <button>
-                            <img
-                                src=""
-                                alt=""
-                            />
-                        </button>
-
-                        <button>
-                            <img
-                                src=""
-                                alt=""
-                            />
-                        </button>
-
-                        <button>
-                            <img
-                                src=""
-                                alt=""
-                            />
-                        </button>
-
-                        <button className="photo-more">
-                            <p>+<span>2</span> фото</p>
-                            <img
-                                src=""
-                                alt=""
-                            />
-                        </button>
-
+                        {photos.length > 4 && (
+                            <button className="photo-more">
+                                {photos.length > 6 && (
+                                    <p>+<span>{photos.length - 6}</span> фото</p>
+                                )}
+                                <img
+                                    src={getApiImageUrl(photos[4].name, 800)}
+                                    alt="4-more"
+                                />
+                            </button>
+                        )}
                     </div>
 
-                    <img
-                        src=""
-                        alt=""
-                        className="last-photo"
-                    />
-
+                    {/* Остання фотографія */}
+                    {photos[5] && (
+                        <img
+                            src={getApiImageUrl(photos[5].name, 800)}
+                            alt="last"
+                            className="last-photo"
+                        />
+                    )}
                 </div>
             </div>
 
@@ -186,7 +179,7 @@ const HotelPage = () => {
 
                 <SearchHotelSection/>
 
-                <div className="rooms">
+                <div className="rooms" id="rooms">
                     <p className="global-title">Номери</p>
 
                     <table className="room-table">
@@ -195,7 +188,7 @@ const HotelPage = () => {
                             <th>Тип номера</th>
                             <th>Кількість гостей</th>
                             <th>Тип ліжка</th>
-                            <th>Переваги для вас</th>
+                            <th>Додаткова інформація</th>
                             <th>Ціна</th>
                             <th>Оберіть варіанти</th>
                             <th></th>
@@ -203,595 +196,210 @@ const HotelPage = () => {
                         </thead>
 
                         <tbody>
-                        <tr className="col-span-2">
-                            <td className="room-type">
-                                <p className="title">Стандартний номер</p>
-                                <p className="warning">! Лише 3 номери залишилось на цьому сайті!</p>
-                                <div className="features">
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Туалет</p>
+                        {hotelData.rooms.map(room => (
+                            <tr key={room.id}>
+                                <td className="room-type">
+                                    <p className="title">{room.name}</p>
+                                    <p className="rooms-left">! Лише {room.quantity} залишилось на цьому сайті!</p>
+                                    <div className="features">
+                                        {room.amenities.map(amenity => (
+                                            <div key={amenity.id}>
+                                                <img src={getPublicResourceUrl("icons/check.svg")} alt=""/>
+                                                <p>{amenity.name}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Ванна або душ</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Рушники</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Білизна</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Вітальня</p>
-                                    </div>
-                                    {/*<p>Телевізор</p>*/}
-                                    {/*<p>Фен</p>*/}
-                                    {/*<p>Робочий стіл</p>*/}
-                                    {/*<p>Опалення</p>*/}
-                                    {/*<p>Шафа або гардероб</p>*/}
-                                </div>
-                            </td>
+                                </td>
 
-                            <td className="peoples">
-                                <div className="cols">
-                                    <img
-                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="cols">
-                                    <img
-                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                        alt=""
-                                    />
-                                </div>
-                            </td>
-
-                            <td className="bed-type">
-                                <div className="cols">
-                                    <p className="title">Оберіть тип ліжка</p>
-                                    <div className="flex">
-                                        <input
-                                            type="radio"
-                                            id="bed1"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed1">
-                                                <p>1 двоспальне ліжко</p>
+                                <td className="peoples">
+                                    {room.variants.map(variant => (
+                                        <div className="cols" key={variant.id}>
+                                            {Array.from({length: variant.guestInfo.adultCount}).map((_, idx) => (
                                                 <img
-                                                    src={getPublicResourceUrl("icons/amenitiesSvg/double-bed.svg")}
-                                                    alt=""
+                                                    key={`adult-${idx}`}
+                                                    src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
+                                                    alt="Adult"
                                                 />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="flex ">
-                                        <input
-                                            type="radio"
-                                            id="bed2"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed2">
-                                                <p>2 односпальні ліжка</p>
-                                                <div className="flex">
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cols">
-                                    <p className="title">Оберіть тип ліжка</p>
-                                    <div className="flex">
-                                        <input
-                                            type="radio"
-                                            id="bed1"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed1">
-                                                <p>1 двоспальне ліжко</p>
+                                            ))}
+                                            {Array.from({length: variant.guestInfo.childCount}).map((_, idx) => (
                                                 <img
-                                                    src={getPublicResourceUrl("icons/amenitiesSvg/double-bed.svg")}
-                                                    alt=""
+                                                    key={`child-${idx}`}
+                                                    src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
+                                                    alt="Child"
+                                                    className="child"
                                                 />
-                                            </label>
+                                            ))}
                                         </div>
-                                    </div>
-                                    <div className="flex ">
-                                        <input
-                                            type="radio"
-                                            id="bed2"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed2">
-                                                <p>2 односпальні ліжка</p>
+                                    ))}
+                                </td>
+
+                                <td className="bed-type">
+                                    {room.variants.map(variant => (
+                                        <div className="cols" key={variant.id}>
+                                            <p className="title">Оберіть тип ліжка</p>
+
+                                            {variant.bedInfo.doubleBedCount > 0 && (
                                                 <div className="flex">
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
+                                                    <input
+                                                        type="radio"
+                                                        id={`bed_double_${variant.id}`}
+                                                        name={`bed-type_${variant.roomId}`}
                                                     />
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
-                                                    />
+                                                    <label htmlFor={`bed_double_${variant.id}`}>
+                                                        <p>{variant.bedInfo.doubleBedCount} двоспальне ліжко</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/roomSvg/double-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
                                                 </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
+                                            )}
 
-                            <td className="advantages">
-                                <div className="cols">
-                                    <div className="flex flex-row">
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Сніданок включено</p>
-                                    </div>
-                                    <li className="font-semibold text-black">Вартість не повертається</li>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Безкоштовне скасування</span> до 15
-                                                жовтня 2024 р.</p>
-                                        </div>
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Без передплати</span> – сплачуйте в
-                                                помешканні</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cols">
-                                    <div className="flex flex-row">
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Сніданок включено</p>
-                                    </div>
-                                    <li className="font-semibold text-black">Вартість не повертається</li>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Безкоштовне скасування</span> до 15
-                                                жовтня 2024 р.</p>
-                                        </div>
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Без передплати</span> – сплачуйте в
-                                                помешканні</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td className="price">
-                                <div className="cols">
-                                    <div className="flex flex-row gap-2">
-                                        <p className="new-price">1520<span>₴</span></p>
-                                        <p className="old-price">2200₴</p>
-                                    </div>
-                                    <p className="description">Включає податки та збори</p>
-                                </div>
-                                <div className="cols">
-                                    <div className="flex flex-row gap-2">
-                                        <p className="new-price">1520<span>₴</span></p>
-                                        <p className="old-price">2200₴</p>
-                                    </div>
-                                    <p className="description">Включає податки та збори</p>
-                                </div>
-                            </td>
-
-                            <td className="select-options">
-                                <div className="cols">
-                                    <select>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div className="cols">
-                                    <select>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                            </td>
-
-                            <td className="book">
-                                <button className="btn-book">Забронювати</button>
-                                <p>Миттєве підтвердження</p>
-                            </td>
-                        </tr>
-
-                        <tr className="col-span-2">
-                            <td className="room-type">
-                                <p className="title">Двомісний номер з видом на озеро</p>
-                                <p className="warning">! Лише 3 номери залишилось на цьому сайті!</p>
-                                <div className="features">
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Туалет</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Ванна або душ</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Рушники</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Білизна</p>
-                                    </div>
-                                    <div>
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Вітальня</p>
-                                    </div>
-                                    {/*<p>Телевізор</p>*/}
-                                    {/*<p>Фен</p>*/}
-                                    {/*<p>Робочий стіл</p>*/}
-                                    {/*<p>Опалення</p>*/}
-                                    {/*<p>Шафа або гардероб</p>*/}
-                                </div>
-                            </td>
-
-                            <td className="peoples">
-                                <div className="cols">
-                                    <img
-                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="cols">
-                                    <img
-                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="cols">
-                                    <img
-                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                        alt=""
-                                    />
-                                    <img
-                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                        alt=""
-                                    />
-                                </div>
-                            </td>
-
-                            <td className="bed-type">
-                                <div className="cols">
-                                    <p className="title">Оберіть тип ліжка</p>
-                                    <div className="flex">
-                                        <input
-                                            type="radio"
-                                            id="bed1"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed1">
-                                                <p>1 двоспальне ліжко</p>
-                                                <img
-                                                    src={getPublicResourceUrl("icons/amenitiesSvg/double-bed.svg")}
-                                                    alt=""
-                                                />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="flex ">
-                                        <input
-                                            type="radio"
-                                            id="bed2"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed2">
-                                                <p>2 односпальні ліжка</p>
+                                            {variant.bedInfo.singleBedCount > 0 && (
                                                 <div className="flex">
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
+                                                    <input
+                                                        type="radio"
+                                                        id={`bed_single_${variant.id}`}
+                                                        name={`bed-type_${variant.roomId}`}
                                                     />
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
-                                                    />
+                                                    <label htmlFor={`bed_single_${variant.id}`}>
+                                                        <p>{variant.bedInfo.singleBedCount} односпальні ліжка</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/roomSvg/single-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
                                                 </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cols">
-                                    <p className="title">Оберіть тип ліжка</p>
-                                    <div className="flex">
-                                        <input
-                                            type="radio"
-                                            id="bed1"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed1">
-                                                <p>1 двоспальне ліжко</p>
-                                                <img
-                                                    src={getPublicResourceUrl("icons/amenitiesSvg/double-bed.svg")}
-                                                    alt=""
-                                                />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="flex ">
-                                        <input
-                                            type="radio"
-                                            id="bed2"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed2">
-                                                <p>2 односпальні ліжка</p>
+                                            )}
+
+                                            {variant.bedInfo.extraBedCount > 0 && (
                                                 <div className="flex">
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
+                                                    <input
+                                                        type="radio"
+                                                        id={`bed_extra_${variant.id}`}
+                                                        name={`bed-type_${variant.roomId}`}
                                                     />
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
-                                                    />
+                                                    <label htmlFor={`bed_extra_${variant.id}`}>
+                                                        <p>{variant.bedInfo.extraBedCount} додаткове ліжко</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/roomSvg/extra-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
                                                 </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cols">
-                                    <p className="title">Оберіть тип ліжка</p>
-                                    <div className="flex">
-                                        <input
-                                            type="radio"
-                                            id="bed1"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed1">
-                                                <p>1 двоспальне ліжко</p>
-                                                <img
-                                                    src={getPublicResourceUrl("icons/amenitiesSvg/double-bed.svg")}
-                                                    alt=""
-                                                />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="flex ">
-                                        <input
-                                            type="radio"
-                                            id="bed2"
-                                            name="bed-type"
-                                        />
-                                        <div className="title-svg">
-                                            <label htmlFor="bed2">
-                                                <p>2 односпальні ліжка</p>
+                                            )}
+
+                                            {variant.bedInfo.sofaCount > 0 && (
                                                 <div className="flex">
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
+                                                    <input
+                                                        type="radio"
+                                                        id={`bed_sofa_${variant.id}`}
+                                                        name={`bed-type_${variant.roomId}`}
                                                     />
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/amenitiesSvg/single-bed.svg")}
-                                                        alt=""
-                                                    />
+                                                    <label htmlFor={`bed_sofa_${variant.id}`}>
+                                                        <p>{variant.bedInfo.sofaCount} софа</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/roomSvg/sofa.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
                                                 </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
+                                            )}
 
-                            <td className="advantages">
-                                <div className="cols">
-                                    <div className="flex flex-row">
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Сніданок включено</p>
-                                    </div>
-                                    <li className="font-semibold text-black">Вартість не повертається</li>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Безкоштовне скасування</span> до 15
-                                                жовтня 2024 р.</p>
+                                            {variant.bedInfo.kingsizeBedCount > 0 && (
+                                                <div className="flex">
+                                                    <input
+                                                        type="radio"
+                                                        id={`bed_kingsize_${variant.id}`}
+                                                        name={`bed-type_${variant.roomId}`}
+                                                    />
+                                                    <label htmlFor={`bed_kingsize_${variant.id}`}>
+                                                        <p>{variant.bedInfo.kingsizeBedCount} kingsize ліжко</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/roomSvg/kingsize-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
+                                                </div>
+                                            )}
                                         </div>
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Без передплати</span> – сплачуйте в
-                                                помешканні</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cols">
-                                    <div className="flex flex-row">
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Сніданок включено</p>
-                                    </div>
-                                    <li className="font-semibold text-black">Вартість не повертається</li>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Безкоштовне скасування</span> до 15
-                                                жовтня 2024 р.</p>
-                                        </div>
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Без передплати</span> – сплачуйте в
-                                                помешканні</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cols">
-                                    <div className="flex flex-row">
-                                        <img
-                                            src={getPublicResourceUrl("icons/check.svg")}
-                                            alt=""
-                                        />
-                                        <p>Сніданок включено</p>
-                                    </div>
-                                    <li className="font-semibold text-black">Вартість не повертається</li>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Безкоштовне скасування</span> до 15
-                                                жовтня 2024 р.</p>
-                                        </div>
-                                        <div className="flex flex-row">
-                                            <img
-                                                src={getPublicResourceUrl("icons/check.svg")}
-                                                alt=""
-                                            />
-                                            <p><span className="font-semibold">Без передплати</span> – сплачуйте в
-                                                помешканні</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
+                                    ))}
+                                </td>
 
-                            <td className="price">
-                                <div className="cols">
-                                    <div className="flex flex-row gap-2">
-                                        <p className="new-price">1520<span>₴</span></p>
-                                        <p className="old-price">2200₴</p>
-                                    </div>
-                                    <p className="description">Включає податки та збори</p>
-                                </div>
-                                <div className="cols">
-                                    <div className="flex flex-row gap-2">
-                                        <p className="new-price">1520<span>₴</span></p>
-                                        <p className="old-price">2200₴</p>
-                                    </div>
-                                    <p className="description">Включає податки та збори</p>
-                                </div>
-                                <div className="cols">
-                                    <div className="flex flex-row gap-2">
-                                        <p className="new-price">1520<span>₴</span></p>
-                                        <p className="old-price">2200₴</p>
-                                    </div>
-                                    <p className="description">Включає податки та збори</p>
-                                </div>
-                            </td>
+                                <td className="advantages">
+                                    {room.variants.map(variant => (
+                                        <div className="cols" key={variant.id}>
+                                            {hotelData.breakfast && (
+                                                <div className="flex flex-row">
+                                                    <img src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
+                                                         alt=""/>
+                                                    <p>Сніданок включено</p>
+                                                </div>
+                                            )}
 
-                            <td className="select-options">
-                                <div className="cols">
-                                    <select>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div className="cols">
-                                    <select>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                                <div className="cols">
-                                    <select>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                            </td>
+                                            <p><span>Тип кімнати:</span> {room.roomType.name}</p>
 
-                            <td className="book">
-                                <button className="btn-book">Забронювати</button>
-                                <p>Миттєве підтвердження</p>
-                            </td>
-                        </tr>
+                                            <p><span>Площа:</span> {room.area.toFixed(1)} м²</p>
 
+                                            <p><span>Кількість кімнат:</span> {room.numberOfRooms}</p>
+
+                                            {/*<div className="rental-periods">*/}
+                                            {/*    <p>Періоди оренди:</p>*/}
+                                            {/*    <ul>*/}
+                                            {/*        {room.rentalPeriods.map(period => (*/}
+                                            {/*            <li key={period.id}>{period.name}</li>*/}
+                                            {/*        ))}*/}
+                                            {/*    </ul>*/}
+                                            {/*</div>*/}
+                                        </div>
+                                    ))}
+                                </td>
+
+                                <td className="price">
+                                    {room.variants.map(variant => (
+                                        <div className="cols" key={variant.id}>
+                                            <div className="flex flex-row gap-2">
+                                                <p className="new-price">
+                                                    {variant.discountPrice != null ? variant.discountPrice.toFixed(0) + '₴' : variant.price?.toFixed(0) + '₴'}
+                                                </p>
+                                                {variant.discountPrice != null && variant.price != null && (
+                                                    <p className="old-price">
+                                                        {variant.price.toFixed(0) + '₴'}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <p className="description">Включає податки та збори</p>
+                                        </div>
+                                    ))}
+                                </td>
+
+                                <td className="select-options">
+                                    {room.variants.map(variant => (
+                                        <div className="cols" key={variant.id}>
+                                            <select
+                                                value={selectedQuantities[room.id]?.[variant.id] || 0}
+                                                onChange={(e) => handleSelectChange(room.id, variant.id, parseInt(e.target.value))}
+                                            >
+                                                {[...Array(getRemainingQuantity(room.id) + (selectedQuantities[room.id]?.[variant.id] || 0) + 1)].map((_, idx) => (
+                                                    <option key={idx} value={idx}>{idx}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    ))}
+                                </td>
+
+                                <td className="book">
+                                    <button className="btn-book">Забронювати</button>
+                                    <p>Миттєве підтвердження</p>
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
-
                 </div>
             </div>
 
-            <div className="reviews-content">
+            <div className="reviews-content" id="reviews">
                 <p className="title">Відгуки гостей</p>
 
                 <div className="count">
@@ -801,7 +409,7 @@ const HotelPage = () => {
                     </div>
                     <div className="reviews-count">
                         <p><span>5</span> відгуків</p>
-                        <a href="#reviews">читати відгуки</a>
+                        <a href="#reviews" onClick={handleScroll('reviews')}>читати відгуки</a>
                     </div>
                 </div>
 
@@ -896,12 +504,6 @@ const HotelPage = () => {
                             Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була
                             дуже чистою та дуже добре мебльованою. Ціна була дуже хорошою.
                         </p>
-
-                        <button className="btn-delete">
-                            <img
-                                src={getPublicResourceUrl("account/trash.svg")}
-                                alt=""/>
-                        </button>
                     </div>
                     <div className="review">
                         <div className="author">
@@ -974,7 +576,7 @@ const HotelPage = () => {
                 </button>
             </div>
 
-            <div className="questions-content">
+            <div className="questions-content" id="questions">
                 <div className="title">Найчастіші запитання</div>
 
                 <div className="questions">
@@ -1000,7 +602,6 @@ const HotelPage = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }

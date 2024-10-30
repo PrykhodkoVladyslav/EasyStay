@@ -5,6 +5,7 @@ using EasyStay.Application.MediatR.Rooms.Queries.GetAll;
 using EasyStay.Application.MediatR.Rooms.Queries.GetDetails;
 using EasyStay.Application.MediatR.Rooms.Queries.GetDetailsByRoomVariantId;
 using EasyStay.Application.MediatR.Rooms.Queries.GetPage;
+using EasyStay.Application.MediatR.Rooms.Queries.GetRoomVariantsFreeQuantity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,13 @@ public class RoomsController : BaseApiController {
 		var entity = await Mediator.Send(new GetDetailsByRoomVariantIdQuery() { RoomVariantId = roomVariantId });
 
 		return Ok(entity);
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> GetRoomVariantsFreeQuantityAsync([FromQuery] GetRoomVariantsFreeQuantityQuery command) {
+		var quantity = await Mediator.Send(command);
+
+		return Ok(quantity);
 	}
 
 	[HttpPost]

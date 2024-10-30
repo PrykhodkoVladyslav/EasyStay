@@ -3,12 +3,14 @@ using EasyStay.Application.MediatR.Rooms.Commands.Delete;
 using EasyStay.Application.MediatR.Rooms.Commands.Update;
 using EasyStay.Application.MediatR.Rooms.Queries.GetAll;
 using EasyStay.Application.MediatR.Rooms.Queries.GetDetails;
+using EasyStay.Application.MediatR.Rooms.Queries.GetDetailsByRoomVariantId;
 using EasyStay.Application.MediatR.Rooms.Queries.GetPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyStay.WebApi.Controllers;
 
+#pragma warning disable ASP0023 // Route conflict detected between controller actions
 public class RoomsController : BaseApiController {
 	[HttpGet]
 	public async Task<IActionResult> GetAll() {
@@ -27,6 +29,13 @@ public class RoomsController : BaseApiController {
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetById([FromRoute] long id) {
 		var entity = await Mediator.Send(new GetRoomDetailsQuery() { Id = id });
+
+		return Ok(entity);
+	}
+
+	[HttpGet("{roomVariantId}")]
+	public async Task<IActionResult> GetByRoomVariantId([FromRoute] long roomVariantId) {
+		var entity = await Mediator.Send(new GetDetailsByRoomVariantIdQuery() { RoomVariantId = roomVariantId });
 
 		return Ok(entity);
 	}
@@ -55,3 +64,4 @@ public class RoomsController : BaseApiController {
 		return NoContent();
 	}
 }
+#pragma warning restore ASP0023 // Route conflict detected between controller actions

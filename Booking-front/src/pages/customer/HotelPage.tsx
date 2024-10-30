@@ -3,11 +3,12 @@ import SearchHotelSection from "components/partials/customer/SearchHotelSection.
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const HotelPage = () => {
     const { id } = useParams();
     const { data: hotelData, isLoading, error } = useGetHotelQuery(id);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedQuantities, setSelectedQuantities] = useState<{ [roomId: number]: { [variantId: number]: number } }>({});
 
     if (isLoading) return <p>Завантаження...</p>;
@@ -44,10 +45,11 @@ const HotelPage = () => {
     console.log(hotelData);
 
     const photos = hotelData?.photos || [];
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     return (
         <div className="hotel-page">
-
             <div className="hotel-section">
                 <div className="pages-info">
                     <div className="pages" id="pages">
@@ -135,32 +137,33 @@ const HotelPage = () => {
                     {photos[0] && (
                         <img
                             src={getApiImageUrl(photos[0].name, 800)}
-                            alt="1"
+                            alt=""
                             className="first-photo"
+                            onClick={openModal}
                         />
                     )}
 
                     {/* 4 фото та більше */}
                     <div className="row-photos">
                         {photos.slice(1, 4).map((photo, index) => (
-                            <button key={index + 2}>
+                            <div key={index + 2} onClick={openModal}>
                                 <img
                                     src={getApiImageUrl(photo.name, 800)}
-                                    alt={`${index + 2}`}
+                                    alt=""
                                 />
-                            </button>
+                            </div>
                         ))}
 
                         {photos.length > 4 && (
-                            <button className="photo-more">
+                            <div className="photo-more" onClick={openModal}>
                                 {photos.length > 6 && (
                                     <p>+<span>{photos.length - 6}</span> фото</p>
                                 )}
                                 <img
                                     src={getApiImageUrl(photos[4].name, 800)}
-                                    alt="4-more"
+                                    alt=""
                                 />
-                            </button>
+                            </div>
                         )}
                     </div>
 
@@ -168,16 +171,35 @@ const HotelPage = () => {
                     {photos[5] && (
                         <img
                             src={getApiImageUrl(photos[5].name, 800)}
-                            alt="last"
+                            alt=""
                             className="last-photo"
+                            onClick={openModal}
                         />
                     )}
                 </div>
+                {isModalOpen && (
+                    <div className="modal-overlay" onClick={closeModal}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <button className="close-button" onClick={closeModal}>×</button>
+                            <div className="photo-gallery">
+                                {photos.map((photo, index) => (
+                                    <img
+                                        key={index}
+                                        src={getApiImageUrl(photo.name, 800)}
+                                        alt={`photo-${index}`}
+                                        className="modal-photo"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="search-rooms">
-
-                <SearchHotelSection/>
+                <div className="search">
+                    <SearchHotelSection showCityInput={false} />
+                </div>
 
                 <div className="rooms" id="rooms">
                     <p className="global-title">Номери</p>

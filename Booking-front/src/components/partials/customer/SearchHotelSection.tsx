@@ -29,10 +29,10 @@ export interface ISearchData {
 
 interface ISearchTopSectionProps {
     onSearch?: (data: ISearchData) => void;
-    showCityInput?: boolean;
+    hideCityInput?: boolean;
 }
 
-const SearchHotelSection = ({ props, showCityInput = true }: ISearchTopSectionProps) => {
+const SearchHotelSection = (props: ISearchTopSectionProps) => {
     const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
     const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
@@ -77,12 +77,12 @@ const SearchHotelSection = ({ props, showCityInput = true }: ISearchTopSectionPr
 
     return (
         <div className="search-top-section">
-            {showCityInput && (
+            {!props.hideCityInput && (
                 <div className="block city-block">
                     <p className="title">Куди</p>
                     <input type="text" className="city-input" placeholder="Назва міста"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
+                           value={city}
+                           onChange={(e) => setCity(e.target.value)}
                     />
                 </div>
             )}

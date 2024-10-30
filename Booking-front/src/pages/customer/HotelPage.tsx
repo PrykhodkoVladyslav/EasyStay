@@ -237,7 +237,7 @@ const HotelPage = () => {
 
             <div className="search-rooms">
                 <div className="search">
-                    <SearchHotelSection showCityInput={false} />
+                    <SearchHotelSection hideCityInput={true} />
                 </div>
 
                 <div className="rooms" id="rooms">

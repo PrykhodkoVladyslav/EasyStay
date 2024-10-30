@@ -18,7 +18,7 @@ public class GetRoomDetailsQueryHandler(
 		var vm = await context.Rooms
 			.AsNoTracking()
 			.ProjectTo<RoomVm>(mapper.ConfigurationProvider)
-			.FirstOrDefaultAsync(h => h.Id == request.Id, cancellationToken)
+			.FirstOrDefaultAsync(r => r.Id == request.Id, cancellationToken)
 			?? throw new NotFoundException(nameof(Room), request.Id);
 
 		return vm;

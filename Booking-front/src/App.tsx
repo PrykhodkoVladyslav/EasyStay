@@ -44,16 +44,21 @@ import ResetPasswordPage from "pages/auth/ResetPasswordPage.tsx";
 import CustomerLayout from "components/layouts/CustomerLayout.tsx";
 import HotelsPage from "pages/customer/HotelsPage.tsx";
 import HotelPage from "pages/customer/HotelPage.tsx";
+import BookingPage from "pages/customer/BookingPage.tsx";
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
-                    <Route element={<CustomerLayout />}>
+                <Route element={<CustomerLayout />}>
+                    <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
                         <Route index element={<CustomerHomePage />} />
                         <Route path="hotels" element={<HotelsPage />} />
                         <Route path="hotel/:id" element={<HotelPage />} />
+                    </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
+                        <Route path="booking/:data" element={<BookingPage />} />
                     </Route>
                 </Route>
 

@@ -13,5 +13,18 @@
 .booking-page-main-container {
   padding-top: 42px;
 
+  .booking-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 44px;
 
+    .side-block {
+      min-width: 390px;
+    }
+
+    .center-block {
+      max-width: 920px;
+    }
+  }
 }

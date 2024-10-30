@@ -23,8 +23,9 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        getHotel: builder.query<IHotelDetails[], number>({
+        getHotel: builder.query<IHotelDetails, number>({
             query: (id) => `getById/${id}`,
+            providesTags: ["Hotels"],
         }),
 
         getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({

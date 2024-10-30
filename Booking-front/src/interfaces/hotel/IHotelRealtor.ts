@@ -5,4 +5,5 @@ export default interface IHotelRealtor {
     lastName: string;
     photo: string;
     rating: number;
+    description: string;
 }

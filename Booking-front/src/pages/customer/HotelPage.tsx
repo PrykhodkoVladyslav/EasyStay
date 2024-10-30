@@ -37,6 +37,12 @@ const HotelPage = () => {
         return Math.max(room.quantity - usedQuantity, 0);
     };
 
+    const formatTime = (timeString) => {
+        if (!timeString) return "Invalid time";
+        const [hours, minutes] = timeString.split(":");
+        return `${hours}:${minutes}:00`;
+    };
+
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -96,19 +102,52 @@ const HotelPage = () => {
                             </div>
                         </div>
 
-                        {hotelData.hotelAmenities.length > 0 && (
-                            <div className="amenities" id="info">
-                                {hotelData.hotelAmenities.map((amenity) => (
-                                    <div key={amenity.id} className="amenity">
-                                        <img
-                                            src={getApiImageUrl(amenity.image, 800)}
-                                            alt={amenity.name}
-                                        />
-                                        <p>{amenity.name}</p>
-                                    </div>
-                                ))}
+                        <div className="middle-block">
+                            {hotelData.hotelAmenities.length > 0 && (
+                                <div className="amenities" id="info">
+                                    {hotelData.hotelAmenities.map((amenity) => (
+                                        <div key={amenity.id} className="amenity">
+                                            <img
+                                                src={getApiImageUrl(amenity.image, 800)}
+                                                alt={amenity.name}
+                                            />
+                                            <p>{amenity.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {hotelData.breakfasts.length > 0 && (
+                                <div className="breakfasts">
+                                    <p className="title">Сніданки:</p>
+                                    {hotelData.breakfasts.map((breakfast) => (
+                                        <div>
+                                            <img
+                                                src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
+                                                alt=""
+                                            />
+                                            <p key={breakfast.id}>{breakfast.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {hotelData.languages.length > 0 && (
+                                <div className="languages">
+                                    <p className="title">Мови спілкування:</p>
+                                    <ul>
+                                        {hotelData.languages.map((language) => (
+                                            <li key={language.id}>{language.name}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            <div className="timing-info">
+                                <p><span className="title">Час прибуття: </span>{formatTime(hotelData.arrivalTimeUtcFrom)} - {formatTime(hotelData.arrivalTimeUtcTo)}</p>
+                                <p><span className="title">Час від'їзду: </span>{formatTime(hotelData.departureTimeUtcFrom)} - {formatTime(hotelData.departureTimeUtcTo)}</p>
                             </div>
-                        )}
+                        </div>
 
                         <p className="description" id="description">{hotelData.description}</p>
 

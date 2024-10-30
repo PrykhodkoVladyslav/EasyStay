@@ -32,7 +32,7 @@ interface ISearchTopSectionProps {
     showCityInput?: boolean;
 }
 
-const SearchHotelSection = ({ props, showCityInput = true }: ISearchTopSectionProps) => {
+const SearchHotelSection = ({ onSearch, showCityInput = true }: ISearchTopSectionProps) => {
     const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
     const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
@@ -62,13 +62,13 @@ const SearchHotelSection = ({ props, showCityInput = true }: ISearchTopSectionPr
 
     const isSelectedDates = () => selectedDateFrom !== null && selectedDateTo !== null;
 
-    const onSearch = () => {
+    const onSearchClick = () => {
         const selectedDates = selectedDateFrom && selectedDateTo ? {
             from: selectedDateFrom,
             to: selectedDateTo,
         } : undefined;
 
-        props.onSearch?.({
+        onSearch?.({
             city,
             date: selectedDates,
             adultGuests,
@@ -141,7 +141,7 @@ const SearchHotelSection = ({ props, showCityInput = true }: ISearchTopSectionPr
                 </div>
             </div>
             <div className="find-block">
-                <button className="find-button" onClick={onSearch}>
+                <button className="find-button" onClick={onSearchClick}>
                     <img src={getPublicResourceUrl("icons/magnifying-glass.svg")} alt="Magnifying glass" />
                     <p className="button-title">Шукати</p>
                 </button>

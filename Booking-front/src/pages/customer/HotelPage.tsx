@@ -90,8 +90,6 @@ const HotelPage = () => {
         });
     };
 
-    console.log(hotelData);
-
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });

@@ -62,7 +62,7 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
 
     const isSelectedDates = () => selectedDateFrom !== null && selectedDateTo !== null;
 
-    const onSearch = () => {
+    const onSearchClick = () => {
         const selectedDates = selectedDateFrom && selectedDateTo ? {
             from: selectedDateFrom,
             to: selectedDateTo,
@@ -141,7 +141,7 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
                 </div>
             </div>
             <div className="find-block">
-                <button className="find-button" onClick={onSearch}>
+                <button className="find-button" onClick={onSearchClick}>
                     <img src={getPublicResourceUrl("icons/magnifying-glass.svg")} alt="Magnifying glass" />
                     <p className="button-title">Шукати</p>
                 </button>

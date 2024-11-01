@@ -7,12 +7,13 @@ import { useState } from "react";
 
 const HotelPage = () => {
     const { id } = useParams();
-    const { data: hotelData, isLoading, error } = useGetHotelQuery(id);
+    const { data: hotelData, isLoading, error } = useGetHotelQuery(Number(id));
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedQuantities, setSelectedQuantities] = useState<{ [roomId: number]: { [variantId: number]: number } }>({});
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка при завантаженні даних готелю</p>;
+    if (!hotelData) return null;
 
     const handleSelectChange = (roomId: number, variantId: number, selectedQuantity: number) => {
         setSelectedQuantities((prevSelectedQuantities) => {
@@ -37,7 +38,7 @@ const HotelPage = () => {
         return Math.max(room.quantity - usedQuantity, 0);
     };
 
-    const formatTime = (timeString) => {
+    const formatTime = (timeString: string) => {
         if (!timeString) return "Invalid time";
         const [hours, minutes] = timeString.split(":");
         return `${hours}:${minutes}:00`;
@@ -50,7 +51,7 @@ const HotelPage = () => {
 
     console.log(hotelData);
 
-    const photos = hotelData?.photos || [];
+    const photos: { name: string }[] = hotelData?.photos || [];
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -105,7 +106,7 @@ const HotelPage = () => {
                         <div className="middle-block">
                             {hotelData.hotelAmenities.length > 0 && (
                                 <div className="amenities" id="info">
-                                    {hotelData.hotelAmenities.map((amenity) => (
+                                    {hotelData.hotelAmenities.map(amenity => (
                                         <div key={amenity.id} className="amenity">
                                             <img
                                                 src={getApiImageUrl(amenity.image, 800)}
@@ -120,7 +121,7 @@ const HotelPage = () => {
                             {hotelData.breakfasts.length > 0 && (
                                 <div className="breakfasts">
                                     <p className="title">Сніданки:</p>
-                                    {hotelData.breakfasts.map((breakfast) => (
+                                    {hotelData.breakfasts.map(breakfast => (
                                         <div>
                                             <img
                                                 src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
@@ -136,7 +137,7 @@ const HotelPage = () => {
                                 <div className="languages">
                                     <p className="title">Мови спілкування:</p>
                                     <ul>
-                                        {hotelData.languages.map((language) => (
+                                        {hotelData.languages.map(language => (
                                             <li key={language.id}>{language.name}</li>
                                         ))}
                                     </ul>
@@ -184,7 +185,7 @@ const HotelPage = () => {
 
                     {/* 4 фото та більше */}
                     <div className="row-photos">
-                        {photos.slice(1, 4).map((photo, index) => (
+                        {photos.slice(1, 4).map((photo, index: number) => (
                             <div key={index + 2} onClick={openModal}>
                                 <img
                                     src={getApiImageUrl(photo.name, 800)}
@@ -224,7 +225,7 @@ const HotelPage = () => {
                                 {photos.map((photo, index) => (
                                     <img
                                         key={index}
-                                        src={getApiImageUrl(photo.name, 800)}
+                                        src={getApiImageUrl(photo.name, 1200)}
                                         alt={`photo-${index}`}
                                         className="modal-photo"
                                     />
@@ -390,7 +391,7 @@ const HotelPage = () => {
                                 <td className="advantages">
                                     {room.variants.map(variant => (
                                         <div className="cols" key={variant.id}>
-                                            {hotelData.breakfast && (
+                                            {hotelData.breakfasts && (
                                                 <div className="flex flex-row">
                                                     <img src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
                                                          alt=""/>

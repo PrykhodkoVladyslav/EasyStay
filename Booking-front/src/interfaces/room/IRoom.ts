@@ -15,3 +15,13 @@ export default interface IRoom {
     amenities: IRoomAmenity[];
     variants: IRoomVariant[];
 }
+
+export interface RoomVariantsFreeRequest {
+    id: number;
+    FreePeriod: IFreePeriod;
+}
+
+export interface IFreePeriod {
+    from: string;
+    to: string;
+}

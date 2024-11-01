@@ -19,7 +19,7 @@ const nameOfMonthsInGenitiveCase: Record<number, string> = {
 };
 
 export interface ISearchData {
-    city: string;
+    city?: string;
     date?: {
         from: Date;
         to: Date;

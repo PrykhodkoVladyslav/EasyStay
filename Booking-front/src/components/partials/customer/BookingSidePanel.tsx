@@ -1,10 +1,13 @@
 import "./../../../css/booking-side-panel.scss";
-import { format } from "date-fns";
+import { differenceInDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
+import { IRoomVariantWithQuantity } from "pages/customer/BookingPage.tsx";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 
 export interface IBookingSidePanelProps {
     hotelId: number;
+    selectedRoomVariants: IRoomVariantWithQuantity[];
 
     dateFrom: Date;
     dateTo: Date;
@@ -21,6 +24,16 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
 
     const formattedDateFrom = formatDate(props.dateFrom);
     const formattedDateTo = formatDate(props.dateTo);
+
+    const stayDays = differenceInDays(props.dateTo, props.dateFrom) + 1;
+
+    const sumDiscountPrice = props.selectedRoomVariants
+        .map(r => r.roomVariant.discountPrice ?? r.roomVariant.price)
+        .reduce((a, b) => a + b, 0);
+
+    const sumPrice = props.selectedRoomVariants
+        .map(r => r.roomVariant.price)
+        .reduce((a, b) => a + b, 0);
 
     return (
         <div className="booking-side-panel">
@@ -43,7 +56,7 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
 
                     <div className="booking-total-time-container">
                         <p className="total-time-header">Загальний час перебування:</p>
-                        <p className="total-time-value">{2} ночі</p>
+                        <p className="total-time-value">{stayDays} ночей</p>
                     </div>
                 </div>
 
@@ -52,6 +65,36 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
                 <button className="change-selection-button" onClick={() => navigate(`/hotel/${props.hotelId}`)}>
                     Змінити вибір
                 </button>
+            </div>
+
+            <div className="booking-price-block">
+                <div className="price-details-block price-padding">
+                    <p className="price-header">Деталі ціни</p>
+                    <div className="price-value-block">
+                        <p className="price-value-title">Початкова ціна</p>
+                        <p className="price-value">${Math.floor(sumPrice)}</p>
+                    </div>
+                </div>
+
+                <div className="total-price-block price-padding">
+                    <p className="full-price">${Math.floor(sumPrice)}</p>
+                    <div className="total-price-container">
+                        <p className="total-price-title">Усього</p>
+                        <p className="total-price-value">${Math.floor(sumDiscountPrice)}</p>
+                    </div>
+                    <p className="tax-info-label">Включає податок</p>
+                </div>
+
+                <div className="tax-info-container price-padding">
+                    <p className="tax-info-header">Інформація про ціну</p>
+                    <div className="tax-info-value-container">
+                        <div className="tax-info-title-container">
+                            <img src={getPublicResourceUrl("icons/money/money.svg")} alt="tax-icon" />
+                            <p className="tax-info-title">Податок</p>
+                        </div>
+                        <p className="tax-info-value">$20</p>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ import StageIndicator from "components/partials/customer/StageIndicator.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import { useGetHotelQuery } from "services/hotel.ts";
 import BookingSidePanel from "components/partials/customer/BookingSidePanel.tsx";
+import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
 export interface IBookingPageExternalInformation {
     hotelId: number;
@@ -25,6 +26,16 @@ export interface IBookingPageExternalInformation {
     };
 }
 
+interface IRoomVariantIdWithQuantity {
+    roomVariantId: number;
+    quantity: number;
+}
+
+export interface IRoomVariantWithQuantity {
+    roomVariant: IRoomVariant;
+    quantity: number;
+}
+
 const BookingPage = () => {
     const { data: bookingPageExternalInformation } = useParams();
 
@@ -32,9 +43,28 @@ const BookingPage = () => {
         throw new Error("No data provided");
 
     const externalBookingInfo = JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
-    console.log(externalBookingInfo);
+
+    const selectedRoomVariantIds = externalBookingInfo.bookingInfo.bookingRoomVariants
+        .map(brv => ({
+            roomVariantId: brv.roomVariantId,
+            quantity: brv.quantity,
+        }) as IRoomVariantIdWithQuantity);
 
     const { data: hotel } = useGetHotelQuery(externalBookingInfo.hotelId);
+
+    const selectedRoomVariants = hotel?.rooms
+        ?.map(r => r.variants)
+        ?.flat()
+        ?.filter(
+            rv => selectedRoomVariantIds
+                .map(r => r.roomVariantId)
+                .includes(rv.id),
+        )
+        ?.map(r => ({
+            roomVariant: r,
+            quantity: selectedRoomVariantIds
+                .find(s => s.roomVariantId === r.id)?.quantity ?? new Error("No quantity"),
+        } as IRoomVariantWithQuantity)) ?? [];
 
     // const json = JSON.stringify({
     //     hotelId: 1,
@@ -71,6 +101,7 @@ const BookingPage = () => {
         <div className="booking-info-container">
             {hotel && <BookingSidePanel
                 hotelId={externalBookingInfo.hotelId}
+                selectedRoomVariants={selectedRoomVariants}
                 dateFrom={externalBookingInfo.bookingInfo.dateFrom}
                 dateTo={externalBookingInfo.bookingInfo.dateTo}
                 arrivalTimeUtcFrom={hotel.arrivalTimeUtcFrom}

@@ -6,7 +6,7 @@
   gap: 24px;
 
   .booking-info-block {
-    padding: 24px;
+    padding: 14px 16px;
     border-radius: 22px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
     background: rgb(255, 255, 255);
@@ -103,6 +103,148 @@
       line-height: 100%;
 
       padding: 9px 18px;
+    }
+  }
+
+  .booking-price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+
+    border-radius: 22px;
+    padding: 14px 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+    background: rgb(255, 255, 255);
+
+    .price-padding {
+      padding: 0 16px;
+    }
+
+    .price-details-block {
+      .price-header {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+
+        padding-bottom: 6px;
+      }
+
+      .price-value-block {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .price-value-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+        }
+
+        .price-value {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+      }
+    }
+
+    .total-price-block {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+
+      background: rgb(227, 244, 225);
+      padding: 16px;
+
+      .full-price {
+        color: rgb(249, 50, 50);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+        text-decoration: line-through;
+      }
+
+      .total-price-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+
+        .total-price-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 24px;
+        }
+
+        .total-price-value {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 29px;
+        }
+      }
+
+      .tax-info-label {
+        color: rgb(81, 81, 81);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 12px;
+      }
+    }
+
+    .tax-info-container {
+      .tax-info-header {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+
+        padding-bottom: 6px;
+      }
+
+      .tax-info-value-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+
+        .tax-info-title-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+
+          .tax-info-title {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-nunito), system-ui;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 28px;
+
+            padding-left: 8px;
+          }
+        }
+
+        .tax-info-value {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+      }
     }
   }
 }

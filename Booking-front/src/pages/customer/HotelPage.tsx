@@ -2,11 +2,12 @@ import { useParams } from "react-router-dom";
 import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
-import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
+// import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { useState } from "react";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 import IRoomAmenity from "interfaces/roomAmenity/IRoomAmenity.ts";
+import { differenceInDays } from "date-fns";
 
 const HotelPage = () => {
     const { id } = useParams();
@@ -15,7 +16,7 @@ const HotelPage = () => {
     const [selectedQuantities, setSelectedQuantities] = useState<{ [roomId: number]: { [variantId: number]: number } }>({});
     const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
     const [isRoomsVisible, setIsRoomsVisible] = useState(false);
-    const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
+    // const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
     const [selectedDays, setSelectedDays] = useState(0);
 
     if (isLoading) return <p>Завантаження...</p>;
@@ -53,11 +54,11 @@ const HotelPage = () => {
 
     const onSearch = (topFilters: ISearchData) => {
         const adultGuests = topFilters.adultGuests || 0;
-        const fromDate = new Date(topFilters.date.from);
-        const toDate = new Date(topFilters.date.to);
+        const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
+        const toDate = topFilters.date?.to ? new Date(topFilters.date.to) : new Date();
 
         if (topFilters.date?.from && topFilters.date?.to) {
-            setSelectedDays((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
+            setSelectedDays(differenceInDays(toDate, fromDate));
         }
         const matchedRooms = hotelData.rooms.filter(room =>
             room.variants.some((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests)
@@ -69,28 +70,24 @@ const HotelPage = () => {
         setFilteredRooms(matchedRooms);
         setIsRoomsVisible(true);
 
-        matchedRooms.forEach(room => {
-            room.variants.forEach(variant => {
-                const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
-                    id: variant.id,
-                    FreePeriod: {
-                        from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : '',
-                        to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : '',
-                    },
-                });
-                console.log(quantityData);
-
-                if (quantityData) {
-                    setQuantities(prevQuantities => ({
-                        ...prevQuantities,
-                        [variant.id]: quantityData
-                    }));
-                }
-            });
-        });
+        // const matchedRooms1 = hotelData.rooms.forEach(room => {
+        //         const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
+        //             id: room.id,
+        //             FreePeriod: {
+        //                 from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : '',
+        //                 to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : '',
+        //             },
+        //         });
+        //         console.log(quantityData);
+        //
+        //         if (quantityData) {
+        //             setQuantities(prevQuantities => ({
+        //                 ...prevQuantities,
+        //                 [room.id]: quantityData
+        //             }));
+        //         }
+        // });
     };
-
-    console.log(hotelData);
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -308,7 +305,7 @@ const HotelPage = () => {
                                 <tr key={room.id}>
                                     <td className="room-type">
                                         <p className="title">{room.name}</p>
-                                        <p className="rooms-left">! Лише {quantities[room.id] ?? room.quantity} залишилось на цьому сайті!</p>
+                                        <p className="rooms-left">! Лише {/*quantities[room.id] ??*/ room.quantity} залишилось на цьому сайті!</p>
                                         <div className="features">
                                             {room.amenities.map((amenity: IRoomAmenity) => (
                                                 <div key={amenity.id}>

@@ -1,0 +1,108 @@
+.booking-side-panel {
+  min-width: 390px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+
+  .booking-info-block {
+    padding: 24px;
+    border-radius: 22px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+    background: rgb(255, 255, 255);
+
+    .booking-info-top {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 22px;
+
+      .booking-info-header {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+
+      .booking-info-dates {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        gap: 20px;
+
+        .date-container {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+
+          .date-header {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-nunito), system-ui;
+            font-size: 14px;
+            font-weight: 500;
+          }
+
+          .date-value {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+
+            padding: 6px 0 4px 0;
+          }
+
+          .time-value {
+            color: rgb(165, 165, 165);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 15px;
+          }
+        }
+
+        .dates-separator {
+          border: 1px solid rgba(225, 225, 225, 0.64);
+        }
+      }
+
+      .booking-total-time-container {
+        .total-time-header {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .total-time-value {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 16px;
+          font-weight: 600;
+
+          padding-top: 6px;
+        }
+      }
+    }
+
+    .vertical-separator {
+      border: 1px solid rgb(240, 240, 240);
+
+      margin: 18px 0;
+    }
+
+    .change-selection-button {
+      border-radius: 14px;
+      background: rgb(63, 82, 60);
+
+      color: rgb(255, 255, 255);
+      font-family: var(--font-nunito), system-ui;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 100%;
+
+      padding: 9px 18px;
+    }
+  }
+}

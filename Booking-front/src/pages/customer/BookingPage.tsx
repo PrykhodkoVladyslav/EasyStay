@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import "./../../css/booking-page.scss";
 import StageIndicator from "components/partials/customer/StageIndicator.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import { useGetHotelQuery } from "services/hotel.ts";
+import BookingSidePanel from "components/partials/customer/BookingSidePanel.tsx";
 
 export interface IBookingPageExternalInformation {
     hotelId: number;
@@ -29,8 +31,10 @@ const BookingPage = () => {
     if (!bookingPageExternalInformation)
         throw new Error("No data provided");
 
-    const data = JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
-    console.log(data);
+    const externalBookingInfo = JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
+    console.log(externalBookingInfo);
+
+    const { data: hotel } = useGetHotelQuery(externalBookingInfo.hotelId);
 
     // const json = JSON.stringify({
     //     hotelId: 1,
@@ -65,12 +69,15 @@ const BookingPage = () => {
         <VerticalPad heightPx={46} />
 
         <div className="booking-info-container">
-            <div className="side-block">
-                <p>asdasd</p>
-            </div>
+            {hotel && <BookingSidePanel
+                hotelId={externalBookingInfo.hotelId}
+                dateFrom={externalBookingInfo.bookingInfo.dateFrom}
+                dateTo={externalBookingInfo.bookingInfo.dateTo}
+                arrivalTimeUtcFrom={hotel.arrivalTimeUtcFrom}
+                departureTimeUtcFrom={hotel.departureTimeUtcFrom}
+            />}
             <div className="center-block">
-                <p>asdasddasd</p>
-
+                <p>Center block</p>
             </div>
         </div>
     </div>;

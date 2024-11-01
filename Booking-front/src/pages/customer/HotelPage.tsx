@@ -16,6 +16,7 @@ const HotelPage = () => {
     const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
     const [isRoomsVisible, setIsRoomsVisible] = useState(false);
     const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
+    const [selectedDays, setSelectedDays] = useState(0);
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка при завантаженні даних готелю</p>;
@@ -45,13 +46,19 @@ const HotelPage = () => {
     };
 
     const formatTime = (timeString: string) => {
-        if (!timeString) return "Invalid time";
+        if (!timeString) return "Невірний час";
         const [hours, minutes] = timeString.split(":");
         return `${hours}:${minutes}:00`;
     };
 
     const onSearch = (topFilters: ISearchData) => {
         const adultGuests = topFilters.adultGuests || 0;
+        const fromDate = new Date(topFilters.date.from);
+        const toDate = new Date(topFilters.date.to);
+
+        if (topFilters.date?.from && topFilters.date?.to) {
+            setSelectedDays((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
+        }
         const matchedRooms = hotelData.rooms.filter(room =>
             room.variants.some((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests)
         ).map(room => ({
@@ -83,6 +90,8 @@ const HotelPage = () => {
         });
     };
 
+    console.log(hotelData);
+
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -97,7 +106,7 @@ const HotelPage = () => {
             <div className="hotel-section">
                 <div className="pages-info">
                     <div className="pages" id="pages">
-                        <a href="#rooms" onClick={handleScroll('rooms')}>Типи номерів</a>
+                        <a href="#search" onClick={handleScroll('search')}>Типи номерів</a>
                         <a href="#reviews" onClick={handleScroll('reviews')}>Відгуки</a>
                         <a href="#questions" onClick={handleScroll('questions')}>Питання</a>
                         <a href="#pages" onClick={handleScroll('pages')}>Зручності</a>
@@ -274,12 +283,12 @@ const HotelPage = () => {
             </div>
 
             <div className="search-rooms">
-                <div className="search">
+                <div className="search" id="search">
                     <SearchHotelSection onSearch={onSearch} showCityInput={false} />
                 </div>
 
                 {isRoomsVisible && (
-                    <div className="rooms" id="rooms">
+                    <div className="rooms">
                         <p className="global-title">Номери</p>
                         <table className="room-table">
                             <thead>
@@ -459,21 +468,34 @@ const HotelPage = () => {
                                     </td>
 
                                     <td className="price">
-                                        {room.variants.map((variant: IRoomVariant) => (
-                                            <div className="cols" key={variant.id}>
-                                                <div className="flex flex-row gap-2 flex-wrap">
-                                                    <p className="new-price" title="Нова ціна">
-                                                        {variant.discountPrice != null ? variant.discountPrice.toFixed(0) + '₴' : variant.price?.toFixed(0) + '₴'}
-                                                    </p>
-                                                    {variant.discountPrice != null && variant.price != null && (
-                                                        <p className="old-price" title="Стара ціна">
-                                                            {variant.price.toFixed(0) + '₴'}
-                                                        </p>
-                                                    )}
+                                        {room.variants.map((variant: IRoomVariant) => {
+                                            const discountPrice = variant.price != null ? variant.price : variant.discountPrice;
+                                            const basePrice = variant.discountPrice != null ? variant.discountPrice : variant.price;
+                                            const totalBasePrice = basePrice != null ? basePrice * selectedDays : 0;
+                                            const totalDiscountPrice = discountPrice != null ? discountPrice * selectedDays : 0;
+
+                                            return (
+                                                <div className="cols" key={variant.id}>
+                                                    <div className="flex flex-row gap-2 flex-wrap">
+                                                        {selectedDays === 0 ? (
+                                                            <p className="new-price text-red-500">Виберіть дати</p>
+                                                        ) : (
+                                                            <>
+                                                                <p className="new-price" title="Нова ціна">
+                                                                    {totalBasePrice.toFixed(0) + '$'}
+                                                                </p>
+                                                                {variant.discountPrice != null && (
+                                                                    <p className="old-price" title="Стара ціна">
+                                                                        {totalDiscountPrice.toFixed(0) + '$'}
+                                                                    </p>
+                                                                )}
+                                                                <p className="description">Включає податки та збори</p>
+                                                            </>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <p className="description">Включає податки та збори</p>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </td>
 
                                     <td className="select-options">

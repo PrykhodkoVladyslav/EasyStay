@@ -1,5 +1,5 @@
 import "./../../../css/booking-side-panel.scss";
-import { differenceInDays, format } from "date-fns";
+import { addDays, differenceInDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { IRoomVariantWithQuantity } from "pages/customer/BookingPage.tsx";
@@ -35,9 +35,12 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
         .map(r => r.roomVariant.price)
         .reduce((a, b) => a + b, 0);
 
+    const dayBeforeBooking = addDays(props.dateFrom, -1);
+    const formattedDayBeforeBooking = format(dayBeforeBooking, "d MMM", { locale: uk });
+
     return (
         <div className="booking-side-panel">
-            <div className="booking-info-block">
+            <div className="booking-info-block booking-side-block">
                 <div className="booking-info-top">
                     <p className="booking-info-header">Інформація про ваше бронювання</p>
                     <div className="booking-info-dates">
@@ -67,18 +70,18 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
                 </button>
             </div>
 
-            <div className="booking-price-block">
+            <div className="booking-price-block booking-side-block">
                 <div className="price-details-block price-padding">
                     <p className="price-header">Деталі ціни</p>
-                    <div className="price-value-block">
+                    <div className="price-value-block sides-container">
                         <p className="price-value-title">Початкова ціна</p>
                         <p className="price-value">${Math.floor(sumPrice)}</p>
                     </div>
                 </div>
 
                 <div className="total-price-block price-padding">
-                    <p className="full-price">${Math.floor(sumPrice)}</p>
-                    <div className="total-price-container">
+                    {sumDiscountPrice !== sumPrice && <p className="full-price">${Math.floor(sumPrice)}</p>}
+                    <div className="total-price-container sides-container">
                         <p className="total-price-title">Усього</p>
                         <p className="total-price-value">${Math.floor(sumDiscountPrice)}</p>
                     </div>
@@ -94,6 +97,16 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
                         </div>
                         <p className="tax-info-value">$20</p>
                     </div>
+                </div>
+            </div>
+
+            <div className="cancellation-info-block booking-side-block">
+                <p className="cancellation-header">Яка вартість скасування?</p>
+                <p className="cancellation-message">Безкоштовно скасування до {formattedDayBeforeBooking}</p>
+
+                <div className="cancellation-date-price sides-container">
+                    <p>З 00:00, {formattedDayBeforeBooking}</p>
+                    <p>${Math.floor(sumDiscountPrice)}</p>
                 </div>
             </div>
         </div>

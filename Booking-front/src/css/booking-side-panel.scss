@@ -5,11 +5,20 @@
   align-items: stretch;
   gap: 24px;
 
-  .booking-info-block {
-    padding: 14px 16px;
+  .booking-side-block {
     border-radius: 22px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
     background: rgb(255, 255, 255);
+  }
+
+  .sides-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .booking-info-block {
+    padding: 14px 16px;
 
     .booking-info-top {
       display: flex;
@@ -112,10 +121,7 @@
     align-items: stretch;
     gap: 18px;
 
-    border-radius: 22px;
     padding: 14px 0;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
-    background: rgb(255, 255, 255);
 
     .price-padding {
       padding: 0 16px;
@@ -133,10 +139,6 @@
       }
 
       .price-value-block {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
         .price-value-title {
           color: rgb(0, 0, 0);
           font-family: var(--font-nunito), system-ui;
@@ -173,9 +175,6 @@
       }
 
       .total-price-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
         width: 100%;
 
         .total-price-title {
@@ -245,6 +244,38 @@
           line-height: 20px;
         }
       }
+    }
+  }
+
+  .cancellation-info-block {
+    padding: 14px 16px;
+
+    .cancellation-header {
+      color: rgb(0, 0, 0);
+      font-family: var(--font-montserrat), system-ui;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+
+      padding-bottom: 4px;
+    }
+
+    .cancellation-message {
+      color: rgb(0, 130, 53);
+      font-family: var(--font-nunito), system-ui;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 28px;
+
+      padding-bottom: 10px;
+    }
+
+    .cancellation-date-price {
+      color: rgb(0, 0, 0);
+      font-family: var(--font-nunito), system-ui;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 28px;
     }
   }
 }

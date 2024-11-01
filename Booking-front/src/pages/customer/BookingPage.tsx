@@ -5,6 +5,7 @@ import VerticalPad from "components/ui/VerticalPad.tsx";
 import { useGetHotelQuery } from "services/hotel.ts";
 import BookingSidePanel from "components/partials/customer/BookingSidePanel.tsx";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
+import { useEffect, useState } from "react";
 
 export interface IBookingPageExternalInformation {
     hotelId: number;
@@ -38,33 +39,36 @@ export interface IRoomVariantWithQuantity {
 
 const BookingPage = () => {
     const { data: bookingPageExternalInformation } = useParams();
-
     if (!bookingPageExternalInformation)
         throw new Error("No data provided");
 
-    const externalBookingInfo = JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
+    const [selectedRoomVariants, setSelectedRoomVariants] = useState<IRoomVariantWithQuantity[]>([]);
 
-    const selectedRoomVariantIds = externalBookingInfo.bookingInfo.bookingRoomVariants
-        .map(brv => ({
-            roomVariantId: brv.roomVariantId,
-            quantity: brv.quantity,
-        }) as IRoomVariantIdWithQuantity);
+    const externalBookingInfo = JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
 
     const { data: hotel } = useGetHotelQuery(externalBookingInfo.hotelId);
 
-    const selectedRoomVariants = hotel?.rooms
-        ?.map(r => r.variants)
-        ?.flat()
-        ?.filter(
-            rv => selectedRoomVariantIds
-                .map(r => r.roomVariantId)
-                .includes(rv.id),
-        )
-        ?.map(r => ({
-            roomVariant: r,
-            quantity: selectedRoomVariantIds
-                .find(s => s.roomVariantId === r.id)?.quantity ?? new Error("No quantity"),
-        } as IRoomVariantWithQuantity)) ?? [];
+    useEffect(() => {
+        const selectedRoomVariantIds = externalBookingInfo.bookingInfo.bookingRoomVariants
+            .map(brv => ({
+                roomVariantId: brv.roomVariantId,
+                quantity: brv.quantity,
+            }) as IRoomVariantIdWithQuantity);
+
+        setSelectedRoomVariants(hotel?.rooms
+            ?.map(r => r.variants)
+            ?.flat()
+            ?.filter(
+                rv => selectedRoomVariantIds
+                    .map(r => r.roomVariantId)
+                    .includes(rv.id),
+            )
+            ?.map(r => ({
+                roomVariant: r,
+                quantity: selectedRoomVariantIds
+                    .find(s => s.roomVariantId === r.id)?.quantity ?? new Error("No quantity"),
+            } as IRoomVariantWithQuantity)) ?? []);
+    }, [externalBookingInfo.bookingInfo.bookingRoomVariants, hotel]);
 
     // const json = JSON.stringify({
     //     hotelId: 1,
@@ -111,6 +115,8 @@ const BookingPage = () => {
                 <p>Center block</p>
             </div>
         </div>
+
+        <VerticalPad heightPx={20} />
     </div>;
 };
 

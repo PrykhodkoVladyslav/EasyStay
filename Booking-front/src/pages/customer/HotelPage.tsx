@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
-// import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
+import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { useState } from "react";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
@@ -16,7 +16,7 @@ const HotelPage = () => {
     const [selectedQuantities, setSelectedQuantities] = useState<{ [roomId: number]: { [variantId: number]: number } }>({});
     const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
     const [isRoomsVisible, setIsRoomsVisible] = useState(false);
-    // const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
+    const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
     const [selectedDays, setSelectedDays] = useState(0);
 
     if (isLoading) return <p>Завантаження...</p>;
@@ -70,23 +70,25 @@ const HotelPage = () => {
         setFilteredRooms(matchedRooms);
         setIsRoomsVisible(true);
 
-        // const matchedRooms1 = hotelData.rooms.forEach(room => {
-        //         const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
-        //             id: room.id,
-        //             FreePeriod: {
-        //                 from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : '',
-        //                 to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : '',
-        //             },
-        //         });
-        //         console.log(quantityData);
-        //
-        //         if (quantityData) {
-        //             setQuantities(prevQuantities => ({
-        //                 ...prevQuantities,
-        //                 [room.id]: quantityData
-        //             }));
-        //         }
-        // });
+        const newQuantities: { [roomId: number]: number } = {};
+        matchedRooms.forEach(room => {
+            const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
+                id: room.id,
+                FreePeriod: {
+                    from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : '',
+                    to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : '',
+                },
+            });
+
+            if (quantityData) {
+                newQuantities[room.id] = quantityData;
+            }
+        });
+
+        setQuantities(prevQuantities => ({
+            ...prevQuantities,
+            ...newQuantities,
+        }));
     };
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -305,7 +307,7 @@ const HotelPage = () => {
                                 <tr key={room.id}>
                                     <td className="room-type">
                                         <p className="title">{room.name}</p>
-                                        <p className="rooms-left">! Лише {/*quantities[room.id] ??*/ room.quantity} залишилось на цьому сайті!</p>
+                                        <p className="rooms-left">! Лише {quantities[room.id] ?? room.quantity} залишилось на цьому сайті!</p>
                                         <div className="features">
                                             {room.amenities.map((amenity: IRoomAmenity) => (
                                                 <div key={amenity.id}>

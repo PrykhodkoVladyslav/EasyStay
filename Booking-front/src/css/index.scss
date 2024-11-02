@@ -145,6 +145,7 @@
       }
 
       .user-section {
+        position: relative;
         display: flex;
         align-items: center;
         gap: 28px;
@@ -2057,45 +2058,42 @@
   height: auto;
   //height: 1500px;
   margin: 0 auto 92px;
-  padding: 29px 100px 0;
 
   header {
     height: 74px;
     width: 100%;
-    max-width: 1720px;
-    min-width: 1035px;
-    margin-bottom: 34px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 5px;
+    padding: 30px 100px 0 100px;
 
     .logo {
       width: 183px;
-      //max-width: none;
-      //min-width: calc(0.6 * 183px);
-      height: 73.82px;
+      height: 74px;
+      min-width: 74px;
     }
 
     .center-section {
-      height: 45px;
+      height: 34px;
       display: flex;
-      gap: 39px;
-      font-size: 20px;
-      line-height: 27px;
+      font-size: 16px;
+      line-height: 22px;
       font-family: var(--font-primary), system-ui;
 
       .pages {
         white-space: nowrap;
         font-weight: 600;
+        margin: 0 20px;
       }
 
       .active {
-        padding: 9px 26px;
+        margin: 0 -6px;
+        padding: 6px 20px;
         border-radius: 14px;
         color: white;
         background: var(--color-primary);
-        font-weight: 800;
+        font-weight: 700;
       }
     }
 
@@ -2183,6 +2181,7 @@
       }
 
       .user-section {
+        position: relative;
         display: flex;
         align-items: center;
         gap: 28px;
@@ -2195,10 +2194,17 @@
     }
   }
 
+  .main {
+    flex: 1;
+    padding: 0 100px;
+  }
+
   // Бічна панель
   .body-container {
     display: flex;
+    padding: 38px 100px 0;
     gap: 2.5vw;
+    flex: 1;
 
     // Ліва постійна частина профілю і вкладок
     .left-side {
@@ -2311,7 +2317,6 @@
 
         // Список готелів
         .hotels-container {
-          min-height: 584px;
           display: flex;
           flex-direction: column;
           align-items: start;
@@ -2342,7 +2347,6 @@
           }
 
           .hotel {
-            width: 413px;
             height: 453px;
             border-radius: var(--border-radius);
             background: white;
@@ -2352,7 +2356,8 @@
               position: relative;
 
               .image {
-                width: 413px;
+                width: 100%;
+                max-width: 413px;
                 height: 241px;
                 object-fit: cover;
                 border-radius: var(--border-radius);
@@ -3868,6 +3873,65 @@
   }
 }
 
+.profile-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: flex-end; /* Aligns modal to the right */
+  align-items: flex-start; /* Aligns modal to the top */
+  z-index: 1; /* Ensure it sits above other elements */
+
+
+}
+
+.profile-modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  max-width: 200px;
+  top: 30px;
+  right: 12px;
+  z-index: 1;
+  border: 2px solid rgba(63, 82, 60, 0.6);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 12px 0 12px 12px;
+  padding: 8px 0;
+  opacity: 0;
+  animation: fade-in 0.2s forwards;
+  backdrop-filter: blur(2px);
+
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, 0.8);
+    font-family: var(--font-primary), system-ui;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  button:hover {
+    font-size: 16px;
+    font-weight: 800;
+    animation:  0.3s ease;
+  }
+}
 
 //HOME PAGE CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 /*Discounts component!!!!!!!!!*/

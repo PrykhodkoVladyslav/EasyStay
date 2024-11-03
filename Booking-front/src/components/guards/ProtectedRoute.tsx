@@ -12,10 +12,12 @@ const ProtectedRoute = ({ allowedRoles }: { allowedRoles: string[] }) => {
     const role = user
         ? user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
         : "Unauthorized";
-    
-    if ((!isValidToken(token) && role !== "Unauthorized") || !allowedRoles.includes(role!)) {
+
+    if (!isValidToken(token) && role === "Unauthorized" && !allowedRoles.includes(role!))
+        return <Navigate to={"/auth/login"} state={{ from: location }} replace />;
+
+    if ((!isValidToken(token) && role !== "Unauthorized") || !allowedRoles.includes(role!))
         return <Navigate to={userLocation} state={{ from: location }} replace />;
-    }
 
     return <Outlet />;
 };

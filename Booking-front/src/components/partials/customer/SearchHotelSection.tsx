@@ -19,7 +19,7 @@ const nameOfMonthsInGenitiveCase: Record<number, string> = {
 };
 
 export interface ISearchData {
-    city?: string;
+    city: string;
     date?: {
         from: Date;
         to: Date;
@@ -29,10 +29,10 @@ export interface ISearchData {
 
 interface ISearchTopSectionProps {
     onSearch?: (data: ISearchData) => void;
-    showCityInput?: boolean;
+    hideCityInput?: boolean;
 }
 
-const SearchHotelSection = ({ onSearch, showCityInput = true }: ISearchTopSectionProps) => {
+const SearchHotelSection = (props: ISearchTopSectionProps) => {
     const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
     const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
@@ -68,7 +68,7 @@ const SearchHotelSection = ({ onSearch, showCityInput = true }: ISearchTopSectio
             to: selectedDateTo,
         } : undefined;
 
-        onSearch?.({
+        props.onSearch?.({
             city,
             date: selectedDates,
             adultGuests,
@@ -77,12 +77,12 @@ const SearchHotelSection = ({ onSearch, showCityInput = true }: ISearchTopSectio
 
     return (
         <div className="search-top-section">
-            {showCityInput && (
+            {!props.hideCityInput && (
                 <div className="block city-block">
                     <p className="title">Куди</p>
                     <input type="text" className="city-input" placeholder="Назва міста"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
+                           value={city}
+                           onChange={(e) => setCity(e.target.value)}
                     />
                 </div>
             )}

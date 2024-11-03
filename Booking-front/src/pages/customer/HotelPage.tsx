@@ -13,7 +13,9 @@ const HotelPage = () => {
     const { id } = useParams();
     const { data: hotelData, isLoading, error } = useGetHotelQuery(Number(id));
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedQuantities, setSelectedQuantities] = useState<{ [roomId: number]: { [variantId: number]: number } }>({});
+    const [selectedQuantities, setSelectedQuantities] = useState<{
+        [roomId: number]: { [variantId: number]: number }
+    }>({});
     const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
     const [isRoomsVisible, setIsRoomsVisible] = useState(false);
     const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
@@ -61,7 +63,7 @@ const HotelPage = () => {
             setSelectedDays(differenceInDays(toDate, fromDate));
         }
         const matchedRooms = hotelData.rooms.filter(room =>
-            room.variants.some((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests)
+            room.variants.some((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests),
         ).map(room => ({
             ...room,
             variants: room.variants.filter((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests),
@@ -72,28 +74,29 @@ const HotelPage = () => {
 
         const newQuantities: { [roomId: number]: number } = {};
         matchedRooms.forEach(room => {
-            const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
-                id: room.id,
-                FreePeriod: {
-                    from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : '',
-                    to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : '',
-                },
+            room.variants.forEach(variant => {
+                const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
+                    id: variant.id,
+                    FreePeriod: {
+                        from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : "",
+                        to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : "",
+                    },
+                });
+                console.log(quantityData);
+
+                if (quantityData) {
+                    setQuantities(prevQuantities => ({
+                        ...prevQuantities,
+                        [variant.id]: quantityData,
+                    }));
+                }
             });
-
-            if (quantityData) {
-                newQuantities[room.id] = quantityData;
-            }
         });
-
-        setQuantities(prevQuantities => ({
-            ...prevQuantities,
-            ...newQuantities,
-        }));
     };
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     };
 
     const photos: { name: string }[] = hotelData?.photos || [];
@@ -105,11 +108,11 @@ const HotelPage = () => {
             <div className="hotel-section">
                 <div className="pages-info">
                     <div className="pages" id="pages">
-                        <a href="#search" onClick={handleScroll('search')}>Типи номерів</a>
-                        <a href="#reviews" onClick={handleScroll('reviews')}>Відгуки</a>
-                        <a href="#questions" onClick={handleScroll('questions')}>Питання</a>
-                        <a href="#pages" onClick={handleScroll('pages')}>Зручності</a>
-                        <a href="#info" onClick={handleScroll('info')}>Інформація</a>
+                        <a href="#search" onClick={handleScroll("search")}>Типи номерів</a>
+                        <a href="#reviews" onClick={handleScroll("reviews")}>Відгуки</a>
+                        <a href="#questions" onClick={handleScroll("questions")}>Питання</a>
+                        <a href="#pages" onClick={handleScroll("pages")}>Зручності</a>
+                        <a href="#info" onClick={handleScroll("info")}>Інформація</a>
                     </div>
 
                     <div className="hotel-info">
@@ -190,8 +193,12 @@ const HotelPage = () => {
                             )}
 
                             <div className="timing-info">
-                                <p><span className="title">Час прибуття: </span>{formatTime(hotelData.arrivalTimeUtcFrom)} - {formatTime(hotelData.arrivalTimeUtcTo)}</p>
-                                <p><span className="title">Час від'їзду: </span>{formatTime(hotelData.departureTimeUtcFrom)} - {formatTime(hotelData.departureTimeUtcTo)}</p>
+                                <p><span
+                                    className="title">Час прибуття: </span>{formatTime(hotelData.arrivalTimeUtcFrom)} - {formatTime(hotelData.arrivalTimeUtcTo)}
+                                </p>
+                                <p><span
+                                    className="title">Час від'їзду: </span>{formatTime(hotelData.departureTimeUtcFrom)} - {formatTime(hotelData.departureTimeUtcTo)}
+                                </p>
                             </div>
                         </div>
 
@@ -283,7 +290,7 @@ const HotelPage = () => {
 
             <div className="search-rooms">
                 <div className="search" id="search">
-                    <SearchHotelSection onSearch={onSearch} showCityInput={false} />
+                    <SearchHotelSection onSearch={onSearch} hideCityInput={true} />
                 </div>
 
                 {isRoomsVisible && (
@@ -307,11 +314,12 @@ const HotelPage = () => {
                                 <tr key={room.id}>
                                     <td className="room-type">
                                         <p className="title">{room.name}</p>
-                                        <p className="rooms-left">! Лише {quantities[room.id] ?? room.quantity} залишилось на цьому сайті!</p>
+                                        <p className="rooms-left">!
+                                            Лише {quantities[room.id] ?? room.quantity} залишилось на цьому сайті!</p>
                                         <div className="features">
                                             {room.amenities.map((amenity: IRoomAmenity) => (
                                                 <div key={amenity.id}>
-                                                    <img src={getPublicResourceUrl("icons/check.svg")} alt=""/>
+                                                    <img src={getPublicResourceUrl("icons/check.svg")} alt="" />
                                                     <p>{amenity.name}</p>
                                                 </div>
                                             ))}
@@ -322,7 +330,7 @@ const HotelPage = () => {
                                         {room.variants.map((variant: IRoomVariant) => (
                                             <div className="cols" key={variant.id}>
                                                 <div className="flex flex-wrap">
-                                                    {Array.from({length: variant.guestInfo.adultCount}).map((_, idx) => (
+                                                    {Array.from({ length: variant.guestInfo.adultCount }).map((_, idx) => (
                                                         <img
                                                             key={`adult-${idx}`}
                                                             src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
@@ -330,7 +338,7 @@ const HotelPage = () => {
                                                             title="Дорослий"
                                                         />
                                                     ))}
-                                                    {Array.from({length: variant.guestInfo.childCount}).map((_, idx) => (
+                                                    {Array.from({ length: variant.guestInfo.childCount }).map((_, idx) => (
                                                         <img
                                                             key={`child-${idx}`}
                                                             src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
@@ -443,7 +451,7 @@ const HotelPage = () => {
                                                 {hotelData.breakfasts && (
                                                     <div className="flex flex-row">
                                                         <img src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
-                                                             alt=""/>
+                                                             alt="" />
                                                         <p>Сніданок включено</p>
                                                     </div>
                                                 )}
@@ -481,11 +489,11 @@ const HotelPage = () => {
                                                         ) : (
                                                             <>
                                                                 <p className="new-price" title="Нова ціна">
-                                                                    {totalBasePrice.toFixed(0) + '$'}
+                                                                    {totalBasePrice.toFixed(0) + "$"}
                                                                 </p>
                                                                 {variant.discountPrice != null && (
                                                                     <p className="old-price" title="Стара ціна">
-                                                                        {totalDiscountPrice.toFixed(0) + '$'}
+                                                                        {totalDiscountPrice.toFixed(0) + "$"}
                                                                     </p>
                                                                 )}
                                                                 <p className="description">Включає податки та збори</p>
@@ -534,7 +542,7 @@ const HotelPage = () => {
                     </div>
                     <div className="reviews-count">
                         <p><span>5</span> відгуків</p>
-                        <a href="#reviews" onClick={handleScroll('reviews')}>читати відгуки</a>
+                        <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
                     </div>
                 </div>
 
@@ -606,7 +614,7 @@ const HotelPage = () => {
                         <div className="author">
                             <div className="image">
                                 <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
+                                    src={getPublicResourceUrl("account/no_user_photo.png")}
                                     alt="realtor name"
                                 />
                             </div>
@@ -634,7 +642,7 @@ const HotelPage = () => {
                         <div className="author">
                             <div className="image">
                                 <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
+                                    src={getPublicResourceUrl("account/no_user_photo.png")}
                                     alt="realtor name"
                                 />
                             </div>
@@ -668,7 +676,7 @@ const HotelPage = () => {
                         <div className="author">
                             <div className="image">
                                 <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
+                                    src={getPublicResourceUrl("account/no_user_photo.png")}
                                     alt="realtor name"
                                 />
                             </div>
@@ -721,7 +729,7 @@ const HotelPage = () => {
                         <p className="question-title">Вас цікавить інше питання?</p>
                         <p className="question-subtitle">У нас є миттєва відповідь на найбільш поширені запитання</p>
                         <div className="w-full relative">
-                            <input type="text" placeholder="Поставте запитання"/>
+                            <input type="text" placeholder="Поставте запитання" />
                             <button>Надіслати</button>
                         </div>
                     </div>
@@ -729,6 +737,6 @@ const HotelPage = () => {
             </div>
         </div>
     );
-}
+};
 
 export default HotelPage;

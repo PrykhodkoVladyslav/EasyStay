@@ -18,8 +18,15 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        getHotelsPage: builder.query<IPage<IHotel>, IHotelsPageQuery>({
-            query: (query) => `GetPage?${toQueryFromIHotelsPageQuery(query)}`,
+        getHotelsPage: builder.query<IPage<IHotel>, IHotelsPageQuery | undefined>({
+            query: (query) => {
+                const baseQuery = "GetPage";
+
+                if (!query)
+                    return baseQuery;
+
+                return `${baseQuery}?${toQueryFromIHotelsPageQuery(query)}`;
+            },
             providesTags: ["Hotels"],
         }),
 

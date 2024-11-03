@@ -6,6 +6,8 @@ import { useGetHotelQuery } from "services/hotel.ts";
 import BookingSidePanel from "components/partials/customer/BookingSidePanel.tsx";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 import { useEffect, useState } from "react";
+import BookingPersonalData from "components/partials/customer/BookingPersonalData.tsx";
+import BookingPaymentData from "components/partials/customer/BookingPaymentData.tsx";
 
 export interface IBookingPageExternalInformation {
     hotelId: number;
@@ -77,6 +79,8 @@ const BookingPage = () => {
             } as IRoomVariantWithQuantity)) ?? []);
     }, [externalBookingInfo.bookingInfo.bookingRoomVariants, hotel]);
 
+    const [bodyIndex, setBodyIndex] = useState(1);
+
     // const json = JSON.stringify({
     //     hotelId: 1,
     //
@@ -105,7 +109,7 @@ const BookingPage = () => {
     // const base64 = btoa(json);
 
     return <div className="booking-page-main-container">
-        <StageIndicator options={["Ваш вибір", "Ваші дані", "Завершальний крок"]} currentOptionIndex={1} />
+        <StageIndicator options={["Ваш вибір", "Ваші дані", "Завершальний крок"]} currentOptionIndex={bodyIndex} />
 
         <VerticalPad heightPx={46} />
 
@@ -119,7 +123,13 @@ const BookingPage = () => {
                 departureTimeUtcFrom={hotel.departureTimeUtcFrom}
             />}
             <div className="center-block">
-                <p>Center block</p>
+                {
+                    bodyIndex === 1
+                        ? <BookingPersonalData onNext={() => setBodyIndex(2)} />
+                        : bodyIndex === 2
+                            ? <BookingPaymentData />
+                            : null
+                }
             </div>
         </div>
 

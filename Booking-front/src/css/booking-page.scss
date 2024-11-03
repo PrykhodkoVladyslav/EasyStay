@@ -9,6 +9,60 @@
 
     .center-block {
       max-width: 920px;
+      width: 100%;
+    }
+  }
+
+  .personal-data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 64px;
+
+    .message-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: flex-start;
+      gap: 16px;
+
+      border-radius: 22px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+      background-color: rgb(240, 240, 240);
+      padding: 28px 24px;
+
+      color: rgb(0, 0, 0);
+      font-family: var(--font-nunito), system-ui;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 28px;
+
+      .red-text {
+        color: rgb(249, 50, 50);
+      }
+    }
+
+    .personal-data-block {
+      .personal-data-title {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .personal-data-rows {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .personal-data-columns {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 20px;
+        }
+      }
     }
   }
 }

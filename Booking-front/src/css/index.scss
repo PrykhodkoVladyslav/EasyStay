@@ -1065,7 +1065,7 @@
                   line-height: 38px;
                   display: -webkit-box;
                   -webkit-box-orient: vertical;
-                  -webkit-line-clamp: 1;
+                  -webkit-line-clamp: 3;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   text-wrap: wrap;
@@ -1430,6 +1430,11 @@
           width: 12vw;
           max-width: 220px;
         }
+
+        .middle-block {
+          width: 100%;
+          max-width: 270px;
+        }
       }
 
       .rooms {
@@ -1549,11 +1554,6 @@
           }
 
           .peoples .cols {
-            display: flex;
-            flex-direction: row;
-            justify-content: start;
-            align-items: start;
-            flex-wrap: wrap;
 
             img {
               width: 24px;
@@ -1574,15 +1574,19 @@
               line-height: 20px;
             }
 
+            div.flex {
+              gap: 1vw;
+              padding-bottom: 6px;
+            }
+
             input {
               width: 24px;
+              min-width: 24px;
               height: 24px;
               appearance: none;
               border: 2px solid var(--color-text);
               border-radius: 4px;
-              margin-right: 16px;
               cursor: pointer;
-              outline: none;
 
               &:checked {
                 background-color: var(--color-primary);
@@ -1605,6 +1609,7 @@
             }
 
             img {
+              margin-top: -5px;
               width: 48px;
             }
 
@@ -1613,7 +1618,7 @@
             }
           }
 
-          .advantages .cols{
+          .advantages .cols {
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -1623,7 +1628,8 @@
             line-height: 15px;
 
             p {
-              color: rgb(0, 130, 53);
+              color: var(--color-text);
+              //color: rgb(0, 130, 53);
               padding-top: 3px;
             }
 
@@ -1648,7 +1654,8 @@
               }
 
               ul {
-                color: rgb(0, 130, 53);
+                color: var(--color-text);
+                //color: rgb(0, 130, 53);
               }
 
             }
@@ -1679,8 +1686,9 @@
             }
 
             .description {
-              font-size: 12px;
-              font-weight: 500;
+              color: black;
+              font-size: 10px;
+              font-weight: 600;
               line-height: 12px;
             }
           }

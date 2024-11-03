@@ -45,6 +45,7 @@ import CustomerLayout from "components/layouts/CustomerLayout.tsx";
 import HotelsPage from "pages/customer/HotelsPage.tsx";
 import HotelPage from "pages/customer/HotelPage.tsx";
 import BookingPage from "pages/customer/BookingPage.tsx";
+import RealtorPage from "pages/customer/RealtorPage.tsx";
 
 function App() {
     return (
@@ -59,6 +60,8 @@ function App() {
 
                     <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
                         <Route path="booking/:data" element={<BookingPage />} />
+                        <Route path="hotel" element={<HotelPage />} />
+                        <Route path="realtorPage" element={<RealtorPage />} />
                     </Route>
                 </Route>
 

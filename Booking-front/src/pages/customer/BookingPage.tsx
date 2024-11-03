@@ -42,9 +42,16 @@ const BookingPage = () => {
     if (!bookingPageExternalInformation)
         throw new Error("No data provided");
 
-    const [selectedRoomVariants, setSelectedRoomVariants] = useState<IRoomVariantWithQuantity[]>([]);
+    const parseBookingPageExternalInformation =
+        () => JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
 
-    const externalBookingInfo = JSON.parse(atob(bookingPageExternalInformation)) as IBookingPageExternalInformation;
+    const [externalBookingInfo, setExternalBookingInfo] = useState(parseBookingPageExternalInformation);
+
+    useEffect(() => {
+        setExternalBookingInfo(parseBookingPageExternalInformation);
+    }, [bookingPageExternalInformation]);
+
+    const [selectedRoomVariants, setSelectedRoomVariants] = useState<IRoomVariantWithQuantity[]>([]);
 
     const { data: hotel } = useGetHotelQuery(externalBookingInfo.hotelId);
 
@@ -116,7 +123,7 @@ const BookingPage = () => {
             </div>
         </div>
 
-        <VerticalPad heightPx={20} />
+        <VerticalPad heightPx={40} />
     </div>;
 };
 

@@ -28,10 +28,10 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
-            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
-            providesTags: ["Hotels"],
-        }),
+        // getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
+        //     query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
+        //     providesTags: ["Hotels"],
+        // }),
 
         createHotel: builder.mutation<void, IHotelCreate>({
             query: (hotel) => {

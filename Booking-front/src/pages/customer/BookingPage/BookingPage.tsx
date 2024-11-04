@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import "./../../css/booking-page.scss";
+import "./booking-page.scss";
 import StageIndicator from "components/partials/customer/StageIndicator.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import { useGetHotelQuery } from "services/hotel.ts";
-import BookingSidePanel from "components/partials/customer/BookingSidePanel.tsx";
+import BookingSidePanel from "components/partials/customer/BookingSidePanel/BookingSidePanel.tsx";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 import { useEffect, useState } from "react";
-import BookingPersonalData from "components/partials/customer/BookingPersonalData.tsx";
+import BookingPersonalData from "components/partials/customer/BookingPersonalData/BookingPersonalData.tsx";
 import BookingPaymentData from "components/partials/customer/BookingPaymentData.tsx";
 import IRoom from "interfaces/room/IRoom.ts";
 

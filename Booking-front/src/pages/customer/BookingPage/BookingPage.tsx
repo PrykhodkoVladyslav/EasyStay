@@ -94,6 +94,9 @@ const BookingPage = () => {
 
     const [bodyIndex, setBodyIndex] = useState(1);
 
+    const [personalWishes, setPersonalWishes] = useState("");
+    const [isRoomsNextToEachOther, setIsRoomsNextToEachOther] = useState(false);
+
     // const json = JSON.stringify({
     //     hotelId: 1,
     //
@@ -141,6 +144,10 @@ const BookingPage = () => {
                         roomName={selecterRoom?.name ?? ""}
                         roomVariantInfos={selectedRoomVariants}
                         hotelAmenities={hotel?.hotelAmenities ?? []}
+                        personalWishes={personalWishes}
+                        setPersonalWishes={setPersonalWishes}
+                        isRoomsNextToEachOther={isRoomsNextToEachOther}
+                        setIsRoomsNextToEachOther={setIsRoomsNextToEachOther}
                         onNext={() => setBodyIndex(2)}
                     />
                     : bodyIndex === 2

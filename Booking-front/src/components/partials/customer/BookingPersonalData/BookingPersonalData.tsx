@@ -6,16 +6,25 @@ import IHotelAmenity from "interfaces/hotelAmenity/IHotelAmenity.ts";
 import BookingInfoBlock from "components/partials/customer/BookingPersonalData/BookingInfoBlock/BookingInfoBlock.tsx";
 import PersonalDataBlock
     from "components/partials/customer/BookingPersonalData/PersonalDataBlock/PersonalDataBlock.tsx";
+import PersonalWishesBlock
+    from "components/partials/customer/BookingPersonalData/PersonalWishesBlock/PersonalWishesBlock.tsx";
 
 interface IBookingPersonalDataProps {
     roomName: string;
     roomVariantInfos: IRoomVariantWithRoom[];
     hotelAmenities: IHotelAmenity[];
 
+    personalWishes: string;
+    setPersonalWishes: (personalWishes: string) => void;
+    isRoomsNextToEachOther: boolean;
+    setIsRoomsNextToEachOther: (isRoomsNextToEachOther: boolean) => void;
+
     onNext: () => void;
 }
 
 const BookingPersonalData = (props: IBookingPersonalDataProps) => {
+    const { personalWishes, setPersonalWishes, isRoomsNextToEachOther, setIsRoomsNextToEachOther } = props;
+
     const user = useSelector(getUser);
     if (!user)
         throw new Error("User is not authorized");
@@ -36,6 +45,13 @@ const BookingPersonalData = (props: IBookingPersonalDataProps) => {
             roomVariantInfos={props.roomVariantInfos}
             hotelAmenities={props.hotelAmenities}
             user={user}
+        />
+
+        <PersonalWishesBlock
+            personalWishes={personalWishes}
+            setPersonalWishes={setPersonalWishes}
+            isRoomsNextToEachOther={isRoomsNextToEachOther}
+            setIsRoomsNextToEachOther={setIsRoomsNextToEachOther}
         />
     </div>;
 };

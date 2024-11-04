@@ -64,5 +64,145 @@
         }
       }
     }
+
+    .booking-data-block {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 24px;
+
+      border-radius: 22px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+      background: rgb(255, 255, 255);
+      padding: 28px 24px;
+
+      .room-name {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .info-block {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+
+        .info-item {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+
+          .info-item-message {
+            padding-left: 14px;
+            padding-right: 6px;
+
+            color: rgb(0, 0, 0);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 15px;
+          }
+        }
+
+        .guess-info {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+
+          .info-item-message {
+            padding-left: 8px;
+            padding-right: 6px;
+
+            color: rgb(0, 0, 0);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+
+            & > span {
+              color: rgb(0, 0, 0);
+              font-family: var(--font-montserrat), system-ui;
+              font-size: 16px;
+              font-weight: 600;
+              line-height: 20px;
+
+              padding-right: 6px;
+            }
+          }
+        }
+      }
+    }
+
+    .hotel-amenities {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .hotel-amenity {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        gap: 12px;
+
+        border: 1px solid rgb(81, 81, 81);
+        border-radius: 12px;
+        padding: 4px 8px;
+
+        .amenity-image {
+          width: 24px;
+          height: 24px;
+        }
+
+        .amenity-name {
+          color: rgb(55, 55, 55);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 15px;
+        }
+      }
+    }
+
+    .bed-info-block {
+      .bed-info-title {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+
+        padding-bottom: 4px;
+      }
+
+      .bed-infos {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .bed-info {
+          & > p {
+            color: rgb(55, 55, 55);
+            font-family: var(--font-nunito), system-ui;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 20px;
+          }
+
+          & > img {
+            width: 48px;
+            height: 48px;
+          }
+        }
+      }
+    }
   }
 }

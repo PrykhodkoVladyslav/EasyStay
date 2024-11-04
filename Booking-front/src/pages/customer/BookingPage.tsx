@@ -8,6 +8,21 @@ import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 import { useEffect, useState } from "react";
 import BookingPersonalData from "components/partials/customer/BookingPersonalData.tsx";
 import BookingPaymentData from "components/partials/customer/BookingPaymentData.tsx";
+import IRoom from "interfaces/room/IRoom.ts";
+
+export interface IBookingBedSelection {
+    isSingleBed?: boolean;
+    isDoubleBed?: boolean;
+    isExtraBed?: boolean;
+    isSofa?: boolean;
+    isKingsizeBed?: boolean;
+}
+
+export interface IBookingRoomVariant {
+    roomVariantId: number;
+    quantity: number;
+    bookingBedSelection: IBookingBedSelection;
+}
 
 export interface IBookingPageExternalInformation {
     hotelId: number;
@@ -15,28 +30,14 @@ export interface IBookingPageExternalInformation {
     bookingInfo: {
         dateFrom: Date;
         dateTo: Date;
-        bookingRoomVariants: {
-            roomVariantId: number;
-            quantity: number;
-            bookingBedSelection: {
-                isSingleBed?: boolean;
-                isDoubleBed?: boolean;
-                isExtraBed?: boolean;
-                isSofa?: boolean;
-                isKingsizeBed?: boolean;
-            };
-        }[];
+        bookingRoomVariants: IBookingRoomVariant[];
     };
 }
 
-interface IRoomVariantIdWithQuantity {
-    roomVariantId: number;
-    quantity: number;
-}
-
-export interface IRoomVariantWithQuantity {
+export interface IRoomVariantWithRoom {
     roomVariant: IRoomVariant;
     quantity: number;
+    bookingBedSelection: IBookingBedSelection;
 }
 
 const BookingPage = () => {
@@ -53,7 +54,8 @@ const BookingPage = () => {
         setExternalBookingInfo(parseBookingPageExternalInformation);
     }, [bookingPageExternalInformation]);
 
-    const [selectedRoomVariants, setSelectedRoomVariants] = useState<IRoomVariantWithQuantity[]>([]);
+    const [selectedRoomVariants, setSelectedRoomVariants] = useState<IRoomVariantWithRoom[]>([]);
+    const [selecterRoom, setSelectedRoom] = useState<IRoom | null>(null);
 
     const { data: hotel } = useGetHotelQuery(externalBookingInfo.hotelId);
 
@@ -62,7 +64,8 @@ const BookingPage = () => {
             .map(brv => ({
                 roomVariantId: brv.roomVariantId,
                 quantity: brv.quantity,
-            }) as IRoomVariantIdWithQuantity);
+                bookingBedSelection: brv.bookingBedSelection,
+            }) as IBookingRoomVariant);
 
         setSelectedRoomVariants(hotel?.rooms
             ?.map(r => r.variants)
@@ -72,11 +75,21 @@ const BookingPage = () => {
                     .map(r => r.roomVariantId)
                     .includes(rv.id),
             )
-            ?.map(r => ({
-                roomVariant: r,
-                quantity: selectedRoomVariantIds
-                    .find(s => s.roomVariantId === r.id)?.quantity ?? new Error("No quantity"),
-            } as IRoomVariantWithQuantity)) ?? []);
+            ?.map(r => {
+                const rv = selectedRoomVariantIds
+                    .find(s => s.roomVariantId === r.id);
+
+                if (!rv)
+                    throw new Error("Room variant not found");
+
+                return {
+                    roomVariant: r,
+                    quantity: rv.quantity,
+                    bookingBedSelection: rv.bookingBedSelection,
+                } as unknown as IRoomVariantWithRoom;
+            }) ?? []);
+
+        setSelectedRoom(hotel?.rooms?.find(r => r.variants.find(rv => rv.id === selectedRoomVariantIds[0].roomVariantId)) ?? null);
     }, [externalBookingInfo.bookingInfo.bookingRoomVariants, hotel]);
 
     const [bodyIndex, setBodyIndex] = useState(1);
@@ -123,13 +136,16 @@ const BookingPage = () => {
                 departureTimeUtcFrom={hotel.departureTimeUtcFrom}
             />}
             <div className="center-block">
-                {
-                    bodyIndex === 1
-                        ? <BookingPersonalData onNext={() => setBodyIndex(2)} />
-                        : bodyIndex === 2
-                            ? <BookingPaymentData />
-                            : null
-                }
+                {bodyIndex === 1
+                    ? <BookingPersonalData
+                        roomName={selecterRoom?.name ?? ""}
+                        roomVariantInfos={selectedRoomVariants}
+                        hotelAmenities={hotel?.hotelAmenities ?? []}
+                        onNext={() => setBodyIndex(2)}
+                    />
+                    : bodyIndex === 2
+                        ? <BookingPaymentData />
+                        : null}
             </div>
         </div>
 

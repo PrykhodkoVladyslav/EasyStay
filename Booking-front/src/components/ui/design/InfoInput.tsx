@@ -1,4 +1,4 @@
-import "./../../../css/InfoInput.scss";
+import "./../../../css/info-input.scss";
 
 const InfoInput = (props: { title: string, value: string }) => {
     return <div className="info-input-container">

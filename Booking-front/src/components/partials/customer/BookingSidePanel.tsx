@@ -2,12 +2,12 @@ import "./../../../css/booking-side-panel.scss";
 import { addDays, differenceInDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
-import { IRoomVariantWithQuantity } from "pages/customer/BookingPage.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { IRoomVariantWithRoom } from "pages/customer/BookingPage.tsx";
 
 export interface IBookingSidePanelProps {
     hotelId: number;
-    selectedRoomVariants: IRoomVariantWithQuantity[];
+    selectedRoomVariants: IRoomVariantWithRoom[];
 
     dateFrom: Date;
     dateTo: Date;

@@ -7,8 +7,10 @@ import BookingSidePanel from "components/partials/customer/BookingSidePanel/Book
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 import { useEffect, useState } from "react";
 import BookingPersonalData from "components/partials/customer/BookingPersonalData/BookingPersonalData.tsx";
-import BookingPaymentData from "components/partials/customer/BookingPaymentData.tsx";
+import BookingPaymentData from "components/partials/customer/BookingPaymentData/BookingPaymentData.tsx";
 import IRoom from "interfaces/room/IRoom.ts";
+import { format } from "date-fns";
+import showToast from "utils/toastShow.ts";
 
 export interface IBookingBedSelection {
     isSingleBed?: boolean;
@@ -55,7 +57,7 @@ const BookingPage = () => {
     }, [bookingPageExternalInformation]);
 
     const [selectedRoomVariants, setSelectedRoomVariants] = useState<IRoomVariantWithRoom[]>([]);
-    const [selecterRoom, setSelectedRoom] = useState<IRoom | null>(null);
+    const [selectedRoom, setSelectedRoom] = useState<IRoom | null>(null);
 
     const { data: hotel } = useGetHotelQuery(externalBookingInfo.hotelId);
 
@@ -97,32 +99,10 @@ const BookingPage = () => {
     const [personalWishes, setPersonalWishes] = useState("");
     const [isRoomsNextToEachOther, setIsRoomsNextToEachOther] = useState(false);
 
-    // const json = JSON.stringify({
-    //     hotelId: 1,
-    //
-    //     bookingInfo: {
-    //         dateFrom: new Date(),
-    //         dateTo: new Date(),
-    //         bookingRoomVariants: [
-    //             {
-    //                 roomVariantId: 1,
-    //                 quantity: 1,
-    //                 bookingBedSelection: {
-    //                     isSingleBed: true,
-    //                 },
-    //             },
-    //             {
-    //                 roomVariantId: 2,
-    //                 quantity: 2,
-    //                 bookingBedSelection: {
-    //                     isDoubleBed: true,
-    //                     isKingsizeBed: true,
-    //                 },
-    //             },
-    //         ],
-    //     },
-    // } as IBookingPageExternalInformation);
-    // const base64 = btoa(json);
+    const timeFromString = (time: string) => new Date(`0001-01-01T${time}Z`);
+    const formatTime = (time: string) => format(timeFromString(time), "HH:mm");
+
+    const [selectedTime, setSelectedTime] = useState<string>("");
 
     return <div className="booking-page-main-container">
         <StageIndicator options={["Ваш вибір", "Ваші дані", "Завершальний крок"]} currentOptionIndex={bodyIndex} />
@@ -141,14 +121,24 @@ const BookingPage = () => {
             <div className="center-block">
                 {bodyIndex === 1
                     ? <BookingPersonalData
-                        roomName={selecterRoom?.name ?? ""}
+                        roomName={selectedRoom?.name ?? ""}
                         roomVariantInfos={selectedRoomVariants}
                         hotelAmenities={hotel?.hotelAmenities ?? []}
                         personalWishes={personalWishes}
                         setPersonalWishes={setPersonalWishes}
                         isRoomsNextToEachOther={isRoomsNextToEachOther}
                         setIsRoomsNextToEachOther={setIsRoomsNextToEachOther}
-                        onNext={() => setBodyIndex(2)}
+                        selectedTime={selectedTime}
+                        setSelectedTime={setSelectedTime}
+                        arrivalTime={formatTime(hotel?.arrivalTimeUtcFrom ?? "00:00:00")}
+                        onNext={() => {
+                            if (selectedTime === "") {
+                                showToast(`Оберіть орієнтований час прибуття`, "error");
+                                return;
+                            }
+
+                            setBodyIndex(2);
+                        }}
                     />
                     : bodyIndex === 2
                         ? <BookingPaymentData />

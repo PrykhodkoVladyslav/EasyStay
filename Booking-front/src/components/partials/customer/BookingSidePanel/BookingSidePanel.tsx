@@ -3,7 +3,7 @@ import { addDays, differenceInDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import { IRoomVariantWithRoom } from "pages/customer/BookingPage.tsx";
+import { IRoomVariantWithRoom } from "pages/customer/BookingPage/BookingPage.tsx";
 
 export interface IBookingSidePanelProps {
     hotelId: number;

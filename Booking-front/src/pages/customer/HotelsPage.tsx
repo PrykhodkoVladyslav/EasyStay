@@ -2,7 +2,7 @@ import SearchHotelSection, { ISearchData } from "components/partials/customer/Se
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import FilterHotelsSection, { IFilter } from "components/partials/customer/FilterHotelsSection.tsx";
 import HotelsSection from "components/partials/customer/HotelsSection.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
 import { format } from "date-fns";
 
@@ -16,17 +16,7 @@ const HotelsPage = () => {
         genders: [],
     });
 
-    const [hotelSearchFilters, setHotelSearchFilters] = useState<IHotelsPageQuery>({} as IHotelsPageQuery);
-
-    const onSearch = (topFilters: ISearchData) => {
-        const cityName = topFilters.city;
-        const dateFrom = topFilters.date?.from;
-        const dateTo = topFilters.date?.to;
-        const freeDatePeriod = dateFrom && dateTo ? {
-            from: format(dateFrom, "yyyy-MM-dd"),
-            to: format(dateTo, "yyyy-MM-dd"),
-        } : undefined;
-        const adultGuests = topFilters.adultGuests || undefined;
+    useEffect(() => {
         const minPrice = sideFilters.prices?.minPrice;
         const maxPrice = sideFilters.prices?.maxPrice;
         const hotelAmenities = sideFilters.hotelAmenities;
@@ -46,13 +36,7 @@ const HotelsPage = () => {
         const genders = sideFilters.genders;
 
         setHotelSearchFilters({
-            address: {
-                city: {
-                    name: cityName,
-                },
-            },
-            freePeriod: freeDatePeriod,
-            minAdultGuests: adultGuests,
+            ...hotelSearchFilters,
             minPrice,
             maxPrice,
             allHotelAmenityIds: hotelAmenities,
@@ -63,6 +47,30 @@ const HotelsPage = () => {
             allLanguageIds: languages,
             allBreakfastIds: breakfasts,
             allowedRealtorGenders: genders,
+        });
+    }, [sideFilters]);
+
+    const [hotelSearchFilters, setHotelSearchFilters] = useState<IHotelsPageQuery>({} as IHotelsPageQuery);
+
+    const onSearch = (topFilters: ISearchData) => {
+        const cityName = topFilters.city;
+        const dateFrom = topFilters.date?.from;
+        const dateTo = topFilters.date?.to;
+        const freeDatePeriod = dateFrom && dateTo ? {
+            from: format(dateFrom, "yyyy-MM-dd"),
+            to: format(dateTo, "yyyy-MM-dd"),
+        } : undefined;
+        const adultGuests = topFilters.adultGuests || undefined;
+
+        setHotelSearchFilters({
+            ...hotelSearchFilters,
+            address: {
+                city: {
+                    name: cityName,
+                },
+            },
+            freePeriod: freeDatePeriod,
+            minAdultGuests: adultGuests,
         });
     };
 

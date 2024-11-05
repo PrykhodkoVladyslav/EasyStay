@@ -3366,13 +3366,15 @@
   }
 }
 
-// Створення Готелю
+// Створення Готелю та Номеру
 .add-hotel-room {
+  position: relative;
   padding: 68px 100px 0;
   display: flex;
   flex-direction: column;
   gap: 68px;
 
+  // Готель і Номер. сторінка 1
   .add-page-1 {
     max-width: 1160px;
     display: flex;
@@ -3628,6 +3630,10 @@
           button {
             font-size: 24px;
           }
+
+          button:first-child {
+            margin-top: -6px;
+          }
         }
 
         .containers {
@@ -3824,6 +3830,7 @@
     }
   }
 
+  // Готель. сторінка 2
   .add-hotel-page-2 {
     width: 100%;
     display: flex;
@@ -3969,177 +3976,6 @@
     }
   }
 
-  .add-room-page-2 {
-    width: 100%;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    gap: 58px;
-    font-family: var(--font-primary), system-ui;
-
-    .title {
-      color: rgb(55, 55, 55);
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 44px;
-    }
-
-    .data-containers {
-      display: flex;
-      flex-direction: column;
-      gap: 114px;
-
-      .pre-container {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-
-        .top {
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-start;
-          align-items: center;
-          gap: 1.35vw;
-
-          .number {
-            width: 60px;
-            min-width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 34px;
-            background: var(--color-secondary);
-            color: var(--color-primary);
-            font-family: var(--font-primary), system-ui;
-            font-size: 32px;
-            font-weight: 700;
-            line-height: 44px;
-          }
-
-          .title {
-            font-family: var(--font-secondary), system-ui;
-            font-size: 24px;
-            font-weight: 600;
-            line-height: 29px;
-          }
-
-          .optional {
-            color: var(--color-text);
-            font-family: var(--font-secondary);
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 20px;
-          }
-        }
-
-        .room-container-1-3-4 {
-          width: 100%;
-          max-width: 670px;
-          display: flex;
-          flex-direction: column;
-          margin-left: 6.5vw;
-          gap: 24px;
-        }
-
-        .room-container-2 {
-          width: 100%;
-          max-width: 560px;
-          display: flex;
-          flex-direction: column;
-          margin-left: 6.5vw;
-          border-radius: 22px;
-          background: rgb(247, 247, 253);
-          padding: 22px 31px;
-          gap: 34px;
-        }
-
-        .guests {
-          display: flex;
-          gap: 4.5vw;
-
-          p {
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 27px;
-          }
-        }
-
-        .beds {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          justify-items: center;
-          align-items: center;
-
-          p {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 25px;
-          }
-        }
-
-        .price-discount {
-          width: 100%;
-          max-width: 165px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          justify-items: center;
-          align-items: center;
-          gap: 16px;
-
-          p {
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 27px;
-          }
-
-          input[type="number"] {
-            padding: 16px 20px;
-            border-radius: 18px;
-            background: rgb(247, 247, 253);
-            color: var(--color-text);
-            appearance: none;
-            -moz-appearance: textfield;
-          }
-          input[type="number"]::-webkit-outer-spin-button,
-          input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
-        }
-      }
-    }
-
-    .stepper {
-      width: 100%;
-      max-width: 160px;
-      height: 51px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      justify-items: center;
-      align-items: center;
-      padding: 12px 13px;
-      color: rgb(55, 55, 55);
-      font-size: 20px;
-      font-weight: 600;
-      line-height: 27px;
-      border-radius: 10px;
-      box-shadow: 0 0 2.4px 0 rgba(0, 0, 0, 0.13);
-
-      button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-  }
 
   .main-button {
     height: 57px;
@@ -4157,6 +3993,230 @@
     line-height: 27px;
   }
   .main-button-2 {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: var(--color-primary);
+    color: white;
+    font-family: var(--font-primary), system-ui;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27px;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+// Створення Номеру, модальне вікно. сторінка 2
+.add-room-page-2-modal {
+  padding: 47px 71px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  font-family: var(--font-primary), system-ui;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  overflow-y: auto;
+
+  .title {
+    color: rgb(55, 55, 55);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 44px;
+  }
+
+  .data-containers {
+    display: flex;
+    flex-direction: column;
+    gap: 58px;
+
+    .pre-container {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+
+      .top {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1.35vw;
+
+        .number {
+          width: 60px;
+          min-width: 60px;
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 34px;
+          background: var(--color-secondary);
+          color: var(--color-primary);
+          font-family: var(--font-primary), system-ui;
+          font-size: 32px;
+          font-weight: 700;
+          line-height: 44px;
+        }
+
+        .title {
+          font-family: var(--font-secondary), system-ui;
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 29px;
+        }
+
+        .optional {
+          color: var(--color-text);
+          font-family: var(--font-secondary);
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+      }
+
+      .room-container-1-3-4 {
+        width: 100%;
+        max-width: 670px;
+        display: flex;
+        flex-direction: column;
+        margin-left: 6.5vw;
+        gap: 24px;
+      }
+
+      .room-container-2 {
+        width: 100%;
+        max-width: 560px;
+        display: flex;
+        flex-direction: column;
+        margin-left: 6.5vw;
+        border-radius: 22px;
+        background: rgb(247, 247, 253);
+        padding: 22px 31px;
+        gap: 34px;
+      }
+
+      .guests {
+        display: flex;
+        width: 100%;
+        max-width: 430px;
+        gap: 4.5vw;
+
+        .guest {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 10px;
+
+          p {
+            white-space: nowrap;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 27px;
+          }
+        }
+      }
+
+      .beds {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        justify-items: center;
+        align-items: center;
+
+        p {
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 25px;
+        }
+      }
+
+      .price-discount {
+        width: 100%;
+        max-width: 165px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        justify-items: center;
+        align-items: center;
+        gap: 16px;
+
+        p {
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 27px;
+        }
+
+        input[type="number"] {
+          padding: 16px 20px;
+          border-radius: 18px;
+          background: rgb(247, 247, 253);
+          color: var(--color-text);
+          appearance: none;
+          -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .stepper {
+    width: 100%;
+    max-width: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    padding: 12px 13px;
+    color: rgb(55, 55, 55);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27px;
+    border-radius: 10px;
+    box-shadow: 0 0 2.4px 0 rgba(0, 0, 0, 0.13);
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      width: 30px;
+      height: 24px;
+    }
+
+    button:first-child {
+      margin-top: -6px;
+    }
+  }
+
+  .main-button-2 {
+    width: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;

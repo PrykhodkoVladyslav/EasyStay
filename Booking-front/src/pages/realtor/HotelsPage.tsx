@@ -1,6 +1,8 @@
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { useNavigate } from "react-router-dom";
 
 const HotelsPage = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="hotels-content">
@@ -51,7 +53,7 @@ const HotelsPage = () => {
                         </button>
 
                         <div className="rooms-action">
-                            <button className="btn-rooms">Номери</button>
+                            <button className="btn-rooms" onClick={() => {navigate("/add/room")}}>Номери</button>
                             <button className="btn-edit">Редагувати</button>
                         </div>
                     </div>

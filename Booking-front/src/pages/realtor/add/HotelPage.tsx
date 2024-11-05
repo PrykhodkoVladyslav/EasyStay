@@ -27,7 +27,6 @@ const HotelPage = () => {
         watch,
         formState: { errors },
     } = useForm<HotelCreateSchemaType>({
-        // resolver: zodResolver(HotelCreateSchema),
         resolver: zodResolver(currentContainer === 1 ? HotelCreatePage1Schema : HotelCreateSchema),
         defaultValues: {
             hotelAmenityIds: [],
@@ -125,7 +124,6 @@ const HotelPage = () => {
                 cityId: Number(data.address.cityId) || 0,
             },
         }
-        // console.log(hoteldata);
 
         try {
             await createHotel(hoteldata).unwrap();
@@ -138,10 +136,10 @@ const HotelPage = () => {
     };
 
     return (
-        <div className="add-hotel">
+        <div className="add-hotel-room">
             <form onSubmit={handleSubmit(onSubmit)}>
                 {currentContainer === 1 && (
-                    <div className="add-hotel-page-1">
+                    <div className="add-page-1">
                         <p className="title">Додайте своє помешкання</p>
                         <div className="data-containers">
 
@@ -151,7 +149,7 @@ const HotelPage = () => {
                                     <p className="title">Дайте опис</p>
                                 </div>
 
-                                <div className="container-1">
+                                <div className="hotel-container-1">
                                     <div className="data">
                                         <p className="title">Назва готелю</p>
                                         <input
@@ -210,7 +208,7 @@ const HotelPage = () => {
                                     <p className="title">Вкажіть адрес</p>
                                 </div>
 
-                                <div className="container-2">
+                                <div className="hotel-container-2">
                                     <div className="data">
                                         <p className="title">Країна</p>
                                         <select
@@ -312,7 +310,7 @@ const HotelPage = () => {
                                     <p className="title">Чим можуть користуватися гості у цьому готелі?</p>
                                 </div>
 
-                                <div className="container-3">
+                                <div className="hotel-container-3 label-checkbox">
                                     {hotelAmenitiesData?.map((hotelAmenity) => (
                                         <label key={hotelAmenity.id}>
                                             <input
@@ -345,7 +343,7 @@ const HotelPage = () => {
                                     <p className="title"> Ви подаєте сніданок?</p>
                                 </div>
 
-                                <div className="container-4">
+                                <div className="hotel-container-4">
                                     <div className="check-breakfast">
                                         <label htmlFor="yes">
                                             <input
@@ -406,7 +404,7 @@ const HotelPage = () => {
                                     <p className="title">Якими мовами говорите ви або ваш персонал?</p>
                                 </div>
 
-                                <div className="container-5">
+                                <div className="hotel-container-5 label-checkbox">
                                     {languagesData?.map((languages) => (
                                         <label key={languages.id}>
                                             <input
@@ -437,7 +435,7 @@ const HotelPage = () => {
                                     <p className="title">О котрій у вас відбувається заїзд і виїзд?</p>
                                 </div>
 
-                                <div className="container-6">
+                                <div className="hotel-container-6">
                                     <div className="containers">
                                         <p className="title">Заїзд</p>
                                         <div className="container">
@@ -572,7 +570,6 @@ const HotelPage = () => {
                 </button>
             </form>
         </div>
-
     );
 }
 

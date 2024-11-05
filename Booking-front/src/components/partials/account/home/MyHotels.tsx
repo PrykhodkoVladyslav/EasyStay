@@ -13,7 +13,7 @@ const MyHotels = () => {
     // const realtorId = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const navigate = useNavigate();
 
-    const { data: hotelsData, error, isLoading } = useGetHotelsPageQuery({pageIndex: 0, RealtorId: 3});
+    const { data: hotelsData, error, isLoading } = useGetHotelsPageQuery({OnlyOwn: true});
     // const [hotels, setHotels] = useState(hotelsData?.data ?? []);
 
     console.log(hotelsData);

@@ -22,6 +22,7 @@ import RealtorArchivedPage from "pages/realtor/ArchivedPage";
 import AddLayout from "components/layouts/AddLayout";
 import CategoriesListPage from "pages/realtor/add/CategoriesListPage";
 import AddHotelPage from "pages/realtor/add/HotelPage";
+import AddRoomPage from "pages/realtor/add/RoomPage";
 
 import HotelCreatePage from "pages/realtor/hotel/HotelCreatePage";
 import HotelEditPage from "pages/realtor/hotel/HotelEditPage";
@@ -82,11 +83,8 @@ function App() {
 
                     <Route path="add" element={<AddLayout />}>
                         <Route path="categories" element={<CategoriesListPage />} />
-
                         <Route path="hotel" element={<AddHotelPage />} />
-
-                        {/*<Route path="apartment">*/}
-                        {/*<Route path="house">} />*/}
+                        <Route path="room" element={<AddRoomPage />} />
                     </Route>
 
 

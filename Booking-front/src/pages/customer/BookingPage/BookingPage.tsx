@@ -109,28 +109,28 @@ const BookingPage = () => {
 
         <VerticalPad heightPx={46} />
 
-        <div className="booking-info-container">
-            {hotel && <BookingSidePanel
+        {hotel && <div className="booking-info-container">
+            <BookingSidePanel
                 hotelId={externalBookingInfo.hotelId}
                 selectedRoomVariants={selectedRoomVariants}
                 dateFrom={externalBookingInfo.bookingInfo.dateFrom}
                 dateTo={externalBookingInfo.bookingInfo.dateTo}
                 arrivalTimeUtcFrom={hotel.arrivalTimeUtcFrom}
                 departureTimeUtcFrom={hotel.departureTimeUtcFrom}
-            />}
+            />
             <div className="center-block">
                 {bodyIndex === 1
                     ? <BookingPersonalData
                         roomName={selectedRoom?.name ?? ""}
                         roomVariantInfos={selectedRoomVariants}
-                        hotelAmenities={hotel?.hotelAmenities ?? []}
+                        hotelAmenities={hotel.hotelAmenities}
                         personalWishes={personalWishes}
                         setPersonalWishes={setPersonalWishes}
                         isRoomsNextToEachOther={isRoomsNextToEachOther}
                         setIsRoomsNextToEachOther={setIsRoomsNextToEachOther}
                         selectedTime={selectedTime}
                         setSelectedTime={setSelectedTime}
-                        arrivalTime={formatTime(hotel?.arrivalTimeUtcFrom ?? "00:00:00")}
+                        arrivalTime={formatTime(hotel.arrivalTimeUtcFrom)}
                         onNext={() => {
                             if (selectedTime === "") {
                                 showToast(`Оберіть орієнтований час прибуття`, "error");
@@ -141,10 +141,12 @@ const BookingPage = () => {
                         }}
                     />
                     : bodyIndex === 2
-                        ? <BookingPaymentData />
+                        ? <BookingPaymentData
+                            dateFrom={externalBookingInfo.bookingInfo.dateFrom}
+                        />
                         : null}
             </div>
-        </div>
+        </div>}
 
         <VerticalPad heightPx={40} />
     </div>;

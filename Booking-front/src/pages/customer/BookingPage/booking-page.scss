@@ -410,4 +410,72 @@
       }
     }
   }
+
+  .payment-data-container {
+    .payment-method-container {
+      .payment-title-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .payment-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 24px;
+        }
+
+        .payment-question-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+
+          & > p {
+            color: rgb(63, 82, 60);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+          }
+        }
+      }
+
+      .payment-options-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        gap: 36px;
+
+        .payment-option-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: start;
+          gap: 20px;
+
+          font-family: var(--font-montserrat), system-ui;
+
+          .payment-option-title {
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+
+            padding-bottom: 10px;
+          }
+
+          .payment-method-description {
+            color: rgb(81, 81, 81);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 15px;
+          }
+        }
+      }
+    }
+  }
 }

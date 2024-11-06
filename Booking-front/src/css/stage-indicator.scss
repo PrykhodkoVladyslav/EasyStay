@@ -58,12 +58,17 @@
     }
 
     .option-name {
+      color: rgb(0, 0, 0);
+      font-family: var(--font-montserrat), system-ui;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+
       padding-left: 6px;
     }
   }
 
   .vertical-line {
-    //width: 100%;
     flex-grow: 1;
     border: 1px solid var(--color-primary);
   }

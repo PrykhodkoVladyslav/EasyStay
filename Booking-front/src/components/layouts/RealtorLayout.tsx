@@ -1,5 +1,5 @@
-import Header from "components/partials/account/Header.tsx";
-import Side from "components/partials/account/Side.tsx";
+import Header from "components/partials/realtor/Header.tsx";
+import Side from "components/partials/realtor/Side.tsx";
 import { Outlet } from "react-router-dom";
 import Footer from "components/Footer.tsx";
 

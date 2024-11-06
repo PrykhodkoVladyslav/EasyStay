@@ -107,7 +107,7 @@ const DataPage = () => {
 
     return (
         <div className="data-content">
-            <p className="title">Особисті дані</p>
+            <p className="global-title">Особисті дані</p>
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="data">

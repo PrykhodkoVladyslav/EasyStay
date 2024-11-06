@@ -7,8 +7,8 @@ const HotelsPage = () => {
     return (
         <div className="hotels-content">
             <div className="top">
-                <p className="title">Мої готелі</p>
-                <div className="sort">
+                <p className="global-title">Мої готелі</p>
+                <div className="filter">
                     <button>
                         <img
                             src={getPublicResourceUrl("account/sort.svg")}

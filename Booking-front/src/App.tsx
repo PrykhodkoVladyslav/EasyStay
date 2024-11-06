@@ -75,10 +75,13 @@ function App() {
                     <Route path="realtor" element={<RealtorLayout />}>
                         <Route index element={<RealtorHomePage />} />
                         <Route path="personal-data" element={<RealtorDataPage />} />
-                        <Route path="hotels" element={<RealtorHotelsPage />} />
                         <Route path="reviews" element={<RealtorReviewsPage />} />
                         <Route path="archived" element={<RealtorArchivedPage />} />
-                        <Route path="edit/:id" element={<HotelEditPage />} />
+
+                        <Route path="hotels" element={<RealtorHotelsPage />} >
+                            <Route path="edit/:id" element={<HotelEditPage />} />
+                        </Route>
+
                     </Route>
 
                     <Route path="add" element={<AddLayout />}>

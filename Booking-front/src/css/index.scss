@@ -648,44 +648,6 @@
           flex-wrap: wrap;
           gap: 24px;
         }
-
-        .pagination-container {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-
-          .pagination-item {
-            color: rgb(0, 0, 0);
-            font-family: var(--font-primary), system-ui;
-            font-size: 20px;
-            font-weight: 600;
-
-            width: 28px;
-            height: 28px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            cursor: pointer;
-          }
-
-          .page {
-            margin: 0 6px;
-          }
-
-          .page-selected {
-            color: rgb(255, 255, 255);
-            border-radius: 5px;
-
-            background: rgb(63, 82, 60);
-          }
-
-          .arrow {
-            margin: 0 16px;
-          }
-        }
       }
     }
   }
@@ -1906,6 +1868,44 @@
   cursor: pointer;
 }
 
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .pagination-item {
+    color: rgb(0, 0, 0);
+    font-family: var(--font-primary), system-ui;
+    font-size: 20px;
+    font-weight: 600;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+  }
+
+  .page {
+    margin: 0 6px;
+  }
+
+  .page-selected {
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+
+    background: rgb(63, 82, 60);
+  }
+
+  .arrow {
+    margin: 0 16px;
+  }
+}
+
 // Акаунт Ріелтора
 .account-layout {
   position: relative;
@@ -2765,23 +2765,30 @@
         border-radius: 22px;
         background: var(--color-secondary);
 
-        .info {
-          width: fit-content;
+        .img-info {
+          width: 100%;
+          max-width: 800px;
           display: flex;
+          align-items: center;
           gap: 22px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
 
           .img {
-            width: 140px;
-            min-width: 140px;
+            width: 100%;
+            min-width: 100px;
+            max-width: 140px;
             height: 86px;
-            border-radius: 22px;
-            background: rgb(55, 55, 55);
-            background-size: cover;
-            //background-position: center;
+
+            img {
+              background: rgb(55, 55, 55);
+              border-radius: 22px;
+              background-size: cover;
+            }
           }
 
           .info {
-            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -2791,25 +2798,19 @@
               flex-direction: column;
 
               .name {
+                color: black;
                 font-family: var(--font-primary), system-ui;
                 font-size: 20px;
                 font-weight: 700;
                 line-height: 27px;
               }
 
-              div {
-                display: flex;
-                flex-direction: row;
-                gap: 6px;
-
-                .city,
-                .address {
-                  color: var(--color-text);
-                  font-family: var(--font-secondary), system-ui;
-                  font-size: 12px;
-                  font-weight: 600;
-                  line-height: 15px;
-                }
+              p {
+                color: var(--color-text);
+                font-family: var(--font-secondary), system-ui;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 15px;
               }
             }
 
@@ -2824,7 +2825,7 @@
 
         .actions {
           width: 100%;
-          max-width: 120px;
+          max-width: fit-content;
           display: flex;
           flex-direction: column;
           align-items: flex-end;

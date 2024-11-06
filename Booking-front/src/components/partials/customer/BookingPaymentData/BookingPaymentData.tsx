@@ -1,6 +1,6 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addDays, differenceInCalendarDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 
@@ -10,6 +10,13 @@ interface IBookingPaymentDataProps {
 
 const BookingPaymentData = (props: IBookingPaymentDataProps) => {
     const { dateFrom } = props;
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, []);
 
     const [activeOption, setActiveOption] = useState<number | null>(null);
 

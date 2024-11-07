@@ -133,4 +133,7 @@ public class ExistingEntityCheckerService(
 
 	public Task<bool> IsCorrectBankCardIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
 		context.BankCards.AnyAsync(b => b.Id == id && b.CustomerId == currentUserService.GetRequiredUserId(), cancellationToken);
+
+	public Task<bool> IsCorrectBookingIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
+		context.Bookings.AnyAsync(b => b.Id == id && b.CustomerId == currentUserService.GetRequiredUserId(), cancellationToken);
 }

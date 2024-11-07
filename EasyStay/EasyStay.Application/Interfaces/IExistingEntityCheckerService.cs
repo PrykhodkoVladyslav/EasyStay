@@ -23,4 +23,5 @@ public interface IExistingEntityCheckerService {
 	Task<bool> IsCorrectRoomVariantIdsAsync(IEnumerable<long>? ids, CancellationToken cancellationToken);
 	Task<bool> IsCorrectRoomVariantIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
 	Task<bool> IsCorrectBankCardIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectBookingIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
 }

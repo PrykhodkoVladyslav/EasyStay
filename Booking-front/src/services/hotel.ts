@@ -40,7 +40,7 @@ export const hotelApi = createApi({
         //     providesTags: ["Hotels"],
         // }),
 
-        createHotel: builder.mutation<void, IHotelCreate>({
+        createHotel: builder.mutation<number, IHotelCreate>({
             query: (hotel) => {
                 const hotelFormData = new FormData();
 

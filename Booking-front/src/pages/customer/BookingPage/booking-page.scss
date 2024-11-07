@@ -1,0 +1,651 @@
+.booking-page-main-container {
+  padding-top: 42px;
+
+  .booking-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 44px;
+
+    .center-block {
+      max-width: 920px;
+      width: 100%;
+    }
+  }
+
+  .personal-data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 64px;
+
+    .message-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: flex-start;
+      gap: 16px;
+
+      border-radius: 22px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+      background-color: rgb(240, 240, 240);
+      padding: 28px 24px;
+
+      color: rgb(0, 0, 0);
+      font-family: var(--font-nunito), system-ui;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 28px;
+
+      .red-text {
+        color: rgb(249, 50, 50);
+      }
+    }
+
+    .personal-data-block {
+      .personal-data-title {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .personal-data-rows {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .personal-data-columns {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 20px;
+        }
+      }
+    }
+
+    .booking-data-block {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 24px;
+
+      border-radius: 22px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+      background: rgb(255, 255, 255);
+      padding: 28px 24px;
+
+      .room-name {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .info-block {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+
+        .info-item {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+
+          .info-item-message {
+            padding-left: 14px;
+            padding-right: 6px;
+
+            color: rgb(0, 0, 0);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 15px;
+          }
+        }
+
+        .guess-info {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+
+          .info-item-message {
+            padding-left: 8px;
+            padding-right: 6px;
+
+            color: rgb(0, 0, 0);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+
+            & > span {
+              color: rgb(0, 0, 0);
+              font-family: var(--font-montserrat), system-ui;
+              font-size: 16px;
+              font-weight: 600;
+              line-height: 20px;
+
+              padding-right: 6px;
+            }
+          }
+        }
+      }
+    }
+
+    .hotel-amenities {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .hotel-amenity {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        gap: 12px;
+
+        border: 1px solid rgb(81, 81, 81);
+        border-radius: 12px;
+        padding: 4px 8px;
+
+        .amenity-image {
+          width: 24px;
+          height: 24px;
+        }
+
+        .amenity-name {
+          color: rgb(55, 55, 55);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 15px;
+        }
+      }
+    }
+
+    .bed-info-block {
+      .bed-info-title {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+
+        padding-bottom: 4px;
+      }
+
+      .bed-infos {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .bed-info {
+          & > p {
+            color: rgb(55, 55, 55);
+            font-family: var(--font-nunito), system-ui;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 20px;
+          }
+
+          & > img {
+            width: 48px;
+            height: 48px;
+          }
+        }
+      }
+    }
+
+    .personal-wishes-block {
+      border-radius: 22px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+      background: rgb(255, 255, 255);
+      padding: 28px 24px;
+
+      .title {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 29px;
+
+        padding-bottom: 12px;
+      }
+
+      .description {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+
+        padding-bottom: 24px;
+      }
+
+      .input-title {
+        color: rgb(0, 0, 0);
+        font-family: var(--font-nunito), system-ui;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 22px;
+
+        padding-bottom: 2px;
+      }
+
+      .personal-wishes-input {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        color: rgb(0, 0, 0);
+        font-family: var(--font-nunito), system-ui;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+
+        textarea {
+          width: 100%;
+          min-height: 150px;
+          max-height: 2000px;
+          padding: 8px 20px;
+          border-radius: 18px;
+          resize: vertical;
+          background: rgb(247, 247, 253);
+        }
+
+        .counter {
+          display: flex;
+          justify-content: end;
+          text-align: right;
+          color: rgb(165, 165, 165);
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+      }
+
+      .personal-wishes-radio {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        p {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+        }
+      }
+    }
+
+    .submit-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+
+      .time-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        gap: 18px;
+
+        width: 500px;
+
+        .time-section-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 24px;
+        }
+
+        .arrival-time {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+          gap: 8px;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+
+          p {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-nunito), system-ui;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 28px;
+          }
+        }
+
+        .customers-arrival-time-container {
+          .arrival-time-input-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .title {
+              color: rgb(0, 0, 0);
+              font-family: var(--font-nunito), system-ui;
+              font-size: 16px;
+              font-weight: 700;
+              line-height: 22px
+            }
+
+            select {
+              width: 100%;
+              height: 56px;
+              padding: 9px 14px;
+              border-radius: 22px;
+              background: rgb(247, 247, 253);
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 24px;
+
+              option {
+                color: rgb(0, 0, 0);
+                font-family: var(--font-nunito), system-ui;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 24px;
+              }
+
+              .default-option {
+                color: rgb(165, 165, 165);
+              }
+            }
+          }
+
+          .message-under-time {
+            color: rgb(81, 81, 81);
+            font-family: var(--font-nunito), system-ui;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 28px;
+
+            padding-top: 4px;
+          }
+        }
+      }
+
+      .submit-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: right;
+        gap: 34px;
+
+        .submit-button {
+          border-radius: 18px;
+          background: rgb(63, 82, 60);
+          padding: 15px 1px;
+
+          color: rgb(255, 255, 255);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 27px;
+        }
+
+        .booking-conditions {
+          color: rgb(81, 81, 81);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+
+  .payment-data-container {
+    .payment-method-container {
+      .payment-title-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .payment-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 24px;
+        }
+
+        .payment-question-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+
+          & > p {
+            color: rgb(63, 82, 60);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+          }
+        }
+      }
+
+      .payment-options-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        gap: 36px;
+
+        .payment-option-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: start;
+          gap: 20px;
+
+          font-family: var(--font-montserrat), system-ui;
+
+          .payment-option-title {
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+
+            padding-bottom: 10px;
+          }
+
+          .payment-method-description {
+            color: rgb(81, 81, 81);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 15px;
+          }
+        }
+      }
+    }
+
+    .bank-card-info-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      width: 440px;
+
+      .input-container {
+        width: 100%;
+
+        .on-sides {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .input-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 22px;
+
+          padding-bottom: 2px;
+
+          sup {
+            color: red;
+            font-size: 16px;
+          }
+        }
+
+        .input-input {
+          width: 100%;
+
+          border-radius: 22px;
+          background: rgb(247, 247, 253);
+          padding: 9px 14px;
+          height: 56px;
+
+          color: rgb(81, 81, 81);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+        }
+      }
+
+      .left-right-part {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .save-card-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        gap: 12px;
+
+        .tweaker {
+          display: flex;
+          padding: 4px;
+
+          width: 60px;
+          height: 32px;
+          border-radius: 50px;
+          transition: 0.2s ease;
+
+          & > div {
+            width: 24px;
+            height: 24px;
+
+            border-radius: 50%;
+            background: rgb(240, 240, 240);
+          }
+        }
+
+        .tweaker-enabled {
+          padding-left: 32px;
+          background: rgb(63, 82, 60);
+        }
+
+        .tweaker-disabled {
+          padding-left: 4px;
+          background: rgb(165, 165, 165);
+        }
+
+        p {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+        }
+      }
+    }
+
+    .submit-container {
+      display: flex;
+      flex-direction: column;
+      gap: 78px;
+
+      .agreements-container {
+        font-family: var(--font-montserrat), system-ui;
+
+        display: flex;
+        flex-direction: column;
+        gap: 34px;
+
+        .agreement-options-container {
+          display: flex;
+          flex-direction: column;
+          gap: 48px;
+
+          .agreement-option-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: start;
+            gap: 20px;
+
+            .agreement-description {
+              color: rgb(0, 0, 0);
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 15px;
+            }
+          }
+        }
+
+        .personal-offers-description {
+          color: rgb(81, 81, 81);
+          font-size: 10px;
+          font-weight: 500;
+          line-height: 12px;
+        }
+      }
+
+      .submit-container {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 34px;
+
+        .payment-submit-button {
+          padding: 16px 18px;
+          border-radius: 18px;
+          background: rgb(63, 82, 60);
+
+          color: rgb(255, 255, 255);
+          font-family: var(--font-nunito), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 27px;
+        }
+
+        .booking-conditions-description {
+          color: rgb(81, 81, 81);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ const CustomerHeader = () => {
 
     const menuItemData = [
         { name: "Готелі", href: "/hotels" },
-        { name: "Машини", href: "/" },
+        { name: "Авто", href: "/" },
         { name: "Апартаменти", href: "/" },
         { name: "Трансфери", href: "/" },
         { name: "Тури", href: "/" },

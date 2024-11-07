@@ -18,9 +18,12 @@ const HotelCard = (props: { item: IHotel }) => {
         ? `${minPrice} - ${maxPrice}`
         : `${minPrice}`;
 
+    const sortedPhotos = [...props.item.photos as typeof props.item.photos]
+        .sort((firstPhoto, secondPhoto) => firstPhoto.priority - secondPhoto.priority);
+
     return (
         <div className="hotel-item" onClick={() => navigate(`/hotel/${item.id}`)}>
-            <PhotoSlider photos={item.photos.map(p => p.name)} />
+            <PhotoSlider photos={sortedPhotos.map(p => p.name)} />
 
             <div className="hotel-info-container">
                 <div className="title-rating-container">

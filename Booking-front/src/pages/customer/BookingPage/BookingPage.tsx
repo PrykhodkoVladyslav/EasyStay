@@ -104,6 +104,14 @@ const BookingPage = () => {
 
     const [selectedTime, setSelectedTime] = useState<string>("");
 
+    const [activeOption, setActiveOption] = useState<number | null>(null);
+    const [holderName, setHolderName] = useState<string>("");
+    const [cardNumber, setCardNumber] = useState<string>("");
+    const [expiryDate, setExpiryDate] = useState<string>("");
+    const [cvc, setCvc] = useState<string>("");
+    const [isSaveCard, setIsSaveCard] = useState<boolean>(false);
+    const [isAppliedAgreements, setIsAppliedAgreements] = useState<boolean>(false);
+
     return <div className="booking-page-main-container">
         <StageIndicator options={["Ваш вибір", "Ваші дані", "Завершальний крок"]} currentOptionIndex={bodyIndex} />
 
@@ -143,6 +151,20 @@ const BookingPage = () => {
                     : bodyIndex === 2
                         ? <BookingPaymentData
                             dateFrom={externalBookingInfo.bookingInfo.dateFrom}
+                            activeOption={activeOption}
+                            setActiveOption={setActiveOption}
+                            holderName={holderName}
+                            setHolderName={setHolderName}
+                            cardNumber={cardNumber}
+                            setCardNumber={setCardNumber}
+                            expiryDate={expiryDate}
+                            setExpiryDate={setExpiryDate}
+                            cvc={cvc}
+                            setCvc={setCvc}
+                            isSaveCard={isSaveCard}
+                            setIsSaveCard={setIsSaveCard}
+                            isAppliedAgreements={isAppliedAgreements}
+                            setIsAppliedAgreements={setIsAppliedAgreements}
                         />
                         : null}
             </div>

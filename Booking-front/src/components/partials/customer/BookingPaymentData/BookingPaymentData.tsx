@@ -1,15 +1,45 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { addDays, differenceInCalendarDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 
 interface IBookingPaymentDataProps {
     dateFrom: Date;
+    activeOption: number | null;
+    setActiveOption: (option: number | null) => void;
+    holderName: string;
+    setHolderName: (value: string) => void;
+    cardNumber: string;
+    setCardNumber: (value: string) => void;
+    expiryDate: string;
+    setExpiryDate: (value: string) => void;
+    cvc: string;
+    setCvc: (value: string) => void;
+    isSaveCard: boolean;
+    setIsSaveCard: (value: boolean) => void;
+    isAppliedAgreements: boolean;
+    setIsAppliedAgreements: (value: boolean) => void;
 }
 
 const BookingPaymentData = (props: IBookingPaymentDataProps) => {
-    const { dateFrom } = props;
+    const {
+        dateFrom,
+        activeOption,
+        setActiveOption,
+        holderName,
+        setHolderName,
+        cardNumber,
+        setCardNumber,
+        expiryDate,
+        setExpiryDate,
+        cvc,
+        setCvc,
+        isSaveCard,
+        setIsSaveCard,
+        isAppliedAgreements,
+        setIsAppliedAgreements,
+    } = props;
 
     useEffect(() => {
         window.scrollTo({
@@ -23,17 +53,6 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
 
     const threeDaysBefore = addDays(dateFrom, -3);
     const formattedThreeDaysBefore = format(threeDaysBefore, "d MMM yyyy", { locale: uk });
-
-    const [activeOption, setActiveOption] = useState<number | null>(null);
-
-    const [holderName, setHolderName] = useState<string>("");
-    const [cardNumber, setCardNumber] = useState<string>("");
-    const [expiryDate, setExpiryDate] = useState<string>("");
-    const [cvc, setCvc] = useState<string>("");
-
-    const [isSaveCard, setIsSaveCard] = useState<boolean>(false);
-
-    const [isAppliedAgreements, setIsAppliedAgreements] = useState<boolean>(false);
 
     return <div className="payment-data-container">
         <div className="payment-method-container">

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./booking-page.scss";
 import StageIndicator from "components/partials/customer/StageIndicator.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
@@ -9,8 +9,13 @@ import { useEffect, useState } from "react";
 import BookingPersonalData from "components/partials/customer/BookingPersonalData/BookingPersonalData.tsx";
 import BookingPaymentData from "components/partials/customer/BookingPaymentData/BookingPaymentData.tsx";
 import IRoom from "interfaces/room/IRoom.ts";
-import { format } from "date-fns";
+import { addMinutes, format } from "date-fns";
 import showToast from "utils/toastShow.ts";
+import { useCreateBankCardMutation } from "services/bankCard.ts";
+import ICreateBankCardRequest from "interfaces/bankCard/ICreateBankCardRequest.ts";
+import ICreateBookingRequest from "interfaces/booking/ICreateBookingRequest.ts";
+import { useCreateBookingMutation } from "services/booking.ts";
+import IValidationError from "interfaces/error/IValidationError.ts";
 
 export interface IBookingBedSelection {
     isSingleBed?: boolean;
@@ -112,6 +117,11 @@ const BookingPage = () => {
     const [isSaveCard, setIsSaveCard] = useState<boolean>(false);
     const [isAppliedAgreements, setIsAppliedAgreements] = useState<boolean>(false);
 
+    const [createBankCard] = useCreateBankCardMutation();
+    const [createBooking] = useCreateBookingMutation();
+
+    const navigate = useNavigate();
+
     const onlyDigitsRegExp = /^\d+$/;
 
     const setSafeCardNumber = (value: string) => {
@@ -136,24 +146,108 @@ const BookingPage = () => {
             setCvc(value);
     };
 
+    const createBookingRequestInstance = () => {
+        const { bookingInfo } = externalBookingInfo;
+
+        const [hours, minutes] = selectedTime.split(":");
+
+        const localTime = new Date(0, 0, 0, parseInt(hours), parseInt(minutes), 0, 0);
+        const utcTime = addMinutes(localTime, localTime.getTimezoneOffset());
+
+        return {
+            dateFrom: bookingInfo.dateFrom,
+            dateTo: bookingInfo.dateTo,
+            personalWishes: personalWishes || undefined,
+            estimatedTimeOfArrivalUtc: utcTime,
+            bookingRoomVariants: bookingInfo.bookingRoomVariants
+                .map(brv => brv as IBookingRoomVariant),
+        } as ICreateBookingRequest;
+    };
+
     const submitBookingInfo = () => {
         if (selectedTime === "") {
-            showToast(`Оберіть орієнтований час прибуття`, "error");
+            showToast("Оберіть орієнтований час прибуття", "warning");
             return;
         }
 
         setBodyIndex(2);
     };
 
-    const submitPaymentInfo = () => {
+    const submitPaymentInfo = async () => {
+        if (activeOption == null) {
+            showToast("Оберіть спосіб оплати", "warning");
+            return;
+        }
 
+        if (!isAppliedAgreements) {
+            showToast("Прийміть умови політики конфіденційності", "warning");
+            return;
+        }
+
+        const createBookingRequest = createBookingRequestInstance();
+
+        if (activeOption === 0 || activeOption === 1) {
+            if (!holderName) {
+                showToast("Введіть повне ім'я власника банківської карти", "warning");
+                return;
+            }
+
+            if (cardNumber.length !== 16) {
+                showToast("Введіть номер картки", "warning");
+                return;
+            }
+
+            if (expiryDate.length !== 5) {
+                showToast("Введіть термін дії картки", "warning");
+                return;
+            }
+
+            if (cvc.length !== 3) {
+                showToast("Введіть CVC код", "warning");
+                return;
+            }
+
+            const [month, year] = expiryDate.split("/");
+
+            const createCardRequest = {
+                ownerFullName: holderName,
+                number: cardNumber,
+                cvv: cvc,
+                expirationDate: `20${year.padStart(2, "0")}-${month.padStart(2, "0")}-01`,
+            } as ICreateBankCardRequest;
+
+            if (isSaveCard) {
+                try {
+                    createBookingRequest.bankCardId = await createBankCard(createCardRequest).unwrap();
+                } catch (error) {
+                    showToast("Некоректні дані картки", "error");
+                    return;
+                }
+            } else {
+                createBookingRequest.bankCard = createCardRequest;
+            }
+        }
+
+        try {
+            await createBooking(createBookingRequest).unwrap();
+
+            navigate("/");
+        } catch (error) {
+            const e = error as IValidationError;
+            if (e.data[0].PropertyName === "BankCard") {
+                showToast("Некоректні дані картки", "error");
+                return;
+            }
+
+            showToast("Помилка бронювання", "error");
+        }
     };
 
-    const onNext = () => {
+    const onNext = async () => {
         if (bodyIndex === 1) {
             submitBookingInfo();
         } else if (bodyIndex === 2) {
-            submitPaymentInfo();
+            await submitPaymentInfo();
         }
     };
 

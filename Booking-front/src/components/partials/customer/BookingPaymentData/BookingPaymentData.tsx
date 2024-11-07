@@ -127,7 +127,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                 <div className="input-container">
                     <p className="input-title">Номер картки <sup>*</sup></p>
                     <input className="input-input"
-                           placeholder="5577000055770004"
+                           placeholder="5555555555554444"
                            type="text"
                            value={cardNumber}
                            onChange={e => setCardNumber(e.target.value)}
@@ -139,7 +139,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                     <div className="input-container">
                         <p className="input-title">Термін дії <sup>*</sup></p>
                         <input className="input-input"
-                               placeholder="01/25"
+                               placeholder="01/26"
                                type="text"
                                value={expiryDate}
                                onChange={e => setExpiryDate(e.target.value)}

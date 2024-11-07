@@ -23,5 +23,5 @@ public class Booking {
 
 	public ICollection<BookingRoomVariant> BookingRoomVariants { get; set; } = null!;
 
-	public ICollection<HotelReview> HotelReviews { get; set; } = null!;
+	public HotelReview? HotelReview { get; set; } = null!;
 }

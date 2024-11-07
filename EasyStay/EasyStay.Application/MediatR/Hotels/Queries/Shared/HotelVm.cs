@@ -23,7 +23,7 @@ public class HotelVm : IMapWith<Hotel> {
 	public decimal? MinPrice { get; set; }
 	public decimal? MaxPrice { get; set; }
 
-	public float Rating { get; set; }
+	public double Rating { get; set; }
 
 	public bool IsArchived { get; set; }
 
@@ -74,8 +74,16 @@ public class HotelVm : IMapWith<Hotel> {
 						.Max(rv => (decimal?)(rv.DiscountPrice ?? rv.Price))
 				)
 			)
-			// ToDo: Add a real rating when there are reviews
-			.ForMember(dest => dest.Rating, opt => opt.MapFrom(src => 9.3F))
+			.ForMember(
+				dest => dest.Rating,
+				opt => opt.MapFrom(
+					src => src.Rooms
+						.SelectMany(r => r.RoomVariants)
+						.SelectMany(rv => rv.BookingRoomVariants)
+						.Select(brv => brv.Booking)
+						.Average(b => b.HotelReview!.Score)
+				)
+			)
 			.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.HotelCategory))
 			.ForMember(
 				dest => dest.HotelAmenities,

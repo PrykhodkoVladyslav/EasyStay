@@ -102,9 +102,14 @@ public class HotelPaginationService(
 					.Any(rv => (rv.DiscountPrice ?? rv.Price) <= filter.MaxPrice.Value)
 			);
 
-		// ToDo: Add a real rating when there are reviews
 		if (filter.MinRating is not null)
-			query = query.Where(h => 9.3F >= filter.MinRating);
+			query = query.Where(
+				h => h.Rooms
+					.SelectMany(r => r.RoomVariants)
+					.SelectMany(rv => rv.BookingRoomVariants)
+					.Select(brv => brv.Booking)
+					.Average(b => b.HotelReview!.Score) >= filter.MinRating
+			);
 
 		if (filter.HasAnyRoomVariant == true)
 			query = query.Where(h => h.Rooms.SelectMany(r => r.RoomVariants).Any());

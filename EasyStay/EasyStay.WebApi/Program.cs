@@ -1,34 +1,6 @@
 using EasyStay.Application;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.Interfaces;
-using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
-using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
-using EasyStay.Application.MediatR.Breakfasts.Queries.GetPage;
-using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
-using EasyStay.Application.MediatR.Cities.Queries.GetPage;
-using EasyStay.Application.MediatR.Cities.Queries.Shared;
-using EasyStay.Application.MediatR.Citizenships.Queries.GetPage;
-using EasyStay.Application.MediatR.Citizenships.Queries.Shared;
-using EasyStay.Application.MediatR.Countries.Queries.GetPage;
-using EasyStay.Application.MediatR.Countries.Queries.Shared;
-using EasyStay.Application.MediatR.HotelAmenities.Queries.GetPage;
-using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
-using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
-using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
-using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
-using EasyStay.Application.MediatR.Hotels.Queries.Shared;
-using EasyStay.Application.MediatR.Languages.Queries.GetPage;
-using EasyStay.Application.MediatR.Languages.Queries.Shared;
-using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
-using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
-using EasyStay.Application.MediatR.RentalPeriods.Queries.GetPage;
-using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
-using EasyStay.Application.MediatR.RoomAmenities.Queries.GetPage;
-using EasyStay.Application.MediatR.RoomAmenities.Queries.Shared;
-using EasyStay.Application.MediatR.Rooms.Queries.GetPage;
-using EasyStay.Application.MediatR.Rooms.Queries.Shared;
-using EasyStay.Application.MediatR.RoomTypes.Queries.GetPage;
-using EasyStay.Application.MediatR.RoomTypes.Queries.Shared;
 using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
 using EasyStay.Persistence;
@@ -38,7 +10,7 @@ using EasyStay.WebApi.Extensions;
 using EasyStay.WebApi.Hubs;
 using EasyStay.WebApi.Middleware;
 using EasyStay.WebApi.Services;
-using EasyStay.WebApi.Services.PaginationServices;
+using EasyStay.WebApi.Services.PaginationServices.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 
@@ -100,22 +72,8 @@ builder.Services.AddSingleton<IEmailService, GmailEmailService>();
 builder.Services.AddSingleton<ITimeConverter, TimeConverter>();
 builder.Services.AddSingleton<IDateConverter, DateConverter>();
 
-builder.Services.AddScoped<IPaginationService<CountryVm, GetCountriesPageQuery>, CountryPaginationService>();
-builder.Services.AddScoped<IPaginationService<CityVm, GetCitiesPageQuery>, CityPaginationService>();
-builder.Services.AddScoped<IPaginationService<HotelCategoryVm, GetHotelCategoriesPageQuery>, HotelCategoryPaginationService>();
-builder.Services.AddScoped<IPaginationService<HotelAmenityVm, GetHotelAmenitiesPageQuery>, HotelAmenityPaginationService>();
-builder.Services.AddScoped<IPaginationService<BreakfastVm, GetBreakfastsPageQuery>, BreakfastPaginationService>();
-builder.Services.AddScoped<IPaginationService<LanguageVm, GetLanguagesPageQuery>, LanguagePaginationService>();
-builder.Services.AddScoped<IPaginationService<HotelVm, GetHotelsPageQuery>, HotelPaginationService>();
-builder.Services.AddScoped<IPaginationService<RoomVm, GetRoomsPageQuery>, RoomPaginationService>();
-builder.Services.AddScoped<IPaginationService<RentalPeriodVm, GetRentalPeriodsPageQuery>, RentalPeriodPaginationService>();
-builder.Services.AddScoped<IPaginationService<RoomTypeVm, GetRoomTypesPageQuery>, RoomTypePaginationService>();
-builder.Services.AddScoped<IPaginationService<RoomAmenityVm, GetRoomAmenitiesPageQuery>, RoomAmenityPaginationService>();
-builder.Services.AddScoped<IPaginationService<CustomerItemVm, GetCustomerPageCommand>, CustomerPaginationService>();
-builder.Services.AddScoped<IPaginationService<RealtorItemVm, GetRealtorPageCommand>, RealtorPaginationService>();
-builder.Services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
-builder.Services.AddScoped<IPaginationService<CitizenshipVm, GetCitizenshipsPageQuery>, CitizenshipPaginationService>();
 
+builder.Services.AddPaginationServices();
 
 builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));
 

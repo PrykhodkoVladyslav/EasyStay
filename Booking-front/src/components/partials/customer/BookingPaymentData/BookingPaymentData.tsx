@@ -18,13 +18,13 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
         });
     }, []);
 
-    const [activeOption, setActiveOption] = useState<number | null>(null);
-
     const dayBefore = addDays(dateFrom, -1);
     const formattedDayBefore = format(dayBefore, "d MMM yyyy", { locale: uk });
 
     const threeDaysBefore = addDays(dateFrom, -3);
     const formattedThreeDaysBefore = format(threeDaysBefore, "d MMM yyyy", { locale: uk });
+
+    const [activeOption, setActiveOption] = useState<number | null>(null);
 
     const [holderName, setHolderName] = useState<string>("");
     const [cardNumber, setCardNumber] = useState<string>("");
@@ -33,12 +33,14 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
 
     const [isSaveCard, setIsSaveCard] = useState<boolean>(false);
 
+    const [isAppliedAgreements, setIsAppliedAgreements] = useState<boolean>(false);
+
     return <div className="payment-data-container">
         <div className="payment-method-container">
             <div className="payment-title-container">
                 <h3 className="payment-title">Коли ви хочете оплатити?</h3>
 
-                <div className="payment-question-container">
+                <div className="payment-question-container pointer">
                     <img src={getPublicResourceUrl("icons/question/gray-question.svg")} alt="question" />
                     <p>Немає картки?</p>
                 </div>
@@ -151,6 +153,37 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                 </div>
             </div>
         </>}
+
+        <VerticalPad heightPx={100} />
+
+        <div className="submit-container">
+            <div className="agreements-container">
+                <div className="agreement-options-container">
+                    <div className="agreement-option-container pointer"
+                         onClick={() => setIsAppliedAgreements(!isAppliedAgreements)}>
+                        <img
+                            src={getPublicResourceUrl(`icons/radiobutton/${isAppliedAgreements ? "checked" : "unchecked"}-gray.svg`)}
+                            alt="checkbox-icon"
+                        />
+                        <p className="agreement-description">Я погоджуюсь з умовами політики конфіденційності EasyStay,
+                            надаючи згоду на обробку моїх персональних даних з метою забезпечення належного
+                            функціонування сервісу, покращення користувацького досвіду, а також надання персоналізованих
+                            рекомендацій.</p>
+                    </div>
+                </div>
+
+                <p className="personal-offers-description">Зареєструвавшись, ви дозволяєте нам підбирати пропозиції та
+                    вміст відповідно до ваших інтересів,
+                    відстежуючи, як ви використовуєте EasyStay за допомогою технологій відстеження. Ознайомтеся з нашою
+                    політикою конфіденційності.</p>
+            </div>
+
+            <div className="submit-container">
+                <button className="payment-submit-button">Забронювати з зобовʼязанням оплатити</button>
+
+                <p className="booking-conditions-description pointer">Які умови мого бронювання?</p>
+            </div>
+        </div>
     </div>;
 };
 

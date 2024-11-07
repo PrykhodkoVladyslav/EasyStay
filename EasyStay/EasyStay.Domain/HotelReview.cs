@@ -1,9 +1,8 @@
 ﻿using EasyStay.Domain.EntityInterfaces;
-using EasyStay.Domain.Identity;
 
 namespace EasyStay.Domain;
 
-public class RealtorReview : ITimestamped {
+public class HotelReview : ITimestamped {
 	public long Id { get; set; }
 
 	public string Description { get; set; } = null!;
@@ -14,9 +13,6 @@ public class RealtorReview : ITimestamped {
 
 	public DateTime? UpdatedAtUtc { get; set; }
 
-	public long AuthorId;
-	public Customer Author { get; set; } = null!;
-
-	public long RealtorId { get; set; }
-	public Realtor Realtor { get; set; } = null!;
+	public long BookingId { get; set; }
+	public Booking Booking { get; set; } = null!;
 }

@@ -1,8 +1,9 @@
-﻿using EasyStay.Domain.Identity;
+﻿using EasyStay.Domain.EntityInterfaces;
+using EasyStay.Domain.Identity;
 
 namespace EasyStay.Domain;
 
-public class Message {
+public class Message : ITimestamped {
 	public long Id { get; set; }
 
 	public string Text { get; set; } = null!;

@@ -55,6 +55,7 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	public DbSet<Booking> Bookings { get; set; }
 	public DbSet<BookingRoomVariant> BookingRoomVariants { get; set; }
 	public DbSet<BookingBedSelection> BookingBedSelections { get; set; }
+	public DbSet<HotelReview> HotelReviews { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);

@@ -20,6 +20,8 @@ interface IBookingPaymentDataProps {
     setIsSaveCard: (value: boolean) => void;
     isAppliedAgreements: boolean;
     setIsAppliedAgreements: (value: boolean) => void;
+
+    onNext: () => void;
 }
 
 const BookingPaymentData = (props: IBookingPaymentDataProps) => {
@@ -39,6 +41,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
         setIsSaveCard,
         isAppliedAgreements,
         setIsAppliedAgreements,
+        onNext,
     } = props;
 
     useEffect(() => {
@@ -113,7 +116,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                 <div className="input-container">
                     <p className="input-title">Імʼя власника картки <sup>*</sup></p>
                     <input className="input-input"
-                           placeholder="Вказати"
+                           placeholder="Іваненко Іван Іванович"
                            type="text"
                            value={holderName}
                            onChange={e => setHolderName(e.target.value)}
@@ -124,7 +127,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                 <div className="input-container">
                     <p className="input-title">Номер картки <sup>*</sup></p>
                     <input className="input-input"
-                           placeholder="Вказати"
+                           placeholder="5577000055770004"
                            type="text"
                            value={cardNumber}
                            onChange={e => setCardNumber(e.target.value)}
@@ -136,7 +139,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                     <div className="input-container">
                         <p className="input-title">Термін дії <sup>*</sup></p>
                         <input className="input-input"
-                               placeholder="Вказати"
+                               placeholder="01/25"
                                type="text"
                                value={expiryDate}
                                onChange={e => setExpiryDate(e.target.value)}
@@ -151,7 +154,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                                  alt="question" />
                         </div>
                         <input className="input-input"
-                               placeholder="Вказати"
+                               placeholder="000"
                                type="text"
                                value={cvc}
                                onChange={e => setCvc(e.target.value)}
@@ -198,7 +201,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
             </div>
 
             <div className="submit-container">
-                <button className="payment-submit-button">Забронювати з зобовʼязанням оплатити</button>
+                <button className="payment-submit-button" onClick={onNext}>Забронювати з зобовʼязанням оплатити</button>
 
                 <p className="booking-conditions-description pointer">Які умови мого бронювання?</p>
             </div>

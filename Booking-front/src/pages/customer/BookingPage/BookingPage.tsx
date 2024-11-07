@@ -112,6 +112,51 @@ const BookingPage = () => {
     const [isSaveCard, setIsSaveCard] = useState<boolean>(false);
     const [isAppliedAgreements, setIsAppliedAgreements] = useState<boolean>(false);
 
+    const onlyDigitsRegExp = /^\d+$/;
+
+    const setSafeCardNumber = (value: string) => {
+        if (value.match(onlyDigitsRegExp) || value.length === 0)
+            setCardNumber(value);
+    };
+
+    const setSafeExpiryDate = (value: string) => {
+        if (
+            value.match(/^\d$/) ||
+            value.match(/^\d{2}$/) ||
+            value.match(/^\d{2}\/$/) ||
+            value.match(/^\d{2}\/\d$/) ||
+            value.match(/^\d{2}\/\d{2}$/) ||
+            value.length === 0
+        )
+            setExpiryDate(value);
+    };
+
+    const setSafeCvc = (value: string) => {
+        if (value.match(onlyDigitsRegExp) || value.length === 0)
+            setCvc(value);
+    };
+
+    const submitBookingInfo = () => {
+        if (selectedTime === "") {
+            showToast(`Оберіть орієнтований час прибуття`, "error");
+            return;
+        }
+
+        setBodyIndex(2);
+    };
+
+    const submitPaymentInfo = () => {
+
+    };
+
+    const onNext = () => {
+        if (bodyIndex === 1) {
+            submitBookingInfo();
+        } else if (bodyIndex === 2) {
+            submitPaymentInfo();
+        }
+    };
+
     return <div className="booking-page-main-container">
         <StageIndicator options={["Ваш вибір", "Ваші дані", "Завершальний крок"]} currentOptionIndex={bodyIndex} />
 
@@ -139,14 +184,7 @@ const BookingPage = () => {
                         selectedTime={selectedTime}
                         setSelectedTime={setSelectedTime}
                         arrivalTime={formatTime(hotel.arrivalTimeUtcFrom)}
-                        onNext={() => {
-                            if (selectedTime === "") {
-                                showToast(`Оберіть орієнтований час прибуття`, "error");
-                                return;
-                            }
-
-                            setBodyIndex(2);
-                        }}
+                        onNext={onNext}
                     />
                     : bodyIndex === 2
                         ? <BookingPaymentData
@@ -156,15 +194,16 @@ const BookingPage = () => {
                             holderName={holderName}
                             setHolderName={setHolderName}
                             cardNumber={cardNumber}
-                            setCardNumber={setCardNumber}
+                            setCardNumber={setSafeCardNumber}
                             expiryDate={expiryDate}
-                            setExpiryDate={setExpiryDate}
+                            setExpiryDate={setSafeExpiryDate}
                             cvc={cvc}
-                            setCvc={setCvc}
+                            setCvc={setSafeCvc}
                             isSaveCard={isSaveCard}
                             setIsSaveCard={setIsSaveCard}
                             isAppliedAgreements={isAppliedAgreements}
                             setIsAppliedAgreements={setIsAppliedAgreements}
+                            onNext={onNext}
                         />
                         : null}
             </div>

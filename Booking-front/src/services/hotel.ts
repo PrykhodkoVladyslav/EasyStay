@@ -18,13 +18,21 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        getHotelsPage: builder.query<IPage<IHotel>, IHotelsPageQuery>({
-            query: (query) => `GetPage?${toQueryFromIHotelsPageQuery(query)}`,
+        getHotelsPage: builder.query<IPage<IHotel>, IHotelsPageQuery | undefined>({
+            query: (query) => {
+                const baseQuery = "GetPage";
+
+                if (!query)
+                    return baseQuery;
+
+                return `${baseQuery}?${toQueryFromIHotelsPageQuery(query)}`;
+            },
             providesTags: ["Hotels"],
         }),
 
-        getHotel: builder.query<IHotelDetails[], number>({
+        getHotel: builder.query<IHotelDetails, number>({
             query: (id) => `getById/${id}`,
+            providesTags: ["Hotels"],
         }),
 
         getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
@@ -32,7 +40,7 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        createHotel: builder.mutation<void, IHotelCreate>({
+        createHotel: builder.mutation<number, IHotelCreate>({
             query: (hotel) => {
                 const hotelFormData = new FormData();
 
@@ -78,45 +86,11 @@ export const hotelApi = createApi({
                     url: "create",
                     method: "POST",
                     body: hotelFormData,
-                }
+                };
             },
             invalidatesTags: ["Hotels"],
         }),
 
-        // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
-        //     query: (params) => {
-        //         const queryString = createQueryString(params as Record<string, any>);
-        //         return `getPage?${queryString}`;
-        //     },
-        // }),
-
-        // createHotel: builder.mutation({
-        //     query: (hotel) => {
-        //         const hotelFormData = new FormData();
-        //         hotelFormData.append("Name", hotel.name);
-        //         hotelFormData.append("Description", hotel.description);
-        //         hotelFormData.append("Area", hotel.area);
-        //         hotelFormData.append("NumberOfRooms", hotel.numberOfRooms);
-        //         hotelFormData.append("IsArchived", hotel.isArchived);
-        //         hotelFormData.append("Address.Street", hotel.address.street);
-        //         hotelFormData.append("Address.HouseNumber", hotel.address.houseNumber);
-        //         hotelFormData.append("Address.Latitude", hotel.address.latitude);
-        //         hotelFormData.append("Address.Longitude", hotel.address.longitude);
-        //         hotelFormData.append("Address.CityId", hotel.cityId?.toString());
-        //         hotelFormData.append("CategoryId", hotel.categoryId?.toString());
-        //         if (hotel.photos) {
-        //             Array.from(hotel.photos).forEach((image) => hotelFormData.append("Photos", image as File));
-        //         }
-        //
-        //         return {
-        //             url: "create",
-        //             method: "POST",
-        //             body: hotelFormData,
-        //         };
-        //     },
-        //     invalidatesTags: ["Hotels"],
-        // }),
-        //
         // updateHotel: builder.mutation({
         //     query: (hotel: IHotel) => {
         //         const hotelFormData = new FormData();
@@ -143,13 +117,6 @@ export const hotelApi = createApi({
         //         };
         //     },
         //     invalidatesTags: ["Hotels"],
-        // }),
-
-        // getPageHotels: builder.query<GetPageResponse<Hotel>, GetHotelPageRequest>({
-        //     query: (params) => {
-        //         const queryString = createQueryString(params as Record<string, any>);
-        //         return `getPage?${queryString}`;
-        //     },
         // }),
 
         deleteHotel: builder.mutation({
@@ -185,7 +152,6 @@ export const {
     useGetHotelQuery,
     useGetRealtorHotelsPageQuery,
     useCreateHotelMutation,
-    // useCreateHotelMutation,
     // useUpdateHotelMutation,
     useDeleteHotelMutation,
     useSetArchiveStatusHotelMutation,

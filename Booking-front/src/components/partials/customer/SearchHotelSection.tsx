@@ -29,6 +29,7 @@ export interface ISearchData {
 
 interface ISearchTopSectionProps {
     onSearch?: (data: ISearchData) => void;
+    hideCityInput?: boolean;
 }
 
 const SearchHotelSection = (props: ISearchTopSectionProps) => {
@@ -61,7 +62,7 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
 
     const isSelectedDates = () => selectedDateFrom !== null && selectedDateTo !== null;
 
-    const onSearch = () => {
+    const onSearchClick = () => {
         const selectedDates = selectedDateFrom && selectedDateTo ? {
             from: selectedDateFrom,
             to: selectedDateTo,
@@ -76,12 +77,15 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
 
     return (
         <div className="search-top-section">
-            <div className="block city-block">
-                <p className="title">Куди</p>
-                <input type="text" className="city-input" placeholder="Назва міста"
-                       value={city}
-                       onChange={(e) => setCity(e.target.value)} />
-            </div>
+            {!props.hideCityInput && (
+                <div className="block city-block">
+                    <p className="title">Куди</p>
+                    <input type="text" className="city-input" placeholder="Назва міста"
+                           value={city}
+                           onChange={(e) => setCity(e.target.value)}
+                    />
+                </div>
+            )}
             <div className="block middle-block date-block" onClick={() => setIsOpenedDatePicker(true)}>
                 <div className="title-container">
                     <img
@@ -137,7 +141,7 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
                 </div>
             </div>
             <div className="find-block">
-                <button className="find-button" onClick={onSearch}>
+                <button className="find-button" onClick={onSearchClick}>
                     <img src={getPublicResourceUrl("icons/magnifying-glass.svg")} alt="Magnifying glass" />
                     <p className="button-title">Шукати</p>
                 </button>

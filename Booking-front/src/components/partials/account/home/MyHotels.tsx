@@ -57,7 +57,7 @@ const MyHotels = () => {
                                 <p>2 ночі, 1 дорослий</p>
                                 <div className="container5">
                                     <div className="prices-container">
-                                        <p className="price">6999₴</p>
+                                        <p className="price"><span>Від </span>6999₴</p>
                                         <p className="old-price">13399₴</p>
                                     </div>
                                     <div className="container6">

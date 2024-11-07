@@ -11,8 +11,8 @@ public class CreateRealtorReviewValidator : AbstractValidator<CreateRealtorRevie
 				.WithMessage("Description is too long");
 
 		RuleFor(r => r.Score)
-			.InclusiveBetween(0, 5)
-				.WithMessage("Score must be in the range from 0 to 5");
+			.InclusiveBetween(0, 10)
+				.WithMessage("Score must be in the range from 0 to 10");
 
 		RuleFor(r => r.RealtorId)
 			.NotEqual(0)

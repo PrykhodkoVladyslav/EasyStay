@@ -173,7 +173,7 @@ public class GeneratedDataSeeder(
 		for (int i = 0; i < 15; i++) {
 			var realtorReview = new RealtorReview {
 				Description = faker.Lorem.Sentences(3),
-				Score = faker.Random.Int(1, 5),
+				Score = faker.Random.Int(1, 10),
 				CreatedAtUtc = DateTime.UtcNow,
 				RealtorId = faker.PickRandom(realtorsIds),
 				AuthorId = faker.PickRandom(customersIds)

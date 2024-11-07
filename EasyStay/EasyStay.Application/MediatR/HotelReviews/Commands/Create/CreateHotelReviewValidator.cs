@@ -12,8 +12,8 @@ public class CreateHotelReviewValidator : AbstractValidator<CreateHotelReviewCom
 				.WithMessage("Description is too long.");
 
 		RuleFor(hr => hr.Score)
-			.InclusiveBetween(0, 5)
-				.WithMessage("Score must be in the range from 0 to 5.");
+			.InclusiveBetween(0, 10)
+				.WithMessage("Score must be in the range from 0 to 10.");
 
 		RuleFor(hr => hr.BookingId)
 			.NotEqual(0)

@@ -17,7 +17,7 @@ public class CreateRealtorReviewCommandHandler(
 	public async Task<long> Handle(CreateRealtorReviewCommand request, CancellationToken cancellationToken) {
 		var realtor = await userManager.Users
 			.OfType<Realtor>()
-			.FirstOrDefaultAsync(r => r.Id == request.RealtorId)
+			.FirstOrDefaultAsync(r => r.Id == request.RealtorId, cancellationToken)
 			?? throw new NotFoundException(nameof(Realtor), request.RealtorId);
 
 		var entity = new RealtorReview {

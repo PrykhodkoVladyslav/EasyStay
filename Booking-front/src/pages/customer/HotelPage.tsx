@@ -2,50 +2,25 @@ import { useParams } from "react-router-dom";
 import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
-import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
+// import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { useState } from "react";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
-import IRoomAmenity from "interfaces/roomAmenity/IRoomAmenity.ts";
+// import IRoomAmenity from "interfaces/roomAmenity/IRoomAmenity.ts";
+import { differenceInDays } from "date-fns";
+import RoomSection from "components/partials/customer/RoomSection.tsx";
 
 const HotelPage = () => {
     const { id } = useParams();
     const { data: hotelData, isLoading, error } = useGetHotelQuery(Number(id));
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedQuantities, setSelectedQuantities] = useState<{
-        [roomId: number]: { [variantId: number]: number }
-    }>({});
     const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
     const [isRoomsVisible, setIsRoomsVisible] = useState(false);
-    const [quantities, setQuantities] = useState<{ [variantId: number]: number }>({});
     const [selectedDays, setSelectedDays] = useState(0);
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка при завантаженні даних готелю</p>;
     if (!hotelData) return null;
-
-    const handleSelectChange = (roomId: number, variantId: number, selectedQuantity: number) => {
-        setSelectedQuantities((prevSelectedQuantities) => {
-            const roomSelections = prevSelectedQuantities[roomId] || {};
-            return {
-                ...prevSelectedQuantities,
-                [roomId]: {
-                    ...roomSelections,
-                    [variantId]: selectedQuantity,
-                },
-            };
-        });
-    };
-
-    const getRemainingQuantity = (roomId: number) => {
-        const room = hotelData.rooms.find((r: any) => r.id === roomId);
-        if (!room) return 0;
-
-        const selectedForRoom = selectedQuantities[roomId] || {};
-        const usedQuantity = Object.values(selectedForRoom).reduce((sum, qty) => sum + qty, 0);
-
-        return Math.max(room.quantity - usedQuantity, 0);
-    };
 
     const formatTime = (timeString: string) => {
         if (!timeString) return "Невірний час";
@@ -55,11 +30,11 @@ const HotelPage = () => {
 
     const onSearch = (topFilters: ISearchData) => {
         const adultGuests = topFilters.adultGuests || 0;
-        const fromDate = new Date(topFilters.date.from);
-        const toDate = new Date(topFilters.date.to);
+        const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
+        const toDate = topFilters.date?.to ? new Date(topFilters.date.to) : new Date();
 
         if (topFilters.date?.from && topFilters.date?.to) {
-            setSelectedDays((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
+            setSelectedDays(differenceInDays(toDate, fromDate));
         }
         const matchedRooms = hotelData.rooms.filter(room =>
             room.variants.some((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests),
@@ -71,28 +46,27 @@ const HotelPage = () => {
         setFilteredRooms(matchedRooms);
         setIsRoomsVisible(true);
 
-        matchedRooms.forEach(room => {
-            room.variants.forEach(variant => {
-                const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
-                    id: variant.id,
-                    FreePeriod: {
-                        from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : "",
-                        to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : "",
-                    },
-                });
-                console.log(quantityData);
-
-                if (quantityData) {
-                    setQuantities(prevQuantities => ({
-                        ...prevQuantities,
-                        [variant.id]: quantityData,
-                    }));
-                }
-            });
-        });
+        // const newQuantities: { [roomId: number]: number } = {};
+        // matchedRooms.forEach(room => {
+        //     room.variants.forEach(variant => {
+        //         const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
+        //             id: variant.id,
+        //             FreePeriod: {
+        //                 from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : "",
+        //                 to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : "",
+        //             },
+        //         });
+        //         console.log(quantityData);
+        //
+        //         if (quantityData) {
+        //             setQuantities(prevQuantities => ({
+        //                 ...prevQuantities,
+        //                 [variant.id]: quantityData,
+        //             }));
+        //         }
+        //     });
+        // });
     };
-
-    console.log(hotelData);
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -172,7 +146,7 @@ const HotelPage = () => {
                                     {hotelData.breakfasts.map(breakfast => (
                                         <div>
                                             <img
-                                                src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
+                                                src={getPublicResourceUrl("icons/breakfast.svg")}
                                                 alt=""
                                             />
                                             <p key={breakfast.id}>{breakfast.name}</p>
@@ -296,238 +270,11 @@ const HotelPage = () => {
                 {isRoomsVisible && (
                     <div className="rooms">
                         <p className="global-title">Номери</p>
-                        <table className="room-table">
-                            <thead>
-                            <tr>
-                                <th>Тип номера</th>
-                                <th>Кількість гостей</th>
-                                <th>Тип ліжка</th>
-                                <th>Додаткова інформація</th>
-                                <th>Ціна</th>
-                                <th>Оберіть варіанти</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {filteredRooms.map(room => (
-                                <tr key={room.id}>
-                                    <td className="room-type">
-                                        <p className="title">{room.name}</p>
-                                        <p className="rooms-left">!
-                                            Лише {quantities[room.id] ?? room.quantity} залишилось на цьому сайті!</p>
-                                        <div className="features">
-                                            {room.amenities.map((amenity: IRoomAmenity) => (
-                                                <div key={amenity.id}>
-                                                    <img src={getPublicResourceUrl("icons/check.svg")} alt="" />
-                                                    <p>{amenity.name}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </td>
-
-                                    <td className="peoples">
-                                        {room.variants.map((variant: IRoomVariant) => (
-                                            <div className="cols" key={variant.id}>
-                                                <div className="flex flex-wrap">
-                                                    {Array.from({ length: variant.guestInfo.adultCount }).map((_, idx) => (
-                                                        <img
-                                                            key={`adult-${idx}`}
-                                                            src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                                            alt="Adult"
-                                                            title="Дорослий"
-                                                        />
-                                                    ))}
-                                                    {Array.from({ length: variant.guestInfo.childCount }).map((_, idx) => (
-                                                        <img
-                                                            key={`child-${idx}`}
-                                                            src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                                            alt="Child"
-                                                            title="Дитина"
-                                                            className="child"
-                                                        />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </td>
-
-                                    <td className="bed-type">
-                                        {room.variants.map((variant: IRoomVariant) => (
-                                            <div className="cols" key={variant.id}>
-                                                <p className="title">Оберіть тип ліжка</p>
-
-                                                {variant.bedInfo.doubleBedCount > 0 && (
-                                                    <div className="flex">
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`double-bed`}
-                                                            name={`bed-type_${variant.roomId}`}
-                                                        />
-                                                        <label htmlFor={`double-bed`}>
-                                                            <p>{variant.bedInfo.doubleBedCount} двоспальне ліжко</p>
-                                                            <img
-                                                                src={getPublicResourceUrl("icons/roomSvg/double-bed.svg")}
-                                                                alt=""
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                )}
-
-                                                {variant.bedInfo.singleBedCount > 0 && (
-                                                    <div className="flex">
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`single-bed`}
-                                                            name={`bed-type_${variant.roomId}`}
-                                                        />
-                                                        <label htmlFor={`single-bed`}>
-                                                            <p>{variant.bedInfo.singleBedCount} односпальні ліжка</p>
-                                                            <img
-                                                                src={getPublicResourceUrl("icons/roomSvg/single-bed.svg")}
-                                                                alt=""
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                )}
-
-                                                {variant.bedInfo.extraBedCount > 0 && (
-                                                    <div className="flex">
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`extra-bed`}
-                                                            name={`bed-type_${variant.roomId}`}
-                                                        />
-                                                        <label htmlFor={`extra-bed`}>
-                                                            <p>{variant.bedInfo.extraBedCount} додаткове ліжко</p>
-                                                            <img
-                                                                src={getPublicResourceUrl("icons/roomSvg/extra-bed.svg")}
-                                                                alt=""
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                )}
-
-                                                {variant.bedInfo.sofaCount > 0 && (
-                                                    <div className="flex">
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`sofa-bed`}
-                                                            name={`bed-type_${variant.roomId}`}
-                                                        />
-                                                        <label htmlFor={`sofa-bed`}>
-                                                            <p>{variant.bedInfo.sofaCount} софа</p>
-                                                            <img
-                                                                src={getPublicResourceUrl("icons/roomSvg/sofa-bed.svg")}
-                                                                alt=""
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                )}
-
-                                                {variant.bedInfo.kingsizeBedCount > 0 && (
-                                                    <div className="flex">
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`bed_kingsize_${variant.id}`}
-                                                            name={`bed-type_${variant.roomId}`}
-                                                        />
-                                                        <label htmlFor={`bed_kingsize_${variant.id}`}>
-                                                            <p>{variant.bedInfo.kingsizeBedCount} kingsize ліжко</p>
-                                                            <img
-                                                                src={getPublicResourceUrl("icons/roomSvg/kingsize-bed.svg")}
-                                                                alt=""
-                                                            />
-                                                        </label>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </td>
-
-                                    <td className="advantages">
-                                        {room.variants.map((variant: IRoomVariant) => (
-                                            <div className="cols" key={variant.id}>
-                                                {hotelData.breakfasts && (
-                                                    <div className="flex flex-row">
-                                                        <img src={getPublicResourceUrl("icons/roomSvg/breakfast.svg")}
-                                                             alt="" />
-                                                        <p>Сніданок включено</p>
-                                                    </div>
-                                                )}
-
-                                                <p><span>Тип кімнати:</span> {room.roomType.name}</p>
-
-                                                <p><span>Площа:</span> {room.area.toFixed(1)} м²</p>
-
-                                                <p><span>Кількість кімнат:</span> {room.numberOfRooms}</p>
-
-                                                {/*<div className="rental-periods">*/}
-                                                {/*    <p>Періоди оренди:</p>*/}
-                                                {/*    <ul>*/}
-                                                {/*        {room.rentalPeriods.map(period => (*/}
-                                                {/*            <li key={period.id}>{period.name}</li>*/}
-                                                {/*        ))}*/}
-                                                {/*    </ul>*/}
-                                                {/*</div>*/}
-                                            </div>
-                                        ))}
-                                    </td>
-
-                                    <td className="price">
-                                        {room.variants.map((variant: IRoomVariant) => {
-                                            const discountPrice = variant.price != null ? variant.price : variant.discountPrice;
-                                            const basePrice = variant.discountPrice != null ? variant.discountPrice : variant.price;
-                                            const totalBasePrice = basePrice != null ? basePrice * selectedDays : 0;
-                                            const totalDiscountPrice = discountPrice != null ? discountPrice * selectedDays : 0;
-
-                                            return (
-                                                <div className="cols" key={variant.id}>
-                                                    <div className="flex flex-row gap-2 flex-wrap">
-                                                        {selectedDays === 0 ? (
-                                                            <p className="new-price text-red-500">Виберіть дати</p>
-                                                        ) : (
-                                                            <>
-                                                                <p className="new-price" title="Нова ціна">
-                                                                    {totalBasePrice.toFixed(0) + "$"}
-                                                                </p>
-                                                                {variant.discountPrice != null && (
-                                                                    <p className="old-price" title="Стара ціна">
-                                                                        {totalDiscountPrice.toFixed(0) + "$"}
-                                                                    </p>
-                                                                )}
-                                                                <p className="description">Включає податки та збори</p>
-                                                            </>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-                                    </td>
-
-                                    <td className="select-options">
-                                        {room.variants.map((variant: IRoomVariant) => (
-                                            <div className="cols" key={variant.id}>
-                                                <select
-                                                    value={selectedQuantities[room.id]?.[variant.id] || 0}
-                                                    onChange={(e) => handleSelectChange(room.id, variant.id, parseInt(e.target.value))}
-                                                >
-                                                    {[...Array(getRemainingQuantity(room.id) + (selectedQuantities[room.id]?.[variant.id] || 0) + 1)].map((_, idx) => (
-                                                        <option key={idx} value={idx}>{idx}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        ))}
-                                    </td>
-
-                                    <td className="book">
-                                        <button className="btn-book">Забронювати</button>
-                                        <p>Миттєве підтвердження</p>
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
+                        <RoomSection
+                            rooms={filteredRooms}
+                            selectedDays={selectedDays}
+                            hotelBreakfast={hotelData.breakfasts.length > 0}
+                        />
                     </div>
                 )}
             </div>

@@ -1,13 +1,15 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 import { useNavigate } from "react-router-dom";
+import ProfileModal from "components/partials/ProfileModal.tsx";
 
 const CustomerHeader = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    const [profileIsModalOpen, setProfileIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const menuItemData = [
@@ -46,8 +48,7 @@ const CustomerHeader = () => {
     };
 
     const handleProfileClick = () => {
-        console.log("Profile clicked");
-
+        setProfileIsModalOpen(prev => !prev);
     };
 
     return (
@@ -99,6 +100,9 @@ const CustomerHeader = () => {
                             alt="Profile"
                         />
                     </button>
+                    {profileIsModalOpen && (
+                        <ProfileModal onClose={() => setProfileIsModalOpen(false)} />
+                    )}
                 </div>
             </div>
         </header>

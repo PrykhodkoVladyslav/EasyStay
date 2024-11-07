@@ -1,8 +1,39 @@
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
-// import HorizontalPad from "components/ui/HorizontalPad.tsx";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
+import { useContext, useEffect, useState } from "react";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { useNavigate } from "react-router-dom";
+import ProfileModal from "components/partials/ProfileModal.tsx";
 
 const Header = () => {
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    const [profileIsModalOpen, setProfileIsModalOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const menuItemData = [
+        { name: "Кабінет", href: "/hotels" },
+        { name: "Мої готелі", href: "/realtor/hotels" },
+        { name: "Відгуки", href: "/realtor/reviews" },
+        { name: "Архів", href: "/realtor/archived" },
+    ];
+
+    const menuItems = menuItemData.map((item, index) => (
+        <button
+            key={index}
+            className={`pages ${item.name === activeMenuItemContext?.activePage ? "active" : ""}`}
+            onClick={() => navigate(item.href)}
+        >{item.name}</button>
+    ));
+
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("Кабінет");
+        activeMenuItemContext?.setActivePage("Мої готелі");
+        activeMenuItemContext?.setActivePage("Відгуки");
+        activeMenuItemContext?.setActivePage("Архів");
+    });
+
     const languageOptions = [
         { full: "English", abbr: "En" },
         { full: "Українська", abbr: "Укр" }
@@ -19,23 +50,21 @@ const Header = () => {
     };
 
     const handleProfileClick = () => {
-        console.log("Profile clicked");
-
+        setProfileIsModalOpen(prev => !prev);
     };
 
     return (
         <header>
-            <img
-                src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
-                alt="EasyStay Logo"
-                className="logo"
-            />
+            <a onClick={() => navigate("/realtor")} style={{cursor: "pointer"}}>
+                <img
+                    src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
+                    alt="EasyStay Logo"
+                    className="logo"
+                />
+            </a>
 
             <div className="center-section">
-                <button className="pages active">Кабінет</button>
-                <button className="pages">Мої готелі</button>
-                <button className="pages">Відгуки</button>
-                <button className="pages">Архів</button>
+                {menuItems}
             </div>
 
             <div className="right-section">
@@ -73,10 +102,13 @@ const Header = () => {
                             alt="Profile"
                         />
                     </button>
+                    {profileIsModalOpen && (
+                        <ProfileModal onClose={() => setProfileIsModalOpen(false)} />
+                    )}
                 </div>
             </div>
         </header>
-);
+    );
 };
 
 export default Header;

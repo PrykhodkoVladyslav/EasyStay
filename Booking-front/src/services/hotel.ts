@@ -35,10 +35,10 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
-            query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
-            providesTags: ["Hotels"],
-        }),
+        // getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
+        //     query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
+        //     providesTags: ["Hotels"],
+        // }),
 
         createHotel: builder.mutation<number, IHotelCreate>({
             query: (hotel) => {
@@ -150,7 +150,7 @@ export const {
     useGetAllHotelsQuery,
     useGetHotelsPageQuery,
     useGetHotelQuery,
-    useGetRealtorHotelsPageQuery,
+    // useGetRealtorHotelsPageQuery,
     useCreateHotelMutation,
     // useUpdateHotelMutation,
     useDeleteHotelMutation,

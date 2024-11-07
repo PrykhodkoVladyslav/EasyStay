@@ -1,3 +1,4 @@
+import "./../../../css/hotel-item.scss";
 import { IHotel } from "interfaces/hotel/IHotel.ts";
 import PhotoSlider from "components/partials/customer/PhotoSlider.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";

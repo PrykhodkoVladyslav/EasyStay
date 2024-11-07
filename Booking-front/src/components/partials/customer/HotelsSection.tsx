@@ -84,13 +84,15 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
                     if (type === "prev") {
                         return <img className="pagination-item arrow"
                                     src={getPublicResourceUrl("icons/pagination/prev.svg")}
-                                    alt="prev arrow" />;
+                                    alt="prev arrow"
+                                    title="Попередня" />;
                     }
 
                     if (type === "next") {
                         return <img className="pagination-item arrow"
                                     src={getPublicResourceUrl("icons/pagination/next.svg")}
-                                    alt="next arrow" />;
+                                    alt="next arrow"
+                                    title="Наступна" />;
                     }
 
                     if (type === "page") {
@@ -98,6 +100,7 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
                         const activeClassNames = `${classNames} page-selected`;
                         return <div
                             className={pageIndex + 1 === current ? activeClassNames : classNames}
+                            title=""
                         >{current}</div>;
                     }
 

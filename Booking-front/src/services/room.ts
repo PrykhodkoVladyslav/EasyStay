@@ -10,12 +10,7 @@ export const roomApi = createApi({
     endpoints: (build) => ({
         getRoomVariantsFreeQuantity: build.query<number, RoomVariantsFreeRequest>({
             query: ({ id, FreePeriod }) => ({
-                url: "getRoomVariantsFreeQuantity",
-                params: {
-                    Id: id,
-                    "FreePeriod.From": FreePeriod.from,
-                    "FreePeriod.To": FreePeriod.to,
-                },
+                url: `getRoomVariantsFreeQuantity?id=${id}&freePeriod.from=${FreePeriod.from}&freePeriod.to=${FreePeriod.to}`,
                 method: "GET",
             }),
             providesTags: ["Rooms"],

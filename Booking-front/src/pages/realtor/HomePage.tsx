@@ -1,6 +1,6 @@
-import AddHotel from "components/partials/account/home/AddHotel.tsx";
-import MyHotels from "components/partials/account/home/MyHotels.tsx";
-import Reviews from "components/partials/account/home/Reviews.tsx";
+import AddHotel from "components/partials/realtor/home/AddHotel.tsx";
+import MyHotels from "components/partials/realtor/home/MyHotels.tsx";
+import Reviews from "components/partials/realtor/home/Reviews.tsx";
 
 const HomePage = () => {
     return (

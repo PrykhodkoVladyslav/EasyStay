@@ -19,7 +19,7 @@ import IRealtor from "interfaces/user/IRealtor.ts";
 export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: createBaseQuery("accounts"),
-    tagTypes: ["User", "Citizenships"],
+    tagTypes: ["User"],
 
     endpoints: (builder) => ({
         getAllCustomers: builder.query<IPage<ICustomer>, void>({

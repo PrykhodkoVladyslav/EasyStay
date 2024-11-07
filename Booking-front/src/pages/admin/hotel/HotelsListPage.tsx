@@ -44,7 +44,7 @@ const HotelsListPage: React.FC = () => {
                                         {hotel.photos.map((photo, index) => (
                                             <div key={index} className="w-20 h-20 flex-shrink-0">
                                                 <img
-                                                    src={`${API_URL}/images/800_${photo.name}`}
+                                                    src={`${API_URL}/images/200_${photo.name}`}
                                                     alt={`${hotel.name} фото ${index + 1}`}
                                                     className="h-full w-full object-cover"
                                                 />

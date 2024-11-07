@@ -5,8 +5,21 @@ const ReviewsPage = () => {
     return (
         <div className="reviews-content">
             <div className="top">
-                <p className="title">Відгуки</p>
-                <div className="sort">
+                <p className="global-title">Відгуки</p>
+                <div className="rating">
+                    <p>Рейтинг рієлтора</p>
+                    <div className="stars-container">
+                        <img
+                            src={getPublicResourceUrl("account/star.svg")}
+                            alt=""
+                            className="star"
+                        />
+                        <p className="rating">
+                            9.7
+                        </p>
+                    </div>
+                </div>
+                <div className="filter">
                     <button>
                         <img
                             src={getPublicResourceUrl("account/sort.svg")}
@@ -27,7 +40,7 @@ const ReviewsPage = () => {
             </div>
 
             <div className="reviews">
-                <div className="review">
+            <div className="review">
                     <div className="author">
                         <div className="image">
                             <img

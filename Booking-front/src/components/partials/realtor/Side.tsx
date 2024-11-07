@@ -59,7 +59,6 @@ const Side = () => {
                                 className="item"
                                 onClick={() => handleButtonClick(button.name, button.path)}
                                 style={{
-                                    height: activeButton === button.name ? "39px" : "28px",
                                     background: activeButton === button.name ? "rgb(63, 82, 60)" : "none",
                                     color: activeButton === button.name ? "white" : "black",
                                 }}

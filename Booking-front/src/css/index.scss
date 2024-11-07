@@ -1313,13 +1313,14 @@
             flex-direction: column;
             padding: 17px;
             width: 100%;
-            min-height: 350px;
+            //height: fit-content;
+            min-height: 500px;
             border-bottom: 1px solid var(--color-secondary);
           }
 
           @media (max-width: 1430px) {
             td .cols {
-              min-height: 500px;
+              min-height: 630px;
             }
           }
 
@@ -2823,12 +2824,16 @@
         }
 
         .actions {
-          width: 100%;
-          max-width: fit-content;
+          height: 100%;
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
           align-items: flex-end;
-          gap: 28px;
+
+          .rooms-action {
+            display: flex;
+            gap: 0.625vw;
+          }
 
           .btn-delete {
             width: 24px;
@@ -3044,10 +3049,6 @@
         line-height: 24px;
       }
     }
-  }
-
-  .pagination-bottom {
-
   }
 }
 
@@ -4077,6 +4078,17 @@
     font-weight: 800;
     animation:  0.3s ease;
   }
+}
+
+.isLoading-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10%;
+  font-family: var(--font-primary), system-ui;
+  color: var(--color-primary);
+  font-size: 32px;
+  font-weight: 600;
 }
 
 //HOME PAGE CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

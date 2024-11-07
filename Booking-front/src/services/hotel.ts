@@ -150,7 +150,7 @@ export const {
     useGetAllHotelsQuery,
     useGetHotelsPageQuery,
     useGetHotelQuery,
-    useGetRealtorHotelsPageQuery,
+    // useGetRealtorHotelsPageQuery,
     useCreateHotelMutation,
     // useUpdateHotelMutation,
     useDeleteHotelMutation,

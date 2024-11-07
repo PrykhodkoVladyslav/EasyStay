@@ -1,21 +1,22 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useNavigate } from "react-router-dom";
-import {useEffect, useState} from "react";
-import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
-import {useGetHotelsPageQuery} from "services/hotel.ts";
+import { useEffect, useState } from "react";
+import { useGetHotelsPageQuery } from "services/hotel.ts";
 import Pagination from "rc-pagination";
-import {API_URL} from "utils/getEnvData.ts";
+import { API_URL } from "utils/getEnvData.ts";
 
 const HotelsPage = () => {
     const navigate = useNavigate();
     const [pageIndex, setPageIndex] = useState(0);
 
-    const { data: hotelsPageData } = useGetHotelsPageQuery({
+    const { data: hotelsPageData, isLoading, error} = useGetHotelsPageQuery({
         onlyOwn: true,
         pageIndex: pageIndex,
         pageSize: 6,
         isArchived: false,
     });
+
+    console.log(hotelsPageData);
 
     const [hotels, setHotels] = useState(hotelsPageData?.data ?? []);
     const [itemAvailable, setItemAvailable] = useState(hotelsPageData?.itemsAvailable ?? 0);
@@ -40,6 +41,9 @@ const HotelsPage = () => {
             hotelsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     };
+
+    if (isLoading) return <p>Завантаження...</p>;
+    if (error) return <p>Помилка завантаження даних</p>;
 
     return (
         <div className="hotels-content" id="hotels">
@@ -80,7 +84,7 @@ const HotelsPage = () => {
                             <div className="top-info">
                                 <p className="name">{hotel.name}</p>
                                 <div>
-                                    <p>{hotel.city} {hotel.address.street} {hotel.address.houseNumber}</p>
+                                    <p>{hotel.address.city.name}, {hotel.address.street} {hotel.address.houseNumber}</p>
                                 </div>
                             </div>
 

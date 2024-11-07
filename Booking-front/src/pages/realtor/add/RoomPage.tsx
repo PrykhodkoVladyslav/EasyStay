@@ -1,23 +1,23 @@
-import FormError from "components/ui/FormError.tsx";
-import {City} from "interfaces/city";
+// import FormError from "components/ui/FormError.tsx";
+// import {City} from "interfaces/city";
 import {useForm} from "react-hook-form";
-import {HotelCreatePage1Schema, HotelCreateSchema, HotelCreateSchemaType} from "interfaces/zod/hotel.ts";
-import {zodResolver} from "@hookform/resolvers/zod";
+// import {HotelCreatePage1Schema, HotelCreateSchema, HotelCreateSchemaType} from "interfaces/zod/hotel.ts";
+// import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
-import showToast from "utils/toastShow.ts";
+// import showToast from "utils/toastShow.ts";
 
 const RoomPage = () => {
     const [modal, setModal] = useState(false);
 
     const {
-        register,
+        // register,
         handleSubmit,
         // setValue,
         // trigger,
-        watch,
-        formState: { errors },
+        // watch,
+        // formState: { errors },
     } = useForm/*<HotelCreateSchemaType>*/({
-        resolver: zodResolver(/*currentContainer === 1 ? HotelCreatePage1Schema : HotelCreateSchema*/),
+        // resolver: zodResolver(/*currentContainer === 1 ? HotelCreatePage1Schema : HotelCreateSchema*/),
         defaultValues: {
             // hotelAmenityIds: [],
             // staffLanguageIds: [],
@@ -56,7 +56,7 @@ const RoomPage = () => {
                             <div className="data-1">
                                 <label className="con-1-checkbox">
                                     <input
-                                        {...register("roomPeriod")}
+                                        /*{...register("roomPeriod")}*/
                                         type="checkbox"
                                         id="roomPeriod"
                                     />
@@ -65,7 +65,7 @@ const RoomPage = () => {
 
                                 <label className="con-1-checkbox">
                                     <input
-                                        {...register("roomPeriod")}
+                                        /*{...register("roomPeriod")}*/
                                         type="checkbox"
                                         id="roomPeriod"
                                     />
@@ -74,7 +74,7 @@ const RoomPage = () => {
 
                                 <label className="con-1-checkbox">
                                     <input
-                                        {...register("roomPeriod")}
+                                        /*{...register("roomPeriod")}*/
                                         type="checkbox"
                                         id="roomPeriod"
                                     />
@@ -99,10 +99,11 @@ const RoomPage = () => {
                                 {/*        {roomPeriod.name}*/}
                                 {/*    </label>*/}
                                 {/*))}*/}
-                                {errors?.rentalPeriodIds && (
-                                    <FormError className="text-red"
-                                               errorMessage={errors?.rentalPeriodIds?.message as string}/>
-                                )}
+
+                                {/*{errors?.rentalPeriodIds && (*/}
+                                {/*    <FormError className="text-red"*/}
+                                {/*               errorMessage={errors?.rentalPeriodIds?.message as string}/>*/}
+                                {/*)}*/}
                             </div>
                         </div>
                     </div>
@@ -116,15 +117,15 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <input
-                                    {...register("name")}
+                                    /*{...register("name")}*/
                                     type="text"
                                     id="name"
                                     placeholder="Назва"
                                 />
-                                {errors?.name && (
-                                    <FormError className="text-red"
-                                               errorMessage={errors?.name?.message as string}/>
-                                )}
+                                {/*{errors?.name && (*/}
+                                {/*    <FormError className="text-red"*/}
+                                {/*               errorMessage={errors?.name?.message as string}/>*/}
+                                {/*)}*/}
                             </div>
                         </div>
                     </div>
@@ -138,9 +139,9 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <select
-                                    {...register("roomTypeId")}
+                                    /*{...register("roomTypeId")}*/
                                     id="roomTypeId"
-                                    value={watch("roomTypeId") || ""}
+                                    // value={watch("roomTypeId") || ""}
                                 >
                                     <option disabled value="">
                                         Вибрати
@@ -151,10 +152,10 @@ const RoomPage = () => {
                                     {/*    </option>*/}
                                     {/*))}*/}
                                 </select>
-                                {errors?.roomTypeId && (
-                                    <FormError className="text-red"
-                                               errorMessage={errors?.roomTypeId?.message as string}/>
-                                )}
+                                {/*{errors?.roomTypeId && (*/}
+                                {/*    <FormError className="text-red"*/}
+                                {/*               errorMessage={errors?.roomTypeId?.message as string}/>*/}
+                                {/*)}*/}
                             </div>
                         </div>
                     </div>
@@ -168,15 +169,15 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <input
-                                    {...register("area")}
+                                    /*{...register("area")}*/
                                     type="number"
                                     id="area"
                                     placeholder="Площа"
                                 />
-                                {errors?.area && (
-                                    <FormError className="text-red"
-                                               errorMessage={errors?.area?.message as string}/>
-                                )}
+                                {/*{errors?.area && (*/}
+                                {/*    <FormError className="text-red"*/}
+                                {/*               errorMessage={errors?.area?.message as string}/>*/}
+                                {/*)}*/}
                             </div>
                         </div>
                     </div>
@@ -190,9 +191,9 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <select
-                                    {...register("numberOfRooms")}
+                                    /*{...register("numberOfRooms")}*/
                                     id="numberOfRooms"
-                                    value={watch("numberOfRooms") || ""}
+                                    // value={watch("numberOfRooms") || ""}
                                 >
                                     <option disabled value="">
                                         Вибрати
@@ -203,10 +204,10 @@ const RoomPage = () => {
                                     {/*    </option>*/}
                                     {/*))}*/}
                                 </select>
-                                {errors?.numberOfRooms && (
-                                    <FormError className="text-red"
-                                               errorMessage={errors?.numberOfRooms?.message as string}/>
-                                )}
+                                {/*{errors?.numberOfRooms && (*/}
+                                {/*    <FormError className="text-red"*/}
+                                {/*               errorMessage={errors?.numberOfRooms?.message as string}/>*/}
+                                {/*)}*/}
                             </div>
                         </div>
                     </div>
@@ -237,10 +238,11 @@ const RoomPage = () => {
                             {/*        {roomAmenity.name}*/}
                             {/*    </label>*/}
                             {/*))}*/}
-                            {errors?.RoomAmenityIds && (
-                                <FormError className="text-red"
-                                           errorMessage={errors?.RoomAmenityIds?.message as string}/>
-                            )}
+
+                            {/*{errors?.RoomAmenityIds && (*/}
+                            {/*    <FormError className="text-red"*/}
+                            {/*               errorMessage={errors?.RoomAmenityIds?.message as string}/>*/}
+                            {/*)}*/}
                         </div>
                     </div>
 
@@ -252,7 +254,7 @@ const RoomPage = () => {
                         <div className="room-container-7">
                             <button>﹘</button>
                             <div
-                                {...register("quantity")}
+                                /*{...register("quantity")}*/
                                 id="quantity"
                             >
                                 0
@@ -292,7 +294,7 @@ const RoomPage = () => {
                                             <div className="stepper">
                                                 <button>﹘</button>
                                                 <div
-                                                    {...register("quantity")}
+                                                    /*{...register("quantity")}*/
                                                     id="quantity"
                                                 >
                                                     0
@@ -306,7 +308,7 @@ const RoomPage = () => {
                                             <div className="stepper">
                                                 <button>﹘</button>
                                                 <div
-                                                    {...register("quantity")}
+                                                    /*{...register("quantity")}*/
                                                     id="quantity"
                                                 >
                                                     0
@@ -331,7 +333,7 @@ const RoomPage = () => {
                                         <div className="stepper">
                                             <button>﹘</button>
                                             <div
-                                                {...register("quantity")}
+                                                /*{...register("quantity")}*/
                                                 id="quantity"
                                             >
                                                 0
@@ -345,7 +347,7 @@ const RoomPage = () => {
                                         <div className="stepper">
                                             <button>﹘</button>
                                             <div
-                                                {...register("quantity")}
+                                                /*{...register("quantity")}*/
                                                 id="quantity"
                                             >
                                                 0
@@ -359,7 +361,7 @@ const RoomPage = () => {
                                         <div className="stepper">
                                             <button>﹘</button>
                                             <div
-                                                {...register("quantity")}
+                                                /*{...register("quantity")}*/
                                                 id="quantity"
                                             >
                                                 0
@@ -373,7 +375,7 @@ const RoomPage = () => {
                                         <div className="stepper">
                                             <button>﹘</button>
                                             <div
-                                                {...register("quantity")}
+                                                /*{...register("quantity")}*/
                                                 id="quantity"
                                             >
                                                 0
@@ -387,7 +389,7 @@ const RoomPage = () => {
                                         <div className="stepper">
                                             <button>﹘</button>
                                             <div
-                                                {...register("quantity")}
+                                                /*{...register("quantity")}*/
                                                 id="quantity"
                                             >
                                                 0
@@ -410,15 +412,15 @@ const RoomPage = () => {
                                     <div className="price-discount">
                                         <p>$</p>
                                         <input
-                                            {...register("price")}
+                                            /*{...register("price")}*/
                                             type="number"
                                             id="price"
                                             placeholder="0"
                                         />
-                                        {errors?.price && (
-                                            <FormError className="text-red"
-                                                       errorMessage={errors?.price?.message as string}/>
-                                        )}
+                                        {/*{errors?.price && (*/}
+                                        {/*    <FormError className="text-red"*/}
+                                        {/*               errorMessage={errors?.price?.message as string}/>*/}
+                                        {/*)}*/}
                                     </div>
                                 </div>
                             </div>
@@ -434,15 +436,15 @@ const RoomPage = () => {
                                     <div className="price-discount">
                                         <p>$</p>
                                         <input
-                                            {...register("discountPrice")}
+                                            /*{...register("discountPrice")}*/
                                             type="number"
                                             id="discountPrice"
                                             placeholder="0"
                                         />
-                                        {errors?.discountPrice && (
-                                            <FormError className="text-red"
-                                                       errorMessage={errors?.discountPrice?.message as string}/>
-                                        )}
+                                        {/*{errors?.discountPrice && (*/}
+                                        {/*    <FormError className="text-red"*/}
+                                        {/*               errorMessage={errors?.discountPrice?.message as string}/>*/}
+                                        {/*)}*/}
                                     </div>
                                 </div>
                             </div>

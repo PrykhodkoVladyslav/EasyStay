@@ -24,4 +24,5 @@ public interface IExistingEntityCheckerService {
 	Task<bool> IsCorrectRoomVariantIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
 	Task<bool> IsCorrectBankCardIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
 	Task<bool> IsCorrectBookingIdOfCurrentUserAsync(long id, CancellationToken cancellationToken);
+	Task<bool> IsCorrectHotelReviewByBookingIdAsync(long bookingId, CancellationToken cancellationToken);
 }

@@ -19,6 +19,11 @@ public class CreateHotelReviewValidator : AbstractValidator<CreateHotelReviewCom
 			.NotEqual(0)
 				.WithMessage("BookingId cannot be equal to 0.")
 			.MustAsync(existingEntityCheckerService.IsCorrectBookingIdOfCurrentUserAsync)
-				.WithMessage("Booking with this id does not exist or you do not have permission to access it.");
+				.WithMessage("Booking with this id does not exist or you do not have permission to access it.")
+			.MustAsync(
+				async (bookingId, cancellationToken) =>
+					!await existingEntityCheckerService.IsCorrectHotelReviewByBookingIdAsync(bookingId, cancellationToken)
+			)
+				.WithMessage("There are already hotel review for this booking.");
 	}
 }

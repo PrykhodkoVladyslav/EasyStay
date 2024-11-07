@@ -136,4 +136,7 @@ public class ExistingEntityCheckerService(
 
 	public Task<bool> IsCorrectBookingIdOfCurrentUserAsync(long id, CancellationToken cancellationToken) =>
 		context.Bookings.AnyAsync(b => b.Id == id && b.CustomerId == currentUserService.GetRequiredUserId(), cancellationToken);
+
+	public Task<bool> IsCorrectHotelReviewByBookingIdAsync(long bookingId, CancellationToken cancellationToken) =>
+		context.HotelReviews.AnyAsync(hr => hr.BookingId == bookingId, cancellationToken);
 }

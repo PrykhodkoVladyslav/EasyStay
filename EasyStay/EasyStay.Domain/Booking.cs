@@ -22,4 +22,6 @@ public class Booking {
 	public BankCard? BankCard { get; set; }
 
 	public ICollection<BookingRoomVariant> BookingRoomVariants { get; set; } = null!;
+
+	public ICollection<HotelReview> HotelReviews { get; set; } = null!;
 }

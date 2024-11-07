@@ -18,7 +18,8 @@ internal class HotelReviewEntityTypeConfiguration : IEntityTypeConfiguration<Hot
 		builder.Property(hr => hr.UpdatedAtUtc)
 			.IsRequired(false);
 
-		builder.HasIndex(hr => hr.BookingId)
-			.IsUnique();
+		builder.HasOne(hr => hr.Booking)
+			.WithOne(b => b.HotelReview)
+			.IsRequired();
 	}
 }

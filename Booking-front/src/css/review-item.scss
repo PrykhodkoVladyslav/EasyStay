@@ -1,0 +1,56 @@
+.review {
+  flex: 1 1 calc(33.333% - 24px);
+  max-width: calc(33.333% - 24px);
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 23px 30px;
+  border-radius: 22px;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+  background: rgb(255, 255, 255);
+  font-family: var(--font-primary), system-ui;
+  font-weight: 600;
+  overflow: hidden;
+
+  @media screen and (min-width: 2440px) {
+    flex: 1 1 calc(25% - 24px);
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    overflow: hidden;
+
+    .author-image {
+      border-radius: 100%;
+      min-width: 67px;
+      max-width: 67px;
+      height: 67px;
+    }
+
+    .container9 {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .name {
+        font-size: 20px;
+        line-height: 27px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-wrap: wrap;
+      }
+    }
+  }
+
+  .description {
+    margin-top: 24px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+}

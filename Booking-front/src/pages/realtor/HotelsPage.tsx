@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useGetHotelsPageQuery } from "services/hotel.ts";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
+import showToast from "utils/toastShow.ts";
 
 const HotelsPage = () => {
     const navigate = useNavigate();
@@ -15,8 +16,6 @@ const HotelsPage = () => {
         pageSize: 6,
         isArchived: false,
     });
-
-    console.log(hotelsPageData);
 
     const [hotels, setHotels] = useState(hotelsPageData?.data ?? []);
     const [itemAvailable, setItemAvailable] = useState(hotelsPageData?.itemsAvailable ?? 0);
@@ -42,8 +41,8 @@ const HotelsPage = () => {
         }
     };
 
-    if (isLoading) return <p>Завантаження...</p>;
-    if (error) return <p>Помилка завантаження даних</p>;
+    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (error) return showToast("Помилка завантаження даних", "error");
 
     return (
         <div className="hotels-content" id="hotels">

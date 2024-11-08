@@ -95,15 +95,9 @@ const DataPage = () => {
         }
     };
 
-    if (!user) {
-        return null;
-    }
-    if (isLoading) {
-        return <h2 className="flex items-center justify-center">Завантаження...</h2>;
-    }
-    if (error && "status" in error) {
-        return <p>Виникла помилка при отриманні даних: {error.status}</p>;
-    }
+    if (!user) { return null; }
+    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (error) return showToast("Помилка завантаження даних", "error");
 
     return (
         <div className="data-content">

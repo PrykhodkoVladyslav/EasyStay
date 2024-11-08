@@ -2159,405 +2159,25 @@
       }
     }
 
-    // Готелі та відгуки
     .hotels-reviews {
       margin-top: 34px;
       display: flex;
       flex-direction: column;
       gap: 34px;
 
-      // Список готелів
-      .hotels-container {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-
-        .pre-title {
-          margin-bottom: 24px;
-          font-family: var(--font-primary), system-ui;
-          font-size: 32px;
-          font-weight: 700;
-        }
-
-        .hotels {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 23px;
-
-          .hotel-item {
-            max-width: 413px;
-          }
-        }
-
-        .hotel {
-          height: 453px;
-          border-radius: var(--border-radius);
-          background: white;
-          box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-
-          .images-container {
-            position: relative;
-
-            .image {
-              width: 100%;
-              max-width: 413px;
-              height: 241px;
-              object-fit: cover;
-              border-radius: var(--border-radius);
-            }
-
-            .slides {
-              position: absolute;
-              bottom: 10px;
-              left: 50%;
-              transform: translateX(-50%);
-              display: flex;
-              gap: 10px;
-              padding: 3px;
-              background: rgba(55, 55, 55, 0.7);
-              border-radius: 21px;
-
-              .container2 {
-                width: 57px;
-                height: 6px;
-                display: flex;
-                gap: 3px;
-
-                .slide {
-                  width: 6px;
-                  background: var(--color-accent);
-                  border-radius: 100%;
-                }
-
-                .active-slide {
-                  width: 12px;
-                  background: white;
-                  border-radius: 9px;
-                }
-              }
-            }
-          }
-
-          .info {
-            width: 369px;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-            margin: 15px 22px 9px;
-
-            .top {
-              display: flex;
-              flex-direction: column;
-
-              .container3 {
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 61px;
-
-                .name {
-                  max-width: 240px;
-                  font-family: var(--font-primary), system-ui;
-                  font-size: 28px;
-                  font-weight: 700;
-                  line-height: 38px;
-                  display: -webkit-box;
-                  -webkit-box-orient: vertical;
-                  -webkit-line-clamp: 1;
-                  overflow: hidden;
-                }
-
-                .stars-container {
-                  width: 57px;
-                  height: 28px;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  border: 1px solid rgb(234, 232, 232);
-                  border-radius: 30px;
-
-                  .container4 {
-                    display: flex;
-                    align-items: center;
-
-                    .star {
-                      width: 13px;
-                      height: 13px;
-                    }
-
-                    .rating {
-                      font-family: var(--font-primary), system-ui;
-                      font-size: 16px;
-                      font-weight: 600;
-                      line-height: 22px;
-                    }
-                  }
-                }
-              }
-
-              .location {
-                color: rgb(81, 81, 81);
-                font-family: var(--font-secondary), system-ui;
-                font-size: 16px;
-                font-weight: 500;
-                line-height: 20px;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-                overflow: hidden;
-              }
-
-              .description {
-                margin-top: 10px;
-                font-family: var(--font-primary), system-ui;
-                font-size: 13px;
-                font-weight: 600;
-                line-height: 16px;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-                overflow: hidden;
-              }
-
-              .realtor {
-                height: 28px;
-                display: flex;
-                align-items: center;
-                gap: 4px;
-                color: var(--color-text);
-                font-size: 14px;
-
-                p:first-child {
-                  font-family: var(--font-primary), system-ui;
-                  font-weight: 700;
-                }
-
-                p {
-                  font-family: var(--font-primary), system-ui;
-                  font-weight: 500;
-                  line-height: 28px;
-                }
-              }
-            }
-
-            .bottom {
-              display: flex;
-              flex-direction: column;
-
-              p {
-                color: var(--color-text);
-                font-family: var(--font-primary), system-ui;
-                font-size: 16px;
-                font-weight: 600;
-                line-height: 22px;
-              }
-
-              .container5 {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 20px;
-
-                .prices-container {
-                  display: flex;
-                  align-items: flex-end;
-                  gap: 3px;
-                  white-space: pre;
-
-                  .price {
-                    color: rgb(0, 0, 0);
-                    font-family: var(--font-secondary), system-ui;
-                    font-size: 28px;
-                    font-weight: 600;
-                    line-height: 34px;
-
-                    span {
-                      padding-top: 10px;
-                      font-family: Inter;
-                      font-size: 14px;
-                      font-weight: 400;
-                      line-height: 17px;
-                    }
-                  }
-
-                  .old-price {
-                    position: relative;
-                    margin-right: 3px;
-                    color: var(--color-accent);
-                    font-family: var(--font-secondary), system-ui;
-                    font-size: 16px;
-                    font-weight: 500;
-                    line-height: 20px;
-
-                    &::after {
-                      content: '';
-                      position: absolute;
-                      width: calc(100% + 3px);
-                      height: 1px;
-                      left: 0;
-                      bottom: 8px;
-                      background-color: rgb(165, 165, 165);
-                    }
-                  }
-                }
-
-                .container6 {
-                  border-radius: 8px;
-                  background: rgb(252, 243, 242);
-                  font-family: var(--font-primary), system-ui;
-
-                  .no-any-of-left {
-                    padding: 5px;
-                    color: rgb(249, 50, 50);
-                    font-size: 13px;
-                    font-weight: 600;
-                    line-height: 16px;
-                  }
-
-                  .any-of-left {
-                    border-radius: 8px;
-                    padding: 5px;
-                    background: rgb(227, 244, 225);
-                    font-family: var(--font-primary), system-ui;
-                    font-size: 13px;
-                    font-weight: 600;
-                    line-height: 16px;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .main-button {
-        margin-top: 28px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-
-        button {
-          padding: 9px 18px;
-          border-radius: 55px;
-          background: var(--color-primary);
-          color: white;
-          font-family: var(--font-secondary), system-ui;
-          font-size: 12px;
-          font-weight: 600;
-          line-height: 15px;
-        }
-      }
-    }
-
-    // Відгуки
-    .reviews-container {
-      min-height: 353px;
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-
-      .title {
+      .pre-title {
+        margin-bottom: 24px;
         font-family: var(--font-primary), system-ui;
         font-size: 32px;
         font-weight: 700;
       }
 
-      .reviews {
+      .hotels-and-reviews {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 21px;
-      }
-
-      @media (max-width: 1840px) {
-        .reviews {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 1500px) {
-        .reviews {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .review {
-        width: 414px;
-        min-height: 222px;
-        flex-direction: column;
-        padding: 22px 23px;
-        border-radius: 22px;
-        box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-        font-family: var(--font-primary), system-ui;
-        font-weight: 600;
-
-        .author {
-          height: 57px;
-          display: flex;
-          align-items: center;
-          gap: 19px;
-          overflow: hidden;
-
-          .image {
-            width: 67px;
-            border-radius: 100%;
-
-            img {
-              box-sizing: border-box;
-            }
-          }
-
-          .container9 {
-            width: 75%;
-
-            .name {
-              font-size: 20px;
-              line-height: 27px;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
-              -webkit-line-clamp: 1;
-              overflow: hidden;
-            }
-
-            .stars-container {
-              width: 57px;
-              height: 28px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border: 1px solid rgb(234, 232, 232);
-              border-radius: 30px;
-
-              .container4 {
-                display: flex;
-                align-items: center;
-
-                .star {
-                  width: 13px;
-                  height: 13px;
-                }
-
-                .rating {
-                  font-size: 16px;
-                  line-height: 22px;
-                }
-              }
-            }
-          }
-        }
-
-        .description {
-          margin-top: 24px;
-          font-size: 13px;
-          line-height: 16px;
-          //display: -webkit-box;
-          //-webkit-box-orient: vertical;
-          //-webkit-line-clamp: 5;
-          //overflow: hidden;
-        }
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 23px;
       }
 
       .main-button {
@@ -2583,7 +2203,6 @@
   // Особисті дані
   .data-content {
     width: 100%;
-    max-width: 850px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -2732,7 +2351,6 @@
   // Мої готелі/архів
   .hotels-content {
     width: 100%;
-    max-width: 1285px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -2871,8 +2489,6 @@
 
   // Відгуки
   .reviews-content {
-    //max-width: 1285px;
-    //min-width: 560px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -2902,107 +2518,30 @@
     }
 
     .reviews {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 21px;
-    }
-
-    @media (max-width: 1915px) {
-      .reviews {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 1500px) {
-      .reviews {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .review {
       width: 100%;
-      max-width: 414px;
       display: flex;
-      flex-direction: column;
-      padding: 22px 23px;
-      border-radius: 22px;
-      box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-      font-family: var(--font-primary), system-ui;
-      font-weight: 600;
-
-      .author {
-        height: 57px;
-        display: flex;
-        align-items: center;
-        gap: 19px;
-        overflow: hidden;
-
-        .image {
-          img {
-            border-radius: 100%;
-            max-width: 67px;
-            box-sizing: border-box;
-          }
-        }
-
-        .container9 {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-
-          .name {
-            font-size: 20px;
-            line-height: 27px;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            text-wrap: wrap;
-          }
-        }
-      }
-
-      .description {
-        width: 100%;
-        max-width: 369px;
-        margin-top: 24px;
-        font-size: 13px;
-        line-height: 16px;
-        text-wrap: wrap;
-      }
-
-      .btn-delete {
-        position: absolute;
-        right: 22px;
-        width: 24px;
-        height: 24px;
-      }
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 23px;
     }
 
     .stars-container {
-      width: 57px;
-      height: 28px;
+      width: fit-content;
       display: flex;
-      justify-content: center;
+      justify-items: center;
       align-items: center;
+      padding: 3px 9px;
       border: 1px solid rgb(234, 232, 232);
       border-radius: 30px;
 
-      .container4 {
-        display: flex;
-        align-items: center;
+      .star {
+        width: 13px;
+        height: 13px;
+      }
 
-        .star {
-          width: 13px;
-          height: 13px;
-        }
-
-        .rating {
-          font-size: 16px;
-          line-height: 22px;
-        }
+      .rating {
+        font-size: 16px;
+        line-height: 22px;
       }
     }
   }
@@ -3054,7 +2593,7 @@
 
 // Категоріі
 .categories-container {
-  padding: 30px 100px 0;
+  padding: 30px 100px 92px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -3080,33 +2619,24 @@
   }
 
   .categories {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    display: flex;
     gap: 23px;
   }
 
-  @media (max-width: 1840px) {
-    .categories {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 1500px) {
-    .categories {
-      grid-template-columns: 1fr;
-    }
-  }
-
   .category {
-    width: 352px;
-    height: 298px;
+    flex: 1 1 calc(33.333% - 24px);
+    max-width: calc(33.333% - 24px);
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 35px 68px 35px;
     border-radius: 22px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
     gap: 42px;
+    overflow: hidden;
 
     .info {
       display: flex;
@@ -3153,9 +2683,7 @@
 
     .btn-add {
       width: 100%;
-      height: 33px;
-      justify-content: center;
-      align-items: center;
+      max-width: 250px;
       padding: 9px 18px;
       border-radius: 12px;
       background: var(--color-primary);
@@ -3164,7 +2692,7 @@
       font-size: 12px;
       font-weight: 600;
       line-height: 15px;
-      white-space: nowrap;
+      text-align: center;
     }
   }
 }
@@ -3172,7 +2700,7 @@
 // Створення Готелю та Номеру
 .add-hotel-room {
   position: relative;
-  padding: 68px 100px 0;
+  padding: 68px 100px 92px;
   display: flex;
   flex-direction: column;
   gap: 68px;
@@ -3812,17 +3340,6 @@
   }
 }
 
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  backdrop-filter: blur(10px);
-}
-
 // Створення Номеру, модальне вікно. сторінка 2
 .add-room-page-2-modal {
   padding: 47px 71px;
@@ -4035,6 +3552,17 @@
   }
 }
 
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
 .profile-modal {
   position: absolute;
   display: flex;
@@ -4082,14 +3610,260 @@
 
 .isLoading-error {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding-top: 10%;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
   font-family: var(--font-primary), system-ui;
   color: var(--color-primary);
   font-size: 32px;
   font-weight: 600;
 }
+
+// не використані стилі для картки готелю які мали б бути
+.unused-hotel-styles {
+  .hotel {
+    height: 453px;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+
+    .images-container {
+      position: relative;
+
+      .image {
+        width: 100%;
+        max-width: 413px;
+        height: 241px;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+      }
+
+      .slides {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        padding: 3px;
+        background: rgba(55, 55, 55, 0.7);
+        border-radius: 21px;
+
+        .container2 {
+          width: 57px;
+          height: 6px;
+          display: flex;
+          gap: 3px;
+
+          .slide {
+            width: 6px;
+            background: var(--color-accent);
+            border-radius: 100%;
+          }
+
+          .active-slide {
+            width: 12px;
+            background: white;
+            border-radius: 9px;
+          }
+        }
+      }
+    }
+
+    .info {
+      width: 369px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin: 15px 22px 9px;
+
+      .top {
+        display: flex;
+        flex-direction: column;
+
+        .container3 {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 61px;
+
+          .name {
+            max-width: 240px;
+            font-family: var(--font-primary), system-ui;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 38px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+          }
+
+          .stars-container {
+            width: 57px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgb(234, 232, 232);
+            border-radius: 30px;
+
+            .container4 {
+              display: flex;
+              align-items: center;
+
+              .star {
+                width: 13px;
+                height: 13px;
+              }
+
+              .rating {
+                font-family: var(--font-primary), system-ui;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+              }
+            }
+          }
+        }
+
+        .location {
+          color: rgb(81, 81, 81);
+          font-family: var(--font-secondary), system-ui;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+        }
+
+        .description {
+          margin-top: 10px;
+          font-family: var(--font-primary), system-ui;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 16px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+        }
+
+        .realtor {
+          height: 28px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          color: var(--color-text);
+          font-size: 14px;
+
+          p:first-child {
+            font-family: var(--font-primary), system-ui;
+            font-weight: 700;
+          }
+
+          p {
+            font-family: var(--font-primary), system-ui;
+            font-weight: 500;
+            line-height: 28px;
+          }
+        }
+      }
+
+      .bottom {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          color: var(--color-text);
+          font-family: var(--font-primary), system-ui;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 22px;
+        }
+
+        .container5 {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+
+          .prices-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            white-space: pre;
+
+            .price {
+              color: rgb(0, 0, 0);
+              font-family: var(--font-secondary), system-ui;
+              font-size: 28px;
+              font-weight: 600;
+              line-height: 34px;
+
+              span {
+                padding-top: 10px;
+                font-family: Inter;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 17px;
+              }
+            }
+
+            .old-price {
+              position: relative;
+              margin-right: 3px;
+              color: var(--color-accent);
+              font-family: var(--font-secondary), system-ui;
+              font-size: 16px;
+              font-weight: 500;
+              line-height: 20px;
+
+              &::after {
+                content: '';
+                position: absolute;
+                width: calc(100% + 3px);
+                height: 1px;
+                left: 0;
+                bottom: 8px;
+                background-color: rgb(165, 165, 165);
+              }
+            }
+          }
+
+          .container6 {
+            border-radius: 8px;
+            background: rgb(252, 243, 242);
+            font-family: var(--font-primary), system-ui;
+
+            .no-any-of-left {
+              padding: 5px;
+              color: rgb(249, 50, 50);
+              font-size: 13px;
+              font-weight: 600;
+              line-height: 16px;
+            }
+
+            .any-of-left {
+              border-radius: 8px;
+              padding: 5px;
+              background: rgb(227, 244, 225);
+              font-family: var(--font-primary), system-ui;
+              font-size: 13px;
+              font-weight: 600;
+              line-height: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 
 //HOME PAGE CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 /*Discounts component!!!!!!!!!*/

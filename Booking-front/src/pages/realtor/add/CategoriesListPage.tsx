@@ -44,7 +44,7 @@ const CategoriesListPage = () => {
                     </div>
                     <Link
                         to=""
-                        className="btn-add"
+                        className="btn-add cursor-not-allowed"
                     >
                         Зареєструвати помешкання
                     </Link>
@@ -63,7 +63,7 @@ const CategoriesListPage = () => {
                     </div>
                     <Link
                         to=""
-                        className="btn-add"
+                        className="btn-add cursor-not-allowed"
                     >
                         Зареєструвати помешкання
                     </Link>

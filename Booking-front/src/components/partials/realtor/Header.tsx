@@ -1,43 +1,42 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
-import { useContext, useEffect, useState } from "react";
-import {
-    ActivePageOnHeaderContext,
-} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "components/partials/ProfileModal.tsx";
+import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
 
 const Header = () => {
-    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    const { activePage, setActivePage } = useRealtorActivePage();
     const [profileIsModalOpen, setProfileIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const menuItemData = [
-        { name: "Кабінет", href: "/hotels" },
-        { name: "Мої готелі", href: "/realtor/hotels" },
-        { name: "Відгуки", href: "/realtor/reviews" },
-        { name: "Архів", href: "/realtor/archived" },
+        { key: "personal-data", name: "Кабінет", href: "personal-data" },
+        { key: "hotels", name: "Мої готелі", href: "hotels" },
+        { key: "reviews", name: "Відгуки", href: "reviews" },
+        { key: "archived", name: "Архів", href: "archived" },
     ];
 
     const menuItems = menuItemData.map((item, index) => (
         <button
             key={index}
-            className={`pages ${item.name === activeMenuItemContext?.activePage ? "active" : ""}`}
-            onClick={() => navigate(item.href)}
+            className={`pages ${item.key === activePage ? "active" : ""}`}
+            onClick={() => {
+                setActivePage(item.key);
+                navigate(item.href);
+            }}
         >{item.name}</button>
     ));
-
-    useEffect(() => {
-        activeMenuItemContext?.setActivePage("Кабінет");
-        activeMenuItemContext?.setActivePage("Мої готелі");
-        activeMenuItemContext?.setActivePage("Відгуки");
-        activeMenuItemContext?.setActivePage("Архів");
-    });
 
     const languageOptions = [
         { full: "English", abbr: "En" },
         { full: "Українська", abbr: "Укр" }
     ];
+
+    const handleLogoClick = () => {
+        setActivePage("home");
+        navigate("/realtor");
+    };
 
     const handleMessagesClick = () => {
         console.log("Messages clicked");
@@ -55,17 +54,14 @@ const Header = () => {
 
     return (
         <header>
-            <a onClick={() => navigate("/realtor")} style={{cursor: "pointer"}}>
-                <img
-                    src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
-                    alt="EasyStay Logo"
-                    className="logo"
-                />
-            </a>
+            <img
+                onClick={handleLogoClick}
+                src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
+                alt="EasyStay Logo"
+                className="logo pointer"
+            />
 
-            <div className="center-section">
-                {menuItems}
-            </div>
+            <div className="center-section"> {menuItems} </div>
 
             <div className="right-section">
                 <div>

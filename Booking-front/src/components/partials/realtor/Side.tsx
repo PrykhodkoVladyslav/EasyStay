@@ -1,34 +1,28 @@
-import {useState} from "react";
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
-import {API_URL} from "utils/getEnvData.ts";
-import {useSelector} from "react-redux";
-import {getUser} from "store/slice/userSlice.ts";
-// import {IconUser} from "@tabler/icons-react";
-// import HorizontalPad from "components/ui/HorizontalPad.tsx";
-import {useNavigate} from "react-router-dom";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { API_URL } from "utils/getEnvData.ts";
+import { useSelector } from "react-redux";
+import { getUser } from "store/slice/userSlice.ts";
+import { useNavigate } from "react-router-dom";
+import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
 
 const Side = () => {
     const user = useSelector(getUser);
-    const [activeButton, setActiveButton] = useState<string>("Головна");
+    const { activePage, setActivePage } = useRealtorActivePage();
     const navigate = useNavigate();
-
-    if (!user) {
-        return null;
-    }
-
-    const displayName = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : "Невідомий Юзер";
+    if (!user) { return null; }
 
     const buttons = [
-        { name: "Головна", path: "" },
-        { name: "Особисті дані", path: "personal-data" },
-        { name: "Мої готелі", path: "hotels" },
-        { name: "Відгуки", path: "reviews" },
-        { name: "Архів", path: "archived" },
+        { key: "home", name: "Головна", path: "realtor" },
+        { key: "personal-data", name: "Особисті дані", path: "realtor/personal-data" },
+        { key: "hotels", name: "Мої готелі", path: "realtor/hotels" },
+        { key: "reviews", name: "Відгуки", path: "realtor/reviews" },
+        { key: "archived", name: "Архів", path: "realtor/archived" },
     ];
 
-    const handleButtonClick = (buttonName: string, buttonPath: string) => {
-        setActiveButton(buttonName);
-        navigate(`/realtor/${buttonPath}`);
+    const handleButtonClick = (buttonKey: string, buttonPath: string) => {
+        setActivePage(buttonKey);
+        localStorage.setItem('activePage', buttonKey);
+        navigate(`/${buttonPath}`);
     };
 
     return (
@@ -48,7 +42,7 @@ const Side = () => {
                             className="photo"
                         />
                     )}
-                    <p className="name">{displayName}</p>
+                    <p className="name">{user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : "Невідомий Юзер"}</p>
                 </div>
 
                 <div className="content-bottom">
@@ -57,10 +51,10 @@ const Side = () => {
                             <button
                                 key={button.name}
                                 className="item"
-                                onClick={() => handleButtonClick(button.name, button.path)}
+                                onClick={() => handleButtonClick(button.key, button.path)}
                                 style={{
-                                    background: activeButton === button.name ? "rgb(63, 82, 60)" : "none",
-                                    color: activeButton === button.name ? "white" : "black",
+                                    background: activePage === button.key ? "rgb(63, 82, 60)" : "none",
+                                    color: activePage === button.key ? "white" : "black",
                                 }}
                             >
                                 {button.name}

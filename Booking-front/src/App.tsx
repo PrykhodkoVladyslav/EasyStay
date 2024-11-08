@@ -12,6 +12,7 @@ import SuccessSendPage from "pages/auth/SuccessSendPage.tsx";
 
 import CustomerHomePage from "pages/customer/HomePage";
 
+import RealtorPreLayout from "components/layouts/RealtorPreLayout";
 import RealtorLayout from "components/layouts/RealtorLayout";
 import RealtorHomePage from "pages/realtor/HomePage";
 import RealtorDataPage from "pages/realtor/DataPage";
@@ -74,29 +75,31 @@ function App() {
                 </Route>
 
                 <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
-                    <Route path="realtor" element={<RealtorLayout />}>
-                        <Route index element={<RealtorHomePage />} />
-                        <Route path="personal-data" element={<RealtorDataPage />} />
-                        <Route path="reviews" element={<RealtorReviewsPage />} />
-                        <Route path="archived" element={<RealtorArchivedPage />} />
+                    <Route element={<RealtorPreLayout />}>
+                        <Route path="realtor" element={<RealtorLayout />}>
+                            <Route index element={<RealtorHomePage />} />
+                            <Route path="personal-data" element={<RealtorDataPage />} />
+                            <Route path="reviews" element={<RealtorReviewsPage />} />
+                            <Route path="archived" element={<RealtorArchivedPage />} />
 
-                        <Route path="hotels" element={<RealtorHotelsPage />} >
-                            <Route path="edit/:id" element={<HotelEditPage />} />
+                            <Route path="hotels" element={<RealtorHotelsPage />} >
+                                <Route path="edit/:id" element={<HotelEditPage />} />
+                            </Route>
+
                         </Route>
 
-                    </Route>
-
-                    <Route path="add" element={<AddLayout />}>
-                        <Route path="categories" element={<CategoriesListPage />} />
-                        <Route path="hotel" element={<AddHotelPage />} />
-                        <Route path="room" element={<AddRoomPage />} />
-                    </Route>
+                        <Route path="add" element={<AddLayout />}>
+                            <Route path="categories" element={<CategoriesListPage />} />
+                            <Route path="hotel" element={<AddHotelPage />} />
+                            <Route path="room" element={<AddRoomPage />} />
+                        </Route>
 
 
-                    <Route path="hotels">
-                        <Route path="list" element={<HotelsPage />} />
-                        <Route path="create" element={<HotelCreatePage />} />
-                        <Route path="archive" element={<HotelsArchivedPage />} />
+                        <Route path="hotels">
+                            <Route path="list" element={<HotelsPage />} />
+                            <Route path="create" element={<HotelCreatePage />} />
+                            <Route path="archive" element={<HotelsArchivedPage />} />
+                        </Route>
                     </Route>
                 </Route>
 

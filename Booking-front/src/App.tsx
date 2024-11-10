@@ -85,7 +85,6 @@ function App() {
                             <Route path="hotels" element={<RealtorHotelsPage />} >
                                 <Route path="edit/:id" element={<HotelEditPage />} />
                             </Route>
-
                         </Route>
 
                         <Route path="add" element={<AddLayout />}>

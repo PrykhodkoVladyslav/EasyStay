@@ -15,6 +15,7 @@ using EasyStay.Application.MediatR.Accounts.Queries.GetCustomersInformation;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorsInformation;
+using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorsPersonalRating;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -150,4 +151,9 @@ public class AccountsController : BaseApiController {
 
 		return NoContent();
 	}
+
+	[HttpGet]
+	[Authorize(Roles = "Realtor")]
+	public async Task<IActionResult> GetRealtorsPersonalRatingAsync() =>
+		Ok(await Mediator.Send(new GetRealtorsPersonalRatingCommand()));
 }

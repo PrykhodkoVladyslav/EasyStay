@@ -2,21 +2,21 @@ import { useParams } from "react-router-dom";
 import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
-// import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { useState } from "react";
-import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
-// import IRoomAmenity from "interfaces/roomAmenity/IRoomAmenity.ts";
-import { differenceInDays } from "date-fns";
+import { format } from "date-fns";
 import RoomSection from "components/partials/customer/RoomSection.tsx";
+import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
+import showToast from "utils/toastShow.ts";
 
 const HotelPage = () => {
     const { id } = useParams();
-    const { data: hotelData, isLoading, error } = useGetHotelQuery(Number(id));
+    const [hotelId] = useState(Number(id));
+
+    const { data: hotelData, isLoading, error } = useGetHotelQuery(hotelId);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [filteredRooms, setFilteredRooms] = useState<any[]>([]);
-    const [isRoomsVisible, setIsRoomsVisible] = useState(false);
-    const [selectedDays, setSelectedDays] = useState(0);
+    const [freePeriod, setFreePeriod] = useState<IFreePeriod | null>(null);
+    const [rooms, setRooms] = useState<IRoom[]>([]);
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка при завантаженні даних готелю</p>;
@@ -29,43 +29,19 @@ const HotelPage = () => {
     };
 
     const onSearch = (topFilters: ISearchData) => {
-        const adultGuests = topFilters.adultGuests || 0;
         const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
         const toDate = topFilters.date?.to ? new Date(topFilters.date.to) : new Date();
 
-        if (topFilters.date?.from && topFilters.date?.to) {
-            setSelectedDays(differenceInDays(toDate, fromDate));
-        }
-        const matchedRooms = hotelData.rooms.filter(room =>
-            room.variants.some((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests),
-        ).map(room => ({
-            ...room,
-            variants: room.variants.filter((variant: IRoomVariant) => variant.guestInfo.adultCount === adultGuests),
-        }));
+        const freePeriod = (topFilters.date?.from && topFilters.date?.to) ? {
+            from: format(fromDate, "yyyy-MM-dd"),
+            to: format(toDate, "yyyy-MM-dd"),
+        } : null;
 
-        setFilteredRooms(matchedRooms);
-        setIsRoomsVisible(true);
+        if (freePeriod == null)
+            showToast("Оберість дати", "info");
 
-        // const newQuantities: { [roomId: number]: number } = {};
-        // matchedRooms.forEach(room => {
-        //     room.variants.forEach(variant => {
-        //         const { data: quantityData } = useGetRoomVariantsFreeQuantityQuery({
-        //             id: variant.id,
-        //             FreePeriod: {
-        //                 from: topFilters.date?.from ? topFilters.date.from.toISOString().split("T")[0] : "",
-        //                 to: topFilters.date?.to ? topFilters.date.to.toISOString().split("T")[0] : "",
-        //             },
-        //         });
-        //         console.log(quantityData);
-        //
-        //         if (quantityData) {
-        //             setQuantities(prevQuantities => ({
-        //                 ...prevQuantities,
-        //                 [variant.id]: quantityData,
-        //             }));
-        //         }
-        //     });
-        // });
+        setFreePeriod(freePeriod);
+        setRooms(hotelData?.rooms ?? []);
     };
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -267,13 +243,14 @@ const HotelPage = () => {
                     <SearchHotelSection onSearch={onSearch} hideCityInput={true} />
                 </div>
 
-                {isRoomsVisible && (
+                {freePeriod && (
                     <div className="rooms">
                         <p className="global-title">Номери</p>
                         <RoomSection
-                            rooms={filteredRooms}
-                            selectedDays={selectedDays}
+                            hotelId={hotelId}
                             hotelBreakfast={hotelData.breakfasts.length > 0}
+                            freePeriod={freePeriod}
+                            rooms={rooms}
                         />
                     </div>
                 )}
@@ -292,69 +269,6 @@ const HotelPage = () => {
                         <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
                     </div>
                 </div>
-
-                {/*<div className="ratings">*/}
-                {/*    <div className="rating-bar">*/}
-                {/*        <div className="text-rating">*/}
-                {/*            <p>Персонал</p>*/}
-                {/*            <p>9.2</p>*/}
-                {/*        </div>*/}
-                {/*        <div className="bar">*/}
-                {/*            <div className="pre-bar"></div>*/}
-                {/*            <div className="active-bar"></div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <div className="rating-bar">*/}
-                {/*        <div className="text-rating">*/}
-                {/*            <p>Чистота</p>*/}
-                {/*            <p>9.2</p>*/}
-                {/*        </div>*/}
-                {/*        <div className="bar">*/}
-                {/*            <div className="pre-bar"></div>*/}
-                {/*            <div className="active-bar"></div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <div className="rating-bar">*/}
-                {/*        <div className="text-rating">*/}
-                {/*            <p>Зручності</p>*/}
-                {/*            <p>9.2</p>*/}
-                {/*        </div>*/}
-                {/*        <div className="bar">*/}
-                {/*            <div className="pre-bar"></div>*/}
-                {/*            <div className="active-bar"></div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <div className="rating-bar">*/}
-                {/*        <div className="text-rating">*/}
-                {/*            <p>Комфорт</p>*/}
-                {/*            <p>9.2</p>*/}
-                {/*        </div>*/}
-                {/*        <div className="bar">*/}
-                {/*            <div className="pre-bar"></div>*/}
-                {/*            <div className="active-bar"></div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <div className="rating-bar">*/}
-                {/*        <div className="text-rating">*/}
-                {/*            <p>Розташування</p>*/}
-                {/*            <p>9.2</p>*/}
-                {/*        </div>*/}
-                {/*        <div className="bar">*/}
-                {/*            <div className="pre-bar"></div>*/}
-                {/*            <div className="active-bar"></div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <div className="rating-bar">*/}
-                {/*        <div className="text-rating">*/}
-                {/*            <p>Співвідношення ціна/якість</p>*/}
-                {/*            <p>9.2</p>*/}
-                {/*        </div>*/}
-                {/*        <div className="bar">*/}
-                {/*            <div className="pre-bar"></div>*/}
-                {/*            <div className="active-bar"></div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
 
                 <div className="reviews">
                     <div className="review">

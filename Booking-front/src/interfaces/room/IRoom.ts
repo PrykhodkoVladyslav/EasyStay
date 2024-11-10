@@ -18,7 +18,7 @@ export default interface IRoom {
 
 export interface RoomVariantsFreeRequest {
     id: number;
-    FreePeriod: IFreePeriod;
+    freePeriod: IFreePeriod;
 }
 
 export interface IFreePeriod {

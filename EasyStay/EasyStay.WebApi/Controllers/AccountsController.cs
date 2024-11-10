@@ -8,8 +8,10 @@ using EasyStay.Application.MediatR.Accounts.Commands.SetPhoto;
 using EasyStay.Application.MediatR.Accounts.Commands.SignIn;
 using EasyStay.Application.MediatR.Accounts.Commands.UnlockUserById;
 using EasyStay.Application.MediatR.Accounts.Commands.Update;
+using EasyStay.Application.MediatR.Accounts.Commands.UpdateCustomersInformation;
 using EasyStay.Application.MediatR.Accounts.Commands.UpdateRealtorsInformation;
 using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
+using EasyStay.Application.MediatR.Accounts.Queries.GetCustomersInformation;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorsInformation;
@@ -117,9 +119,17 @@ public class AccountsController : BaseApiController {
 		return Ok(token);
 	}
 
+	[HttpGet]
+	[Authorize(Roles = "Customer")]
+	public async Task<IActionResult> GetCustomersInformationAsync() {
+		var vm = await Mediator.Send(new GetCustomersInformationCommand());
+
+		return Ok(vm);
+	}
+
 	[HttpPatch]
-	[Authorize(Roles = "Realtor")]
-	public async Task<IActionResult> UpdateRealtorsInformationAsync([FromBody] UpdateRealtorsInformationCommand command) {
+	[Authorize(Roles = "Customer")]
+	public async Task<IActionResult> UpdateCustomersInformationAsync([FromBody] UpdateCustomersInformationCommand command) {
 		await Mediator.Send(command);
 
 		return NoContent();
@@ -131,5 +141,13 @@ public class AccountsController : BaseApiController {
 		var vm = await Mediator.Send(new GetRealtorsInformationCommand());
 
 		return Ok(vm);
+	}
+
+	[HttpPatch]
+	[Authorize(Roles = "Realtor")]
+	public async Task<IActionResult> UpdateRealtorsInformationAsync([FromBody] UpdateRealtorsInformationCommand command) {
+		await Mediator.Send(command);
+
+		return NoContent();
 	}
 }

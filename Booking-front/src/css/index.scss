@@ -1677,9 +1677,31 @@
 
       .reviews {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1vw;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 23px;
+
+        @media screen and (max-width: 1360px) {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+
+          .hotel-item,
+          .review {
+            width: 100%;
+            max-width: none;
+          }
+        }
+
+        @media screen and (max-width: 1110px) {
+          display: grid;
+          grid-template-columns: 1fr;
+
+          .hotel-item,
+          .review {
+            width: 100%;
+          }
+        }
 
         .review {
           min-height: 222px;

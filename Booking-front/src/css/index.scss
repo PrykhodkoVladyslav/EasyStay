@@ -1677,9 +1677,31 @@
 
       .reviews {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1vw;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 23px;
+
+        @media screen and (max-width: 1360px) {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+
+          .hotel-item,
+          .review {
+            width: 100%;
+            max-width: none;
+          }
+        }
+
+        @media screen and (max-width: 1110px) {
+          display: grid;
+          grid-template-columns: 1fr;
+
+          .hotel-item,
+          .review {
+            width: 100%;
+          }
+        }
 
         .review {
           min-height: 222px;
@@ -2122,7 +2144,6 @@
 
     // Додати готель
     .add-hotel {
-      min-width: 200px;
       padding: 18px 23px;
       border-radius: var(--border-radius);
       background: rgba(247, 247, 253);
@@ -2134,17 +2155,20 @@
         align-items: center;
 
         p {
+          max-width: 100%;
           font-family: var(--font-primary), system-ui;
           font-size: 28px;
           font-weight: 700;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+        }
+
+        @media screen and (max-width: 940px) {
+          p {
+            font-size: 22px;
+          }
         }
 
         .link {
-          width: 100%;
-          max-width: 269px;
+          padding: 22px 2vw;
           height: 64px;
           display: flex;
           justify-content: center;
@@ -2178,6 +2202,27 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 23px;
+
+        @media screen and (max-width: 1360px) {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+
+          .hotel-item,
+          .review {
+            width: 100%;
+            max-width: none;
+          }
+        }
+
+        @media screen and (max-width: 1110px) {
+          display: grid;
+          grid-template-columns: 1fr;
+
+          .hotel-item,
+          .review {
+            width: 100%;
+          }
+        }
       }
 
       .main-button {
@@ -2203,6 +2248,7 @@
   // Особисті дані
   .data-content {
     width: 100%;
+    max-width: 850px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -2250,7 +2296,7 @@
         input {
           width: 100%;
           height: 56px;
-          padding: 9px 14px;
+          padding-left: 14px;
           border-radius: 18px;
           background: rgb(247, 247, 253);
           color: var(--color-text);
@@ -2266,7 +2312,6 @@
 
         select {
           width: 100%;
-          min-width: 200px;
           height: 56px;
           padding: 9px 14px;
           border-radius: 18px;
@@ -2316,7 +2361,6 @@
           gap: 44px;
 
           .container11 {
-            width: 628px;
             display: flex;
             gap: 48px;
 
@@ -2327,8 +2371,6 @@
 
           .btn-edit {
             width: 178px;
-            //width: 100%;
-            //max-width: 178px;
             height: 52px;
             display: flex;
             justify-content: center;

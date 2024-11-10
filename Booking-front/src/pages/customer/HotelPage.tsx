@@ -17,6 +17,7 @@ const HotelPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [freePeriod, setFreePeriod] = useState<IFreePeriod | null>(null);
     const [rooms, setRooms] = useState<IRoom[]>([]);
+    const [selectedDays, setSelectedDays] = useState(0);
 
     if (isLoading) return <p>Завантаження...</p>;
     if (error) return <p>Помилка при завантаженні даних готелю</p>;
@@ -32,13 +33,17 @@ const HotelPage = () => {
         const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
         const toDate = topFilters.date?.to ? new Date(topFilters.date.to) : new Date();
 
+        if (topFilters.date?.from && topFilters.date?.to) {
+            setSelectedDays((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
+        }
+
         const freePeriod = (topFilters.date?.from && topFilters.date?.to) ? {
             from: format(fromDate, "yyyy-MM-dd"),
             to: format(toDate, "yyyy-MM-dd"),
         } : null;
 
         if (freePeriod == null)
-            showToast("Оберість дати", "info");
+            showToast("Оберіть дати", "info");
 
         setFreePeriod(freePeriod);
         setRooms(hotelData?.rooms ?? []);
@@ -251,6 +256,7 @@ const HotelPage = () => {
                             hotelBreakfast={hotelData.breakfasts.length > 0}
                             freePeriod={freePeriod}
                             rooms={rooms}
+                            selectedDays={selectedDays}
                         />
                     </div>
                 )}

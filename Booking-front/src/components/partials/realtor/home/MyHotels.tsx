@@ -3,11 +3,14 @@ import { useGetHotelsPageQuery } from "services/hotel.ts";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
+import { IHotel } from "interfaces/hotel/IHotel.ts";
+import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
 
 const MyHotels = () => {
     const navigate = useNavigate();
+    const { setActivePage } = useRealtorActivePage();
     const [pageSize, setPageSize] = useState(3);
-    const [allHotels, setAllHotels] = useState([]);
+    const [allHotels, setAllHotels] = useState<IHotel[]>([]);
 
     const { data: hotelsData, isLoading, error } = useGetHotelsPageQuery({
         onlyOwn: true,
@@ -22,18 +25,26 @@ const MyHotels = () => {
         }
     }, [hotelsData]);
 
+    const handleHotelClick = () => {
+        setActivePage("hotels");
+        navigate("/realtor/hotels");
+    };
+
     const hotels = allHotels.slice(0, pageSize);
     const hasMoreHotels = allHotels.length > pageSize;
 
     if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
-    if (error) return showToast("Помилка завантаження даних", "error");
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
         <div className="hotels-container">
             <div className="container1">
                 <p className="pre-title">Мої готелі</p>
                 {hotels.length > 0 ? (
-                    <div className="hotels-and-reviews" onClick={() => navigate(`/realtor/hotels`)}>
+                    <div className="hotels-and-reviews" onClick={handleHotelClick}>
                         {hotels.map((item) => (
                             <HotelCard key={item.id} item={item} />
                         ))}

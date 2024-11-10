@@ -1,13 +1,17 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 type RealtorActivePageType = {
     activePage: string;
     setActivePage: (page: string) => void;
 };
 
+type RealtorActivePageProviderProps = {
+    children: ReactNode;
+};
+
 const RealtorActivePage = createContext<RealtorActivePageType | undefined>(undefined);
 
-export const RealtorActivePageProvider: React.FC = ({ children }) => {
+export const RealtorActivePageProvider: React.FC<RealtorActivePageProviderProps> = ({ children }) => {
     const [activePage, setActivePage] = useState<string>(() => {
         const storedActivePage = localStorage.getItem("activePage");
         return storedActivePage ? storedActivePage : "Головна";

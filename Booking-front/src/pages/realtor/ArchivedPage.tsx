@@ -42,7 +42,10 @@ const ArchivedPage = () => {
     };
 
     if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
-    if (error) return showToast("Помилка завантаження даних", "error");
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
         <div className="hotels-content" id="hotels">

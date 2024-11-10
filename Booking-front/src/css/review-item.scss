@@ -2,8 +2,6 @@
   flex: 1 1 calc(33.333% - 24px);
   max-width: calc(33.333% - 24px);
   min-width: 250px;
-  display: flex;
-  flex-direction: column;
   padding: 22px 23px 30px;
   border-radius: 22px;
   box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
@@ -11,6 +9,7 @@
   font-family: var(--font-primary), system-ui;
   font-weight: 600;
   overflow: hidden;
+  cursor: pointer;
 
   @media screen and (min-width: 2440px) {
     flex: 1 1 calc(25% - 24px);
@@ -24,9 +23,9 @@
 
     .author-image {
       border-radius: 100%;
-      min-width: 67px;
-      max-width: 67px;
-      height: 67px;
+      min-width: 57px;
+      max-width: 57px;
+      height: 57px;
     }
 
     .container9 {
@@ -44,6 +43,26 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         text-wrap: wrap;
+      }
+
+      .stars-container {
+        width: fit-content;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        padding: 3px 9px;
+        border: 1px solid rgb(234, 232, 232);
+        border-radius: 30px;
+
+        .star {
+          width: 13px;
+          height: 13px;
+        }
+
+        .rating {
+          font-size: 16px;
+          line-height: 22px;
+        }
       }
     }
   }

@@ -1230,7 +1230,7 @@
     }
 
     .search-rooms {
-      padding-bottom: 32px;
+      padding-bottom: 124px;
 
       .search {
         width: 100%;
@@ -1556,7 +1556,8 @@
 
     .reviews-content {
       width: 100%;
-      max-width: 1280px;
+      max-width: 1285px;
+      padding-bottom: 124px;
 
       .title {
         padding-bottom: 18px;
@@ -1621,175 +1622,85 @@
 
       }
 
-      //.ratings {
-      //  display: grid;
-      //  grid-template-columns: repeat(3, 1fr);
-      //  padding: 0 0 68px 17px;
-      //  gap: 44px;
-      //
-      //  .rating-bar {
-      //    display: flex;
-      //    flex-direction: column;
-      //    width: 100%;
-      //    max-width: 315px;
-      //
-      //    .text-rating {
-      //      display: flex;
-      //      justify-content: space-between;
-      //      font-family: var(--font-secondary), system-ui;
-      //      font-size: 12px;
-      //      line-height: 15px;
-      //      padding-bottom: 8px;
-      //
-      //      p:first-child {
-      //        font-weight: 500;
-      //      }
-      //
-      //      p:last-child {
-      //        font-weight: 600;
-      //      }
-      //    }
-      //
-      //    .bar {
-      //      position: relative;
-      //
-      //      .pre-bar {
-      //        position: absolute;
-      //        width: 100%;
-      //        top: 2px;
-      //        height: 4px;
-      //        border-radius: 17px;
-      //        background: var(--color-secondary);
-      //        z-index: -1;
-      //      }
-      //
-      //      .active-bar {
-      //        z-index: -1;
-      //        position: absolute;
-      //        width: 50%;
-      //        height: 8px;
-      //        border-radius: 17px;
-      //        background: var(--color-primary);
-      //      }
-      //    }
-      //  }
-      //}
+      // не використаний стиль з елементами
+      .ratings {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0 0 68px 17px;
+        gap: 44px;
 
-      .reviews {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 23px;
-
-        @media screen and (max-width: 1360px) {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-
-          .hotel-item,
-          .review {
-            width: 100%;
-            max-width: none;
-          }
-        }
-
-        @media screen and (max-width: 1110px) {
-          display: grid;
-          grid-template-columns: 1fr;
-
-          .hotel-item,
-          .review {
-            width: 100%;
-          }
-        }
-
-        .review {
-          min-height: 222px;
+        .rating-bar {
+          display: flex;
           flex-direction: column;
-          padding: 22px 23px;
-          border-radius: 22px;
-          box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-          font-family: var(--font-primary), system-ui;
-          font-weight: 600;
+          width: 100%;
+          max-width: 315px;
 
-          .author {
-            height: 57px;
+          .text-rating {
             display: flex;
-            align-items: center;
-            gap: 19px;
-            overflow: hidden;
+            justify-content: space-between;
+            font-family: var(--font-secondary), system-ui;
+            font-size: 12px;
+            line-height: 15px;
+            padding-bottom: 8px;
 
-            .image {
-              width: 67px;
-              border-radius: 100%;
-
-              img {
-                box-sizing: border-box;
-              }
+            p:first-child {
+              font-weight: 500;
             }
 
-            .container9 {
-              width: 75%;
-
-              .name {
-                font-size: 20px;
-                line-height: 27px;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-                overflow: hidden;
-              }
-
-              .stars-container {
-                width: 57px;
-                height: 28px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid rgb(234, 232, 232);
-                border-radius: 30px;
-
-                .container4 {
-                  display: flex;
-                  align-items: center;
-
-                  .star {
-                    width: 13px;
-                    height: 13px;
-                  }
-
-                  .rating {
-                    font-size: 16px;
-                    line-height: 22px;
-                  }
-                }
-              }
+            p:last-child {
+              font-weight: 600;
             }
           }
 
-          .description {
-            margin-top: 24px;
-            font-size: 13px;
-            line-height: 16px;
+          .bar {
+            position: relative;
+
+            .pre-bar {
+              position: absolute;
+              width: 100%;
+              top: 2px;
+              height: 4px;
+              border-radius: 17px;
+              background: var(--color-secondary);
+              z-index: -1;
+            }
+
+            .active-bar {
+              z-index: -1;
+              position: absolute;
+              width: 50%;
+              height: 8px;
+              border-radius: 17px;
+              background: var(--color-primary);
+            }
           }
         }
       }
 
-      .btn-more {
-        display: flex;
+      .reviews {
         width: 100%;
-        max-width: 136px;
-        height: 32px;
-        padding: 9px 18px;
-        margin: 28px auto;
-        white-space: nowrap;
-        border-radius: 12px;
-        background: var(--color-primary);
-        color: rgb(255, 255, 255);
-        font-family: var(--font-secondary), system-ui;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 15px;
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        gap: 23px;
+      }
+
+      .main-button {
+        margin-top: 28px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        button {
+          padding: 9px 18px;
+          border-radius: 12px;
+          background: var(--color-primary);
+          color: white;
+          font-family: var(--font-secondary), system-ui;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 15px;
+        }
       }
     }
 
@@ -2203,6 +2114,10 @@
         flex-wrap: wrap;
         gap: 23px;
 
+        .review {
+          cursor: pointer;
+        }
+
         @media screen and (max-width: 1360px) {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
@@ -2233,7 +2148,7 @@
 
         button {
           padding: 9px 18px;
-          border-radius: 55px;
+          border-radius: 14px;
           background: var(--color-primary);
           color: white;
           font-family: var(--font-secondary), system-ui;

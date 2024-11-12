@@ -9,7 +9,7 @@ import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
-import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
+import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
 import ReviewCard from "components/partials/customer/revewCard.tsx";
 
 const HotelPage = () => {
@@ -24,7 +24,7 @@ const HotelPage = () => {
     const [pageSize, setPageSize] = useState(3);
     const [allReviews, setAllReviews] = useState<IRealtorReview[]>([]);
     const photos: { name: string }[] = hotelData?.photos || [];
-    const RealtorId = hotelData?.realtorId || 0;
+    const HotelId = hotelData?.id || 0;
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -41,17 +41,24 @@ const HotelPage = () => {
         return `${hours}:${minutes}:00`;
     };
 
-    const { data: realtorReviewsPageData } = useGetRealtorReviewsPageQuery({
+    const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({
         pageIndex: 0,
         pageSize: 100,
-        realtorId: RealtorId,
+        hotelId: HotelId,
     });
 
+    const getRatingLabel = (rating: number) => {
+        if (rating >= 8) return "чудово";
+        if (rating >= 6) return "добре";
+        if (rating >= 4) return "задовільно";
+        return "погано";
+    };
+
     useEffect(() => {
-        if (realtorReviewsPageData) {
-            setAllReviews(realtorReviewsPageData.data as IRealtorReview[]);
+        if (hotelReviewsPageData) {
+            setAllReviews(hotelReviewsPageData.data as IRealtorReview[]);
         }
-    }, [realtorReviewsPageData]);
+    }, [hotelReviewsPageData]);
 
     const onSearch = (topFilters: ISearchData) => {
         const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
@@ -285,24 +292,26 @@ const HotelPage = () => {
 
             <div className="reviews-content" id="reviews">
                 <p className="title">Відгуки гостей</p>
-                <div className="count">
-                    <div className="rating">
-                        <p>9.2</p>
-                        <p>чудово</p>
-                    </div>
-                    <div className="reviews-count">
-                        <p><span>5</span> відгуків</p>
-                        <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
-                    </div>
-                </div>
                 {reviews.length > 0 ? (
-                    <div className="reviews">
-                        {reviews.map((review) => (
-                            <ReviewCard key={review.id} review={review} />
-                        ))}
-                    </div>
+                    <>
+                        <div className="count">
+                            <div className="rating">
+                                <p>{hotelData.rating}</p>
+                                <p>{getRatingLabel(hotelData.rating)}</p>
+                            </div>
+                            <div className="reviews-count">
+                                <p><span>{reviews.length}</span> відгуків</p>
+                                <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
+                            </div>
+                        </div>
+                        <div className="reviews">
+                            {reviews.map((review) => (
+                                <ReviewCard key={review.id} review={review}/>
+                            ))}
+                        </div>
+                    </>
                 ) : (
-                    <p className="isLoading-error">У вас немає відгуків</p>
+                    <p className="isLoading-error pt-20">У цього готелю немає відгуків</p>
                 )}
 
                 {hasMoreReviews && (

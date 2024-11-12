@@ -4,6 +4,7 @@ import { RootState } from "store/index.ts";
 import { getToken } from "store/slice/userSlice.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
+import { useGetRealtorsPersonalRatingQuery } from "services/user.ts";
 import { useEffect, useState } from "react";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
@@ -15,6 +16,7 @@ const ReviewsPage = () => {
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const [pageIndex, setPageIndex] = useState(0);
 
+    const { data: realtorRating } = useGetRealtorsPersonalRatingQuery();
     const { data: realtorReviewsPageData, isLoading, error} = useGetRealtorReviewsPageQuery({
         pageIndex: pageIndex,
         pageSize: 9,
@@ -63,9 +65,7 @@ const ReviewsPage = () => {
                             alt=""
                             className="star"
                         />
-                        <p className="rating">
-                            9.7
-                        </p>
+                        <p className="rating">{realtorRating?.toFixed(1) ?? "0"}</p>
                     </div>
                 </div>
                 <div className="filter">

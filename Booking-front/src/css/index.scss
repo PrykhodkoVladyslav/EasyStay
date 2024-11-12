@@ -1989,8 +1989,7 @@
 
     // Бічна панель
     .left-side {
-      width: 100%;
-      max-width: 390px;
+      width: 20vw;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1998,18 +1997,22 @@
       padding: 23px 2vw;
       border-radius: var(--border-radius);
       background: var(--color-secondary);
+      overflow: hidden;
 
       .head {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0 3vw;
+        padding: 0 0;
         gap: 18px;
 
-        .photo {
-          width: 205px;
-          height: 205px;
+        img {
           border-radius: 100%;
+          width: 100%;
+          min-width: 100px;
+          max-width: 10vw;
+          object-fit: cover;
           background: rgb(217, 217, 217);
         }
 
@@ -2030,7 +2033,6 @@
           flex-direction: column;
 
           .item {
-            width: 100%;
             height: 39px;
             padding: 11px 16px;
             display: flex;
@@ -4301,7 +4303,6 @@
   }
 }
 
-
 @media (max-width: 1240px) {
   .discount {
     margin: 60px auto;
@@ -4321,7 +4322,6 @@
 
   }
 }
-
 
 @media (max-width: 1000px) {
   .discount {

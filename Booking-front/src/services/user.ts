@@ -37,6 +37,11 @@ export const userApi = createApi({
             providesTags: ["User"],
         }),
 
+        getRealtorsPersonalRating: builder.query<number, void>({
+            query: () => "GetRealtorsPersonalRating",
+            providesTags: ["User"],
+        }),
+
         signIn: builder.mutation<SignInResponse, SignInRequest>({
             query: (data) => {
                 const formData = new FormData();
@@ -138,6 +143,7 @@ export const userApi = createApi({
                 };
             },
         }),
+
     }),
 });
 
@@ -145,6 +151,7 @@ export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
     useGetRealtorsInformationQuery,
+    useGetRealtorsPersonalRatingQuery,
     useSignInMutation,
     useRegistrationMutation,
     useCreateAdminMutation,

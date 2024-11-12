@@ -1,5 +1,5 @@
 
-export interface IRealtorReview {
+export interface IHotelReview {
     id: number;
     description: string;
     score: number;
@@ -12,5 +12,5 @@ export interface IRealtorReview {
     minUpdatedAtUtc?: string;
     maxUpdatedAtUtc?: string;
     authorId: number;
-    realtorId: number;
+    hotelId: number;
 }

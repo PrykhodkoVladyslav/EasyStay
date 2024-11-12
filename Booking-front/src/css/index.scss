@@ -1709,6 +1709,7 @@
       flex-direction: column;
       gap: 18px;
       font-family: var(--font-primary), system-ui;
+      cursor: default;
 
       .title {
         font-size: 32px;
@@ -1774,6 +1775,7 @@
             line-height: 28px;
             color: rgb(165, 165, 165);
             background-color: rgb(255, 255, 255);
+            cursor: default;
           }
 
           button {
@@ -1789,6 +1791,7 @@
             font-size: 14px;
             font-weight: 700;
             line-height: 100%;
+            cursor: default;
           }
         }
       }
@@ -2004,10 +2007,8 @@
         gap: 18px;
 
         .photo {
-          width: fit-content;
-          min-width: 100px;
-          max-width: 205px;
-          height: 100%;
+          width: 205px;
+          height: 205px;
           border-radius: 100%;
           background: rgb(217, 217, 217);
         }

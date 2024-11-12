@@ -16,6 +16,7 @@ import { getIconUrl } from "utils/publicAccessor.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import IMessage from "interfaces/message/IMessage.ts";
 import { format } from "date-fns";
+import { useLocation } from "react-router-dom";
 
 export interface IChatWishInterlocutor extends IChat {
     interlocutorId: number;
@@ -25,6 +26,14 @@ export interface IChatWishInterlocutor extends IChat {
 }
 
 const ChatPage = () => {
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+
+    const interlocutorIdParam = queryParams.get("interlocutorIdParam");
+    const avatarParam = queryParams.get("avatarParam");
+    const fullNameParam = queryParams.get("fullNameParam");
+
     const user = useAppSelector(getUser);
     const token = useAppSelector(getToken);
     if (user === null) throw new Error("User in not authenticated");
@@ -45,6 +54,7 @@ const ChatPage = () => {
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
 
     const [chats, setChats] = useState<IChat[]>([]);
+    const [tempChat, setTempChat] = useState<IChat | null>(null);
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     useEffect(() => {
@@ -63,6 +73,28 @@ const ChatPage = () => {
     }, [selectedChatId]);
 
     useEffect(() => {
+        if (interlocutorIdParam && avatarParam && fullNameParam) {
+            const interlocutor = {
+                fullName: fullNameParam,
+                photo: avatarParam,
+            } as IChatUserInfo;
+
+            const me = {
+                fullName: `${user.firstName} ${user.lastName}`,
+                photo: user.photo,
+            } as IChatUserInfo;
+
+            const tempChat = {
+                id: 0,
+                customerId: isCustomer ? user.id : Number(interlocutorIdParam),
+                customer: isCustomer ? me : interlocutor,
+                realtorId: isCustomer ? Number(interlocutorIdParam) : user.id,
+                realtor: isCustomer ? interlocutor : me,
+            } as IChat;
+
+            setTempChat(tempChat);
+        }
+
         get<IChat[]>(`${API_URL}/api/chats/getAll`, buildAxiosConfigWithToken(token!))
             .then(r => setChats(chats.concat(r.data)))
             .catch(() => showToast("Помилка завантаження чатів", "error"));
@@ -72,6 +104,11 @@ const ChatPage = () => {
         "CreateChat",
         (chat: IChat) => {
             setChats([...chats, chat]);
+
+            if (chat[isCustomer ? "realtorId" : "customerId"] === Number(interlocutorIdParam)) {
+                setSelectedChatId(chat.id);
+                setTempChat(null);
+            }
         },
         [],
     );
@@ -86,7 +123,12 @@ const ChatPage = () => {
         [],
     );
 
-    const chatsWithWishInterlocutor = chats.map(c => ({
+    const chatsWithTemp =
+        tempChat && !chats.find(c => c[isCustomer ? "realtorId" : "customerId"] === Number(interlocutorIdParam))
+            ? [...chats, tempChat]
+            : chats;
+
+    const chatsWithWishInterlocutor = chatsWithTemp.map(c => ({
         ...c,
         interlocutorId: isCustomer ? c.realtorId : c.customerId,
         interlocutor: isCustomer ? c.realtor : c.customer,

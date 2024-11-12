@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Chats.Queries.Shared;
 using EasyStay.Application.MediatR.Messages.Queries.Shared;
@@ -43,7 +44,7 @@ public class ChatHub(
 
 		var isNewChat = chat is null;
 
-		if (isNewChat) {
+		if (chat is null) {
 			chat = new Chat {
 				CustomerId = customerId,
 				RealtorId = realtorId,
@@ -65,9 +66,13 @@ public class ChatHub(
 		await context.SaveChangesAsync(CancellationToken.None);
 
 		if (isNewChat) {
+			var chatVm = await context.Chats
+				.ProjectTo<ChatVm>(mapper.ConfigurationProvider)
+				.FirstAsync(c => c.Id == chat.Id);
+
 			await Clients
-				.User(receiverId.ToString())
-				.SendAsync(Methods.CreateChat, mapper.Map<ChatVm>(chat));
+				.Users(sender.Id.ToString(), receiver.Id.ToString())
+				.SendAsync(Methods.CreateChat, chatVm);
 		}
 
 		await Clients

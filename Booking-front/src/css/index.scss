@@ -2979,6 +2979,7 @@
             height: 24px;
           }
         }
+
         @media (max-width: 1060px) {
           .room-container-6 {
             grid-template-columns: 1fr;
@@ -3365,6 +3366,7 @@
     font-weight: 600;
     line-height: 27px;
   }
+
   .main-button-2 {
     width: fit-content;
     display: flex;
@@ -3538,6 +3540,7 @@
           appearance: none;
           -moz-appearance: textfield;
         }
+
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
           -webkit-appearance: none;
@@ -3646,7 +3649,7 @@
   button:hover {
     font-size: 16px;
     font-weight: 800;
-    animation:  0.3s ease;
+    animation: 0.3s ease;
   }
 }
 

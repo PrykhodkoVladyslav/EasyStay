@@ -11,10 +11,17 @@ import { buildAxiosConfigWithToken } from "utils/axiosConfigBuilder.ts";
 import showToast from "utils/toastShow.ts";
 import IChat from "interfaces/chat/IChat.ts";
 import IChatUserInfo from "interfaces/chat/IChatUserInfo.ts";
+import ChatHeader from "components/partials/shared/chat/ChatHeader.tsx";
+import { getIconUrl } from "utils/publicAccessor.ts";
+import { getApiImageUrl } from "utils/apiImageAccessor.ts";
+import IMessage from "interfaces/message/IMessage.ts";
+import { format } from "date-fns";
 
 export interface IChatWishInterlocutor extends IChat {
     interlocutorId: number;
     interlocutor: IChatUserInfo;
+    meId: number;
+    me: IChatUserInfo;
 }
 
 const ChatPage = () => {
@@ -25,14 +32,22 @@ const ChatPage = () => {
     const isCustomer = role === "Customer";
 
     const [search, setSearch] = useState("");
+    const [message, setMessage] = useState<string>("");
 
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
 
     const [chats, setChats] = useState<IChat[]>([]);
+    const [messages, setMessages] = useState<IMessage[]>([]);
+
+    useEffect(() => {
+        setMessage("");
+
+        // load messages
+    }, [selectedChatId]);
 
     useEffect(() => {
         get<IChat[]>(`${API_URL}/api/chats/getAll`, buildAxiosConfigWithToken(token!))
-            .then(r => setChats([...chats, ...r.data]))
+            .then(r => setChats(chats.concat(r.data)))
             .catch(() => showToast("Помилка завантаження чатів", "error"));
     }, []);
 
@@ -44,11 +59,35 @@ const ChatPage = () => {
         [],
     );
 
+    SignalRContext.useSignalREffect(
+        "ReceiveMessage",
+        (chatId: number, message: IMessage) => {
+            if (selectedChatId == chatId)
+                setMessages([...messages, message]);
+        },
+        [],
+    );
+
     const chatsWithWishInterlocutor = chats.map(c => ({
         ...c,
         interlocutorId: isCustomer ? c.realtorId : c.customerId,
         interlocutor: isCustomer ? c.realtor : c.customer,
+        meId: isCustomer ? c.customerId : c.realtorId,
+        me: isCustomer ? c.customer : c.realtor,
     }) as IChatWishInterlocutor);
+
+    const selectedChat = chatsWithWishInterlocutor.find(c => c.id === selectedChatId);
+
+    const sendMessage = () => {
+        SignalRContext.invoke("SendMessage", selectedChat?.realtorId, message)
+            ?.then(() => setMessage(""))
+            .catch((e) => {
+                console.log(e);
+                showToast("Помилка відправки повідомлення");
+            });
+    };
+
+    const isEnabledChat = selectedChatId !== null;
 
     return <div className="chat-page-container">
         <div className="side-panel-container">
@@ -64,12 +103,66 @@ const ChatPage = () => {
                         <ChatCard
                             key={item.id}
                             isSelected={selectedChatId === item.id}
-                            onClick={() => setSelectedChatId(item.id)}
+                            onClick={() => setSelectedChatId((selectedChatId === item.id) ? null : (item.id))}
                             image={item.interlocutor.photo}
                             fullName={item.interlocutor.fullName}
                             lastMassage={item.lastMassage}
                         />),
                     )}
+            </div>
+        </div>
+
+        <div className="chat-body-container">
+            <ChatHeader title={selectedChat?.interlocutor.fullName} />
+
+            <div className="chat-messages-container">
+                <div className="chat-body-content-container on-vertical-sides-chat">
+                    <div className="messages-container">
+                        {messages.map(m =>
+                            <div className="message-container">
+                                <img
+                                    src={getApiImageUrl((m.authorId == user.id) ? (user.photo) : (selectedChat?.interlocutor.photo ?? ""), 200)}
+                                    alt="avatar"
+                                    className="message-avatar"
+                                />
+                                <div className="message-content-container">
+                                    <div className="on-sides-of-message">
+                                        <p className="message-author">{(m.authorId == user.id) ? ("Ви") : (selectedChat?.interlocutor.fullName)}</p>
+                                        <p className="message-time">{format(m.createdAtUtc, "HH:mm")}</p>
+                                    </div>
+
+                                    <p className="message-content">{m.text}</p>
+                                </div>
+                            </div>)
+                        }
+                    </div>
+
+                    <div className="chat-text-input-container">
+                        <div className="input-container">
+                            <input
+                                className="message-input"
+                                type="text"
+                                placeholder="Написати повідомлення"
+                                value={message}
+                                onChange={e => setMessage(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter")
+                                        sendMessage();
+                                }}
+                                disabled={!isEnabledChat}
+                            />
+                            <img
+                                src={getIconUrl("send.svg")}
+                                alt="send"
+                                className="pointer"
+                                onClick={() => {
+                                    if (isEnabledChat)
+                                        sendMessage();
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>;

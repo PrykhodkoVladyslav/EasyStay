@@ -1,8 +1,13 @@
 .chat-page-container {
-  margin-top: 10px;
+  margin-top: 20px;
   border-radius: 22px 22px 0 0;
+  box-shadow: 0 0 6px rgb(165, 165, 165);
   overflow: hidden;
-  height: calc(100vh - 74px);
+  height: calc(100vh - 94px);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
 
   .side-panel-container {
     background: rgb(240, 240, 240);
@@ -50,6 +55,7 @@
         .chat-user-image {
           width: 40px;
           height: 40px;
+          border-radius: 50%;
         }
 
         .chat-info {
@@ -137,6 +143,169 @@
           .chat-body {
             .last-message {
               color: rgb(165, 165, 165);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .chat-body-container {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .chat-body-content-container {
+      max-width: 1080px;
+      padding: 0 24px;
+    }
+
+    .chat-header {
+      border-radius: 0 22px 0 0;
+      background: rgb(240, 240, 240);
+      height: 60px;
+      width: 100%;
+      padding: 8px 0;
+
+      .on-sides-chat-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+      }
+
+      .chat-title {
+        color: rgb(55, 55, 55);
+        font-family: var(--font-montserrat), system-ui;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 29px;
+      }
+
+      .chat-header-buttons-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        height: 100%;
+
+        .chat-header-button-container {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgb(255, 255, 255);
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    .chat-messages-container {
+      height: 100%;
+      padding-bottom: 70px;
+
+      .on-vertical-sides-chat {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 10px;
+
+        .messages-container {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 48px;
+
+          overflow-y: auto;
+
+          .message-container {
+            display: flex;
+            flex-direction: row;
+            align-items: start;
+            gap: 6px;
+
+            .message-avatar {
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+            }
+
+            .message-content-container {
+              width: 100%;
+
+              display: flex;
+              flex-direction: column;
+              justify-content: stretch;
+              gap: 8px;
+
+              .on-sides-of-message {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .message-author {
+                  color: rgb(0, 0, 0);
+                  font-family: var(--font-nunito), system-ui;
+                  font-size: 14px;
+                  font-weight: 700;
+                  line-height: 100%;
+                }
+
+                .message-time {
+                  color: rgb(165, 165, 165);
+                  font-family: var(--font-montserrat), system-ui;
+                  font-size: 12px;
+                  font-weight: 500;
+                  line-height: 15px;
+                }
+              }
+
+              .message-content {
+                color: rgb(81, 81, 81);
+                font-family: var(--font-montserrat), system-ui;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 137%;
+              }
+            }
+          }
+        }
+
+        .chat-text-input-container {
+          .input-container {
+            padding: 20px 20px;
+            border-radius: 22px;
+            background: rgb(240, 240, 240);
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .message-input {
+              height: 34px;
+              background: inherit;
+              width: 100%;
+
+              color: rgb(165, 165, 165);
+              font-family: var(--font-montserrat), system-ui;
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 15px;
+
+              &:focus {
+                outline: none;
+              }
             }
           }
         }

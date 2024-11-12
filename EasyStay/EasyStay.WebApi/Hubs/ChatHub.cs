@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Chats.Queries.Shared;
+using EasyStay.Application.MediatR.Messages.Queries.Shared;
 using EasyStay.Domain;
 using EasyStay.Domain.Constants;
 using EasyStay.Domain.Identity;
@@ -57,10 +58,9 @@ public class ChatHub(
 		var messageEntity = new Message {
 			Text = message,
 			AuthorId = sender.Id,
-			CreatedAtUtc = DateTime.UtcNow
+			CreatedAtUtc = DateTime.UtcNow,
+			ChatId = chat!.Id
 		};
-
-		chat!.Messages.Add(messageEntity);
 
 		await context.SaveChangesAsync(CancellationToken.None);
 
@@ -72,7 +72,7 @@ public class ChatHub(
 
 		await Clients
 			.Users(sender.Id.ToString(), receiver.Id.ToString())
-			.SendAsync(Methods.ReceiveMessage, chat.Id, message);
+			.SendAsync(Methods.ReceiveMessage, chat.Id, mapper.Map<MessageVm>(messageEntity));
 	}
 
 	private string UserId => Context.User?.FindFirstValue(ClaimTypes.NameIdentifier)

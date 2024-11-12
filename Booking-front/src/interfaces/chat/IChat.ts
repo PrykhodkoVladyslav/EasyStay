@@ -1,5 +1,5 @@
 import IChatUserInfo from "interfaces/chat/IChatUserInfo.ts";
-import IMassage from "interfaces/message/IMassage.ts";
+import IMessage from "interfaces/message/IMessage.ts";
 
 export default interface IChat {
     id: number;
@@ -7,5 +7,5 @@ export default interface IChat {
     customer: IChatUserInfo;
     realtorId: number;
     realtor: IChatUserInfo;
-    lastMassage?: IMassage;
+    lastMassage?: IMessage;
 }

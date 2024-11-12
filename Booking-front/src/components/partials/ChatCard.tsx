@@ -1,11 +1,11 @@
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { format } from "date-fns";
-import IMassage from "interfaces/message/IMassage.ts";
+import IMessage from "interfaces/message/IMessage.ts";
 
 const ChatCard = (props: {
     image: string;
     fullName: string;
-    lastMassage?: IMassage;
+    lastMassage?: IMessage;
     isOnline?: boolean;
 
     isSelected?: boolean;

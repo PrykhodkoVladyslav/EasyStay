@@ -1,4 +1,4 @@
-export default interface IMassage {
+export default interface IMessage {
     id: number;
     text: string;
     createdAtUtc: Date;

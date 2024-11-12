@@ -1,6 +1,6 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
@@ -27,10 +27,6 @@ const CustomerHeader = () => {
             onClick={() => navigate(item.href)}
         >{item.name}</button>
     ));
-
-    useEffect(() => {
-        activeMenuItemContext?.setActivePage("Готелі");
-    });
 
     const languageOptions = [
         { full: "English", abbr: "En" },

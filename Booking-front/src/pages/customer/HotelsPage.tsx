@@ -2,11 +2,19 @@ import SearchHotelSection, { ISearchData } from "components/partials/customer/Se
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import FilterHotelsSection, { IFilter } from "components/partials/customer/FilterHotelsSection.tsx";
 import HotelsSection from "components/partials/customer/HotelsSection.tsx";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
 import { format } from "date-fns";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const HotelsPage = () => {
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("Готелі");
+    });
+    
     const [sideFilters, setSideFilters] = useState<IFilter>({
         hotelAmenities: [],
         roomAmenities: [],

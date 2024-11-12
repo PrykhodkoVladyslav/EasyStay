@@ -1,4 +1,6 @@
-﻿using EasyStay.Application.Interfaces;
+﻿using AutoMapper;
+using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Chats.Queries.Shared;
 using EasyStay.Domain;
 using EasyStay.Domain.Constants;
 using EasyStay.Domain.Identity;
@@ -13,14 +15,15 @@ namespace EasyStay.WebApi.Hubs;
 [Authorize(Roles = "Customer,Realtor")]
 public class ChatHub(
 	IEasyStayDbContext context,
-	UserManager<User> userManager
+	UserManager<User> userManager,
+	IMapper mapper
 ) : Hub {
 	private static class Methods {
 		public const string CreateChat = "CreateChat";
 		public const string ReceiveMessage = "ReceiveMessage";
 	}
 
-	public async Task SendMessage(long receiverId, string message, string requestId) {
+	public async Task SendMessage(long receiverId, string message) {
 		var sender = await GetUserAsync();
 		var receiver = await ((await userManager.IsInRoleAsync(sender, Roles.Customer))
 			? GetUserOfTypeAsync<Realtor>(receiverId)
@@ -37,7 +40,9 @@ public class ChatHub(
 		var chat = await context.Chats
 			.FirstOrDefaultAsync(c => c.CustomerId == customerId && c.RealtorId == realtorId);
 
-		if (chat is null) {
+		var isNewChat = chat is null;
+
+		if (isNewChat) {
 			chat = new Chat {
 				CustomerId = customerId,
 				RealtorId = realtorId,
@@ -47,7 +52,6 @@ public class ChatHub(
 			await context.Chats.AddAsync(chat);
 
 			await context.SaveChangesAsync(CancellationToken.None);
-			await Clients.User(receiverId.ToString()).SendAsync(Methods.CreateChat, chat.Id);
 		}
 
 		var messageEntity = new Message {
@@ -56,35 +60,30 @@ public class ChatHub(
 			CreatedAtUtc = DateTime.UtcNow
 		};
 
-		chat.Messages.Add(messageEntity);
+		chat!.Messages.Add(messageEntity);
 
 		await context.SaveChangesAsync(CancellationToken.None);
 
+		if (isNewChat) {
+			await Clients
+				.User(receiverId.ToString())
+				.SendAsync(Methods.CreateChat, mapper.Map<ChatVm>(chat));
+		}
+
 		await Clients
 			.Users(sender.Id.ToString(), receiver.Id.ToString())
-			.SendAsync(Methods.ReceiveMessage, chat.Id, message, requestId);
+			.SendAsync(Methods.ReceiveMessage, chat.Id, message);
 	}
 
-	private async Task<User> GetUserAsync() {
-		var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+	private string UserId => Context.User?.FindFirstValue(ClaimTypes.NameIdentifier)
+		?? throw new HubException("Unauthorized user.");
 
-		if (string.IsNullOrEmpty(userId))
-			throw new HubException("Unauthorized user.");
+	private async Task<User> GetUserAsync() => await userManager.FindByIdAsync(UserId)
+		?? throw new HubException("User not found.");
 
-		var user = await userManager.FindByIdAsync(userId)
-			?? throw new HubException("User not found.");
-
-		//await userManager.GetRolesAsync(user);
-
-		return user;
-	}
-
-	private async Task<User> GetUserOfTypeAsync<T>(long id) where T : User {
-		var user = await userManager.Users
+	private async Task<User> GetUserOfTypeAsync<T>(long id) where T : User =>
+		await userManager.Users
 			.OfType<T>()
 			.FirstOrDefaultAsync(u => u.Id == id)
 			?? throw new HubException("User not found.");
-
-		return user;
-	}
 }

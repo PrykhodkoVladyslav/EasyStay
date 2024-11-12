@@ -77,6 +77,13 @@ builder.Services.AddPaginationServices();
 
 builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));
 
+builder.Services.AddCors(options => options.AddPolicy("SignalRCors", configuration => {
+	configuration
+		.WithOrigins(builder.Configuration["FrontEndDomain"] ?? throw new NullReferenceException("FrontEndDomain"))
+		.AllowAnyHeader()
+		.AllowAnyMethod()
+		.AllowCredentials();
+}));
 
 var app = builder.Build();
 
@@ -106,7 +113,8 @@ app.UseStaticFiles(new StaticFileOptions {
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<ChatHub>("/chat");
+app.MapHub<ChatHub>("/hubs/chat")
+	.RequireCors("SignalRCors");
 
 app.MapControllers();
 

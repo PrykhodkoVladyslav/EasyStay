@@ -38,8 +38,7 @@ const CustomerHeader = () => {
     ];
 
     const handleMessagesClick = () => {
-        console.log("Messages clicked");
-
+        navigate("/chat");
     };
 
     const handleNotificationsClick = () => {

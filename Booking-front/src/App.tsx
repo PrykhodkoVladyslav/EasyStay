@@ -48,6 +48,7 @@ import HotelsPage from "pages/customer/HotelsPage.tsx";
 import HotelPage from "pages/customer/HotelPage.tsx";
 import BookingPage from "pages/customer/BookingPage/BookingPage.tsx";
 import RealtorPage from "pages/customer/RealtorPage.tsx";
+import SignalRChatPage from "pages/shared/Chat/SignalRChatPage.tsx";
 
 function App() {
     return (
@@ -63,6 +64,7 @@ function App() {
                     <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
                         <Route path="booking/:data" element={<BookingPage />} />
                         <Route path="realtorPage" element={<RealtorPage />} />
+                        <Route path="chat" element={<SignalRChatPage />} />
                     </Route>
                 </Route>
 
@@ -82,7 +84,7 @@ function App() {
                             <Route path="reviews" element={<RealtorReviewsPage />} />
                             <Route path="archived" element={<RealtorArchivedPage />} />
 
-                            <Route path="hotels" element={<RealtorHotelsPage />} >
+                            <Route path="hotels" element={<RealtorHotelsPage />}>
                                 <Route path="edit/:id" element={<HotelEditPage />} />
                             </Route>
                         </Route>

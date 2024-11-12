@@ -30,7 +30,7 @@ const Header = () => {
 
     const languageOptions = [
         { full: "English", abbr: "En" },
-        { full: "Українська", abbr: "Укр" }
+        { full: "Українська", abbr: "Укр" },
     ];
 
     const handleLogoClick = () => {
@@ -39,8 +39,7 @@ const Header = () => {
     };
 
     const handleMessagesClick = () => {
-        console.log("Messages clicked");
-
+        navigate("/realtor/chat");
     };
 
     const handleNotificationsClick = () => {
@@ -65,7 +64,7 @@ const Header = () => {
 
             <div className="right-section">
                 <div>
-                    <Dropdown options={languageOptions} defaultOption="Українська"/>
+                    <Dropdown options={languageOptions} defaultOption="Українська" />
                 </div>
 
                 <div className="user-section">

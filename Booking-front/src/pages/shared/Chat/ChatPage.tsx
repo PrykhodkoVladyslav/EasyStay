@@ -1,6 +1,6 @@
 import "../../../css/chat.scss";
 import SearchInput from "components/ui/design/SearchInput.tsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatCard from "components/partials/ChatCard.tsx";
 import { useAppSelector } from "store/index.ts";
 import { getToken, getUser } from "store/slice/userSlice.ts";
@@ -34,15 +34,32 @@ const ChatPage = () => {
     const [search, setSearch] = useState("");
     const [message, setMessage] = useState<string>("");
 
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+    const scrollToBottom = () => {
+        messagesContainerRef.current?.scrollTo({
+            top: messagesContainerRef.current.scrollHeight,
+            behavior: "auto",
+        });
+    };
+
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
 
     const [chats, setChats] = useState<IChat[]>([]);
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    useEffect(() => {
         setMessage("");
 
-        // load messages
+        setMessages([]);
+        if (selectedChatId != null) {
+            get<IMessage[]>(`${API_URL}/api/Messages/GetAll?ChatId=${selectedChatId}`, buildAxiosConfigWithToken(token!))
+                .then(r => setMessages(r.data))
+                .catch(() => showToast("Помилка завантаження повідомлень", "error"));
+        }
     }, [selectedChatId]);
 
     useEffect(() => {
@@ -62,8 +79,9 @@ const ChatPage = () => {
     SignalRContext.useSignalREffect(
         "ReceiveMessage",
         (chatId: number, message: IMessage) => {
-            if (selectedChatId == chatId)
+            if (selectedChatId == chatId) {
                 setMessages([...messages, message]);
+            }
         },
         [],
     );
@@ -79,12 +97,12 @@ const ChatPage = () => {
     const selectedChat = chatsWithWishInterlocutor.find(c => c.id === selectedChatId);
 
     const sendMessage = () => {
-        SignalRContext.invoke("SendMessage", selectedChat?.realtorId, message)
+        if (!message)
+            return;
+
+        SignalRContext.invoke("SendMessage", selectedChat?.interlocutorId, message)
             ?.then(() => setMessage(""))
-            .catch((e) => {
-                console.log(e);
-                showToast("Помилка відправки повідомлення");
-            });
+            .catch(() => showToast("Помилка відправки повідомлення"));
     };
 
     const isEnabledChat = selectedChatId !== null;
@@ -106,7 +124,7 @@ const ChatPage = () => {
                             onClick={() => setSelectedChatId((selectedChatId === item.id) ? null : (item.id))}
                             image={item.interlocutor.photo}
                             fullName={item.interlocutor.fullName}
-                            lastMassage={item.lastMassage}
+                            lastMessage={item.lastMessage}
                         />),
                     )}
             </div>
@@ -117,9 +135,9 @@ const ChatPage = () => {
 
             <div className="chat-messages-container">
                 <div className="chat-body-content-container on-vertical-sides-chat">
-                    <div className="messages-container">
-                        {messages.map(m =>
-                            <div className="message-container">
+                    <div className="messages-container" ref={messagesContainerRef}>
+                        {messages.map((m, index) =>
+                            <div key={index} className="message-container">
                                 <img
                                     src={getApiImageUrl((m.authorId == user.id) ? (user.photo) : (selectedChat?.interlocutor.photo ?? ""), 200)}
                                     alt="avatar"
@@ -150,11 +168,12 @@ const ChatPage = () => {
                                         sendMessage();
                                 }}
                                 disabled={!isEnabledChat}
+                                maxLength={4000}
                             />
                             <img
                                 src={getIconUrl("send.svg")}
                                 alt="send"
-                                className="pointer"
+                                className={isEnabledChat ? "pointer" : ""}
                                 onClick={() => {
                                     if (isEnabledChat)
                                         sendMessage();

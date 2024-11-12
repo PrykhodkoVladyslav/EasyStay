@@ -5,15 +5,15 @@ import IMessage from "interfaces/message/IMessage.ts";
 const ChatCard = (props: {
     image: string;
     fullName: string;
-    lastMassage?: IMessage;
+    lastMessage?: IMessage;
     isOnline?: boolean;
 
     isSelected?: boolean;
     onClick?: () => void;
 }) => {
-    const { image, fullName, lastMassage, isSelected, onClick } = props;
+    const { image, fullName, lastMessage, isSelected, onClick } = props;
 
-    const time = lastMassage?.createdAtUtc !== undefined ? format(lastMassage.createdAtUtc, "HH:mm") : "";
+    const time = lastMessage?.createdAtUtc !== undefined ? format(lastMessage.createdAtUtc, "HH:mm") : "";
 
     return <div className={`chat-container ${isSelected ? "chat-container-selected" : ""} pointer`}
                 onClick={() => onClick?.()}>
@@ -25,8 +25,8 @@ const ChatCard = (props: {
                 <p className="chat-time">{time}</p>
             </div>
             <div className="chat-body">
-                <p className="last-message">{lastMassage?.text}</p>
-                <div className={`online-status ${props.isOnline ? "online-status-online" : "online-status-offline"}`} />
+                <p className="last-message">{lastMessage?.text}</p>
+                {/*<div className={`online-status ${props.isOnline ? "online-status-online" : "online-status-offline"}`} />*/}
             </div>
         </div>
     </div>;

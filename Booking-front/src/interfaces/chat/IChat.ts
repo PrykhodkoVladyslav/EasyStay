@@ -7,5 +7,5 @@ export default interface IChat {
     customer: IChatUserInfo;
     realtorId: number;
     realtor: IChatUserInfo;
-    lastMassage?: IMessage;
+    lastMessage?: IMessage;
 }

@@ -106,6 +106,8 @@
               -webkit-box-orient: vertical;
               overflow: hidden;
               text-overflow: ellipsis;
+
+              max-width: 220px;
             }
 
             .online-status {
@@ -233,6 +235,10 @@
             align-items: start;
             gap: 6px;
 
+            &:first-child {
+              margin-top: 24px;
+            }
+
             .message-avatar {
               width: 24px;
               height: 24px;
@@ -276,6 +282,10 @@
                 font-size: 13px;
                 font-weight: 500;
                 line-height: 137%;
+
+                word-wrap: break-word;
+                word-break: break-word;
+                white-space: normal;
               }
             }
           }

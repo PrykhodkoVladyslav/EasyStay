@@ -51,7 +51,6 @@ public class ChatHub(
 			};
 
 			await context.Chats.AddAsync(chat);
-
 			await context.SaveChangesAsync(CancellationToken.None);
 		}
 
@@ -62,6 +61,7 @@ public class ChatHub(
 			ChatId = chat!.Id
 		};
 
+		await context.Messages.AddAsync(messageEntity);
 		await context.SaveChangesAsync(CancellationToken.None);
 
 		if (isNewChat) {

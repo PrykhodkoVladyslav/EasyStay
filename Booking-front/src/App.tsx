@@ -89,6 +89,10 @@ function App() {
                             </Route>
                         </Route>
 
+                        <Route path="realtor" element={<AddLayout />}>
+                            <Route path="chat" element={<SignalRChatPage />} />
+                        </Route>
+
                         <Route path="add" element={<AddLayout />}>
                             <Route path="categories" element={<CategoriesListPage />} />
                             <Route path="hotel" element={<AddHotelPage />} />

@@ -6,7 +6,7 @@ namespace EasyStay.WebApi.Controllers;
 
 public class ChatsController : BaseApiController {
 	[HttpGet]
-	[Authorize(Roles = "Customer")]
+	[Authorize(Roles = "Customer,Realtor")]
 	public async Task<IActionResult> GetAllAsync() {
 		var items = await Mediator.Send(new GetAllChatsQuery());
 		return Ok(items);

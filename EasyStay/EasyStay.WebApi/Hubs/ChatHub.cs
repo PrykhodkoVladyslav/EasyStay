@@ -22,6 +22,7 @@ public class ChatHub(
 ) : Hub {
 	private static class Methods {
 		public const string CreateChat = "CreateChat";
+		public const string DeleteChat = "DeleteChat";
 		public const string ReceiveMessage = "ReceiveMessage";
 	}
 
@@ -78,6 +79,22 @@ public class ChatHub(
 		await Clients
 			.Users(sender.Id.ToString(), receiver.Id.ToString())
 			.SendAsync(Methods.ReceiveMessage, chat.Id, mapper.Map<MessageVm>(messageEntity));
+	}
+
+	public async Task DeleteChat(long chatId) {
+		var userId = Convert.ToInt64(UserId);
+
+		var chat = await context.Chats
+			.Where(c => c.CustomerId == userId || c.RealtorId == userId)
+			.FirstOrDefaultAsync(c => c.Id == chatId)
+			?? throw new HubException("Chat not found.");
+
+		context.Chats.Remove(chat);
+		await context.SaveChangesAsync(CancellationToken.None);
+
+		await Clients
+			.Users(chat.CustomerId.ToString(), chat.RealtorId.ToString())
+			.SendAsync(Methods.DeleteChat, chatId);
 	}
 
 	private string UserId => Context.User?.FindFirstValue(ClaimTypes.NameIdentifier)

@@ -114,6 +114,17 @@ const ChatPage = () => {
     );
 
     SignalRContext.useSignalREffect(
+        "DeleteChat",
+        (chatId: number) => {
+            setChats(chats.filter(c => c.id !== chatId));
+
+            if (selectedChatId == chatId)
+                setSelectedChatId(null);
+        },
+        [],
+    );
+
+    SignalRContext.useSignalREffect(
         "ReceiveMessage",
         (chatId: number, message: IMessage) => {
             if (selectedChatId == chatId) {
@@ -147,6 +158,14 @@ const ChatPage = () => {
             .catch(() => showToast("Помилка відправки повідомлення"));
     };
 
+    const deleteChat = () => {
+        if (selectedChatId == null)
+            return;
+
+        SignalRContext.invoke("DeleteChat", selectedChatId)
+            ?.catch(() => showToast("Помилка видалення чату"));
+    };
+
     const isEnabledChat = selectedChatId !== null;
 
     return <div className="chat-page-container">
@@ -173,7 +192,7 @@ const ChatPage = () => {
         </div>
 
         <div className="chat-body-container">
-            <ChatHeader title={selectedChat?.interlocutor.fullName} />
+            <ChatHeader title={selectedChat?.interlocutor.fullName} onDelete={deleteChat} />
 
             <div className="chat-messages-container">
                 <div className="chat-body-content-container on-vertical-sides-chat">

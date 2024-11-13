@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { API_URL } from "utils/getEnvData.ts";
 
 export const SignalRContext = createSignalRContext();
 
@@ -21,7 +22,7 @@ const SignalRChatPage = () => {
         <SignalRContext.Provider
             connectEnabled={true}
             accessTokenFactory={() => token ?? ""}
-            url={"http://localhost:5292/hubs/chat"}
+            url={`${API_URL}/hubs/chat`}
             withCredentials={true}
         >
             <ChatPage />

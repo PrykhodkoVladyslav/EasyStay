@@ -11,6 +11,7 @@ import {
     IResetPasswordRequest,
     IRealtorInformation,
     IUpdateRealtorInformation,
+    IRealtorDetails,
 } from "interfaces/user";
 import ICustomer from "interfaces/user/ICustomer.ts";
 import IPage from "interfaces/page/IPage.ts";
@@ -29,6 +30,11 @@ export const userApi = createApi({
 
         getAllRealtors: builder.query<IPage<IRealtor>, void>({
             query: () => "GetRealtorPage",
+            providesTags: ["User"],
+        }),
+
+        getRealtorDetails: builder.query<IRealtorDetails, number>({
+            query: () => "GetRealtorDatails",
             providesTags: ["User"],
         }),
 
@@ -151,6 +157,7 @@ export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
     useGetRealtorsInformationQuery,
+    useGetRealtorDetailsQuery,
     useGetRealtorsPersonalRatingQuery,
     useSignInMutation,
     useRegistrationMutation,

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
@@ -11,10 +11,16 @@ import showToast from "utils/toastShow.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
 import ReviewCard from "components/partials/customer/revewCard.tsx";
+import {useDispatch, useSelector} from "react-redux";
+import {getToken} from "store/slice/userSlice.ts";
+import {jwtParser} from "utils/jwtParser.ts";
+import {User} from "interfaces/user";
 
 const HotelPage = () => {
     const { id } = useParams();
     const [hotelId] = useState(Number(id));
+    const navigate = useNavigate();
+    const token = useSelector(getToken);
 
     const { data: hotelData, isLoading, error } = useGetHotelQuery(hotelId);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -189,7 +195,6 @@ const HotelPage = () => {
 
                         <div className="bottom">
                             <p className="title-about">Про власника</p>
-
                             <div className="realtor-rating">
                                 <p className="name">{hotelData.realtor.firstName} {hotelData.realtor.lastName}</p>
 
@@ -201,8 +206,14 @@ const HotelPage = () => {
                                     <p>{hotelData.realtor.rating.toFixed(1)}</p>
                                 </div>
                             </div>
-
                             <p className="description">{hotelData.realtor.description}</p>
+
+                            {token && (
+                                <button
+                                    onClick={() => navigate(`/realtorPage/${hotelData.realtor.id}`)}
+                                    className="realtor-btn"
+                                >Більше про власника</button>
+                            )}
                         </div>
                     </div>
                 </div>

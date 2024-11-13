@@ -1929,73 +1929,67 @@
 
 // Акаунт Ріелтора
 .account-layout {
-  position: relative;
-  width: 100%;
-  height: auto;
+  display: flex;
+  margin: 38px 0 90px 0;
+  gap: 2.5vw;
 
-  .body-container {
+  // Бічна панель
+  .left-side {
+    width: 100%;
+    max-width: 390px;
     display: flex;
-    margin: 38px 100px 90px;
-    gap: 2.5vw;
+    flex-direction: column;
+    align-items: center;
+    gap: 56px;
+    padding: 23px 2vw;
+    border-radius: var(--border-radius);
+    background: var(--color-secondary);
 
-    // Бічна панель
-    .left-side {
-      width: 100%;
-      max-width: 390px;
+    .head {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 56px;
-      padding: 23px 2vw;
-      border-radius: var(--border-radius);
-      background: var(--color-secondary);
+      padding: 0 3vw;
+      gap: 18px;
 
-      .head {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 3vw;
-        gap: 18px;
-
-        .photo {
-          width: fit-content;
-          min-width: 100px;
-          max-width: 205px;
-          height: 100%;
-          border-radius: 100%;
-          background: rgb(217, 217, 217);
-        }
-
-        .name {
-          text-align: center;
-          font-family: var(--font-primary), system-ui;
-          font-size: 28px;
-          font-weight: 700;
-          line-height: 38px;
-        }
+      .photo {
+        width: fit-content;
+        min-width: 100px;
+        max-width: 205px;
+        height: 100%;
+        border-radius: 100%;
+        background: rgb(217, 217, 217);
       }
 
-      .content-bottom {
-        width: 100%;
+      .name {
+        text-align: center;
+        font-family: var(--font-primary), system-ui;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 38px;
+      }
+    }
 
-        .items {
+    .content-bottom {
+      width: 100%;
+
+      .items {
+        display: flex;
+        flex-direction: column;
+
+        .item {
+          width: 100%;
+          height: 39px;
+          padding: 11px 16px;
           display: flex;
-          flex-direction: column;
-
-          .item {
-            width: 100%;
-            height: 39px;
-            padding: 11px 16px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            border-radius: 14px;
-            font-family: var(--font-primary), system-ui;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 28px;
-            white-space: nowrap;
-          }
+          justify-content: flex-start;
+          align-items: center;
+          border-radius: 14px;
+          font-family: var(--font-primary), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+          white-space: nowrap;
         }
       }
     }

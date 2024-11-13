@@ -12,7 +12,7 @@ import SuccessSendPage from "pages/auth/SuccessSendPage.tsx";
 import CustomerHomePage from "pages/customer/HomePage";
 
 import RealtorPreLayout from "components/layouts/RealtorPreLayout";
-import RealtorLayout from "components/layouts/RealtorLayout";
+import RealtorWithSideBarLayout from "components/layouts/RealtorWithSideBarLayout.tsx";
 import RealtorHomePage from "pages/realtor/HomePage";
 import RealtorDataPage from "pages/realtor/DataPage";
 import RealtorHotelsPage from "pages/realtor/HotelsPage";
@@ -75,18 +75,18 @@ function App() {
     const realtorsPart = <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
         <Route path="realtor">
             <Route element={<RealtorPreLayout />}>
-                <Route element={<RealtorLayout />}>
-                    <Route index element={<RealtorHomePage />} />
-                    <Route path="personal-data" element={<RealtorDataPage />} />
-                    <Route path="reviews" element={<RealtorReviewsPage />} />
-                    <Route path="archived" element={<RealtorArchivedPage />} />
-
-                    <Route path="hotels" element={<RealtorHotelsPage />}>
-                        <Route path="edit/:id" element={<HotelEditPage />} />
-                    </Route>
-                </Route>
-
                 <Route element={<RealtorBaseLayout />}>
+                    <Route element={<RealtorWithSideBarLayout />}>
+                        <Route index element={<RealtorHomePage />} />
+                        <Route path="personal-data" element={<RealtorDataPage />} />
+                        <Route path="reviews" element={<RealtorReviewsPage />} />
+                        <Route path="archived" element={<RealtorArchivedPage />} />
+
+                        <Route path="hotels" element={<RealtorHotelsPage />}>
+                            <Route path="edit/:id" element={<HotelEditPage />} />
+                        </Route>
+                    </Route>
+
                     <Route path="chat" element={<SignalRChatPage />} />
 
                     <Route path="add">

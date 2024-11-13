@@ -1,4 +1,4 @@
-import Header from "components/partials/realtor/Header.tsx";
+import RealtorHeader from "components/partials/realtor/RealtorHeader.tsx";
 import Side from "components/partials/realtor/Side.tsx";
 import { Outlet } from "react-router-dom";
 import Footer from "components/Footer.tsx";
@@ -8,13 +8,13 @@ const RealtorLayout = () => {
     return (
         <RealtorActivePageProvider>
             <main className="account-layout">
-                <Header/>
+                <RealtorHeader />
                 <div className="body-container">
-                    <Side/>
-                    <Outlet/>
+                    <Side />
+                    <Outlet />
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </RealtorActivePageProvider>
     );
 };

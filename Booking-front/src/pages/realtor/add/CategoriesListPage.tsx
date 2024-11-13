@@ -24,7 +24,7 @@ const CategoriesListPage = () => {
                         <p>Помешкання, як-от готелі, готелі, хостели, апарт-готелі тощо.</p>
                     </div>
                     <Link
-                        to="/add/hotel"
+                        to="/realtor/add/hotel"
                         className="btn-add"
                     >
                         Зареєструвати помешкання

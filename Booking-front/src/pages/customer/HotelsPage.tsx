@@ -11,10 +11,8 @@ import {
 
 const HotelsPage = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
-    useEffect(() => {
-        activeMenuItemContext?.setActivePage("Готелі");
-    });
-    
+    activeMenuItemContext?.setActivePage("Готелі");
+
     const [sideFilters, setSideFilters] = useState<IFilter>({
         hotelAmenities: [],
         roomAmenities: [],

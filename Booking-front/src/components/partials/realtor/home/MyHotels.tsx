@@ -10,28 +10,27 @@ const MyHotels = () => {
     const navigate = useNavigate();
     const { setActivePage } = useRealtorActivePage();
     const [pageSize, setPageSize] = useState(3);
-    const [allHotels, setAllHotels] = useState<IHotel[]>([]);
+    const [hotels, setHotels] = useState<IHotel[]>([]);
 
     const { data: hotelsData, isLoading, error } = useGetHotelsPageQuery({
         onlyOwn: true,
         isArchived: false,
         pageIndex: 0,
-        pageSize: 100,
+        pageSize,
     });
 
     useEffect(() => {
         if (hotelsData) {
-            setAllHotels(hotelsData.data);
+            setHotels(hotelsData.data);
         }
     }, [hotelsData]);
 
+    const hasMoreHotels = (hotelsData?.itemsAvailable ?? 0) > pageSize;
+    
     const handleHotelClick = () => {
         setActivePage("hotels");
         navigate("/realtor/hotels");
     };
-
-    const hotels = allHotels.slice(0, pageSize);
-    const hasMoreHotels = allHotels.length > pageSize;
 
     if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
     if (error) {

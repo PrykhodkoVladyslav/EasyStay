@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "components/partials/ProfileModal.tsx";
 import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
+import "./../../../css/realtor-header.scss";
 
-const Header = () => {
+const RealtorHeader = () => {
     const { activePage, setActivePage } = useRealtorActivePage();
     const [profileIsModalOpen, setProfileIsModalOpen] = useState(false);
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Header = () => {
     };
 
     return (
-        <header>
+        <header className="realtor-header">
             <img
                 onClick={handleLogoClick}
                 src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
@@ -106,4 +107,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default RealtorHeader;

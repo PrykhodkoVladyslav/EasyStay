@@ -103,7 +103,7 @@ const ArchivedPage = () => {
 
                             <div className="rooms-action">
                                 <button className="btn-rooms" onClick={() => {navigate(`/realtor/rooms/${hotel.id}`)}}>Номери</button>
-                                <button className="btn-edit" onClick={() => {navigate(`edit:${hotel.id}`)}}>Редагувати</button>
+                                <button className="btn-edit" onClick={() => {navigate(`/realtor/hotel/edit:${hotel.id}`)}}>Редагувати</button>
                             </div>
                         </div>
                     </div>

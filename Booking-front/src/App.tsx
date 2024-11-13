@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "components/layouts/Layout";
 
-
 import ProtectedRoute from "components/guards/ProtectedRoute";
 
 import LoginPage from "pages/auth/LoginPage";
@@ -20,7 +19,6 @@ import RealtorHotelsPage from "pages/realtor/HotelsPage";
 import RealtorReviewsPage from "pages/realtor/ReviewsPage";
 import RealtorArchivedPage from "pages/realtor/ArchivedPage";
 
-import AddLayout from "components/layouts/AddLayout";
 import CategoriesListPage from "pages/realtor/add/CategoriesListPage";
 import AddHotelPage from "pages/realtor/add/HotelPage";
 import AddRoomPage from "pages/realtor/add/RoomPage";
@@ -49,92 +47,99 @@ import HotelPage from "pages/customer/HotelPage.tsx";
 import BookingPage from "pages/customer/BookingPage/BookingPage.tsx";
 import RealtorPage from "pages/customer/RealtorPage.tsx";
 import SignalRChatPage from "pages/shared/Chat/SignalRChatPage.tsx";
+import RealtorBaseLayout from "components/layouts/RealtorBaseLayout.tsx";
 
 function App() {
+    const authPart = <Route path="auth" element={<AuthLayout />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="forgot" element={<ForgotPage />} />
+        <Route path="success-send" element={<SuccessSendPage />} />
+        <Route path="reset" element={<ResetPasswordPage />} />
+    </Route>;
+
+    const customersPart = <Route element={<CustomerLayout />}>
+        <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
+            <Route index element={<CustomerHomePage />} />
+            <Route path="hotels" element={<HotelsPage />} />
+            <Route path="hotel/:id" element={<HotelPage />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
+            <Route path="booking/:data" element={<BookingPage />} />
+            <Route path="realtorPage" element={<RealtorPage />} />
+            <Route path="chat" element={<SignalRChatPage />} />
+        </Route>
+    </Route>;
+
+    const realtorsPart = <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
+        <Route path="realtor">
+            <Route element={<RealtorPreLayout />}>
+                <Route element={<RealtorLayout />}>
+                    <Route index element={<RealtorHomePage />} />
+                    <Route path="personal-data" element={<RealtorDataPage />} />
+                    <Route path="reviews" element={<RealtorReviewsPage />} />
+                    <Route path="archived" element={<RealtorArchivedPage />} />
+
+                    <Route path="hotels" element={<RealtorHotelsPage />}>
+                        <Route path="edit/:id" element={<HotelEditPage />} />
+                    </Route>
+                </Route>
+
+                <Route element={<RealtorBaseLayout />}>
+                    <Route path="chat" element={<SignalRChatPage />} />
+
+                    <Route path="add">
+                        <Route path="categories" element={<CategoriesListPage />} />
+                        <Route path="hotel" element={<AddHotelPage />} />
+                        <Route path="room" element={<AddRoomPage />} />
+                    </Route>
+
+                    <Route path="hotels">
+                        <Route path="list" element={<HotelsPage />} />
+                        <Route path="create" element={<HotelCreatePage />} />
+                        <Route path="archive" element={<HotelsArchivedPage />} />
+                    </Route>
+                </Route>
+            </Route>
+        </Route>
+    </Route>;
+
+    const adminsPart = <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+        <Route path="admin" element={<AdminLayout />}>
+            <Route path="hotels">
+                <Route path="list" element={<HotelsListPage />} />
+                <Route path="archive" element={<HotelsArchivedListPage />} />
+            </Route>
+            <Route path="countries">
+                <Route path="list" element={<CountriesPage />} />
+                <Route path="create" element={<CountryCreatePage />} />
+                <Route path="edit/:id" element={<CountryEditPage />} />
+            </Route>
+            <Route path="cities">
+                <Route path="list" element={<CitiesPage />} />
+                <Route path="create" element={<CityCreatePage />} />
+                <Route path="edit/:id" element={<CityEditPage />} />
+            </Route>
+
+            <Route path="users">
+                <Route path="customers/list" element={<CustomersListPage />} />
+                <Route path="realtors/list" element={<RealtorsListPage />} />
+                <Route path="createAdmin" element={<AdminCreatePage />} />
+            </Route>
+        </Route>
+    </Route>;
+
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route element={<CustomerLayout />}>
-                    <Route element={<ProtectedRoute allowedRoles={["Customer", "Unauthorized"]} />}>
-                        <Route index element={<CustomerHomePage />} />
-                        <Route path="hotels" element={<HotelsPage />} />
-                        <Route path="hotel/:id" element={<HotelPage />} />
-                    </Route>
+                {authPart}
 
-                    <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
-                        <Route path="booking/:data" element={<BookingPage />} />
-                        <Route path="realtorPage" element={<RealtorPage />} />
-                        <Route path="chat" element={<SignalRChatPage />} />
-                    </Route>
-                </Route>
+                {customersPart}
 
-                <Route path="auth" element={<AuthLayout />}>
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
-                    <Route path="forgot" element={<ForgotPage />} />
-                    <Route path="success-send" element={<SuccessSendPage />} />
-                    <Route path="reset" element={<ResetPasswordPage />} />
-                </Route>
+                {realtorsPart}
 
-                <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
-                    <Route element={<RealtorPreLayout />}>
-                        <Route path="realtor" element={<RealtorLayout />}>
-                            <Route index element={<RealtorHomePage />} />
-                            <Route path="personal-data" element={<RealtorDataPage />} />
-                            <Route path="reviews" element={<RealtorReviewsPage />} />
-                            <Route path="archived" element={<RealtorArchivedPage />} />
-
-                            <Route path="hotels" element={<RealtorHotelsPage />}>
-                                <Route path="edit/:id" element={<HotelEditPage />} />
-                            </Route>
-                        </Route>
-
-                        <Route path="realtor" element={<AddLayout />}>
-                            <Route path="chat" element={<SignalRChatPage />} />
-                        </Route>
-
-                        <Route path="add" element={<AddLayout />}>
-                            <Route path="categories" element={<CategoriesListPage />} />
-                            <Route path="hotel" element={<AddHotelPage />} />
-                            <Route path="room" element={<AddRoomPage />} />
-                        </Route>
-
-
-                        <Route path="hotels">
-                            <Route path="list" element={<HotelsPage />} />
-                            <Route path="create" element={<HotelCreatePage />} />
-                            <Route path="archive" element={<HotelsArchivedPage />} />
-                        </Route>
-                    </Route>
-                </Route>
-
-
-                <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
-                    <Route path="admin" element={<AdminLayout />}>
-                        <Route path="hotels">
-                            <Route path="list" element={<HotelsListPage />} />
-                            <Route path="archive" element={<HotelsArchivedListPage />} />
-                        </Route>
-                        <Route path="countries">
-                            <Route path="list" element={<CountriesPage />} />
-                            <Route path="create" element={<CountryCreatePage />} />
-                            <Route path="edit/:id" element={<CountryEditPage />} />
-                        </Route>
-                        <Route path="cities">
-                            <Route path="list" element={<CitiesPage />} />
-                            <Route path="create" element={<CityCreatePage />} />
-                            <Route path="edit/:id" element={<CityEditPage />} />
-                        </Route>
-
-                        <Route path="users">
-                            <Route path="customers/list" element={<CustomersListPage />} />
-                            <Route path="realtors/list" element={<RealtorsListPage />} />
-                            <Route path="createAdmin" element={<AdminCreatePage />} />
-                        </Route>
-
-                    </Route>
-                </Route>
-
+                {adminsPart}
             </Route>
         </Routes>
     );

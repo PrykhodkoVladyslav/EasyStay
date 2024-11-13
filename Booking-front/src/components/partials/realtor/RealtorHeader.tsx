@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "components/partials/ProfileModal.tsx";
 import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
+import "./../../../css/realtor-header.scss";
 
-const Header = () => {
+const RealtorHeader = () => {
     const { activePage, setActivePage } = useRealtorActivePage();
     const [profileIsModalOpen, setProfileIsModalOpen] = useState(false);
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Header = () => {
 
     const languageOptions = [
         { full: "English", abbr: "En" },
-        { full: "Українська", abbr: "Укр" }
+        { full: "Українська", abbr: "Укр" },
     ];
 
     const handleLogoClick = () => {
@@ -39,8 +40,7 @@ const Header = () => {
     };
 
     const handleMessagesClick = () => {
-        console.log("Messages clicked");
-
+        navigate("/realtor/chat");
     };
 
     const handleNotificationsClick = () => {
@@ -53,7 +53,7 @@ const Header = () => {
     };
 
     return (
-        <header>
+        <header className="realtor-header">
             <img
                 onClick={handleLogoClick}
                 src={getPublicResourceUrl("logo/logo_EasyStay.svg")}
@@ -65,7 +65,7 @@ const Header = () => {
 
             <div className="right-section">
                 <div>
-                    <Dropdown options={languageOptions} defaultOption="Українська"/>
+                    <Dropdown options={languageOptions} defaultOption="Українська" />
                 </div>
 
                 <div className="user-section">
@@ -107,4 +107,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default RealtorHeader;

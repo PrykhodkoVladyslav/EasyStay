@@ -71,6 +71,18 @@ public static class DependencyInjection {
 						if (user is null || user.LockoutEnd > DateTimeOffset.UtcNow) {
 							context.Fail("This account is locked.");
 						}
+					},
+
+					OnMessageReceived = context => {
+						var accessToken = context.Request.Query["access_token"];
+
+						var path = context.HttpContext.Request.Path;
+
+						if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs")) {
+							context.Token = accessToken;
+						}
+
+						return Task.CompletedTask;
 					}
 				};
 			});

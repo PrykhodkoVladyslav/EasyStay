@@ -1,0 +1,31 @@
+.search-input-container {
+  background: rgb(255, 255, 255);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  cursor: text;
+
+  .search-magnifying-glass-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .search-text-input {
+    border: 1px solid var(--text-input-input-color-default-border);
+    padding: 0;
+    width: 100%;
+
+    color: rgb(165, 165, 165);
+    font-family: var(--font-montserrat), system-ui;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

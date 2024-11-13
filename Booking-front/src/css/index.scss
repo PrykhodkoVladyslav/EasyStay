@@ -1843,208 +1843,67 @@
 
 // Акаунт Ріелтора
 .account-layout {
-  position: relative;
-  width: 100%;
-  height: auto;
+  display: flex;
+  margin: 38px 0 90px 0;
+  gap: 2.5vw;
 
-  header {
-    height: 74px;
+  // Бічна панель
+  .left-side {
     width: 100%;
+    max-width: 390px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 5px;
-    padding: 30px 100px 0 100px;
+    gap: 56px;
+    padding: 23px 2vw;
+    border-radius: var(--border-radius);
+    background: var(--color-secondary);
 
-    .logo {
-      width: 183px;
-      height: 74px;
-      min-width: 74px;
-    }
-
-    .center-section {
-      height: 34px;
-      display: flex;
-      font-size: 16px;
-      line-height: 22px;
-      font-family: var(--font-primary), system-ui;
-
-      .pages {
-        white-space: nowrap;
-        font-weight: 600;
-        margin: 0 20px;
-      }
-
-      .active {
-        margin: 0 -6px;
-        padding: 6px 20px;
-        border-radius: 14px;
-        color: white;
-        background: var(--color-primary);
-        font-weight: 700;
-      }
-    }
-
-    .right-section {
-      display: flex;
-      gap: 46px;
-
-      .dropdown-lang-container {
-        width: 98px;
-        display: flex;
-        flex-direction: column;
-        padding: 4px 6px;
-        border-radius: 17px;
-        background: var(--color-secondary);
-
-        .elements {
-          width: 76px;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-          gap: 6px;
-
-          .lang {
-            height: 29px;
-            width: 46px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 17px;
-            background: var(--color-primary);
-
-            .text {
-              color: white;
-              font-family: var(--font-primary), system-ui;
-              font-size: 15px;
-              font-weight: 700;
-            }
-          }
-
-          button {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            .arrow {
-              //transition: transform 0.3s ease;
-
-              //&.open {
-              //  transform: rotate(180deg);
-              //}
-            }
-          }
-        }
-
-        //.dropdown-options {
-        //  position: absolute;
-        //  top: 100%;
-        //  left: 0;
-        //  right: 0;
-        //  background-color: white;
-        //  border: 1px solid #ccc;
-        //  border-radius: 8px;
-        //  z-index: 10;
-        //  margin-top: 5px;
-        //  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        //  max-height: 200px;
-        //  overflow-y: auto;
-        //
-        //  .dropdown-option {
-        //    position: relative;
-        //    background-color: white;
-        //    border: 1px solid #ccc;
-        //    border-radius: 8px;
-        //    margin-top: 5px;
-        //    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        //
-        //    &:hover {
-        //      background-color: #f0f0f0;
-        //    }
-        //  }
-        //}
-      }
-
-      .user-section {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 28px;
-
-        button {
-          width: 24px;
-          height: 24px;
-        }
-      }
-    }
-  }
-
-  .body-container {
-    display: flex;
-    margin: 38px 100px 90px;
-    gap: 2.5vw;
-
-    // Бічна панель
-    .left-side {
-      width: 20vw;
+    .head {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 56px;
-      padding: 23px 2vw;
-      border-radius: var(--border-radius);
-      background: var(--color-secondary);
-      overflow: hidden;
+      padding: 0 3vw;
+      gap: 18px;
 
-      .head {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 0;
-        gap: 18px;
-
-        img {
-          border-radius: 100%;
-          width: 100%;
-          min-width: 100px;
-          max-width: 10vw;
-          object-fit: cover;
-          background: rgb(217, 217, 217);
-        }
-
-        .name {
-          text-align: center;
-          font-family: var(--font-primary), system-ui;
-          font-size: 28px;
-          font-weight: 700;
-          line-height: 38px;
-        }
+      .photo {
+        width: fit-content;
+        min-width: 100px;
+        max-width: 205px;
+        height: 100%;
+        border-radius: 100%;
+        background: rgb(217, 217, 217);
       }
 
-      .content-bottom {
-        width: 100%;
+      .name {
+        text-align: center;
+        font-family: var(--font-primary), system-ui;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 38px;
+      }
+    }
 
-        .items {
+    .content-bottom {
+      width: 100%;
+
+      .items {
+        display: flex;
+        flex-direction: column;
+
+        .item {
+          width: 100%;
+          height: 39px;
+          padding: 11px 16px;
           display: flex;
-          flex-direction: column;
-
-          .item {
-            height: 39px;
-            padding: 11px 16px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            border-radius: 14px;
-            font-family: var(--font-primary), system-ui;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 28px;
-            white-space: nowrap;
-          }
+          justify-content: flex-start;
+          align-items: center;
+          border-radius: 14px;
+          font-family: var(--font-primary), system-ui;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 28px;
+          white-space: nowrap;
         }
       }
     }
@@ -2897,6 +2756,7 @@
             height: 24px;
           }
         }
+
         @media (max-width: 1060px) {
           .room-container-6 {
             grid-template-columns: 1fr;
@@ -3283,6 +3143,7 @@
     font-weight: 600;
     line-height: 27px;
   }
+
   .main-button-2 {
     width: fit-content;
     display: flex;
@@ -3456,6 +3317,7 @@
           appearance: none;
           -moz-appearance: textfield;
         }
+
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
           -webkit-appearance: none;
@@ -3564,7 +3426,7 @@
   button:hover {
     font-size: 16px;
     font-weight: 800;
-    animation:  0.3s ease;
+    animation: 0.3s ease;
   }
 }
 

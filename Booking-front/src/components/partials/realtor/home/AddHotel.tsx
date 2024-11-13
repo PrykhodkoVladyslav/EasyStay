@@ -5,7 +5,7 @@ const AddHotel = () => {
       <div className="add-hotel">
           <div className="components">
               <p>Зареєструйте своє помешкання</p>
-              <Link className="link" to="/add/categories">Зареєструвати</Link>
+              <Link className="link" to="/realtor/add/categories">Зареєструвати</Link>
           </div>
       </div>
   );

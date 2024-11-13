@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
+using EasyStay.Application.MediatR.Cities.Queries.Shared;
+using EasyStay.Application.MediatR.Citizenships.Queries.Shared;
+using EasyStay.Application.MediatR.Genders.Queries.Shared;
 using EasyStay.Domain.Identity;
 
 namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
@@ -16,6 +19,18 @@ public class RealtorDatailsVm : IMapWith<Realtor> {
 	public string Photo { get; set; } = null!;
 
 	public double Rating { get; set; }
+
+	public string? Description { get; set; }
+
+	public DateOnly? DateOfBirth { get; set; }
+
+	public string? Address { get; set; }
+
+	public CitizenshipVm? Citizenship { get; set; }
+
+	public GenderVm? Gender { get; set; }
+
+	public CityVm? City { get; set; }
 
 
 

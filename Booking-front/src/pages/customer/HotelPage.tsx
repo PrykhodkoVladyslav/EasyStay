@@ -78,7 +78,7 @@ const HotelPage = () => {
         } : null;
 
         if (freePeriod == null)
-            showToast("Оберіть дати", "info");
+            showToast("Оберіть дати", "warning");
 
         setFreePeriod(freePeriod);
         setRooms(hotelData?.rooms ?? []);
@@ -289,11 +289,11 @@ const HotelPage = () => {
                     <div className="rooms">
                         <p className="global-title">Номери</p>
                         <RoomSection
-                            hotelId={hotelId}
-                            hotelBreakfast={hotelData.breakfasts.length > 0}
-                            freePeriod={freePeriod}
                             rooms={rooms}
+                            freePeriod={freePeriod}
+                            hotelBreakfast={hotelData.breakfasts.length > 0}
                             selectedDays={selectedDays}
+                            hotelId={hotelId}
                         />
                     </div>
                 )}

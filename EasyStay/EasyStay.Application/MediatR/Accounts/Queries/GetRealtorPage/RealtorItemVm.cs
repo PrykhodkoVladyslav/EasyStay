@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
-using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using EasyStay.Domain.Identity;
 
 namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;

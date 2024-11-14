@@ -8,13 +8,11 @@ import { format } from "date-fns";
 import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
-import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
 import ReviewCard from "components/partials/customer/revewCard.tsx";
-import {useDispatch, useSelector} from "react-redux";
-import {getToken} from "store/slice/userSlice.ts";
-import {jwtParser} from "utils/jwtParser.ts";
-import {User} from "interfaces/user";
+import { useSelector } from "react-redux";
+import { getToken } from "store/slice/userSlice.ts";
+import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
 
 const HotelPage = () => {
     const { id } = useParams();
@@ -28,7 +26,7 @@ const HotelPage = () => {
     const [rooms, setRooms] = useState<IRoom[]>([]);
     const [selectedDays, setSelectedDays] = useState(0);
     const [pageSize, setPageSize] = useState(3);
-    const [allReviews, setAllReviews] = useState<IRealtorReview[]>([]);
+    const [allReviews, setAllReviews] = useState<IHotelReview[]>([]);
     const photos: { name: string }[] = hotelData?.photos || [];
     const HotelId = hotelData?.id || 0;
 
@@ -49,9 +47,15 @@ const HotelPage = () => {
 
     const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({
         pageIndex: 0,
-        pageSize: 100,
+        pageSize: 1000,
         hotelId: HotelId,
     });
+
+    useEffect(() => {
+        if (hotelReviewsPageData) {
+            setAllReviews(hotelReviewsPageData.data as IHotelReview[]);
+        }
+    }, [hotelReviewsPageData]);
 
     const getRatingLabel = (rating: number) => {
         if (rating >= 8) return "чудово";
@@ -59,12 +63,6 @@ const HotelPage = () => {
         if (rating >= 4) return "задовільно";
         return "погано";
     };
-
-    useEffect(() => {
-        if (hotelReviewsPageData) {
-            setAllReviews(hotelReviewsPageData.data as IRealtorReview[]);
-        }
-    }, [hotelReviewsPageData]);
 
     const onSearch = (topFilters: ISearchData) => {
         const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
@@ -86,7 +84,7 @@ const HotelPage = () => {
         setRooms(hotelData?.rooms ?? []);
     };
 
-    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (isLoading || !hotelData) return <p className="isLoading-error">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");
         return null;

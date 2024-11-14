@@ -1,13 +1,14 @@
-import React from "react";
-import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
+import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 
 interface ReviewCardProps {
-    review: IRealtorReview;
+    review: IHotelReview | IRealtorReview;
 }
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
+
     return (
         <div className="review">
             <div className="author">

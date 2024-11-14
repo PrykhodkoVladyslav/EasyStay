@@ -1,24 +1,24 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import RealtorHotels from "components/partials/customer/RealtorHotels.tsx";
 import RealtorReviews from "components/partials/customer/RealtorReviews.tsx";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetRealtorsInformationQuery } from "services/user.ts";
-import showToast from "utils/toastShow.ts";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { useGetRealtorsInformationQuery } from "services/user.ts";
+// import showToast from "utils/toastShow.ts";
 
 const RealtorPage = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const { data: realtorDetails, error, isLoading } = useGetRealtorsInformationQuery(id as string);
-    console.log(realtorInfo);
-    const realtorId = realtorDetails.data.id;
-    const realtorPhoto = realtorDetails.data.photo;
-    const realtorName = realtorDetails.data.name;
+    // const { id } = useParams();
+    // const navigate = useNavigate();
+    // const { data: realtorDetails, error, isLoading } = useGetRealtorsInformationQuery(id as string);
+    // console.log(realtorInfo);
+    // const realtorId = realtorDetails.data.id;
+    // const realtorPhoto = realtorDetails.data.photo;
+    // const realtorName = realtorDetails.data.name;
 
-    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
-    if (error) {
-        showToast("Помилка завантаження даних", "error");
-        return null;
-    }
+    // if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    // if (error) {
+    //     showToast("Помилка завантаження даних", "error");
+    //     return null;
+    // }
 
     return (
         <div className="all-conteiner-realtor">
@@ -75,7 +75,7 @@ const RealtorPage = () => {
                         <button className="realtor-card-feedback-btn">Написати відгук</button>
 
                         <button
-                            onClick={() => navigate(`/chat?interlocutorIdParam=${realtorId}&avatarParam=${realtorPhoto}&fullNameParam=${realtorName}`)}
+                            // onClick={() => navigate(`/chat?interlocutorIdParam=${realtorId}&avatarParam=${realtorPhoto}&fullNameParam=${realtorName}`)}
                             className="realtor-card-feedback-btn"
                         >Написати в чат</button>
                     </div>

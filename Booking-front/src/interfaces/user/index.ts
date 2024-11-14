@@ -103,3 +103,16 @@ export interface IGender {
     id: number;
     name: string;
 }
+
+export interface IRealtorDetails {
+    id: number;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    birthDate: string;
+    gender: string;
+    description: string;
+    photo: string;
+    rating: number;
+}

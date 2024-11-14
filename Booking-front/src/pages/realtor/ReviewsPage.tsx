@@ -4,6 +4,7 @@ import { RootState } from "store/index.ts";
 import { getToken } from "store/slice/userSlice.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
+import { useGetRealtorsPersonalRatingQuery } from "services/user.ts";
 import { useEffect, useState } from "react";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
@@ -15,6 +16,7 @@ const ReviewsPage = () => {
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const [pageIndex, setPageIndex] = useState(0);
 
+    const { data: realtorRating } = useGetRealtorsPersonalRatingQuery();
     const { data: realtorReviewsPageData, isLoading, error} = useGetRealtorReviewsPageQuery({
         pageIndex: pageIndex,
         pageSize: 9,
@@ -63,9 +65,7 @@ const ReviewsPage = () => {
                             alt=""
                             className="star"
                         />
-                        <p className="rating">
-                            9.7
-                        </p>
+                        <p className="rating">{realtorRating?.toFixed(1) ?? "0"}</p>
                     </div>
                 </div>
                 <div className="filter">
@@ -89,32 +89,36 @@ const ReviewsPage = () => {
             </div>
 
             <div className="reviews">
-                {realtorReviews.map((review) => (
-                    <div key={review.id} className="review">
-                        <div className="author">
-                            <img
-                                src={review.author.photo ? `${API_URL}/images/800_${review.author.photo}` : getPublicResourceUrl('account/no_user_photo.png')}
-                                alt=""
-                                className="author-image"
-                            />
-                            <div className="container9">
-                                <p className="name" title={`${review.author.firstName} ${review.author.lastName}`}>
-                                    {review.author.firstName}
-                                </p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">{review.score}</p>
+                {realtorReviews.length > 0 ? (
+                    realtorReviews.map((review) => (
+                        <div key={review.id} className="review">
+                            <div className="author">
+                                <img
+                                    src={review.author.photo ? `${API_URL}/images/800_${review.author.photo}` : getPublicResourceUrl('account/no_user_photo.png')}
+                                    alt=""
+                                    className="author-image"
+                                />
+                                <div className="container9">
+                                    <p className="name" title={`${review.author.firstName} ${review.author.lastName}`}>
+                                        {review.author.firstName}
+                                    </p>
+                                    <div className="stars-container">
+                                        <img
+                                            src={getPublicResourceUrl("account/star.svg")}
+                                            alt=""
+                                            className="star"
+                                        />
+                                        <p className="rating">{review.score}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <p className="description">{review.description}</p>
-                    </div>
-                ))}
+                            <p className="description">{review.description}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p className="isLoading-error">У вас немає Відгуків</p>
+                )}
             </div>
 
             <Pagination

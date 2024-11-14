@@ -33,13 +33,11 @@ const Side = () => {
                         <img
                             src={API_URL + `/images/800_${user.photo}`}
                             alt=""
-                            className="photo"
                         />
                     ) : (
                         <img
                             src={getPublicResourceUrl("account/no_user_photo.png")}
                             alt="Немає фото"
-                            className="photo"
                         />
                     )}
                     <p className="name">{user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : "Невідомий Юзер"}</p>

@@ -1,4 +1,5 @@
-export interface IRealtorReview {
+
+export interface IHotelReview {
     id: number;
     description: string;
     score?: number;
@@ -6,14 +7,6 @@ export interface IRealtorReview {
     updatedAtUtc?: string;
     authorId: number;
     author: {
-        id: number;
-        userName: string;
-        firstName: string;
-        lastName: string;
-        photo: string;
-    };
-    realtorId: number;
-    realtor: {
         id: number;
         userName: string;
         firstName: string;

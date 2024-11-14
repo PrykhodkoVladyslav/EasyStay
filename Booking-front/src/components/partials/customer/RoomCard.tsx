@@ -3,17 +3,21 @@ import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import { useGetRoomVariantsFreeQuantityQuery } from "services/room.ts";
-import {useState} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import showToast from "utils/toastShow.ts";
 
 interface IRoomCardProps {
     room: IRoom;
     freePeriod: IFreePeriod;
     hotelBreakfast: boolean;
     selectedDays: number;
+    hotelId: number;
 }
 
 const RoomCard = (props: IRoomCardProps) => {
-    const { hotelBreakfast, freePeriod, room, selectedDays } = props;
+    const { room, freePeriod,  hotelBreakfast, selectedDays, hotelId } = props;
+    const navigate = useNavigate();
 
     const { data: freeQuantity } = useGetRoomVariantsFreeQuantityQuery({
         id: room.id,
@@ -42,6 +46,51 @@ const RoomCard = (props: IRoomCardProps) => {
         const totalUsed = Object.values(selectedQuantities[room.id] || {}).reduce((sum, qty) => sum + qty, 0);
         const remainingQuantity = Math.max(totalAvailable - totalUsed, 0);
         return remainingQuantity;
+    };
+
+    const getSelectedBeds = (variant: IRoomVariant): { [key: string]: boolean } => {
+        const selectedBeds = {
+            isDoubleBed: variant.bedInfo.doubleBedCount > 0 && (document.getElementById(`double-bed_${variant.id}`) as HTMLInputElement)?.checked,
+            isSingleBed: variant.bedInfo.singleBedCount > 0 && (document.getElementById(`single-bed_${variant.id}`) as HTMLInputElement)?.checked,
+            isExtraBed: variant.bedInfo.extraBedCount > 0 && (document.getElementById(`extra-bed_${variant.id}`) as HTMLInputElement)?.checked,
+            isSofa: variant.bedInfo.sofaCount > 0 && (document.getElementById(`sofa-bed_${variant.id}`) as HTMLInputElement)?.checked,
+            isKingsizeBed: variant.bedInfo.kingsizeBedCount > 0 && (document.getElementById(`bed_kingsize_${variant.id}`) as HTMLInputElement)?.checked,
+        };
+
+        return Object.fromEntries(
+            Object.entries(selectedBeds).filter(([, isSelected]) => isSelected)
+        );
+    };
+
+    const handleBookingClick = () => {
+        const selectedVariants = room.variants.filter(
+            (variant) => selectedQuantities[room.id]?.[variant.id] > 0
+        );
+
+        if (selectedVariants.length === 0) {
+            showToast("Оберіть варіанти номерів", "warning");
+            return;
+        }
+
+        const bookingData = {
+            hotelId,
+            bookingInfo: {
+                dateFrom: freePeriod.from,
+                dateTo: freePeriod.to,
+                bookingRoomVariants: room.variants.map((variant) => ({
+                    roomVariantId: variant.id,
+                    quantity: selectedQuantities[room.id]?.[variant.id] || 0,
+                    bookingBedSelection: getSelectedBeds(variant),
+                })),
+            },
+        };
+        console.log(bookingData);
+
+        const base64Data = btoa(JSON.stringify(bookingData));
+
+        console.log(base64Data);
+
+        navigate(`/booking/${base64Data}`);
     };
 
     return <tr key={room.id}>
@@ -94,10 +143,10 @@ const RoomCard = (props: IRoomCardProps) => {
                         <div className="flex">
                             <input
                                 type="checkbox"
-                                id={`double-bed`}
+                                id={`double-bed_${variant.id}`}
                                 name={`bed-type_${variant.roomId}`}
                             />
-                            <label htmlFor={`double-bed`}>
+                            <label htmlFor={`double-bed_${variant.id}`}>
                                 <p>{variant.bedInfo.doubleBedCount} двоспальне ліжко</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/double-bed.svg")}
@@ -111,10 +160,10 @@ const RoomCard = (props: IRoomCardProps) => {
                         <div className="flex">
                             <input
                                 type="checkbox"
-                                id={`single-bed`}
+                                id={`single-bed_${variant.id}`}
                                 name={`bed-type_${variant.roomId}`}
                             />
-                            <label htmlFor={`single-bed`}>
+                            <label htmlFor={`single-bed_${variant.id}`}>
                                 <p>{variant.bedInfo.singleBedCount} односпальні ліжка</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/single-bed.svg")}
@@ -128,10 +177,10 @@ const RoomCard = (props: IRoomCardProps) => {
                         <div className="flex">
                             <input
                                 type="checkbox"
-                                id={`extra-bed`}
+                                id={`extra-bed_${variant.id}`}
                                 name={`bed-type_${variant.roomId}`}
                             />
-                            <label htmlFor={`extra-bed`}>
+                            <label htmlFor={`extra-bed_${variant.id}`}>
                                 <p>{variant.bedInfo.extraBedCount} додаткове ліжко</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/additional-bed.svg")}
@@ -145,10 +194,10 @@ const RoomCard = (props: IRoomCardProps) => {
                         <div className="flex">
                             <input
                                 type="checkbox"
-                                id={`sofa-bed`}
+                                id={`sofa-bed_${variant.id}`}
                                 name={`bed-type_${variant.roomId}`}
                             />
-                            <label htmlFor={`sofa-bed`}>
+                            <label htmlFor={`sofa-bed_${variant.id}`}>
                                 <p>{variant.bedInfo.sofaCount} софа</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/sofa-bed.svg")}
@@ -247,7 +296,9 @@ const RoomCard = (props: IRoomCardProps) => {
         </td>
 
         <td className="book">
-            <button className="btn-book">Забронювати</button>
+            <button className="btn-book" onClick={handleBookingClick}>
+                Забронювати
+            </button>
             <p>Миттєве підтвердження</p>
         </td>
     </tr>;

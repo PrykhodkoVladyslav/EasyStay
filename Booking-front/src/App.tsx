@@ -67,7 +67,7 @@ function App() {
 
         <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
             <Route path="booking/:data" element={<BookingPage />} />
-            <Route path="realtorPage" element={<RealtorPage />} />
+            <Route path="realtorPage/:id" element={<RealtorPage />} />
             <Route path="chat" element={<SignalRChatPage />} />
         </Route>
     </Route>;

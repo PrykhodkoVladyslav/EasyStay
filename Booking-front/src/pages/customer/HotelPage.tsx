@@ -1,32 +1,67 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
+import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
+import ReviewCard from "components/partials/customer/revewCard.tsx";
+import { useSelector } from "react-redux";
+import { getToken } from "store/slice/userSlice.ts";
+import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
 
 const HotelPage = () => {
     const { id } = useParams();
     const [hotelId] = useState(Number(id));
+    const navigate = useNavigate();
+    const token = useSelector(getToken);
 
     const { data: hotelData, isLoading, error } = useGetHotelQuery(hotelId);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [freePeriod, setFreePeriod] = useState<IFreePeriod | null>(null);
     const [rooms, setRooms] = useState<IRoom[]>([]);
     const [selectedDays, setSelectedDays] = useState(0);
+    const [pageSize, setPageSize] = useState(3);
+    const [allReviews, setAllReviews] = useState<IHotelReview[]>([]);
+    const photos: { name: string }[] = hotelData?.photos || [];
+    const HotelId = hotelData?.id || 0;
 
-    if (isLoading) return <p>Завантаження...</p>;
-    if (error) return <p>Помилка при завантаженні даних готелю</p>;
-    if (!hotelData) return null;
+    const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    };
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    const reviews = allReviews.slice(0, pageSize);
+    const hasMoreReviews = allReviews.length > pageSize;
 
     const formatTime = (timeString: string) => {
         if (!timeString) return "Невірний час";
         const [hours, minutes] = timeString.split(":");
         return `${hours}:${minutes}:00`;
+    };
+
+    const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({
+        pageIndex: 0,
+        pageSize: 1000,
+        hotelId: HotelId,
+    });
+
+    useEffect(() => {
+        if (hotelReviewsPageData) {
+            setAllReviews(hotelReviewsPageData.data as IHotelReview[]);
+        }
+    }, [hotelReviewsPageData]);
+
+    const getRatingLabel = (rating: number) => {
+        if (rating >= 8) return "чудово";
+        if (rating >= 6) return "добре";
+        if (rating >= 4) return "задовільно";
+        return "погано";
     };
 
     const onSearch = (topFilters: ISearchData) => {
@@ -43,20 +78,17 @@ const HotelPage = () => {
         } : null;
 
         if (freePeriod == null)
-            showToast("Оберіть дати", "info");
+            showToast("Оберіть дати", "warning");
 
         setFreePeriod(freePeriod);
         setRooms(hotelData?.rooms ?? []);
     };
 
-    const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    const photos: { name: string }[] = hotelData?.photos || [];
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    if (isLoading || !hotelData) return <p className="isLoading-error">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
         <div className="hotel-page">
@@ -161,7 +193,6 @@ const HotelPage = () => {
 
                         <div className="bottom">
                             <p className="title-about">Про власника</p>
-
                             <div className="realtor-rating">
                                 <p className="name">{hotelData.realtor.firstName} {hotelData.realtor.lastName}</p>
 
@@ -173,8 +204,14 @@ const HotelPage = () => {
                                     <p>{hotelData.realtor.rating.toFixed(1)}</p>
                                 </div>
                             </div>
-
                             <p className="description">{hotelData.realtor.description}</p>
+
+                            {token && (
+                                <button
+                                    onClick={() => navigate(`/realtorPage/${hotelData.realtor.id}`)}
+                                    className="realtor-btn"
+                                >Більше про власника</button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -252,11 +289,11 @@ const HotelPage = () => {
                     <div className="rooms">
                         <p className="global-title">Номери</p>
                         <RoomSection
-                            hotelId={hotelId}
-                            hotelBreakfast={hotelData.breakfasts.length > 0}
-                            freePeriod={freePeriod}
                             rooms={rooms}
+                            freePeriod={freePeriod}
+                            hotelBreakfast={hotelData.breakfasts.length > 0}
                             selectedDays={selectedDays}
+                            hotelId={hotelId}
                         />
                     </div>
                 )}
@@ -264,116 +301,35 @@ const HotelPage = () => {
 
             <div className="reviews-content" id="reviews">
                 <p className="title">Відгуки гостей</p>
-
-                <div className="count">
-                    <div className="rating">
-                        <p>9.2</p>
-                        <p>чудово</p>
-                    </div>
-                    <div className="reviews-count">
-                        <p><span>5</span> відгуків</p>
-                        <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
-                    </div>
-                </div>
-
-                <div className="reviews">
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl("account/no_user_photo.png")}
-                                    alt="realtor name"
-                                />
+                {reviews.length > 0 ? (
+                    <>
+                        <div className="count">
+                            <div className="rating">
+                                <p>{hotelData.rating}</p>
+                                <p>{getRatingLabel(hotelData.rating)}</p>
                             </div>
-                            <div className="container9">
-                                <p className="name">Марія</p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
+                            <div className="reviews-count">
+                                <p><span>{reviews.length}</span> відгуків</p>
+                                <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
                             </div>
                         </div>
-
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була
-                            дуже чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
-                    </div>
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl("account/no_user_photo.png")}
-                                    alt="realtor name"
-                                />
-                            </div>
-                            <div className="container9">
-                                <p className="name">Олександра dsad as d asd dad s </p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
-                            </div>
-
+                        <div className="reviews">
+                            {reviews.map((review) => (
+                                <ReviewCard key={review.id} review={review}/>
+                            ))}
                         </div>
+                    </>
+                ) : (
+                    <p className="isLoading-error pt-20">У цього готелю немає відгуків</p>
+                )}
 
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була
-                            дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.Розташування було дуже близько
-                            до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.Розташування було дуже близько
-                            до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
+                {hasMoreReviews && (
+                    <div className="main-button">
+                        <button onClick={() => setPageSize(prev => prev + 3)}>
+                            Більше відгуків
+                        </button>
                     </div>
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl("account/no_user_photo.png")}
-                                    alt="realtor name"
-                                />
-                            </div>
-                            <div className="container9">
-                                <p className="name">Даніела</p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була
-                            дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
-                    </div>
-                </div>
-
-                <button className="btn-more">
-                    Більше відгуків
-                </button>
+                )}
             </div>
 
             <div className="questions-content" id="questions">

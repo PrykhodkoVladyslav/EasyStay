@@ -1,6 +1,4 @@
-import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import "./../../../../css/review-item.scss";
-import { API_URL } from "utils/getEnvData.ts";
 import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "store/index.ts";
@@ -10,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
+import ReviewCard from "components/partials/customer/revewCard.tsx";
 
 const Reviews = () => {
     const token = useSelector((state: RootState) => getToken(state));
@@ -54,30 +53,7 @@ const Reviews = () => {
                 {reviews.length > 0 ? (
                     <div className="hotels-and-reviews" onClick={handleReviewClick}>
                         {reviews.map((review) => (
-                            <div key={review.id} className="review">
-                                <div className="author">
-                                    <img
-                                        src={review.author.photo ? `${API_URL}/images/800_${review.author.photo}` : getPublicResourceUrl('account/no_user_photo.png')}
-                                        alt=""
-                                        className="author-image"
-                                    />
-                                    <div className="container9">
-                                        <p className="name" title={`${review.author.firstName} ${review.author.lastName}`}>
-                                            {review.author.firstName}
-                                        </p>
-                                        <div className="stars-container">
-                                            <img
-                                                src={getPublicResourceUrl("account/star.svg")}
-                                                alt=""
-                                                className="star"
-                                            />
-                                            <p className="rating">{review.score}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <p className="description">{review.description}</p>
-                            </div>
+                            <ReviewCard key={review.id} review={review} />
                         ))}
                     </div>
                 ) : (

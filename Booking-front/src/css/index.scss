@@ -1313,6 +1313,7 @@
 
           th, td {
             vertical-align: top;
+            overflow: hidden;
           }
 
           td:not(:last-child) {

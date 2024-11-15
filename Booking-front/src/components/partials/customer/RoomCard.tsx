@@ -72,16 +72,34 @@ const RoomCard = (props: IRoomCardProps) => {
             return;
         }
 
+        const bookingRoomVariants = [];
+
+        for (const variant of selectedVariants) {
+            const bookingBedSelection = getSelectedBeds(variant);
+
+            if (Object.keys(bookingBedSelection).length === 0) {
+                showToast(`Оберіть хоча б один тип ліжка для вибраного номеру`, "warning");
+                return;
+            }
+
+            bookingRoomVariants.push({
+                roomVariantId: variant.id,
+                quantity: selectedQuantities[room.id]?.[variant.id],
+                bookingBedSelection,
+            });
+        }
+
+        if (bookingRoomVariants.length === 0) {
+            showToast(`Оберіть хоча б один тип ліжка для вибраного номеру`, "warning");
+            return;
+        }
+
         const bookingData = {
             hotelId,
             bookingInfo: {
                 dateFrom: freePeriod.from,
                 dateTo: freePeriod.to,
-                bookingRoomVariants: room.variants.map((variant) => ({
-                    roomVariantId: variant.id,
-                    quantity: selectedQuantities[room.id]?.[variant.id] || 0,
-                    bookingBedSelection: getSelectedBeds(variant),
-                })),
+                bookingRoomVariants,
             },
         };
         console.log(bookingData);
@@ -147,7 +165,7 @@ const RoomCard = (props: IRoomCardProps) => {
                                 name={`bed-type_${variant.roomId}`}
                             />
                             <label htmlFor={`double-bed_${variant.id}`}>
-                                <p>{variant.bedInfo.doubleBedCount} двоспальне ліжко</p>
+                                <p>двоспальне ліжко</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/double-bed.svg")}
                                     alt=""
@@ -164,7 +182,7 @@ const RoomCard = (props: IRoomCardProps) => {
                                 name={`bed-type_${variant.roomId}`}
                             />
                             <label htmlFor={`single-bed_${variant.id}`}>
-                                <p>{variant.bedInfo.singleBedCount} односпальні ліжка</p>
+                                <p>односпальне ліжко</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/single-bed.svg")}
                                     alt=""
@@ -181,7 +199,7 @@ const RoomCard = (props: IRoomCardProps) => {
                                 name={`bed-type_${variant.roomId}`}
                             />
                             <label htmlFor={`extra-bed_${variant.id}`}>
-                                <p>{variant.bedInfo.extraBedCount} додаткове ліжко</p>
+                                <p>додаткове ліжко</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/additional-bed.svg")}
                                     alt=""
@@ -198,7 +216,7 @@ const RoomCard = (props: IRoomCardProps) => {
                                 name={`bed-type_${variant.roomId}`}
                             />
                             <label htmlFor={`sofa-bed_${variant.id}`}>
-                                <p>{variant.bedInfo.sofaCount} софа</p>
+                                <p>софа</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/sofa-bed.svg")}
                                     alt=""
@@ -215,7 +233,7 @@ const RoomCard = (props: IRoomCardProps) => {
                                 name={`bed-type_${variant.roomId}`}
                             />
                             <label htmlFor={`bed_kingsize_${variant.id}`}>
-                                <p>{variant.bedInfo.kingsizeBedCount} kingsize ліжко</p>
+                                <p>Кінгсайз</p>
                                 <img
                                     src={getPublicResourceUrl("icons/bed/kingsize-bed.svg")}
                                     alt=""

@@ -20,6 +20,8 @@ public class RealtorDatailsVm : IMapWith<Realtor> {
 
 	public double Rating { get; set; }
 
+	public string? PhoneNumber { get; set; } = null!;
+
 	public string? Description { get; set; }
 
 	public DateOnly? DateOfBirth { get; set; }

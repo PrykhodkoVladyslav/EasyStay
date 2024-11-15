@@ -9,7 +9,7 @@ import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
-import ReviewCard from "components/partials/customer/revewCard.tsx";
+import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 import { useSelector } from "react-redux";
 import { getToken } from "store/slice/userSlice.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
@@ -28,7 +28,6 @@ const HotelPage = () => {
     const [pageSize, setPageSize] = useState(3);
     const [allReviews, setAllReviews] = useState<IHotelReview[]>([]);
     const photos: { name: string }[] = hotelData?.photos || [];
-    const HotelId = hotelData?.id || 0;
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -48,8 +47,11 @@ const HotelPage = () => {
     const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({
         pageIndex: 0,
         pageSize: 1000,
-        hotelId: HotelId,
+        hotelId,
     });
+
+    console.log(hotelId)
+    console.log(hotelReviewsPageData);
 
     useEffect(() => {
         if (hotelReviewsPageData) {
@@ -113,7 +115,7 @@ const HotelPage = () => {
                                             alt=""
                                             className="star"
                                         />
-                                        <p>{hotelData.rating}</p>
+                                        <p>{hotelData.rating.toFixed(1)}</p>
                                     </div>
                                 </div>
 
@@ -305,11 +307,11 @@ const HotelPage = () => {
                     <>
                         <div className="count">
                             <div className="rating">
-                                <p>{hotelData.rating}</p>
+                                <p>{hotelData.rating.toFixed(1)}</p>
                                 <p>{getRatingLabel(hotelData.rating)}</p>
                             </div>
                             <div className="reviews-count">
-                                <p><span>{reviews.length}</span> відгуків</p>
+                                <p><span>{allReviews.length}</span> відгуків</p>
                                 <a href="#reviews" onClick={handleScroll("reviews")}>читати відгуки</a>
                             </div>
                         </div>

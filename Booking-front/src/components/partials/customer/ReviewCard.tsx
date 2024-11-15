@@ -27,7 +27,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
                             alt="Rating star"
                             className="star"
                         />
-                        <p className="rating">{review.score}</p>
+                        <p className="rating">{(review.score ?? 0).toFixed(1)}</p>
                     </div>
                 </div>
             </div>

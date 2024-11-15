@@ -50,6 +50,9 @@ const HotelPage = () => {
         hotelId,
     });
 
+    console.log(hotelId)
+    console.log(hotelReviewsPageData);
+
     useEffect(() => {
         if (hotelReviewsPageData) {
             setAllReviews(hotelReviewsPageData.data as IHotelReview[]);

@@ -33,7 +33,7 @@ export const userApi = createApi({
             providesTags: ["User"],
         }),
 
-        getRealtorDetails: builder.query<IRealtorDetails, number>({
+        getRealtorDetails: builder.query<IRealtorDetails, void>({
             query: () => "GetRealtorDatails",
             providesTags: ["User"],
         }),

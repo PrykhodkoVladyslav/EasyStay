@@ -1,4 +1,5 @@
 import { ICitizenship } from "interfaces/citizenship";
+import {City} from "interfaces/city";
 
 export interface User {
     id: number;
@@ -109,10 +110,13 @@ export interface IRealtorDetails {
     userName: string;
     firstName: string;
     lastName: string;
-    phoneNumber: string;
-    birthDate: string;
-    gender: string;
-    description: string;
     photo: string;
     rating: number;
+    description?: string;
+    dateOfBirth?: string;
+    address?: string;
+    phoneNumber?: string;
+    citizenship?: ICitizenship;
+    gender: IGender;
+    city: City;
 }

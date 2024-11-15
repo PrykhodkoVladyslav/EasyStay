@@ -1,19 +1,19 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import RealtorHotels from "components/partials/customer/RealtorHotels.tsx";
 import RealtorReviews from "components/partials/customer/RealtorReviews.tsx";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { useGetRealtorsInformationQuery } from "services/user.ts";
-// import showToast from "utils/toastShow.ts";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetRealtorDetailsQuery } from "services/user.ts";
+import showToast from "utils/toastShow.ts";
 
 const RealtorPage = () => {
-    // const { id } = useParams();
+    const { id } = useParams();
     // const navigate = useNavigate();
-    // const { data: realtorDetails, error, isLoading } = useGetRealtorsInformationQuery(id as string);
+    // const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
     // console.log(realtorInfo);
     // const realtorId = realtorDetails.data.id;
     // const realtorPhoto = realtorDetails.data.photo;
     // const realtorName = realtorDetails.data.name;
-
+    //
     // if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
     // if (error) {
     //     showToast("Помилка завантаження даних", "error");

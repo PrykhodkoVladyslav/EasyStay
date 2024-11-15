@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
-import ReviewCard from "components/partials/customer/RevewCard.tsx";
+import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 
 const Reviews = () => {
     const token = useSelector((state: RootState) => getToken(state));
@@ -16,7 +16,6 @@ const Reviews = () => {
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const navigate = useNavigate();
     const { setActivePage } = useRealtorActivePage();
-
     const [pageSize, setPageSize] = useState(3);
     const [allReviews, setAllReviews] = useState<IRealtorReview[]>([]);
 
@@ -47,19 +46,17 @@ const Reviews = () => {
     }
 
     return (
-        <div className="reviews-container">
-            <div className="container7">
-                <p className="pre-title">Відгуки</p>
-                {reviews.length > 0 ? (
-                    <div className="hotels-and-reviews" onClick={handleReviewClick}>
-                        {reviews.map((review) => (
-                            <ReviewCard key={review.id} review={review} />
-                        ))}
-                    </div>
-                ) : (
-                    <p className="isLoading-error">У вас немає відгуків</p>
-                )}
-            </div>
+        <>
+            <p className="pre-title">Відгуки</p>
+            {reviews.length > 0 ? (
+                <div className="hotels-and-reviews" onClick={handleReviewClick}>
+                    {reviews.map((review) => (
+                        <ReviewCard key={review.id} review={review} />
+                    ))}
+                </div>
+            ) : (
+                <p className="isLoading-error">У вас немає відгуків</p>
+            )}
 
             {hasMoreReviews && (
                 <div className="main-button">
@@ -68,7 +65,7 @@ const Reviews = () => {
                     </button>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

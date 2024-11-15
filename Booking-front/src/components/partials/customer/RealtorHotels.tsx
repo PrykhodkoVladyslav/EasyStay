@@ -1,260 +1,58 @@
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { IHotel } from "interfaces/hotel/IHotel.ts";
+import { useGetHotelsPageQuery } from "services/hotel.ts";
+import showToast from "utils/toastShow.ts";
+import HotelCard from "components/partials/customer/HotelCard.tsx";
 
 const RealtorHotels = () => {
+    const { id } = useParams();
+    const [pageSize, setPageSize] = useState(4);
+    const [hotels, setHotels] = useState<IHotel[]>([]);
+
+    const { data: hotelsData, isLoading, error } = useGetHotelsPageQuery({
+        isArchived: false,
+        pageIndex: 0,
+        pageSize,
+        realtorId: id ? Number(id) : undefined,
+    });
+
+    useEffect(() => {
+        if (hotelsData) {
+            setHotels(hotelsData.data);
+        }
+    }, [hotelsData]);
+
+    const hasMoreHotels = (hotelsData?.itemsAvailable ?? 0) > pageSize;
+
+    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
-        <div className="hotels-containerr">
-
-                <p className="title">Помешкання цього ріелтора</p>
-                <div className="hotels2">
-                    <div className="hotel">
-                        <div className="images-container">
-                            <img className="image"
-                                 src="https://img.poehalisnami.ua/static/hotels/dominikana/khuan-dolio/h6158/orig/booking6158_16158_637973645967969341.jpg"
-                                 alt=""
-                            />
-
-                            <div className="slides">
-                                <div className="container2">
-                                    <div className="active-slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="info">
-                            <div className="top">
-                                <div className="container3">
-                                    <p className="name">Costa</p>
-                                    <div className="stars-container">
-                                        <div className="container4">
-                                            <img
-                                                src={getPublicResourceUrl("account/star.svg")}
-                                                alt=""
-                                                className="star"
-                                            />
-                                            <p className="rating">
-                                                9.7
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="location">Huan, Caribe</p>
-                                <p className="description">Люкс з гідромасажною ванною, вигляд на центр міста,
-                                    балкон</p>
-                                <div className="realtor">
-                                    <p>Рієлтор:</p>
-                                    <p>Оксана</p>
-                                </div>
-                            </div>
-
-                            <div className="bottom">
-                                <p>2 ночі, 1 дорослий</p>
-                                <div className="container5">
-                                    <div className="prices-container">
-                                        <p className="price">6999₴</p>
-                                        <p className="old-price">13399₴</p>
-                                    </div>
-                                    <div className="container6">
-                                        <p className="no-any-of-left">Залишилось лише 2 варіанти</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="hotel">
-                        <div className="images-container">
-                            <img className="image"
-                                 src="https://hotel-mir-rivne.hotelmix.com.ua/data/Photos/OriginalPhoto/1381/138197/138197871/Hotel-Mir-Rivne-Exterior.JPEG"
-                                 alt=""
-                            />
-
-                            <div className="slides">
-                                <div className="container2">
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="active-slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="info">
-                            <div className="top">
-                                <div className="container3">
-                                    <p className="name">Costtac Costata Costa</p>
-                                    <div className="stars-container">
-                                        <div className="container4">
-                                            <img
-                                                src={getPublicResourceUrl("account/star.svg")}
-                                                alt="Зірки"
-                                                className="star"
-                                            />
-                                            <p className="rating">
-                                                9.7
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="location">Рівне, Україна</p>
-                                <p className="description">Люкс з гідромасажною ванною, вигляд на центр міста,
-                                    балкон</p>
-                                <div className="realtor">
-                                    <p>Рієлтор:</p>
-                                    <p>Оксана</p>
-                                </div>
-                            </div>
-
-                            <div className="bottom">
-                                <p>2 ночі, 1 дорослий</p>
-                                <div className="container5">
-                                    <div className="prices-container">
-                                        <p className="price">6999₴</p>
-                                        <p className="old-price">13399₴</p>
-                                    </div>
-                                    <div className="container6">
-                                        <p className="any-of-left">Сезонна пропозиція</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="hotel">
-                        <div className="images-container">
-                            <img className="image"
-                                 src="https://hotel-mir-rivne.hotelmix.com.ua/data/Photos/OriginalPhoto/1381/138197/138197871/Hotel-Mir-Rivne-Exterior.JPEG"
-                                 alt=""
-                            />
-
-                            <div className="slides">
-                                <div className="container2">
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="active-slide"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="info">
-                            <div className="top">
-                                <div className="container3">
-                                    <p className="name">Hotel Mir Rivne</p>
-                                    <div className="stars-container">
-                                        <div className="container4">
-                                            <img
-                                                src={getPublicResourceUrl("account/star.svg")}
-                                                alt="Зірки"
-                                                className="star"
-                                            />
-                                            <p className="rating">
-                                                9.7
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="location">Рівне, Україна</p>
-                                <p className="description">Люкс з гідромасажною ванною, вигляд на центр міста,
-                                    балкон</p>
-                                <div className="realtor">
-                                    <p>Рієлтор:</p>
-                                    <p>Оксана</p>
-                                </div>
-                            </div>
-
-                            <div className="bottom">
-                                <p>2 ночі, 1 дорослий</p>
-                                <div className="container5">
-                                    <div className="prices-container">
-                                        <p className="price">6999₴</p>
-                                        <p className="old-price">13399₴</p>
-                                    </div>
-                                    <div className="container6">
-                                        <p className="no-any-of-left">Залишилось лише 2 варіанти</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="hotel">
-                        <div className="images-container">
-                            <img className="image"
-                                 src="https://img.poehalisnami.ua/static/hotels/dominikana/khuan-dolio/h6158/orig/booking6158_16158_637973645967969341.jpg"
-                                 alt=""
-                            />
-
-                            <div className="slides">
-                                <div className="container2">
-                                    <div className="active-slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                    <div className="slide"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="info">
-                            <div className="top">
-                                <div className="container3">
-                                    <p className="name">Costa</p>
-                                    <div className="stars-container">
-                                        <div className="container4">
-                                            <img
-                                                src={getPublicResourceUrl("account/star.svg")}
-                                                alt=""
-                                                className="star"
-                                            />
-                                            <p className="rating">
-                                                9.7
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="location">Huan, Caribe</p>
-                                <p className="description">Люкс з гідромасажною ванною, вигляд на центр міста,
-                                    балкон</p>
-                                <div className="realtor">
-                                    <p>Рієлтор:</p>
-                                    <p>Оксана</p>
-                                </div>
-                            </div>
-
-                            <div className="bottom">
-                                <p>2 ночі, 1 дорослий</p>
-                                <div className="container5">
-                                    <div className="prices-container">
-                                        <p className="price">6999₴</p>
-                                        <p className="old-price">13399₴</p>
-                                    </div>
-                                    <div className="container6">
-                                        <p className="no-any-of-left">Залишилось лише 2 варіанти</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <>
+            <p className="pre-title">Помешкання цього рієлтора</p>
+            {hotels.length > 0 ? (
+                <div className="hotels-and-reviews">
+                    {hotels.map((item) => (
+                        <HotelCard key={item.id} item={item}/>
+                    ))}
                 </div>
+            ) : (
+                <p className="isLoading-error">У вас немає готелів</p>
+            )}
 
-
-            <div className="main-button2">
-                <button>
-                    Більше помешкань
-                </button>
-            </div>
-        </div>
-    )
+            {hasMoreHotels && (
+                <div className="main-button">
+                    <button onClick={() => setPageSize(prev => prev + 4)}>
+                        Більше
+                    </button>
+                </div>
+            )}
+        </>
+    );
 }
 
 export default RealtorHotels;

@@ -94,6 +94,10 @@
         justify-content: center;
         align-items: center;
 
+        img {
+          margin-bottom: -4px;
+        }
+
         .rating {
           color: rgb(0, 0, 0);
           font-family: var(--font-primary), system-ui;

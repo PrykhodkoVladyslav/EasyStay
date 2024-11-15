@@ -9,12 +9,8 @@ const RealtorPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
-    console.log(realtorDetails);
-    // const realtorId = realtorDetails.data.id;
-    // const realtorPhoto = realtorDetails.data.photo;
-    // const realtorName = realtorDetails.data.name;
 
-    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (isLoading || !realtorDetails) return <p className="isLoading-error">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");
         return null;
@@ -26,64 +22,58 @@ const RealtorPage = () => {
                 <div className="realtor-card-info">
                     <div className="nameConteiner">
                         <h2 className="realtor-card-name">Дмитро Романчук</h2>
-                        <div className="starConteiner">
+                        <div className="stars-container">
                             <img
                                 src={getPublicResourceUrl("account/star.svg")}
                                 alt=""
-                                className="star1"
+                                className="star"
                             />
-                            <p className="realtor-card-rating">
-                                9.7
-                            </p>
+                            <p className="rating">{realtorDetails.rating}</p>
                         </div>
-
                     </div>
-                    <p className="realtor-card-email">dmytro973@gmail.com</p>
+                    <p className="realtor-card-email">{realtorDetails.email}</p>
 
                     <div className="realtor-card-details">
                         <div className="form-group">
-                            <label htmlFor="phone">Номер телефону</label>
-                            <input type="text" id="phone" ></input>
+                            <p>Номер телефону</p>
+                            <p>{realtorDetails.phoneNumber}</p>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="birthdate">Дата народження</label>
-                            <input type="text" id="birthdate" ></input>
+                            <p>Дата народження</p>
+                            <p>{realtorDetails.dateOfBirth}</p>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="gender">Стать</label>
-                            <input type="text" id="gender" ></input>
+                            <p>Стать</p>
+                            <p>{realtorDetails.gender?.name}</p>
                         </div>
                     </div>
 
                     <div className="realtor-card-description">
                         <h3>Інформація про рієлтора</h3>
-                        <p>
-                            З багаторічним досвідом у сфері нерухомості, я пропоную широкий вибір
-                            комфортних апартаментів та будинків у найкращих локаціях. Незалежно від
-                            того, чи шукаєте ви житло для відпочинку на узбережжі, чи прості
-                            апартаменти для тривалого проживання в центрі міста, я допоможу
-                            підібрати найкращий варіант, що відповідає вашим потребам і бюджету.
-                        </p>
+                        <p>{realtorDetails.description}</p>
                     </div>
                 </div>
 
                 <div className="realtor-card-image">
-                    <div className="realtor-conteiner-image"><img
-                        src={getPublicResourceUrl("./account/no_user_photo.png")}></img></div>
+                    <img src={getPublicResourceUrl("account/no_user_photo.png")} alt="star"/>
 
                     <div className="center">
-                        <button className="realtor-card-feedback-btn">Написати відгук</button>
+                        <button
+                            // onClick={() => }
+                            className="realtor-card-feedback-btn"
+                        >Написати відгук</button>
 
                         <button
-                            // onClick={() => navigate(`/chat?interlocutorIdParam=${realtorId}&avatarParam=${realtorPhoto}&fullNameParam=${realtorName}`)}
+                            onClick={() => navigate(`/chat?interlocutorIdParam=${id}&avatarParam=${realtorDetails.photo}&fullNameParam=${realtorDetails.firstName}`)}
                             className="realtor-card-feedback-btn"
-                        >Написати в чат</button>
+                        >Написати в чат
+                        </button>
                     </div>
                 </div>
             </div>
-            <div className="hotels-reviews">
 
-            <RealtorHotels/>
+            <div className="hotels-reviews">
+                <RealtorHotels/>
                 <RealtorReviews/>
             </div>
         </div>

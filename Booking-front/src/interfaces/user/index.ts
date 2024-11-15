@@ -107,6 +107,7 @@ export interface IGender {
 
 export interface IRealtorDetails {
     id: number;
+    email: string;
     userName: string;
     firstName: string;
     lastName: string;
@@ -117,6 +118,6 @@ export interface IRealtorDetails {
     dateOfBirth?: string;
     address?: string;
     citizenship?: ICitizenship;
-    gender: IGender;
-    city: City;
+    gender?: IGender;
+    city?: City;
 }

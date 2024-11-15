@@ -39,19 +39,17 @@ const MyHotels = () => {
     }
 
     return (
-        <div className="hotels-container">
-            <div className="container1">
-                <p className="pre-title">Мої готелі</p>
-                {hotels.length > 0 ? (
-                    <div className="hotels-and-reviews" onClick={handleHotelClick}>
-                        {hotels.map((item) => (
-                            <HotelCard key={item.id} item={item} />
-                        ))}
-                    </div>
-                ) : (
-                    <p className="isLoading-error">У вас немає готелів</p>
-                )}
-            </div>
+        <>
+            <p className="pre-title">Мої готелі</p>
+            {hotels.length > 0 ? (
+                <div className="hotels-and-reviews" onClick={handleHotelClick}>
+                    {hotels.map((item) => (
+                        <HotelCard key={item.id} item={item} />
+                    ))}
+                </div>
+            ) : (
+                <p className="isLoading-error">У вас немає готелів</p>
+            )}
 
             {hasMoreHotels && (
                 <div className="main-button">
@@ -60,7 +58,7 @@ const MyHotels = () => {
                     </button>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

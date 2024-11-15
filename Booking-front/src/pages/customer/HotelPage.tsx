@@ -9,7 +9,7 @@ import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
-import ReviewCard from "components/partials/customer/RevewCard.tsx";
+import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 import { useSelector } from "react-redux";
 import { getToken } from "store/slice/userSlice.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
@@ -49,9 +49,6 @@ const HotelPage = () => {
         pageSize: 1000,
         hotelId,
     });
-
-    console.log(hotelId)
-    console.log(hotelReviewsPageData);
 
     useEffect(() => {
         if (hotelReviewsPageData) {

@@ -1,139 +1,57 @@
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import ReviewCard from "components/partials/customer/ReviewCard.tsx";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
+import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
+import showToast from "utils/toastShow.ts";
 
 const RealtorReviews = () => {
+    const { id } = useParams();
+    const [pageSize, setPageSize] = useState(4);
+    const [allReviews, setAllReviews] = useState<IRealtorReview[]>([]);
+
+    const { data: realtorReviewsPageData, isLoading, error } = useGetRealtorReviewsPageQuery({
+        pageIndex: 0,
+        pageSize: 100,
+        realtorId: id ? Number(id) : undefined,
+    });
+
+    useEffect(() => {
+        if (realtorReviewsPageData) {
+            setAllReviews(realtorReviewsPageData.data as IRealtorReview[]);
+        }
+    }, [realtorReviewsPageData]);
+
+    const reviews = allReviews.slice(0, pageSize);
+    const hasMoreReviews = allReviews.length > pageSize;
+
+    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
-        <div className="reviews-container">
-            <div className="container7">
-                <p className="title">Відгуки</p>
-                <div className="reviews">
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
-                                    alt="realtor name"
-                                />
-                            </div>
-                            <div className="container9">
-                                <p className="name">Марія</p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
-                    </div>
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
-                                    alt="realtor name"
-                                />
-                            </div>
-                            <div className="container9">
-                                <p className="name">Олександра dsad as d asd  dad s </p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
-                    </div>
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
-                                    alt="realtor name"
-                                />
-                            </div>
-                            <div className="container9">
-                                <p className="name">Даніела</p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
-                    </div>
-                    <div className="review">
-                        <div className="author">
-                            <div className="image">
-                                <img
-                                    src={getPublicResourceUrl('account/no_user_photo.png')}
-                                    alt="realtor name"
-                                />
-                            </div>
-                            <div className="container9">
-                                <p className="name">Даніела</p>
-                                <div className="stars-container">
-                                    <img
-                                        src={getPublicResourceUrl("account/star.svg")}
-                                        alt=""
-                                        className="star"
-                                    />
-                                    <p className="rating">
-                                        9.7
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <p className="description">
-                            Розташування було дуже близько до центру міста. Господар був дуже добрим. Квартира була дуже
-                            чистою та дуже добре мебльованою. Ціна була дуже хорошою.
-                        </p>
-                    </div>
+        <>
+            <p className="pre-title">Відгуки</p>
+            {reviews.length > 0 ? (
+                <div className="hotels-and-reviews">
+                    {reviews.map((review) => (
+                        <ReviewCard key={review.id} review={review} />
+                    ))}
                 </div>
+            ) : (
+                <p className="isLoading-error">У вас немає відгуків</p>
+            )}
 
-            </div>
-
-            <div className="main-button">
-                <button>
-                    Більше відгуків
-                </button>
-            </div>
-        </div>
+            {hasMoreReviews && (
+                <div className="main-button">
+                    <button onClick={() => setPageSize(prev => prev + 4)}>
+                        Більше
+                    </button>
+                </div>
+            )}
+        </>
     )
 }
 

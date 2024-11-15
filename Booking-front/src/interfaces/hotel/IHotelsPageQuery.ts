@@ -45,6 +45,8 @@ export default interface IHotelsPageQuery extends IPaginationFilter {
 
     realtorId?: number;
 
+    hasDiscount?: boolean;
+
     orderBy?: string;
 
     onlyOwn?: boolean;
@@ -196,6 +198,9 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
     if (query.realtorId)
         queryItems.push({ key: "realtorId", value: query.realtorId.toString() });
 
+    if (query.hasDiscount)
+        queryItems.push({ key: "hasDiscount", value: query.hasDiscount.toString() });
+    
     if (query.orderBy)
         queryItems.push({ key: "orderBy", value: query.orderBy });
 

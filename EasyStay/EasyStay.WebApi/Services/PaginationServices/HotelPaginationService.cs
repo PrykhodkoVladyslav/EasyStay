@@ -23,7 +23,14 @@ public class HotelPaginationService(
 		else {
 			query = filter.OrderBy switch {
 				"Category" => query.OrderBy(h => h.HotelCategory.Name),
-				"Rating" => query.OrderByDescending(h => h.Id), // ToDo: Add a real rating when there are reviews
+				"Rating" => query.OrderByDescending(
+					h => h.Rooms
+						.SelectMany(r => r.RoomVariants)
+						.SelectMany(rv => rv.BookingRoomVariants)
+						.Select(brv => brv.Booking)
+						.Average(b => b.HotelReview!.Score)
+						.GetValueOrDefault(0)
+				),
 				"City" => query.OrderBy(h => h.Address.City.Name),
 				"RoomsCount" => query.OrderBy(h => h.Rooms.Min(r => r.NumberOfRooms)),
 				_ => query.OrderBy(h => h.Id),
@@ -189,6 +196,11 @@ public class HotelPaginationService(
 
 		if (filter.RealtorId is not null)
 			query = query.Where(h => h.RealtorId == filter.RealtorId);
+
+		if (filter.HasDiscount == true)
+			query = query.Where(
+				h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.DiscountPrice != null))
+			);
 
 		if (filter.OnlyOwn == true)
 			query = query.Where(h => h.RealtorId == currentUser.GetRequiredUserId());

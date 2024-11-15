@@ -1101,7 +1101,7 @@
               border-radius: 12px;
               background: var(--color-primary);
               color: white;
-              font-family: var(--font-montserrat);
+              font-family: var(--font-montserrat), system-ui;
               font-size: 12px;
               font-weight: 600;
               line-height: 15px;
@@ -3710,7 +3710,31 @@
   .first-discount {
     color: black;
     font-size: 6em;
+  }
 
+  .order-by-button {
+    border-radius: 22px;
+    background: rgb(247, 247, 253);
+    padding: 16px 18px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+
+    .order-title {
+      color: rgb(0, 0, 0);
+      font-family: var(--font-montserrat), system-ui;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+
+      .order-name {
+        font-family: var(--font-nunito), system-ui;
+        font-weight: 400;
+        line-height: 24px;
+      }
+    }
   }
 
   .sort-btn {
@@ -3728,234 +3752,9 @@
     bottom: 20px;
   }
 
-  .sidebar {
-    position: absolute;
-    height: 32px;
-    width: auto;
-
-    .menu {
-      display: flex;
-      list-style: none;
-      font-family: "Nunito", system-ui;
-      font-weight: 600;
-      transform: rotate(-90deg) translateX(-100%);
-      transform-origin: top left;
-
-      font-size: 1.1em;
-
-      &__item:not(:last-of-type) {
-        margin-right: 34px;
-
-      }
-
-      &__item:hover {
-        background-color: #3F523C;
-        color: white;
-      }
-
-      &__link {
-        text-decoration: none;
-        color: black;
-      }
-    }
-
-  }
-
-
-  .container11 {
+  .discount-hotels-container {
     display: flex;
-    width: 100%;
-    position: relative;
-    height: auto;
-    margin-left: 50px;
-    min-height: 505px;
-
-    .title1 {
-      font-family: var(--font-nunito), system-ui;
-      font-size: 32px;
-      font-weight: 700;
-    }
-
-    .items1 {
-      position: relative;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between; /* Або space-between, якщо хочете, щоб між першою і останньою карткою не було відступів */
-      padding: 0px 50px 0px 0px;
-      width: 100%;
-      height: auto;
-      gap: 24px;
-
-      .item1 {
-        max-width: 379px;
-        height: 505px;
-        border-radius: var(--border-radius);
-        background: white;
-        box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-
-        .images-container1 {
-          position: relative;
-
-          .image1 {
-            width: 379px;
-            height: 358px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-          }
-
-
-        }
-
-        .info1 {
-          width: 369px;
-          display: flex;
-          flex-direction: column;
-          gap: 22px;
-          margin: 15px 22px 9px;
-
-          .top1 {
-            display: flex;
-            flex-direction: column;
-
-            .container31 {
-              width: 100%;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              gap: 61px;
-
-              .name1 {
-                max-width: 240px;
-                font-family: var(--font-nunito), system-ui;
-                font-size: 28px;
-                font-weight: 700;
-                line-height: 38px;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-                overflow: hidden;
-              }
-
-              .stars-container1 {
-                position: relative;
-                width: 57px;
-                height: 28px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid rgb(234, 232, 232);
-                border-radius: 30px;
-                right: 30px;
-
-                .container41 {
-
-                  display: flex;
-                  align-items: center;
-
-                  .star1 {
-                    width: 13px;
-                    height: 13px;
-                  }
-
-                  .rating1 {
-                    font-family: var(--font-nunito), system-ui;
-                    font-size: 16px;
-                    font-weight: 600;
-                    line-height: 22px;
-                  }
-                }
-              }
-            }
-
-            .location1 {
-              color: rgb(81, 81, 81);
-              font-family: var(--font-montserrat), system-ui;
-              font-size: 16px;
-              font-weight: 500;
-              line-height: 20px;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
-              -webkit-line-clamp: 1;
-              overflow: hidden;
-            }
-
-
-          }
-
-          .bottom1 {
-            display: flex;
-            flex-direction: column;
-
-            .button-Reserve {
-              display: flex;
-              position: relative;
-              width: 123px;
-              height: 35px;
-              justify-content: center;
-              align-items: center;
-              border-radius: 15px;
-              background: rgb(63, 82, 60);
-              right: 30px;
-              color: white;
-            }
-
-            .button-Reserve:hover {
-              background-color: gray;
-              transition: 0.2s;
-            }
-
-            p {
-              color: var(--color-text);
-              font-family: var(--font-nunito), system-ui;
-              font-size: 16px;
-              font-weight: 600;
-              line-height: 22px;
-            }
-
-            .container51 {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              gap: 20px;
-
-              .prices-container1 {
-                display: flex;
-                align-items: flex-end;
-                gap: 3px;
-
-                .price1 {
-                  color: rgb(0, 0, 0);
-                  font-family: var(--font-montserrat), system-ui;
-                  font-size: 28px;
-                  font-weight: 600;
-                  line-height: 34px;
-                }
-
-                .old-price1 {
-                  position: relative;
-                  margin-right: 3px;
-                  color: var(--color-accent);
-                  font-family: var(--font-montserrat), system-ui;
-                  font-size: 16px;
-                  font-weight: 500;
-                  line-height: 20px;
-
-                  &::after {
-                    content: '';
-                    position: absolute;
-                    width: calc(100% + 3px);
-                    height: 1px;
-                    left: 0;
-                    bottom: 8px;
-                    background-color: rgb(165, 165, 165);
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    gap: 24px;
   }
 }
 
@@ -3970,7 +3769,7 @@
   background-color: #e5e5e5;
   text-align: center;
   margin-top: 50px;
-  font-family: var(--font-nunito);
+  font-family: var(--font-nunito), system-ui;
   margin-bottom: 25px;
   position: relative;
 
@@ -4349,12 +4148,19 @@
   padding: 22px 48px 22px 50.5px;
 
   .Carousel-conteiner2 {
+    position: relative;
     height: 704px;
     width: 100%;
-    background-image: url("./icons/homepageSvg/line.svg");
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
+
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
   }
 
   .Carousel-conteiner2 h1 {

@@ -13,6 +13,13 @@ const HotelsPage = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
     activeMenuItemContext?.setActivePage("Готелі");
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, []);
+
     const [sideFilters, setSideFilters] = useState<IFilter>({
         hotelAmenities: [],
         roomAmenities: [],

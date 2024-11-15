@@ -48,6 +48,8 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public long? RealtorId { get; set; }
 
+	public bool? HasDiscount { get; set; }
+
 	public bool? OnlyOwn { get; set; }
 
 	public string? OrderBy { get; set; }

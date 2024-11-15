@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
 
-const orderOptions = [
+export const hotelOrderOptions = [
     { key: "Rating", value: "рейтинг" },
     { key: "Category", value: "категорія" },
     { key: "City", value: "місто" },
@@ -17,7 +17,7 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
     const [pageIndex, setPageIndex] = useState(0);
 
     const [orderIndex, setOrderIndex] = useState(0);
-    const nextOrder = () => setOrderIndex((orderIndex + 1 === orderOptions.length) ? 0 : orderIndex + 1);
+    const nextOrder = () => setOrderIndex((orderIndex + 1 === hotelOrderOptions.length) ? 0 : orderIndex + 1);
 
     const buildFilter = (): IHotelsPageQuery => {
         return {
@@ -26,7 +26,7 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
             pageSize: 18,
             isArchived: false,
             hasAnyRoomVariant: props.filter?.maxPrice == undefined ? true : undefined,
-            orderBy: orderOptions[orderIndex].key,
+            orderBy: hotelOrderOptions[orderIndex].key,
         };
     };
 
@@ -62,7 +62,7 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
                 <button className="order-by-button" onClick={nextOrder}>
                     <img src={getPublicResourceUrl("icons/order.svg")} alt="order" />
                     <p className="order-title">Сортувати за: <span
-                        className="order-name">{orderOptions[orderIndex].value}</span></p>
+                        className="order-name">{hotelOrderOptions[orderIndex].value}</span></p>
                 </button>
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import Services from "components/HomePage/Services.tsx";
 import TravelCarousel from "components/HomePage/TravelCarousel.tsx";
@@ -13,9 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
-    useEffect(() => {
-        activeMenuItemContext?.setActivePage(undefined);
-    });
+    activeMenuItemContext?.setActivePage(undefined);
 
     const navigate = useNavigate();
 

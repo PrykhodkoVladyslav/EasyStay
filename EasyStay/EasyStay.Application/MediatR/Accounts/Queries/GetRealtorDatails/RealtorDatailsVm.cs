@@ -10,6 +10,10 @@ namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 public class RealtorDatailsVm : IMapWith<Realtor> {
 	public long Id { get; set; }
 
+	public string Email { get; set; } = null!;
+
+	public string? PhoneNumber { get; set; }
+
 	public string UserName { get; set; } = null!;
 
 	public string FirstName { get; set; } = null!;
@@ -19,8 +23,6 @@ public class RealtorDatailsVm : IMapWith<Realtor> {
 	public string Photo { get; set; } = null!;
 
 	public double Rating { get; set; }
-
-	public string? PhoneNumber { get; set; } = null!;
 
 	public string? Description { get; set; }
 

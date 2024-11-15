@@ -7,18 +7,18 @@ import showToast from "utils/toastShow.ts";
 
 const RealtorPage = () => {
     const { id } = useParams();
-    // const navigate = useNavigate();
-    // const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
-    // console.log(realtorInfo);
+    const navigate = useNavigate();
+    const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
+    console.log(realtorDetails);
     // const realtorId = realtorDetails.data.id;
     // const realtorPhoto = realtorDetails.data.photo;
     // const realtorName = realtorDetails.data.name;
-    //
-    // if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
-    // if (error) {
-    //     showToast("Помилка завантаження даних", "error");
-    //     return null;
-    // }
+
+    if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
         <div className="all-conteiner-realtor">

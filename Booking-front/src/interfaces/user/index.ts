@@ -112,10 +112,10 @@ export interface IRealtorDetails {
     lastName: string;
     photo: string;
     rating: number;
+    phoneNumber?: string;
     description?: string;
     dateOfBirth?: string;
     address?: string;
-    phoneNumber?: string;
     citizenship?: ICitizenship;
     gender: IGender;
     city: City;

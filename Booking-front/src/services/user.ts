@@ -34,7 +34,7 @@ export const userApi = createApi({
         }),
 
         getRealtorDetails: builder.query<IRealtorDetails, void>({
-            query: () => "GetRealtorDatails",
+            query: (id) => `GetRealtorDatails/${id}`,
             providesTags: ["User"],
         }),
 

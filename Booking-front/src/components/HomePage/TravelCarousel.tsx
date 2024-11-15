@@ -4,6 +4,8 @@ const TravelCarousel = () => {
     return (
         <div className="Carousel-conteiner">
             <div className="Carousel-conteiner2">
+                <img src={getIconUrl("homepageSvg/line.svg")} alt="line" className="background-image" />
+
                 <h1>Найкращі пропозиції</h1>
 
                 <div className="Carousel-conteiner3">

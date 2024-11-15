@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
-import ReviewCard from "components/partials/customer/revewCard.tsx";
+import ReviewCard from "components/partials/customer/RevewCard.tsx";
 
 const Reviews = () => {
     const token = useSelector((state: RootState) => getToken(state));

@@ -31,7 +31,7 @@ export function toQueryFromIHotelReviewsPageQuery(query: IHotelReviewsPageQuery)
     if (query.minUpdatedAtUtc) queryItems.push({ key: "minUpdatedAtUtc", value: query.minUpdatedAtUtc });
     if (query.maxUpdatedAtUtc) queryItems.push({ key: "maxUpdatedAtUtc", value: query.maxUpdatedAtUtc });
     if (query.authorId !== undefined) queryItems.push({ key: "authorId", value: query.authorId.toString() });
-    if (query.hotelId !== undefined) queryItems.push({ key: "realtorId", value: query.hotelId.toString() });
+    if (query.hotelId !== undefined) queryItems.push({ key: "hotelId", value: query.hotelId.toString() });
 
     return queryItems.map(item => `${item.key}=${item.value}`).join("&");
 }

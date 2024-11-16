@@ -1,4 +1,4 @@
-import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
+import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import FilterHotelsSection, { IFilter } from "components/partials/customer/FilterHotelsSection.tsx";
 import HotelsSection from "components/partials/customer/HotelsSection.tsx";
@@ -11,7 +11,9 @@ import {
 
 const HotelsPage = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
-    activeMenuItemContext?.setActivePage("Готелі");
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("Готелі");
+    }, []);
 
     useEffect(() => {
         window.scrollTo({
@@ -19,6 +21,18 @@ const HotelsPage = () => {
             behavior: "smooth",
         });
     }, []);
+
+    const queryParams = new URLSearchParams(location.search);
+
+    const cityParam = queryParams.get("city");
+    const dateFromParam = queryParams.get("dateFrom");
+    const dateToParam = queryParams.get("dateTo");
+    const adultGuestsParam = queryParams.get("adultGuests");
+
+    const [city, setCity] = useState(cityParam ?? "");
+    const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(dateFromParam ? new Date(dateFromParam) : null);
+    const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(dateToParam ? new Date(dateToParam) : null);
+    const [adultGuests, setAdultGuests] = useState(adultGuestsParam ? Number(adultGuestsParam) : 1);
 
     const [sideFilters, setSideFilters] = useState<IFilter>({
         hotelAmenities: [],
@@ -65,15 +79,14 @@ const HotelsPage = () => {
 
     const [hotelSearchFilters, setHotelSearchFilters] = useState<IHotelsPageQuery>({} as IHotelsPageQuery);
 
-    const onSearch = (topFilters: ISearchData) => {
-        const cityName = topFilters.city;
-        const dateFrom = topFilters.date?.from;
-        const dateTo = topFilters.date?.to;
+    const onSearch = () => {
+        const cityName = city;
+        const dateFrom = selectedDateFrom;
+        const dateTo = selectedDateTo;
         const freeDatePeriod = dateFrom && dateTo ? {
             from: format(dateFrom, "yyyy-MM-dd"),
             to: format(dateTo, "yyyy-MM-dd"),
         } : undefined;
-        const adultGuests = topFilters.adultGuests || undefined;
 
         setHotelSearchFilters({
             ...hotelSearchFilters,
@@ -83,13 +96,28 @@ const HotelsPage = () => {
                 },
             },
             freePeriod: freeDatePeriod,
-            minAdultGuests: adultGuests,
+            minAdultGuests: adultGuests || undefined,
         });
     };
 
+    useEffect(() => {
+        if (cityParam || dateFromParam || dateToParam || adultGuestsParam)
+            onSearch();
+    }, []);
+
     return (
         <div className="hotels-page">
-            <SearchHotelSection onSearch={onSearch} />
+            <SearchHotelSection
+                city={city}
+                setCity={setCity}
+                selectedDateFrom={selectedDateFrom}
+                selectedDateTo={selectedDateTo}
+                setSelectedDateFrom={setSelectedDateFrom}
+                setSelectedDateTo={setSelectedDateTo}
+                adultGuests={adultGuests}
+                setAdultGuests={setAdultGuests}
+                onSearch={onSearch}
+            />
 
             <VerticalPad heightPx={18} />
 

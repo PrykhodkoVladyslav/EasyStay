@@ -3,6 +3,11 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { City, CreateCity } from "interfaces/city";
 // import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
+import IPage from "interfaces/page/IPage.ts";
+import ICityAdvertising from "interfaces/city/ICityAdvertising.ts";
+import IGetCitiesAdvertisingPageQuery, {
+    toQueryFromIGetCitiesAdvertisingPageQuery,
+} from "interfaces/city/IGetCitiesAdvertisingPageQuery.ts";
 // import { createQueryString } from "utils/createQueryString.ts";
 
 export const cityApi = createApi({
@@ -26,6 +31,18 @@ export const cityApi = createApi({
         //         return `getPage?${queryString}`;
         //     },
         // }),
+
+        getCitiesAdvertisingPage: builder.query<IPage<ICityAdvertising>, IGetCitiesAdvertisingPageQuery>({
+            query: (query) => {
+                const baseQuery = "GetAdvertisingPage";
+
+                if (!query)
+                    return baseQuery;
+
+                return `${baseQuery}?${toQueryFromIGetCitiesAdvertisingPageQuery(query)}`;
+            },
+            providesTags: ["Cities"],
+        }),
 
         addCity: builder.mutation({
             query: (city: CreateCity) => {
@@ -63,7 +80,7 @@ export const cityApi = createApi({
                     url: `update`,
                     method: "PUT",
                     body: cityFormData,
-                }
+                };
             },
             invalidatesTags: ["Cities"],
         }),
@@ -81,6 +98,7 @@ export const cityApi = createApi({
 export const {
     useGetCityQuery,
     useGetAllCitiesQuery,
+    useGetCitiesAdvertisingPageQuery,
     useAddCityMutation,
     useUpdateCityMutation,
     useDeleteCityMutation,

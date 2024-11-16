@@ -15,7 +15,7 @@ public class CustomerPaginationService(
 			.OfType<Customer>()
 			.OrderBy(c => c.Id);
 
-	protected override IQueryable<Customer> FilterQuery(IQueryable<Customer> query, GetCustomerPageCommand filter) {
+	protected override IQueryable<Customer> FilterQueryBeforeProjectTo(IQueryable<Customer> query, GetCustomerPageCommand filter) {
 		if (filter.FirstName is not null)
 			query = query.Where(c => c.FirstName.ToLower().Contains(filter.FirstName.ToLower()));
 

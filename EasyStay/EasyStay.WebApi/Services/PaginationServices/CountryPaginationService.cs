@@ -13,7 +13,7 @@ public class CountryPaginationService(
 
 	protected override IQueryable<Country> GetQuery() => context.Countries.OrderBy(c => c.Id);
 
-	protected override IQueryable<Country> FilterQuery(IQueryable<Country> query, GetCountriesPageQuery filter) {
+	protected override IQueryable<Country> FilterQueryBeforeProjectTo(IQueryable<Country> query, GetCountriesPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(c => c.Name.ToLower().Contains(filter.Name.ToLower()));
 

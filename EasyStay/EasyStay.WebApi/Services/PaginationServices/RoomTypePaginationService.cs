@@ -13,7 +13,7 @@ public class RoomTypePaginationService(
 
 	protected override IQueryable<RoomType> GetQuery() => context.RoomTypes.OrderBy(rt => rt.Id);
 
-	protected override IQueryable<RoomType> FilterQuery(IQueryable<RoomType> query, GetRoomTypesPageQuery filter) {
+	protected override IQueryable<RoomType> FilterQueryBeforeProjectTo(IQueryable<RoomType> query, GetRoomTypesPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(rt => rt.Name.ToLower().Contains(filter.Name.ToLower()));
 

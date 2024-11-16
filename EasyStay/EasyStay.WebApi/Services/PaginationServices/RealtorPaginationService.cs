@@ -15,7 +15,7 @@ public class RealtorPaginationService(
 			.OfType<Realtor>()
 			.OrderBy(r => r.Id);
 
-	protected override IQueryable<Realtor> FilterQuery(IQueryable<Realtor> query, GetRealtorPageCommand filter) {
+	protected override IQueryable<Realtor> FilterQueryBeforeProjectTo(IQueryable<Realtor> query, GetRealtorPageCommand filter) {
 		if (filter.FirstName is not null)
 			query = query.Where(r => r.FirstName.ToLower().Contains(filter.FirstName.ToLower()));
 

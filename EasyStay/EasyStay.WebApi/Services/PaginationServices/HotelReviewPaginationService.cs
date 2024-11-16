@@ -13,7 +13,7 @@ public class HotelReviewPaginationService(
 
 	protected override IQueryable<HotelReview> GetQuery() => context.HotelReviews.OrderByDescending(r => r.CreatedAtUtc);
 
-	protected override IQueryable<HotelReview> FilterQuery(IQueryable<HotelReview> query, GetHotelReviewsPageQuery filter) {
+	protected override IQueryable<HotelReview> FilterQueryBeforeProjectTo(IQueryable<HotelReview> query, GetHotelReviewsPageQuery filter) {
 		if (filter.Description is not null)
 			query = query.Where(hr => hr.Description.ToLower().Contains(filter.Description.ToLower()));
 

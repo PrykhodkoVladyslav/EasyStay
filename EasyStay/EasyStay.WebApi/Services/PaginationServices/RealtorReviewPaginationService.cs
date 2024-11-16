@@ -13,7 +13,7 @@ public class RealtorReviewPaginationService(
 
 	protected override IQueryable<RealtorReview> GetQuery() => context.RealtorReviews.OrderByDescending(r => r.CreatedAtUtc);
 
-	protected override IQueryable<RealtorReview> FilterQuery(IQueryable<RealtorReview> query, GetRealtorReviewsPageQuery filter) {
+	protected override IQueryable<RealtorReview> FilterQueryBeforeProjectTo(IQueryable<RealtorReview> query, GetRealtorReviewsPageQuery filter) {
 		if (filter.Description is not null)
 			query = query.Where(r => r.Description.ToLower().Contains(filter.Description.ToLower()));
 

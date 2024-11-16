@@ -13,7 +13,7 @@ public class CitizenshipPaginationService(
 
 	protected override IQueryable<Citizenship> GetQuery() => context.Citizenships.OrderBy(c => c.Id);
 
-	protected override IQueryable<Citizenship> FilterQuery(IQueryable<Citizenship> query, GetCitizenshipsPageQuery filter) {
+	protected override IQueryable<Citizenship> FilterQueryBeforeProjectTo(IQueryable<Citizenship> query, GetCitizenshipsPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(c => c.Name.ToLower().Contains(filter.Name.ToLower()));
 

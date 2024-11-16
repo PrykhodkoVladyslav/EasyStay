@@ -14,7 +14,7 @@ public class BreakfastPaginationService(
 
 	protected override IQueryable<Breakfast> GetQuery() => context.Breakfasts.AsNoTracking().OrderBy(b => b.Id);
 
-	protected override IQueryable<Breakfast> FilterQuery(IQueryable<Breakfast> query, GetBreakfastsPageQuery filter) {
+	protected override IQueryable<Breakfast> FilterQueryBeforeProjectTo(IQueryable<Breakfast> query, GetBreakfastsPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(b => b.Name.ToLower().Contains(filter.Name.ToLower()));
 

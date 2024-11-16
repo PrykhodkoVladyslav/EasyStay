@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Services from "components/HomePage/Services.tsx";
 import TravelCarousel from "components/HomePage/TravelCarousel.tsx";
@@ -13,9 +13,32 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
-    activeMenuItemContext?.setActivePage(undefined);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage(undefined);
+    }, []);
 
     const navigate = useNavigate();
+
+    const [city, setCity] = useState("");
+    const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
+    const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
+    const [adultGuests, setAdultGuests] = useState(1);
+
+    const onSearch = () => {
+        const queryParams: string[] = [];
+
+        if (city) queryParams.push(`city=${city}`);
+        if (selectedDateFrom) queryParams.push(`dateFrom=${selectedDateFrom.toISOString()}`);
+        if (selectedDateTo) queryParams.push(`dateTo=${selectedDateTo.toISOString()}`);
+        if (adultGuests) queryParams.push(`adultGuests=${adultGuests}`);
+
+        if (queryParams.length === 0) {
+            navigate("/hotels");
+            return;
+        }
+
+        navigate(`/hotels?${queryParams.join("&")}`);
+    };
 
     return (
         <div className="app">
@@ -28,13 +51,23 @@ const HomePage: React.FC = () => {
                     </div>
                     <button className="cta-button" onClick={() => navigate("/hotels")}>Шукати житло</button>
                 </div>
-
             </div>
-            <SearchHotelSection />
+
+            <SearchHotelSection
+                city={city}
+                setCity={setCity}
+                selectedDateFrom={selectedDateFrom}
+                setSelectedDateFrom={setSelectedDateFrom}
+                selectedDateTo={selectedDateTo}
+                setSelectedDateTo={setSelectedDateTo}
+                adultGuests={adultGuests}
+                setAdultGuests={setAdultGuests}
+                onSearch={onSearch}
+            />
+
             <TravelCarousel />
 
             <DiscountsComponent />
-
 
             <Services />
 

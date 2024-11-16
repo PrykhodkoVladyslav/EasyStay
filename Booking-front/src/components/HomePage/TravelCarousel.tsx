@@ -3,8 +3,11 @@ import { useGetCitiesAdvertisingPageQuery } from "services/city.ts";
 import ICityAdvertising from "interfaces/city/ICityAdvertising.ts";
 import { useEffect, useState } from "react";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
+import { useNavigate } from "react-router-dom";
 
 const TravelCarousel = () => {
+    const navigate = useNavigate();
+
     const [pageIndex, setPageIndex] = useState(0);
 
     const { data: citiesPage } = useGetCitiesAdvertisingPageQuery({
@@ -34,7 +37,7 @@ const TravelCarousel = () => {
 
                 <div className="Carousel-conteiner3">
                     {cities.map((city, index) => (
-                        <div className={`Carousel-item CarItem${index + 1}`}>
+                        <div key={index} className={`Carousel-item CarItem${index + 1}`}>
                             <img
                                 className={`imgItem${index + 1}`}
                                 src={getApiImageUrl(city.image, 800)}
@@ -46,7 +49,8 @@ const TravelCarousel = () => {
                                     <p>від ${(city?.minPrice ?? 0).toFixed(2)}</p>
                                 </div>
                                 <button>
-                                    <img width="100%" src={getIconUrl("homepageSvg/rightArr.svg")} alt="right-arrow" />
+                                    <img width="100%" src={getIconUrl("homepageSvg/rightArr.svg")} alt="right-arrow"
+                                         onClick={() => navigate(`/hotels?city=${city.name}`)} />
                                 </button>
                             </div>
                         </div>

@@ -16,7 +16,7 @@ interface IRoomCardProps {
 }
 
 const RoomCard = (props: IRoomCardProps) => {
-    const { room, freePeriod,  hotelBreakfast, selectedDays, hotelId } = props;
+    const { room, freePeriod, hotelBreakfast, selectedDays, hotelId } = props;
     const navigate = useNavigate();
 
     const { data: freeQuantity } = useGetRoomVariantsFreeQuantityQuery({
@@ -58,13 +58,13 @@ const RoomCard = (props: IRoomCardProps) => {
         };
 
         return Object.fromEntries(
-            Object.entries(selectedBeds).filter(([, isSelected]) => isSelected)
+            Object.entries(selectedBeds).filter(([, isSelected]) => isSelected),
         );
     };
 
     const handleBookingClick = () => {
         const selectedVariants = room.variants.filter(
-            (variant) => selectedQuantities[room.id]?.[variant.id] > 0
+            (variant) => selectedQuantities[room.id]?.[variant.id] > 0,
         );
 
         if (selectedVariants.length === 0) {
@@ -257,21 +257,15 @@ const RoomCard = (props: IRoomCardProps) => {
                 return (
                     <div className="cols" key={variant.id}>
                         <div className="flex flex-row gap-2 flex-wrap">
-                            {selectedDays === 0 ? (
-                                <p className="new-price text-red-500">Виберіть дати</p>
-                            ) : (
-                                <>
-                                    <p className="new-price" title="Нова ціна">
-                                        {totalBasePrice.toFixed(0) + "$"}
-                                    </p>
-                                    {variant.discountPrice != null && (
-                                        <p className="old-price" title="Стара ціна">
-                                            {totalDiscountPrice.toFixed(0) + "$"}
-                                        </p>
-                                    )}
-                                    <p className="description">Включає податки та збори</p>
-                                </>
+                            <p className="new-price" title="Нова ціна">
+                                {totalBasePrice.toFixed(0) + "$"}
+                            </p>
+                            {variant.discountPrice != null && (
+                                <p className="old-price" title="Стара ціна">
+                                    {totalDiscountPrice.toFixed(0) + "$"}
+                                </p>
                             )}
+                            <p className="description">Включає податки та збори</p>
                         </div>
                     </div>
                 );

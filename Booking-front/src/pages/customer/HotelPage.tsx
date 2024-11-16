@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import SearchHotelSection, { ISearchData } from "components/partials/customer/SearchHotelSection.tsx";
+import SearchHotelSection from "components/partials/customer/SearchHotelSection.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { differenceInCalendarDays, format } from "date-fns";
 import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
@@ -29,6 +29,11 @@ const HotelPage = () => {
     const [allReviews, setAllReviews] = useState<IHotelReview[]>([]);
     const photos: { name: string }[] = hotelData?.photos || [];
     const HotelId = hotelData?.id || 0;
+
+    const [city, setCity] = useState("");
+    const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
+    const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
+    const [adultGuests, setAdultGuests] = useState(1);
 
     const handleScroll = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -64,15 +69,15 @@ const HotelPage = () => {
         return "погано";
     };
 
-    const onSearch = (topFilters: ISearchData) => {
-        const fromDate = topFilters.date?.from ? new Date(topFilters.date.from) : new Date();
-        const toDate = topFilters.date?.to ? new Date(topFilters.date.to) : new Date();
+    const onSearch = () => {
+        const fromDate = selectedDateFrom ? new Date(selectedDateFrom) : new Date();
+        const toDate = selectedDateTo ? new Date(selectedDateTo) : new Date();
 
-        if (topFilters.date?.from && topFilters.date?.to) {
-            setSelectedDays((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
+        if (selectedDateFrom && selectedDateTo) {
+            setSelectedDays(differenceInCalendarDays(selectedDateTo, selectedDateFrom) + 1);
         }
 
-        const freePeriod = (topFilters.date?.from && topFilters.date?.to) ? {
+        const freePeriod = (selectedDateFrom && selectedDateTo) ? {
             from: format(fromDate, "yyyy-MM-dd"),
             to: format(toDate, "yyyy-MM-dd"),
         } : null;
@@ -282,7 +287,18 @@ const HotelPage = () => {
 
             <div className="search-rooms">
                 <div className="search" id="search">
-                    <SearchHotelSection onSearch={onSearch} hideCityInput={true} />
+                    <SearchHotelSection
+                        city={city}
+                        setCity={setCity}
+                        selectedDateFrom={selectedDateFrom}
+                        setSelectedDateFrom={setSelectedDateFrom}
+                        selectedDateTo={selectedDateTo}
+                        setSelectedDateTo={setSelectedDateTo}
+                        adultGuests={adultGuests}
+                        setAdultGuests={setAdultGuests}
+                        onSearch={onSearch}
+                        hideCityInput={true}
+                    />
                 </div>
 
                 {freePeriod && (
@@ -315,7 +331,7 @@ const HotelPage = () => {
                         </div>
                         <div className="reviews">
                             {reviews.map((review) => (
-                                <ReviewCard key={review.id} review={review}/>
+                                <ReviewCard key={review.id} review={review} />
                             ))}
                         </div>
                     </>

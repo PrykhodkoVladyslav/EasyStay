@@ -18,25 +18,31 @@ const nameOfMonthsInGenitiveCase: Record<number, string> = {
     11: "грудня",
 };
 
-export interface ISearchData {
-    city: string;
-    date?: {
-        from: Date;
-        to: Date;
-    };
-    adultGuests: number;
-}
-
 interface ISearchTopSectionProps {
-    onSearch?: (data: ISearchData) => void;
+    onSearch?: () => void;
     hideCityInput?: boolean;
+
+    city: string;
+    setCity: (city: string) => void;
+    selectedDateFrom: Date | null;
+    selectedDateTo: Date | null;
+    setSelectedDateFrom: (date: Date | null) => void;
+    setSelectedDateTo: (date: Date | null) => void;
+    adultGuests: number;
+    setAdultGuests: (guests: number) => void;
 }
 
 const SearchHotelSection = (props: ISearchTopSectionProps) => {
-    const [city, setCity] = useState("");
-    const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
-    const [selectedDateTo, setSelectedDateTo] = useState<Date | null>(null);
-    const [adultGuests, setAdultGuests] = useState(1);
+    const {
+        city,
+        setCity,
+        selectedDateFrom,
+        selectedDateTo,
+        setSelectedDateFrom,
+        setSelectedDateTo,
+        adultGuests,
+        setAdultGuests,
+    } = props;
 
     const [isOpenedDatePicker, setIsOpenedDatePicker] = useState(false);
 
@@ -62,18 +68,7 @@ const SearchHotelSection = (props: ISearchTopSectionProps) => {
 
     const isSelectedDates = () => selectedDateFrom !== null && selectedDateTo !== null;
 
-    const onSearchClick = () => {
-        const selectedDates = selectedDateFrom && selectedDateTo ? {
-            from: selectedDateFrom,
-            to: selectedDateTo,
-        } : undefined;
-
-        props.onSearch?.({
-            city,
-            date: selectedDates,
-            adultGuests,
-        });
-    };
+    const onSearchClick = () => props.onSearch?.();
 
     return (
         <div className="search-top-section">

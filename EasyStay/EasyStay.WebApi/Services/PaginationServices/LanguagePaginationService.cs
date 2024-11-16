@@ -13,7 +13,7 @@ public class LanguagePaginationService(
 
 	protected override IQueryable<Language> GetQuery() => context.Languages.OrderBy(l => l.Id);
 
-	protected override IQueryable<Language> FilterQuery(IQueryable<Language> query, GetLanguagesPageQuery filter) {
+	protected override IQueryable<Language> FilterQueryBeforeProjectTo(IQueryable<Language> query, GetLanguagesPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(l => l.Name.ToLower().Contains(filter.Name.ToLower()));
 

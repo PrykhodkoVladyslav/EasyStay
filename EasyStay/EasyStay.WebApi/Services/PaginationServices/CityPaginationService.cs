@@ -13,7 +13,7 @@ public class CityPaginationService(
 
 	protected override IQueryable<City> GetQuery() => context.Cities;
 
-	protected override IQueryable<City> FilterQuery(IQueryable<City> query, GetCitiesPageQuery filter) {
+	protected override IQueryable<City> FilterQueryBeforeProjectTo(IQueryable<City> query, GetCitiesPageQuery filter) {
 		if (filter.IsRandomItems == true) {
 			query = query.OrderBy(c => Guid.NewGuid());
 		}

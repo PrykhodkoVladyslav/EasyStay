@@ -1,6 +1,7 @@
 ﻿using EasyStay.Application.MediatR.Cities.Commands.Create;
 using EasyStay.Application.MediatR.Cities.Commands.Delete;
 using EasyStay.Application.MediatR.Cities.Commands.Update;
+using EasyStay.Application.MediatR.Cities.Queries.GetAdvertisingPage;
 using EasyStay.Application.MediatR.Cities.Queries.GetAll;
 using EasyStay.Application.MediatR.Cities.Queries.GetDetails;
 using EasyStay.Application.MediatR.Cities.Queries.GetPage;
@@ -22,6 +23,10 @@ public class CitiesController : BaseApiController {
 
 		return Ok(page);
 	}
+
+	[HttpGet]
+	public async Task<IActionResult> GetAdvertisingPageAsync([FromQuery] GetCitiesAdvertisingPageQuery command) =>
+		Ok(await Mediator.Send(command));
 
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetById(long id) {

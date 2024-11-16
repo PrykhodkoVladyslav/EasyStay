@@ -13,7 +13,7 @@ public class RentalPeriodPaginationService(
 
 	protected override IQueryable<RentalPeriod> GetQuery() => context.RentalPeriods.OrderBy(rp => rp.Id);
 
-	protected override IQueryable<RentalPeriod> FilterQuery(IQueryable<RentalPeriod> query, GetRentalPeriodsPageQuery filter) {
+	protected override IQueryable<RentalPeriod> FilterQueryBeforeProjectTo(IQueryable<RentalPeriod> query, GetRentalPeriodsPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(rp => rp.Name.ToLower().Contains(filter.Name.ToLower()));
 

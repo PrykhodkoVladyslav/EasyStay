@@ -9,7 +9,6 @@ public class GetCitiesPageQueryHandler(
 	IPaginationService<CityVm, GetCitiesPageQuery> pagination
 ) : IRequestHandler<GetCitiesPageQuery, PageVm<CityVm>> {
 
-	public async Task<PageVm<CityVm>> Handle(GetCitiesPageQuery request, CancellationToken cancellationToken) {
-		return await pagination.GetPageAsync(request);
-	}
+	public Task<PageVm<CityVm>> Handle(GetCitiesPageQuery request, CancellationToken cancellationToken) =>
+		 pagination.GetPageAsync(request, cancellationToken);
 }

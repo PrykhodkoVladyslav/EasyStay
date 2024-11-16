@@ -24,15 +24,19 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 
 		var query = GetQuery();
 
-		query = FilterQuery(query, vm);
+		query = FilterQueryBeforeProjectTo(query, vm);
 
-		int count = await query.CountAsync(cancellationToken);
+		var projectToQuery = query.ProjectTo<EntityVmType>(mapper.ConfigurationProvider);
+
+		projectToQuery = FilterQueryAfterProjectTo(projectToQuery, vm);
+
+		int count = await projectToQuery.CountAsync(cancellationToken);
 
 		int pagesAvailable;
 
 		if (vm.PageSize is not null) {
 			pagesAvailable = (int)Math.Ceiling(count / (double)vm.PageSize);
-			query = query
+			projectToQuery = projectToQuery
 				.Skip((int)vm.PageIndex! * (int)vm.PageSize)
 				.Take((int)vm.PageSize);
 		}
@@ -40,7 +44,7 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 			pagesAvailable = count > 0 ? 1 : 0;
 		}
 
-		var data = await MapAsync(query, cancellationToken);
+		var data = await projectToQuery.ToArrayAsync(cancellationToken);
 
 		return new PageVm<EntityVmType> {
 			Data = data,
@@ -51,11 +55,9 @@ public abstract class BasePaginationService<EntityType, EntityVmType, Pagination
 
 	protected abstract IQueryable<EntityType> GetQuery();
 
-	protected abstract IQueryable<EntityType> FilterQuery(IQueryable<EntityType> query, PaginationVmType filter);
+	protected virtual IQueryable<EntityType> FilterQueryBeforeProjectTo(IQueryable<EntityType> query, PaginationVmType filter) =>
+		query;
 
-	protected virtual async Task<IEnumerable<EntityVmType>> MapAsync(IQueryable<EntityType> query, CancellationToken cancellationToken) {
-		return await query
-			.ProjectTo<EntityVmType>(mapper.ConfigurationProvider)
-			.ToArrayAsync(cancellationToken);
-	}
+	protected virtual IQueryable<EntityVmType> FilterQueryAfterProjectTo(IQueryable<EntityVmType> query, PaginationVmType filter) =>
+		query;
 }

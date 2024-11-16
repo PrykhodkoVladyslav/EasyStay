@@ -13,7 +13,7 @@ public class HotelAmenityPaginationService(
 
 	protected override IQueryable<HotelAmenity> GetQuery() => context.HotelAmenities.OrderBy(ha => ha.Id);
 
-	protected override IQueryable<HotelAmenity> FilterQuery(IQueryable<HotelAmenity> query, GetHotelAmenitiesPageQuery filter) {
+	protected override IQueryable<HotelAmenity> FilterQueryBeforeProjectTo(IQueryable<HotelAmenity> query, GetHotelAmenitiesPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(ha => ha.Name.ToLower().Contains(filter.Name.ToLower()));
 

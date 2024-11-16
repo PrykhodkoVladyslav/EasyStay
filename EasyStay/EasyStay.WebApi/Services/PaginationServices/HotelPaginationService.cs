@@ -16,7 +16,7 @@ public class HotelPaginationService(
 
 	protected override IQueryable<Hotel> GetQuery() => context.Hotels.AsNoTracking().AsSplitQuery();
 
-	protected override IQueryable<Hotel> FilterQuery(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
+	protected override IQueryable<Hotel> FilterQueryBeforeProjectTo(IQueryable<Hotel> query, GetHotelsPageQuery filter) {
 		if (filter.IsRandomItems == true) {
 			query = query.OrderBy(h => Guid.NewGuid());
 		}

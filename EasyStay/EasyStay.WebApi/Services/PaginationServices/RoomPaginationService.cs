@@ -14,7 +14,7 @@ public class RoomPaginationService(
 
 	protected override IQueryable<Room> GetQuery() => context.Rooms.AsNoTracking().OrderBy(r => r.Id);
 
-	protected override IQueryable<Room> FilterQuery(IQueryable<Room> query, GetRoomsPageQuery filter) {
+	protected override IQueryable<Room> FilterQueryBeforeProjectTo(IQueryable<Room> query, GetRoomsPageQuery filter) {
 		if (filter.Name is not null)
 			query = query.Where(r => r.Name.ToLower().Contains(filter.Name.ToLower()));
 

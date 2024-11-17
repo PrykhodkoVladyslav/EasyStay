@@ -4,7 +4,7 @@ import { z } from "zod";
 export const AddressSchema = z.object({
     street: z.string().min(1, "Вулиця є обов'язковою"),
     houseNumber: z.string().min(1, "Номер будинку є обов'язковим"),
-    floor: z.string().optional(),
+    floor: z.number().optional(),
     apartmentNumber: z.string().optional(),
     cityId: z.string().refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) !== 0, {
         message: "Місто є обов'язковим",
@@ -12,6 +12,7 @@ export const AddressSchema = z.object({
 });
 
 export const HotelCreatePage1Schema = z.object({
+    id: z.number().optional(),
     name: z.string().min(1, "Назва є обов'язковою"),
     description: z.string().min(1, "Опис є обов'язковим"),
     arrivalTimeUtcFrom: z.string().min(1, "Час прибуття є обов'язковим").optional(),

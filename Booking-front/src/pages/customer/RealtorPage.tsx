@@ -10,7 +10,7 @@ const RealtorPage = () => {
     const navigate = useNavigate();
     const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
 
-    if (isLoading || !realtorDetails) return <p className="isLoading-error">Завантаження...</p>;
+    if (isLoading || !realtorDetails) return <p className="isLoading-error pt-20">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");
         return null;

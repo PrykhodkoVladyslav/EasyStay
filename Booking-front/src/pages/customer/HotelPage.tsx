@@ -31,6 +31,7 @@ const HotelPage = () => {
     const [pageSize, setPageSize] = useState(3);
     const [allReviews, setAllReviews] = useState<IHotelReview[]>([]);
     const photos: { name: string }[] = hotelData?.photos || [];
+    const [hasSearched, setHasSearched] = useState(false);
 
     const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);
@@ -57,9 +58,6 @@ const HotelPage = () => {
         pageSize: 1000,
         hotelId,
     });
-
-    console.log(hotelId);
-    console.log(hotelReviewsPageData);
 
     useEffect(() => {
         if (hotelReviewsPageData) {
@@ -91,10 +89,22 @@ const HotelPage = () => {
             showToast("Оберіть дати", "warning");
 
         setFreePeriod(freePeriod);
-        setRooms(hotelData?.rooms ?? []);
+
+        const filteredRooms = hotelData?.rooms?.map(room => {
+            const filteredVariants = room.variants.filter(variant => variant.guestInfo.adultCount === adultGuests);
+
+            if (filteredVariants.length > 0) {
+                return { ...room, variants: filteredVariants };
+            }
+
+            return null;
+        }).filter(room => room !== null) ?? [];
+
+        setRooms(filteredRooms);
+        setHasSearched(true);
     };
 
-    if (isLoading || !hotelData) return <p className="isLoading-error">Завантаження...</p>;
+    if (isLoading || !hotelData) return <p className="isLoading-error pt-20">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");
         return null;
@@ -306,17 +316,25 @@ const HotelPage = () => {
                     />
                 </div>
 
-                {freePeriod && (
-                    <div className="rooms">
-                        <p className="global-title">Номери</p>
-                        <RoomSection
-                            rooms={rooms}
-                            freePeriod={freePeriod}
-                            hotelBreakfast={hotelData.breakfasts.length > 0}
-                            selectedDays={selectedDays}
-                            hotelId={hotelId}
-                        />
-                    </div>
+                {hasSearched ? (
+                    rooms.length > 0 ? (
+                        freePeriod && (
+                            <div className="rooms">
+                                <p className="global-title">Номери</p>
+                                <RoomSection
+                                    rooms={rooms}
+                                    freePeriod={freePeriod}
+                                    hotelBreakfast={hotelData.breakfasts.length > 0}
+                                    selectedDays={selectedDays}
+                                    hotelId={hotelId}
+                                />
+                            </div>
+                        )
+                    ) : (
+                        <p className="isLoading-error pt-20">Немає номерів на вибрані варіанти пошуку</p>
+                    )
+                ) : (
+                    <p className="isLoading-error pt-20">Оберіть варіанти пошуку</p>
                 )}
             </div>
 

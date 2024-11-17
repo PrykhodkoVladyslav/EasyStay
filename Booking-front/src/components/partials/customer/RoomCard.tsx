@@ -16,7 +16,13 @@ interface IRoomCardProps {
 }
 
 const RoomCard = (props: IRoomCardProps) => {
-    const { room, freePeriod, hotelBreakfast, selectedDays, hotelId } = props;
+    const {
+        room,
+        freePeriod,
+        hotelBreakfast,
+        selectedDays,
+        hotelId
+    } = props;
     const navigate = useNavigate();
 
     const { data: freeQuantity } = useGetRoomVariantsFreeQuantityQuery({
@@ -102,12 +108,8 @@ const RoomCard = (props: IRoomCardProps) => {
                 bookingRoomVariants,
             },
         };
-        console.log(bookingData);
 
         const base64Data = btoa(JSON.stringify(bookingData));
-
-        console.log(base64Data);
-
         navigate(`/booking/${base64Data}`);
     };
 

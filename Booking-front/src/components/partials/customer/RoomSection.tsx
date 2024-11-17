@@ -10,7 +10,13 @@ interface IRoomSectionProps {
 }
 
 const RoomSection = (props: IRoomSectionProps) => {
-    const { rooms, freePeriod, hotelBreakfast, selectedDays, hotelId } = props;
+    const {
+        rooms,
+        freePeriod,
+        hotelBreakfast,
+        selectedDays,
+        hotelId
+    } = props;
 
     return (
         <table className="room-table">
@@ -28,7 +34,14 @@ const RoomSection = (props: IRoomSectionProps) => {
 
             <tbody>
             {rooms.map((room, index) => (
-                <RoomCard key={index} room={room} freePeriod={freePeriod} hotelBreakfast={hotelBreakfast} selectedDays={selectedDays} hotelId={hotelId} />
+                <RoomCard
+                    key={index}
+                    room={room}
+                    freePeriod={freePeriod}
+                    hotelBreakfast={hotelBreakfast}
+                    selectedDays={selectedDays}
+                    hotelId={hotelId}
+                />
             ))}
             </tbody>
         </table>

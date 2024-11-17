@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 
 const getLocation = (token?: string | null) => {
     if (!token)
-        return "/";
+        return "";
 
     const user = jwtDecode<User>(token);
     const roles = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
@@ -14,9 +14,9 @@ const getLocation = (token?: string | null) => {
     if (roles.includes("Realtor"))
         return "/realtor";
     if (roles.includes("Customer"))
-        return "/";
+        return "";
 
-    return "/";
+    return "";
 };
 
 const initialState: UserState = {

@@ -17,9 +17,9 @@ function Services() {
                     <a className="details-link" onClick={toInfoPage}>Детальніше</a>
                 </div>
                 <div className="service-item">
-                    <img className="service-icon" src={getIconUrl("homepageSvg/servicesSvg/bus.svg")} alt="icon" />
-                    <h3>Трансфери</h3>
-                    <p>Швидкі та надійні перевезення</p>
+                    <img className="service-icon" src={getIconUrl("homepageSvg/servicesSvg/cars.svg")} alt="icon" />
+                    <h3>Авто</h3>
+                    <p>Оренда авто для вашої зручності</p>
                     <a className="details-link" onClick={toInfoPage}>Детальніше</a>
                 </div>
                 <div className="service-item">
@@ -30,15 +30,15 @@ function Services() {
                     <a className="details-link" onClick={toInfoPage}>Детальніше</a>
                 </div>
                 <div className="service-item">
-                    <img className="service-icon" src={getIconUrl("homepageSvg/servicesSvg/tours.svg")} alt="icon" />
-                    <h3>Тури</h3>
-                    <p>Незабутні подорожі та екскурсії</p>
+                    <img className="service-icon" src={getIconUrl("homepageSvg/servicesSvg/bus.svg")} alt="icon" />
+                    <h3>Трансфери</h3>
+                    <p>Швидкі та надійні перевезення</p>
                     <a className="details-link" onClick={toInfoPage}>Детальніше</a>
                 </div>
                 <div className="service-item">
-                    <img className="service-icon" src={getIconUrl("homepageSvg/servicesSvg/cars.svg")} alt="icon" />
-                    <h3>Машини</h3>
-                    <p>Оренда авто для вашої зручності</p>
+                    <img className="service-icon" src={getIconUrl("homepageSvg/servicesSvg/tours.svg")} alt="icon" />
+                    <h3>Тури</h3>
+                    <p>Незабутні подорожі та екскурсії</p>
                     <a className="details-link" onClick={toInfoPage}>Детальніше</a>
                 </div>
             </div>

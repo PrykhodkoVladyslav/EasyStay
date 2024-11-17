@@ -113,18 +113,12 @@ const HotelsPage = () => {
                                         alt="" />
                                 </button>
 
-                                <div className="rooms-action">
-                                    <button className="btn-rooms" onClick={() => {
-                                        navigate(`/realtor/rooms/${hotel.id}`);
-                                    }}>Номери
-                                    </button>
-                                    <button className="btn-edit" onClick={() => {
-                                        navigate(`edit:${hotel.id}`);
-                                    }}>Редагувати
-                                    </button>
-                                </div>
+                            <div className="rooms-action">
+                                <button className="btn-rooms" onClick={() => {navigate(`/realtor/rooms/${hotel.id}`)}}>Номери</button>
+                                <button className="btn-edit" onClick={() => {navigate(`/realtor/edit/hotel/${hotel.id}`)}}>Редагувати</button>
                             </div>
                         </div>
+                    </div>
                     ))
                 ) : (
                     <p className="isLoading-error">У вас немає готелів</p>

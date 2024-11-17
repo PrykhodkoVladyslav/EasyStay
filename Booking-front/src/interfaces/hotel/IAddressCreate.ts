@@ -2,7 +2,7 @@
 export interface IAddressCreate {
     street: string;
     houseNumber: string;
-    floor?: string;
+    floor?: number;
     apartmentNumber?: string;
     cityId: number;
 }

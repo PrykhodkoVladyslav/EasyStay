@@ -4,7 +4,7 @@ export interface IAddress {
     id: number;
     street: string;
     houseNumber: string;
-    latitude: number;
-    longitude: number;
+    floor?: number;
+    apartmentNumber?: string;
     city: City;
 }

@@ -3,30 +3,26 @@ import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
 import { getUser } from "store/slice/userSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import {
-    ActivePageOnHeaderContext,
-} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { useState } from "react";
 
-const Side = () => {
+const RealtorSide = () => {
     const user = useSelector(getUser);
-    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
     const navigate = useNavigate();
-    const activePage = activeMenuItemContext?.activePage;
+    const [activePage, setActivePage] = useState<string | null>(null);
+
     if (!user) {
         return null;
     }
 
     const buttons = [
-        { key: "home", name: "Головна", path: "realtor" },
-        { key: "personal-data", name: "Особисті дані", path: "realtor/personal-data" },
-        { key: "hotels", name: "Мої готелі", path: "realtor/hotels" },
-        { key: "reviews", name: "Відгуки", path: "realtor/reviews" },
-        { key: "archived", name: "Архів", path: "realtor/archived" },
+        { name: "Особисті дані", path: "customer/personal-data" },
+        { name: "Збережене", path: "customer/favorites" },
+        { name: "Платіжні дані", path: "customer/payment-data" },
+        { name: "Історія бронювань", path: "customer/booking-history" },
     ];
 
     const handleButtonClick = (buttonKey: string, buttonPath: string) => {
-        activeMenuItemContext?.setActivePage(buttonKey);
+        setActivePage(buttonKey);
         navigate(`/${buttonPath}`);
     };
 
@@ -45,7 +41,11 @@ const Side = () => {
                             alt="Немає фото"
                         />
                     )}
-                    <p className="name">{user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : "Невідомий Юзер"}</p>
+                    <p className="name">
+                        {user.firstName && user.lastName
+                            ? `${user.firstName} ${user.lastName}`
+                            : "Невідомий Юзер"}
+                    </p>
                 </div>
 
                 <div className="content-bottom">
@@ -54,10 +54,10 @@ const Side = () => {
                             <button
                                 key={button.name}
                                 className="item"
-                                onClick={() => handleButtonClick(button.key, button.path)}
+                                onClick={() => handleButtonClick(button.name, button.path)}
                                 style={{
-                                    background: activePage === button.key ? "rgb(63, 82, 60)" : "none",
-                                    color: activePage === button.key ? "white" : "black",
+                                    background: activePage === button.name ? "rgb(63, 82, 60)" : "none",
+                                    color: activePage === button.name ? "white" : "black",
                                 }}
                             >
                                 {button.name}
@@ -70,4 +70,4 @@ const Side = () => {
     );
 };
 
-export default Side;
+export default RealtorSide;

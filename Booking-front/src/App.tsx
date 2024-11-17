@@ -48,6 +48,7 @@ import BookingPage from "pages/customer/BookingPage/BookingPage.tsx";
 import RealtorPage from "pages/customer/RealtorPage.tsx";
 import SignalRChatPage from "pages/shared/Chat/SignalRChatPage.tsx";
 import RealtorBaseLayout from "components/layouts/RealtorBaseLayout.tsx";
+import InfoPage from "pages/shared/InfoPage.tsx";
 
 function App() {
     const authPart = <Route path="auth" element={<AuthLayout />}>
@@ -63,6 +64,7 @@ function App() {
             <Route index element={<CustomerHomePage />} />
             <Route path="hotels" element={<HotelsPage />} />
             <Route path="hotel/:id" element={<HotelPage />} />
+            <Route path="info" element={<InfoPage />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Customer"]} />}>
@@ -72,35 +74,35 @@ function App() {
         </Route>
     </Route>;
 
-    const realtorsPart = <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
-        <Route path="realtor">
-            <Route element={<RealtorPreLayout />}>
-                <Route element={<RealtorBaseLayout />}>
-                    <Route element={<RealtorWithSideBarLayout />}>
-                        <Route index element={<RealtorHomePage />} />
-                        <Route path="personal-data" element={<RealtorDataPage />} />
-                        <Route path="reviews" element={<RealtorReviewsPage />} />
-                        <Route path="archived" element={<RealtorArchivedPage />} />
+    const realtorsPart = <Route path="realtor" element={<RealtorPreLayout />}>
+        <Route element={<ProtectedRoute allowedRoles={["Realtor"]} />}>
+            <Route element={<RealtorBaseLayout />}>
+                <Route element={<RealtorWithSideBarLayout />}>
+                    <Route index element={<RealtorHomePage />} />
+                    <Route path="personal-data" element={<RealtorDataPage />} />
+                    <Route path="reviews" element={<RealtorReviewsPage />} />
+                    <Route path="archived" element={<RealtorArchivedPage />} />
 
-                        <Route path="hotels" element={<RealtorHotelsPage />}>
-                            <Route path="edit/:id" element={<HotelEditPage />} />
-                        </Route>
-                    </Route>
-
-                    <Route path="chat" element={<SignalRChatPage />} />
-
-                    <Route path="add">
-                        <Route path="categories" element={<CategoriesListPage />} />
-                        <Route path="hotel" element={<AddHotelPage />} />
-                        <Route path="room" element={<AddRoomPage />} />
-                    </Route>
-
-                    <Route path="hotels">
-                        <Route path="list" element={<HotelsPage />} />
-                        <Route path="create" element={<HotelCreatePage />} />
-                        <Route path="archive" element={<HotelsArchivedPage />} />
+                    <Route path="hotels" element={<RealtorHotelsPage />}>
+                        <Route path="edit/:id" element={<HotelEditPage />} />
                     </Route>
                 </Route>
+
+                <Route path="chat" element={<SignalRChatPage />} />
+
+                <Route path="add">
+                    <Route path="categories" element={<CategoriesListPage />} />
+                    <Route path="hotel" element={<AddHotelPage />} />
+                    <Route path="room" element={<AddRoomPage />} />
+                </Route>
+
+                <Route path="hotels">
+                    <Route path="list" element={<HotelsPage />} />
+                    <Route path="create" element={<HotelCreatePage />} />
+                    <Route path="archive" element={<HotelsArchivedPage />} />
+                </Route>
+
+                <Route path="info" element={<InfoPage />} />
             </Route>
         </Route>
     </Route>;

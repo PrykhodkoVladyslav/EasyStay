@@ -6,6 +6,7 @@ import { useGetRealtorDetailsQuery } from "services/user.ts";
 import showToast from "utils/toastShow.ts";
 import { useEffect } from "react";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {API_URL} from "utils/getEnvData.ts";
 
 const RealtorPage = () => {
     useEffect(instantScrollToTop, []);
@@ -25,14 +26,14 @@ const RealtorPage = () => {
             <div className="realtor-card">
                 <div className="realtor-card-info">
                     <div className="nameConteiner">
-                        <h2 className="realtor-card-name">Дмитро Романчук</h2>
+                        <h2 className="realtor-card-name">{realtorDetails.firstName} {realtorDetails.lastName}</h2>
                         <div className="stars-container">
                             <img
                                 src={getPublicResourceUrl("account/star.svg")}
                                 alt=""
                                 className="star"
                             />
-                            <p className="rating">{realtorDetails.rating}</p>
+                            <p className="rating">{realtorDetails.rating.toFixed(1)}</p>
                         </div>
                     </div>
                     <p className="realtor-card-email">{realtorDetails.email}</p>
@@ -40,26 +41,36 @@ const RealtorPage = () => {
                     <div className="realtor-card-details">
                         <div className="form-group">
                             <p>Номер телефону</p>
-                            <p>{realtorDetails.phoneNumber}</p>
+                            <p>{realtorDetails.phoneNumber?.length ? realtorDetails.phoneNumber : "Не вказано"}</p>
                         </div>
                         <div className="form-group">
                             <p>Дата народження</p>
-                            <p>{realtorDetails.dateOfBirth}</p>
+                            <p>{realtorDetails.dateOfBirth?.length ? realtorDetails.dateOfBirth : "Не вказано"}</p>
                         </div>
                         <div className="form-group">
                             <p>Стать</p>
-                            <p>{realtorDetails.gender?.name}</p>
+                            <p>{realtorDetails.gender?.name?.length ? realtorDetails.gender.name : "Не вказано"}</p>
                         </div>
                     </div>
 
                     <div className="realtor-card-description">
                         <h3>Інформація про рієлтора</h3>
-                        <p>{realtorDetails.description}</p>
+                        <p>{realtorDetails.description?.length ? realtorDetails.description : "Не вказано"}</p>
                     </div>
                 </div>
 
                 <div className="realtor-card-image">
-                    <img src={getPublicResourceUrl("account/no_user_photo.png")} alt="star" />
+                    {realtorDetails.photo ? (
+                        <img
+                            src={API_URL + `/images/1200_${realtorDetails.photo}`}
+                            alt=""
+                        />
+                    ) : (
+                        <img
+                            src={getPublicResourceUrl("account/no_user_photo.png")}
+                            alt="Немає фото"
+                        />
+                    )}
 
                     <div className="center">
                         <button

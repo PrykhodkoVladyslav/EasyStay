@@ -2221,9 +2221,8 @@
           text-overflow: ellipsis;
 
           .img {
-            width: 100%;
+            width: 7.3vw;
             min-width: 100px;
-            max-width: 140px;
             height: 86px;
 
             img {
@@ -4554,8 +4553,7 @@
 
       img {
         border-radius: 100%;
-        width: 100%;
-        max-width: 15vw;
+        width: 15vw;
         min-width: 100px;
         object-fit: cover;
       }
@@ -4568,7 +4566,7 @@
         color: white;
         width: 100%;
         max-width: 204px;
-        padding: 15px 0;
+        padding: 15px 10px;
         border-radius: 18px;
         transition: background-color 0.3s ease;
         margin-top: 20px;

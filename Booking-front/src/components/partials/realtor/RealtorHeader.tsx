@@ -1,18 +1,20 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "components/partials/ProfileModal.tsx";
-import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
 import "./../../../css/realtor-header.scss";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const RealtorHeader = () => {
-    const { activePage, setActivePage } = useRealtorActivePage();
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    const activePage = activeMenuItemContext?.activePage;
     const [profileIsModalOpen, setProfileIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const menuItemData = [
-        { key: "personal-data", name: "Кабінет", href: "personal-data" },
+        { key: "home", name: "Кабінет", href: "" },
         { key: "hotels", name: "Мої готелі", href: "hotels" },
         { key: "reviews", name: "Відгуки", href: "reviews" },
         { key: "archived", name: "Архів", href: "archived" },
@@ -22,30 +24,16 @@ const RealtorHeader = () => {
         <button
             key={index}
             className={`pages ${item.key === activePage ? "active" : ""}`}
-            onClick={() => {
-                setActivePage(item.key);
-                navigate(item.href);
-            }}
+            onClick={() => navigate(item.href)}
         >{item.name}</button>
     ));
 
-    const languageOptions = [
-        { full: "English", abbr: "En" },
-        { full: "Українська", abbr: "Укр" },
-    ];
-
     const handleLogoClick = () => {
-        setActivePage("home");
         navigate("/realtor");
     };
 
     const handleMessagesClick = () => {
         navigate("/realtor/chat");
-    };
-
-    const handleNotificationsClick = () => {
-        console.log("Notifications clicked");
-
     };
 
     const handleProfileClick = () => {
@@ -64,10 +52,6 @@ const RealtorHeader = () => {
             <div className="center-section"> {menuItems} </div>
 
             <div className="right-section">
-                <div>
-                    <Dropdown options={languageOptions} defaultOption="Українська" />
-                </div>
-
                 <div className="user-section">
                     <button
                         className="messages"
@@ -76,16 +60,6 @@ const RealtorHeader = () => {
                         <img
                             src={getPublicResourceUrl("account/header/messages.svg")}
                             alt="Messages"
-                        />
-                    </button>
-
-                    <button
-                        className="notifications"
-                        onClick={handleNotificationsClick}>
-
-                        <img
-                            src={getPublicResourceUrl("account/header/ring.svg")}
-                            alt="Notifications"
                         />
                     </button>
 

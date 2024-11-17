@@ -1,5 +1,5 @@
 import TextInput from "components/ui/design/TextInput.tsx";
-import React from "react";
+import React, { useEffect } from "react";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import { useForm } from "react-hook-form";
@@ -11,8 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import IValidationError from "interfaces/error/IValidationError.ts";
 import { useSendResetPasswordEmailMutation } from "services/user.ts";
 import { useNavigate } from "react-router-dom";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const ForgotPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const navigate = useNavigate();
     const [emailError, setEmailError] = React.useState("");
 

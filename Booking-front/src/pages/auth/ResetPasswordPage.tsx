@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useResetPasswordMutation } from "services/user.ts";
 import { useForm } from "react-hook-form";
 import {
@@ -10,8 +10,11 @@ import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const ResetPasswordPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const navigate = useNavigate();
 
     const [message, setMessage] = useState("");

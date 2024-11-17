@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUser } from "store/slice/userSlice.ts";
 import { useGetRealtorsInformationQuery, useUpdateRealtorsInformationMutation } from "services/user.ts";
@@ -12,8 +12,19 @@ import showToast from "utils/toastShow.ts";
 import { useGetAllCitizenshipsQuery } from "services/citizenship.ts";
 import { City } from "interfaces/city";
 import { useGetAllGendersQuery } from "services/gender.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const DataPage = () => {
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("personal-data");
+    }, []);
+
     const {
         register,
         handleSubmit,
@@ -95,7 +106,9 @@ const DataPage = () => {
         }
     };
 
-    if (!user) { return null; }
+    if (!user) {
+        return null;
+    }
     if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");

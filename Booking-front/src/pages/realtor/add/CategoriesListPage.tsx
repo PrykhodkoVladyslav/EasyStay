@@ -1,7 +1,18 @@
-import {Link} from "react-router-dom";
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { Link } from "react-router-dom";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import { useContext, useEffect } from "react";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const CategoriesListPage = () => {
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage(undefined);
+    }, []);
 
     return (
         <div className="categories-container">
@@ -71,6 +82,6 @@ const CategoriesListPage = () => {
             </div>
         </div>
     );
-}
+};
 
 export default CategoriesListPage;

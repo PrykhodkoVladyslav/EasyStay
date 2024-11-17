@@ -1,5 +1,4 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
 import { useContext, useState } from "react";
 import {
     ActivePageOnHeaderContext,
@@ -28,18 +27,8 @@ const CustomerHeader = () => {
         >{item.name}</button>
     ));
 
-    const languageOptions = [
-        { full: "English", abbr: "En" },
-        { full: "Українська", abbr: "Укр" },
-    ];
-
     const handleMessagesClick = () => {
         navigate("/chat");
-    };
-
-    const handleNotificationsClick = () => {
-        console.log("Notifications clicked");
-
     };
 
     const handleProfileClick = () => {
@@ -61,10 +50,6 @@ const CustomerHeader = () => {
             </div>
 
             <div className="right-section">
-                <div>
-                    <Dropdown options={languageOptions} defaultOption="Українська" />
-                </div>
-
                 <div className="user-section">
                     <button
                         className="messages"
@@ -75,17 +60,6 @@ const CustomerHeader = () => {
                             alt="Messages"
                         />
                     </button>
-
-                    <button
-                        className="notifications"
-                        onClick={handleNotificationsClick}>
-
-                        <img
-                            src={getPublicResourceUrl("account/header/ring.svg")}
-                            alt="Notifications"
-                        />
-                    </button>
-
                     <button
                         className="profile"
                         onClick={handleProfileClick}>

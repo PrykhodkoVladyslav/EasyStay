@@ -4,7 +4,7 @@ import ActivePageOnHeaderProvider from "components/contexts/ActivePageOnHeaderPr
 import "./../../css/realtor-base-layout.scss";
 import RealtorHeader from "components/partials/realtor/RealtorHeader.tsx";
 
-const RealtorBaseLayout = () => {
+const RealtorLayout = () => {
     return (
         <ActivePageOnHeaderProvider>
             <div className="realtor-base-layout">
@@ -18,4 +18,4 @@ const RealtorBaseLayout = () => {
     );
 };
 
-export default RealtorBaseLayout;
+export default RealtorLayout;

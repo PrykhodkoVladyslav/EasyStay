@@ -3,13 +3,19 @@ import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
 import { getUser } from "store/slice/userSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
+import { useContext } from "react";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const Side = () => {
     const user = useSelector(getUser);
-    const { activePage, setActivePage } = useRealtorActivePage();
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
     const navigate = useNavigate();
-    if (!user) { return null; }
+    const activePage = activeMenuItemContext?.activePage;
+    if (!user) {
+        return null;
+    }
 
     const buttons = [
         { key: "home", name: "Головна", path: "realtor" },
@@ -20,8 +26,7 @@ const Side = () => {
     ];
 
     const handleButtonClick = (buttonKey: string, buttonPath: string) => {
-        setActivePage(buttonKey);
-        localStorage.setItem('activePage', buttonKey);
+        activeMenuItemContext?.setActivePage(buttonKey);
         navigate(`/${buttonPath}`);
     };
 

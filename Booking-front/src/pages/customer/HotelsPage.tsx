@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const HotelsPage = () => {
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
@@ -15,12 +16,7 @@ const HotelsPage = () => {
         activeMenuItemContext?.setActivePage("Готелі");
     }, []);
 
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }, []);
+    useEffect(instantScrollToTop, []);
 
     const queryParams = new URLSearchParams(location.search);
 

@@ -6,15 +6,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegistrationSchemaType, RegistrationSchema } from "interfaces/zod/user.ts";
 
-import React from "react";
+import React, { useEffect } from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 import IValidationError from "interfaces/error/IValidationError.ts";
 import RadiobuttonGroup from "components/ui/design/RadiobuttonGroup.tsx";
 import { useSelector } from "react-redux";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const RegisterPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const showCross = true;
 
     const navigate = useNavigate();

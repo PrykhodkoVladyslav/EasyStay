@@ -5,19 +5,30 @@ import { getToken } from "store/slice/userSlice.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
 import { useGetRealtorsPersonalRatingQuery } from "services/user.ts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
 import "./../../css/review-item.scss";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const ReviewsPage = () => {
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("reviews");
+    }, []);
+
     const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const [pageIndex, setPageIndex] = useState(0);
 
     const { data: realtorRating } = useGetRealtorsPersonalRatingQuery();
-    const { data: realtorReviewsPageData, isLoading, error} = useGetRealtorReviewsPageQuery({
+    const { data: realtorReviewsPageData, isLoading, error } = useGetRealtorReviewsPageQuery({
         pageIndex: pageIndex,
         pageSize: 9,
         realtorId: realtor,
@@ -41,9 +52,9 @@ const ReviewsPage = () => {
     const handlePaginationChange = (pageNumber: number) => {
         setPageIndex(pageNumber - 1);
 
-        const realtorReviewsSection = document.getElementById('hotels');
+        const realtorReviewsSection = document.getElementById("hotels");
         if (realtorReviewsSection) {
-            realtorReviewsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            realtorReviewsSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
 
@@ -94,7 +105,7 @@ const ReviewsPage = () => {
                         <div key={review.id} className="review">
                             <div className="author">
                                 <img
-                                    src={review.author.photo ? `${API_URL}/images/800_${review.author.photo}` : getPublicResourceUrl('account/no_user_photo.png')}
+                                    src={review.author.photo ? `${API_URL}/images/800_${review.author.photo}` : getPublicResourceUrl("account/no_user_photo.png")}
                                     alt=""
                                     className="author-image"
                                 />
@@ -160,6 +171,6 @@ const ReviewsPage = () => {
             />
         </div>
     );
-}
+};
 
 export default ReviewsPage;

@@ -44,12 +44,6 @@ const ChatPage = () => {
     const [message, setMessage] = useState<string>("");
 
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
-    const scrollToBottom = () => {
-        messagesContainerRef.current?.scrollTo({
-            top: messagesContainerRef.current.scrollHeight,
-            behavior: "auto",
-        });
-    };
 
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
 
@@ -58,6 +52,13 @@ const ChatPage = () => {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     useEffect(() => {
+        const scrollToBottom = () => {
+            messagesContainerRef.current?.scrollTo({
+                top: messagesContainerRef.current.scrollHeight,
+                behavior: "auto",
+            });
+        };
+
         scrollToBottom();
     }, [messages]);
 

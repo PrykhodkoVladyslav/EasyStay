@@ -2,15 +2,18 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/index.ts";
 import { getUserLocation, setToken } from "store/slice/userSlice.ts";
 
-import React from "react";
+import React, { useEffect } from "react";
 import TextInput from "components/ui/design/TextInput.tsx";
 import VerticalPad from "components/ui/VerticalPad.tsx";
 import getEmptySymbol from "utils/emptySymbol.ts";
 import { useSignInMutation } from "services/user.ts";
 import SignInRegisterButton from "components/ui/design/SignInRegisterButton.tsx";
 import { useSelector } from "react-redux";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const LoginPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const userLocation = useSelector(getUserLocation);

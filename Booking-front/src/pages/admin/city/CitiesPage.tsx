@@ -3,8 +3,12 @@ import { Button } from "components/ui/Button.tsx";
 import { useGetAllCitiesQuery, useDeleteCityMutation } from "services/city.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CitiesPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { data: citiesData, isLoading, error, refetch } = useGetAllCitiesQuery();
     const [deleteCity] = useDeleteCityMutation();
     const navigate = useNavigate();
@@ -87,6 +91,6 @@ const CitiesPage: React.FC = () => {
             </div>
         </div>
     );
-}
+};
 
 export default CitiesPage;

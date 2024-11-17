@@ -1848,7 +1848,7 @@
   }
 }
 
-// Акаунт Ріелтора
+// Акаунт
 .account-layout {
   display: flex;
   margin: 38px 0 90px 0;
@@ -1911,6 +1911,7 @@
           font-weight: 500;
           line-height: 28px;
           white-space: nowrap;
+          overflow: hidden;
         }
       }
     }

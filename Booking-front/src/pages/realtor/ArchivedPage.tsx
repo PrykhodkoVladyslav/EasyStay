@@ -127,7 +127,7 @@ const ArchivedPage = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="isLoading-error">У вас немає готелів</p>
+                    <p className="isLoading-error">У вас немає архівованих готелів</p>
                 )}
             </div>
 

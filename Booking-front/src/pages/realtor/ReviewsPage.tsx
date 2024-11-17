@@ -5,14 +5,22 @@ import { getToken } from "store/slice/userSlice.ts";
 import showToast from "utils/toastShow.ts";
 import { useGetRealtorReviewsPageQuery } from "services/realtorReview.ts";
 import { useGetRealtorsPersonalRatingQuery } from "services/user.ts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
 import "./../../css/review-item.scss";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const ReviewsPage = () => {
     useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("reviews");
+    }, []);
 
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;

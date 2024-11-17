@@ -7,15 +7,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
-import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
 import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 
 const Reviews = () => {
     const token = useSelector((state: RootState) => getToken(state));
-    const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const navigate = useNavigate();
-    const { setActivePage } = useRealtorActivePage();
     const [pageSize, setPageSize] = useState(3);
     const [allReviews, setAllReviews] = useState<IRealtorReview[]>([]);
 
@@ -32,7 +30,6 @@ const Reviews = () => {
     }, [realtorReviewsPageData]);
 
     const handleReviewClick = () => {
-        setActivePage("reviews");
         navigate("/realtor/reviews");
     };
 

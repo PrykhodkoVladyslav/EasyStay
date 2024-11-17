@@ -1,15 +1,23 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useGetHotelsPageQuery } from "services/hotel.ts";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
 import showToast from "utils/toastShow.ts";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const ArchivedPage = () => {
     useEffect(instantScrollToTop, []);
 
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("archived");
+    }, []);
+    
     const navigate = useNavigate();
     const [pageIndex, setPageIndex] = useState(0);
 

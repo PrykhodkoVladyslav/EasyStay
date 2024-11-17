@@ -4,11 +4,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import { IHotel } from "interfaces/hotel/IHotel.ts";
-import { useRealtorActivePage } from "components/contexts/RealtorActivePage.tsx";
 
 const MyHotels = () => {
     const navigate = useNavigate();
-    const { setActivePage } = useRealtorActivePage();
     const [pageSize, setPageSize] = useState(3);
     const [hotels, setHotels] = useState<IHotel[]>([]);
 
@@ -26,9 +24,8 @@ const MyHotels = () => {
     }, [hotelsData]);
 
     const hasMoreHotels = (hotelsData?.itemsAvailable ?? 0) > pageSize;
-    
+
     const handleHotelClick = () => {
-        setActivePage("hotels");
         navigate("/realtor/hotels");
     };
 

@@ -48,7 +48,7 @@ import BookingPage from "pages/customer/BookingPage/BookingPage.tsx";
 import RealtorPage from "pages/customer/RealtorPage.tsx";
 import SignalRChatPage from "pages/shared/Chat/SignalRChatPage.tsx";
 import RealtorBaseLayout from "components/layouts/RealtorBaseLayout.tsx";
-import InfoPage from "pages/shared/InfoPage.tsx";
+import InfoPage from "pages/shared/InfoPage/InfoPage.tsx";
 
 function App() {
     const authPart = <Route path="auth" element={<AuthLayout />}>

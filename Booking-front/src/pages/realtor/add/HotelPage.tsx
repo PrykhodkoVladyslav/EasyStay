@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from "react";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,8 +14,11 @@ import { useGetAllLanguagesQuery } from "services/language.ts";
 import { useCreateHotelMutation } from "services/hotel.ts";
 import { HotelCreatePage1Schema, HotelCreateSchemaType, HotelCreateSchema } from "interfaces/zod/hotel.ts";
 import { useNavigate } from "react-router-dom";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const HotelPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const [currentContainer, setCurrentContainer] = useState(1);
     const navigate = useNavigate();
 
@@ -113,17 +116,17 @@ const HotelPage = () => {
             breakfastIds: selectedBreakfasts,
             staffLanguageIds: selectedLanguages,
             photos: selectedPhotos,
-            arrivalTimeUtcFrom: data.arrivalTimeUtcFrom || '',
-            arrivalTimeUtcTo: data.arrivalTimeUtcTo || '',
-            departureTimeUtcFrom: data.departureTimeUtcFrom || '',
-            departureTimeUtcTo: data.departureTimeUtcTo || '',
+            arrivalTimeUtcFrom: data.arrivalTimeUtcFrom || "",
+            arrivalTimeUtcTo: data.arrivalTimeUtcTo || "",
+            departureTimeUtcFrom: data.departureTimeUtcFrom || "",
+            departureTimeUtcTo: data.departureTimeUtcTo || "",
             categoryId: Number(data.categoryId) || 0,
             address: {
                 ...data.address,
-                floor: data.address.floor || '',
+                floor: data.address.floor || "",
                 cityId: Number(data.address.cityId) || 0,
             },
-        }
+        };
 
         try {
             await createHotel(hoteldata).unwrap();
@@ -160,7 +163,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.name && (
                                             <FormError className="text-red"
-                                                       errorMessage={errors?.name?.message as string}/>
+                                                       errorMessage={errors?.name?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -181,7 +184,7 @@ const HotelPage = () => {
                                         </select>
                                         {errors?.categoryId && (
                                             <FormError className="text-red"
-                                                       errorMessage={errors?.categoryId?.message as string}/>
+                                                       errorMessage={errors?.categoryId?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -194,7 +197,7 @@ const HotelPage = () => {
                                         ></textarea>
                                             {errors?.description && (
                                                 <FormError className="text-red"
-                                                           errorMessage={errors?.description?.message as string}/>
+                                                           errorMessage={errors?.description?.message as string} />
                                             )}
                                             <p className="counter">{watch("description")?.length || 0}/4000</p>
                                         </div>
@@ -259,7 +262,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.street && (
                                             <FormError className="text-red"
-                                                       errorMessage={errors?.address?.street?.message as string}/>
+                                                       errorMessage={errors?.address?.street?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -272,7 +275,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.houseNumber && (
                                             <FormError className="text-red"
-                                                       errorMessage={errors?.address?.houseNumber?.message as string}/>
+                                                       errorMessage={errors?.address?.houseNumber?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -285,7 +288,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.floor && (
                                             <FormError className="text-red"
-                                                       errorMessage={errors?.address?.floor?.message as string}/>
+                                                       errorMessage={errors?.address?.floor?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -298,7 +301,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.apartmentNumber && (
                                             <FormError className="text-red"
-                                                       errorMessage={errors?.address?.apartmentNumber?.message as string}/>
+                                                       errorMessage={errors?.address?.apartmentNumber?.message as string} />
                                         )}
                                     </div>
                                 </div>
@@ -332,7 +335,7 @@ const HotelPage = () => {
                                     ))}
                                     {errors?.hotelAmenityIds && (
                                         <FormError className="text-red"
-                                                   errorMessage={errors?.hotelAmenityIds?.message as string}/>
+                                                   errorMessage={errors?.hotelAmenityIds?.message as string} />
                                     )}
                                 </div>
                             </div>
@@ -382,7 +385,7 @@ const HotelPage = () => {
                                                         onChange={(e) => {
                                                             const id = Number(e.target.value);
                                                             setSelectedBreakfasts((prev) =>
-                                                                e.target.checked ? [...prev, id] : prev.filter((bid) => bid !== id)
+                                                                e.target.checked ? [...prev, id] : prev.filter((bid) => bid !== id),
                                                             );
                                                         }}
                                                     />
@@ -391,7 +394,7 @@ const HotelPage = () => {
                                             ))}
                                             {errors?.breakfastIds && (
                                                 <FormError className="text-red"
-                                                           errorMessage={errors?.breakfastIds?.message as string}/>
+                                                           errorMessage={errors?.breakfastIds?.message as string} />
                                             )}
                                         </div>
                                     </div>
@@ -424,7 +427,7 @@ const HotelPage = () => {
                                     ))}
                                     {errors?.staffLanguageIds && (
                                         <FormError className="text-red"
-                                                   errorMessage={errors?.staffLanguageIds?.message as string}/>
+                                                   errorMessage={errors?.staffLanguageIds?.message as string} />
                                     )}
                                 </div>
                             </div>
@@ -524,7 +527,7 @@ const HotelPage = () => {
                         <div className="photo-container">
                             <label className="add-photo" htmlFor="photos">
                                 <div className="inner">
-                                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото"/>
+                                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото" />
                                     <input
                                         {...register("photos")}
                                         id="photos"
@@ -542,7 +545,7 @@ const HotelPage = () => {
                                 <div className="photos">
                                     {selectedPhotos.map((photo, index) => (
                                         <div key={index} className="photo">
-                                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`}/>
+                                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`} />
                                             <button className="btn-delete" onClick={() => handleDeletePhoto(index)}>
                                                 <img
                                                     src={getPublicResourceUrl("account/trash.svg")}
@@ -556,7 +559,7 @@ const HotelPage = () => {
                         </div>
                         {errors?.photos && (
                             <FormError className="text-red flex justify-end"
-                                       errorMessage={errors?.photos?.message as string}/>
+                                       errorMessage={errors?.photos?.message as string} />
                         )}
                     </div>
                 )}
@@ -571,6 +574,6 @@ const HotelPage = () => {
             </form>
         </div>
     );
-}
+};
 
 export default HotelPage;

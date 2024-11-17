@@ -1,7 +1,10 @@
-import {Link} from "react-router-dom";
-import {getPublicResourceUrl} from "utils/publicAccessor.ts";
+import { Link } from "react-router-dom";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CategoriesListPage = () => {
+    useEffect(instantScrollToTop, []);
 
     return (
         <div className="categories-container">
@@ -71,6 +74,6 @@ const CategoriesListPage = () => {
             </div>
         </div>
     );
-}
+};
 
 export default CategoriesListPage;

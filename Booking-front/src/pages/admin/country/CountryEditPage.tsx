@@ -12,12 +12,15 @@ import showToast from "utils/toastShow.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import {API_URL} from "utils/getEnvData.ts";
+import { API_URL } from "utils/getEnvData.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CountryEditPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { id } = useParams();
     const { data: countryData, refetch } = useGetCountryQuery(id as string);
-    const [updateCountry, { isLoading } ] = useUpdateCountryMutation();
+    const [updateCountry, { isLoading }] = useUpdateCountryMutation();
 
     // const [files, setFiles] = useState<(File | string)[]>([]);
     const [files, setFiles] = useState<File[]>([]);
@@ -42,7 +45,7 @@ const CountryEditPage: React.FC = () => {
                 fetch(API_URL + `/images/1200_${country.image}`)
                     .then((response) => response.blob())
                     .then((blob) => {
-                        const fileFromApi = new File([blob], 'country_image.jpg', { type: blob.type });
+                        const fileFromApi = new File([blob], "country_image.jpg", { type: blob.type });
                         setFiles([fileFromApi]);
                     });
             }
@@ -77,8 +80,8 @@ const CountryEditPage: React.FC = () => {
                 fetch(API_URL + `/images/1200_${country.image}`)
                     .then((response) => response.blob())
                     .then((blob) => {
-                        const fileFromApi = new File([blob], 'country_image.jpg', {
-                            type: 'image/jpeg',
+                        const fileFromApi = new File([blob], "country_image.jpg", {
+                            type: "image/jpeg",
                         });
                         setFiles([fileFromApi]);
                     });
@@ -92,13 +95,13 @@ const CountryEditPage: React.FC = () => {
             fetch(API_URL + `/images/1200_${country.image}`)
                 .then((response) => response.blob())
                 .then((blob) => {
-                    const fileFromApi = new File([blob], 'country_image.jpg', {
-                        type: 'image/jpeg',
+                    const fileFromApi = new File([blob], "country_image.jpg", {
+                        type: "image/jpeg",
                     });
                     setFiles([fileFromApi]);
                 });
         }
-    }, [countryData])
+    }, [countryData]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -167,7 +170,7 @@ const CountryEditPage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
                         )}
                     </div>
 
@@ -204,7 +207,7 @@ const CountryEditPage: React.FC = () => {
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus/>
+                            <IconCirclePlus />
                             Оновити
                         </Button>
                         <Button
@@ -214,7 +217,7 @@ const CountryEditPage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX/>
+                            <IconCircleX />
                             Скинути
                         </Button>
                     </div>

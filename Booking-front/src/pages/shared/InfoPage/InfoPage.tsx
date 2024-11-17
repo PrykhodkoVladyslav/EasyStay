@@ -1,7 +1,11 @@
 import styles from "./InfoPage.module.scss";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const InfoPage = () => {
+    useEffect(instantScrollToTop, []);
+
     return <div className={styles.InfoPage}>
         <h1>Наші послуги – EasyStay</h1>
 

@@ -12,8 +12,11 @@ import showToast from "utils/toastShow.ts";
 import { useGetAllCitizenshipsQuery } from "services/citizenship.ts";
 import { City } from "interfaces/city";
 import { useGetAllGendersQuery } from "services/gender.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const DataPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const {
         register,
         handleSubmit,
@@ -95,7 +98,9 @@ const DataPage = () => {
         }
     };
 
-    if (!user) { return null; }
+    if (!user) {
+        return null;
+    }
     if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");

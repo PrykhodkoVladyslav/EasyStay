@@ -4,8 +4,12 @@ import RealtorReviews from "components/partials/customer/RealtorReviews.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetRealtorDetailsQuery } from "services/user.ts";
 import showToast from "utils/toastShow.ts";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const RealtorPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
@@ -55,13 +59,14 @@ const RealtorPage = () => {
                 </div>
 
                 <div className="realtor-card-image">
-                    <img src={getPublicResourceUrl("account/no_user_photo.png")} alt="star"/>
+                    <img src={getPublicResourceUrl("account/no_user_photo.png")} alt="star" />
 
                     <div className="center">
                         <button
                             // onClick={() => }
                             className="realtor-card-feedback-btn"
-                        >Написати відгук</button>
+                        >Написати відгук
+                        </button>
 
                         <button
                             onClick={() => navigate(`/chat?interlocutorIdParam=${id}&avatarParam=${realtorDetails.photo}&fullNameParam=${realtorDetails.firstName}`)}
@@ -73,11 +78,11 @@ const RealtorPage = () => {
             </div>
 
             <div className="hotels-reviews">
-                <RealtorHotels/>
-                <RealtorReviews/>
+                <RealtorHotels />
+                <RealtorReviews />
             </div>
         </div>
     );
-}
+};
 
 export default RealtorPage;

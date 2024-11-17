@@ -1,12 +1,15 @@
 // import FormError from "components/ui/FormError.tsx";
 // import {City} from "interfaces/city";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 // import {HotelCreatePage1Schema, HotelCreateSchema, HotelCreateSchemaType} from "interfaces/zod/hotel.ts";
 // import {zodResolver} from "@hookform/resolvers/zod";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 // import showToast from "utils/toastShow.ts";
 
 const RoomPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const [modal, setModal] = useState(false);
 
     const {
@@ -29,7 +32,7 @@ const RoomPage = () => {
     };
 
     useEffect(() => {
-        document.body.style.overflow = modal ? 'hidden' : 'auto';
+        document.body.style.overflow = modal ? "hidden" : "auto";
     }, [modal]);
 
     const onSubmitRoom = async (/*data: HotelCreateSchemaType*/) => {
@@ -41,7 +44,7 @@ const RoomPage = () => {
     };
 
     return (
-        <div className={`add-hotel-room ${modal ? 'overflow-hidden' : ''}`}>
+        <div className={`add-hotel-room ${modal ? "overflow-hidden" : ""}`}>
             <form className="add-page-1" onSubmit={handleSubmit(onSubmitRoom)}>
                 <p className="title">Інформація про кімнату</p>
                 <div className="data-containers">
@@ -461,6 +464,6 @@ const RoomPage = () => {
             )}
         </div>
     );
-}
+};
 
 export default RoomPage;

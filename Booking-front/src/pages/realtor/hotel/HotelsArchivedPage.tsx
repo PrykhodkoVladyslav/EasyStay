@@ -13,7 +13,12 @@
 // } from "services/hotel.ts";
 // import showToast from "utils/toastShow.ts";
 
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+
 const ArchivedHotelsPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     // const token = useSelector((state: RootState) => getToken(state));
     // const payload = token ? JSON.parse(atob(token.split('.')[1])) : null;
     // const role = payload ? payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : null;

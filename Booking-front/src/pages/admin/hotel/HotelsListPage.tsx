@@ -4,8 +4,12 @@ import { useNavigate } from "react-router-dom";
 import {
     useGetAllHotelsQuery,
 } from "services/hotel.ts";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const HotelsListPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { data: hotelsData, isLoading, error } = useGetAllHotelsQuery();
     const navigate = useNavigate();
 

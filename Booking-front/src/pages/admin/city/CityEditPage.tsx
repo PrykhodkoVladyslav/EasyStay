@@ -12,9 +12,12 @@ import { useGetAllCountriesQuery } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 import ImageUpload from "components/ImageUpload.tsx";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import {API_URL} from "utils/getEnvData.ts";
+import { API_URL } from "utils/getEnvData.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CityEditPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { id } = useParams();
     const { data: cityData, refetch } = useGetCityQuery(id as string);
     const { data: countriesData } = useGetAllCountriesQuery();
@@ -39,15 +42,15 @@ const CityEditPage: React.FC = () => {
         if (cityData) {
             const city = Array.isArray(cityData) ? cityData[0] : cityData;
             setValue("name", city.name);
-            setValue("latitude", city.latitude.toString().replace('.', ','));
-            setValue("longitude", city.longitude.toString().replace('.', ','));
+            setValue("latitude", city.latitude.toString().replace(".", ","));
+            setValue("longitude", city.longitude.toString().replace(".", ","));
             setValue("countryId", city.country.id.toString());
 
             if (city.image) {
                 fetch(API_URL + `/images/1200_${city.image}`)
                     .then((response) => response.blob())
                     .then((blob) => {
-                        const fileFromApi = new File([blob], 'city_image.jpg', { type: blob.type });
+                        const fileFromApi = new File([blob], "city_image.jpg", { type: blob.type });
                         setFiles([fileFromApi]);
                     });
             }
@@ -78,8 +81,8 @@ const CityEditPage: React.FC = () => {
             fetch(API_URL + `/images/1200_${city.image}`)
                 .then((response) => response.blob())
                 .then((blob) => {
-                    const fileFromApi = new File([blob], 'hotel_image.jpg', {
-                        type: 'image/jpeg',
+                    const fileFromApi = new File([blob], "hotel_image.jpg", {
+                        type: "image/jpeg",
                     });
                     setFiles([fileFromApi]);
                 });
@@ -159,7 +162,7 @@ const CityEditPage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
                         )}
                     </div>
 
@@ -198,7 +201,7 @@ const CityEditPage: React.FC = () => {
                     <div>
                         <Label htmlFor="countryId">Країна:</Label>
                         <select
-                            {...register("countryId", {required: "Country is required"})}
+                            {...register("countryId", { required: "Country is required" })}
                             id="countryId"
                             className="w-full text-md border px-3 py-1 rounded-sm"
                         >
@@ -252,7 +255,7 @@ const CityEditPage: React.FC = () => {
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus/>
+                            <IconCirclePlus />
                             Оновити
                         </Button>
                         <Button
@@ -262,7 +265,7 @@ const CityEditPage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX/>
+                            <IconCircleX />
                             Скинути
                         </Button>
                     </div>

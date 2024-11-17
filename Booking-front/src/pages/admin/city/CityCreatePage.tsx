@@ -13,8 +13,11 @@ import showToast from "utils/toastShow.ts";
 import { useGetAllCountriesQuery } from "services/country.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CityCreatePage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const {
         register,
         handleSubmit,
@@ -133,7 +136,7 @@ const CityCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
                         )}
                     </div>
 
@@ -146,7 +149,7 @@ const CityCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.latitude && (
-                            <FormError className="text-red" errorMessage={errors?.latitude?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.latitude?.message as string} />
                         )}
                     </div>
 
@@ -159,14 +162,14 @@ const CityCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.longitude && (
-                            <FormError className="text-red" errorMessage={errors?.longitude?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.longitude?.message as string} />
                         )}
                     </div>
 
                     <div>
                         <Label htmlFor="countryId">Країна:</Label>
                         <select
-                            {...register("countryId", {required: "Country is required"})}
+                            {...register("countryId", { required: "Country is required" })}
                             id="countryId"
                             defaultValue=""
                             className="w-full text-md border px-3 py-1 rounded-sm"
@@ -181,7 +184,7 @@ const CityCreatePage: React.FC = () => {
                             ))}
                         </select>
                         {errors?.countryId && (
-                            <FormError className="text-red" errorMessage={errors?.countryId?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.countryId?.message as string} />
                         )}
                     </div>
 
@@ -202,7 +205,7 @@ const CityCreatePage: React.FC = () => {
                             />
                         </ImageUpload>
                         {errors?.image && (
-                            <FormError className="text-red" errorMessage={errors?.image?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.image?.message as string} />
                         )}
                     </div>
 
@@ -213,7 +216,7 @@ const CityCreatePage: React.FC = () => {
                             // type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus/>
+                            <IconCirclePlus />
                             Створити
                         </button>
                         <button
@@ -223,7 +226,7 @@ const CityCreatePage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX/>
+                            <IconCircleX />
                             Скинути
                         </button>
                     </div>

@@ -5,12 +5,15 @@ import { useGetHotelsPageQuery } from "services/hotel.ts";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
 import showToast from "utils/toastShow.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const HotelsPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const navigate = useNavigate();
     const [pageIndex, setPageIndex] = useState(0);
 
-    const { data: hotelsPageData, isLoading, error} = useGetHotelsPageQuery({
+    const { data: hotelsPageData, isLoading, error } = useGetHotelsPageQuery({
         onlyOwn: true,
         pageIndex: pageIndex,
         pageSize: 6,
@@ -35,9 +38,9 @@ const HotelsPage = () => {
     const handlePaginationChange = (pageNumber: number) => {
         setPageIndex(pageNumber - 1);
 
-        const hotelsSection = document.getElementById('hotels');
+        const hotelsSection = document.getElementById("hotels");
         if (hotelsSection) {
-            hotelsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            hotelsSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
 
@@ -75,39 +78,45 @@ const HotelsPage = () => {
                 {hotels.length > 0 ? (
                     hotels.map((hotel) => (
                         <div className="hotel" key={hotel.id}>
-                        <div className="img-info">
-                            <div className="img">
-                                <img
-                                    src={`${API_URL}/images/800_${hotel.photos[0].name}`}
-                                    alt={`${hotel.name}`}
-                                    className="h-full w-full object-cover"
-                                />
-                            </div>
-                            <div className="info">
-                                <div className="top-info">
-                                    <p className="name">{hotel.name}</p>
-                                    <div>
-                                        <p>{hotel.address.city.name}, {hotel.address.street} {hotel.address.houseNumber}</p>
-                                    </div>
+                            <div className="img-info">
+                                <div className="img">
+                                    <img
+                                        src={`${API_URL}/images/800_${hotel.photos[0].name}`}
+                                        alt={`${hotel.name}`}
+                                        className="h-full w-full object-cover"
+                                    />
                                 </div>
+                                <div className="info">
+                                    <div className="top-info">
+                                        <p className="name">{hotel.name}</p>
+                                        <div>
+                                            <p>{hotel.address.city.name}, {hotel.address.street} {hotel.address.houseNumber}</p>
+                                        </div>
+                                    </div>
 
-                                <p className="category">{hotel.category.name}</p>
+                                    <p className="category">{hotel.category.name}</p>
+                                </div>
+                            </div>
+
+                            <div className="actions">
+                                <button className="btn-delete">
+                                    <img
+                                        src={getPublicResourceUrl("account/trash.svg")}
+                                        alt="" />
+                                </button>
+
+                                <div className="rooms-action">
+                                    <button className="btn-rooms" onClick={() => {
+                                        navigate(`/realtor/rooms/${hotel.id}`);
+                                    }}>Номери
+                                    </button>
+                                    <button className="btn-edit" onClick={() => {
+                                        navigate(`edit:${hotel.id}`);
+                                    }}>Редагувати
+                                    </button>
+                                </div>
                             </div>
                         </div>
-
-                        <div className="actions">
-                            <button className="btn-delete">
-                                <img
-                                    src={getPublicResourceUrl("account/trash.svg")}
-                                    alt=""/>
-                            </button>
-
-                            <div className="rooms-action">
-                                <button className="btn-rooms" onClick={() => {navigate(`/realtor/rooms/${hotel.id}`)}}>Номери</button>
-                                <button className="btn-edit" onClick={() => {navigate(`edit:${hotel.id}`)}}>Редагувати</button>
-                            </div>
-                        </div>
-                    </div>
                     ))
                 ) : (
                     <p className="isLoading-error">У вас немає готелів</p>
@@ -153,6 +162,6 @@ const HotelsPage = () => {
             />
         </div>
     );
-}
+};
 
 export default HotelsPage;

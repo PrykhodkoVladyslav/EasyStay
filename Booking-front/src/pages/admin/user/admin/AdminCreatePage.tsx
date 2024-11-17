@@ -8,8 +8,12 @@ import { useCreateAdminMutation } from "services/user.ts";
 import showToast from "utils/toastShow.ts";
 import { useForm } from "react-hook-form";
 import { CreateAdminSchemaType, CreateAdminSchema } from "interfaces/zod/user.ts";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const AdminCreatePage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateAdminSchemaType>({
         resolver: zodResolver(CreateAdminSchema),
     });

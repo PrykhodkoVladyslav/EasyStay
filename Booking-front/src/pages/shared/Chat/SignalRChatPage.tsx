@@ -7,14 +7,17 @@ import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 import { API_URL } from "utils/getEnvData.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 export const SignalRContext = createSignalRContext();
 
 const SignalRChatPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
     useEffect(() => {
         activeMenuItemContext?.setActivePage(undefined);
-    });
+    }, []);
 
     const token = useAppSelector(getToken);
 

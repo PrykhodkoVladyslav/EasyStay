@@ -16,6 +16,7 @@ import ICreateBankCardRequest from "interfaces/bankCard/ICreateBankCardRequest.t
 import ICreateBookingRequest from "interfaces/booking/ICreateBookingRequest.ts";
 import { useCreateBookingMutation } from "services/booking.ts";
 import IValidationError from "interfaces/error/IValidationError.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 export interface IBookingBedSelection {
     isSingleBed?: boolean;
@@ -48,6 +49,8 @@ export interface IRoomVariantWithRoom {
 }
 
 const BookingPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const { data: bookingPageExternalInformation } = useParams();
     if (!bookingPageExternalInformation)
         throw new Error("No data provided");

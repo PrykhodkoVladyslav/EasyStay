@@ -3,8 +3,12 @@ import { Button } from "components/ui/Button.tsx";
 import { useDeleteCountryMutation, useGetAllCountriesQuery } from "services/country.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CountriesPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { data: countriesData, isLoading, error, refetch } = useGetAllCountriesQuery();
     const [deleteCountry] = useDeleteCountryMutation();
     const navigate = useNavigate();
@@ -85,6 +89,6 @@ const CountriesPage: React.FC = () => {
             </div>
         </div>
     );
-}
+};
 
 export default CountriesPage;

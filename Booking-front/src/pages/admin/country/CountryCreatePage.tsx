@@ -12,8 +12,11 @@ import { useAddCountryMutation } from "services/country.ts";
 import showToast from "utils/toastShow.ts";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CountryCreatePage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const {
         register,
         handleSubmit,
@@ -118,7 +121,7 @@ const CountryCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string}/>
+                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
                         )}
                     </div>
 
@@ -154,7 +157,7 @@ const CountryCreatePage: React.FC = () => {
                             type="submit"
                             className="hover:bg-sky/70 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <IconCirclePlus/>
+                            <IconCirclePlus />
                             Створити
                         </Button>
                         <Button
@@ -164,7 +167,7 @@ const CountryCreatePage: React.FC = () => {
                             onClick={onReset}
                             className="hover:bg-sky/70 disabled:cursor-not-allowed"
                         >
-                            <IconCircleX/>
+                            <IconCircleX />
                             Скинути
                         </Button>
                     </div>

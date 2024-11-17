@@ -13,8 +13,11 @@ import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 import { useSelector } from "react-redux";
 import { getToken } from "store/slice/userSlice.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const HotelPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const { id } = useParams();
     const [hotelId] = useState(Number(id));
     const navigate = useNavigate();
@@ -55,7 +58,7 @@ const HotelPage = () => {
         hotelId,
     });
 
-    console.log(hotelId)
+    console.log(hotelId);
     console.log(hotelReviewsPageData);
 
     useEffect(() => {

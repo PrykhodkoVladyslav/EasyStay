@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconLock, IconLockOpen } from "@tabler/icons-react";
 import { useGetAllCustomersQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import ModalComponent from "components/ModalComponent";
 import showToast from "utils/toastShow.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const CustomersListPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { data: customersData, isLoading, error, refetch } = useGetAllCustomersQuery();
     const [blockUser, { isLoading: isBlockLoading }] = useBlockUserMutation();
     const [unlockUser, { isLoading: isUnblockLoading }] = useUnlockUserMutation();

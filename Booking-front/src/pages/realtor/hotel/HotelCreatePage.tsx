@@ -14,7 +14,12 @@
 // import showToast from "utils/toastShow.ts";
 // import { ChangeEvent, useEffect, useRef, useState } from "react";
 
+import { useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+
 const HotelCreatePage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     // const {
     //     register,
     //     handleSubmit,

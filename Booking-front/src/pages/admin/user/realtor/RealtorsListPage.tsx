@@ -2,10 +2,13 @@ import { IconLock, IconLockOpen } from "@tabler/icons-react";
 import { useGetAllRealtorsQuery, useBlockUserMutation, useUnlockUserMutation } from "services/user.ts";
 import { API_URL } from "utils/getEnvData.ts";
 import ModalComponent from "components/ModalComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import showToast from "utils/toastShow.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const RealtorsListPage: React.FC = () => {
+    useEffect(instantScrollToTop, []);
+
     const { data: realtorsData, isLoading, error, refetch } = useGetAllRealtorsQuery();
     const [blockUser, { isLoading: isBlockLoading }] = useBlockUserMutation();
     const [unlockUser, { isLoading: isUnblockLoading }] = useUnlockUserMutation();

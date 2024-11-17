@@ -8,7 +8,7 @@ const Footer = () => {
     const navigate = useNavigate();
 
     const userLocation = useAppSelector(getUserLocation);
-    const infoUrl = `${userLocation}/info`;
+    const infoUrl = `${userLocation}info`;
 
     const toInfoPage = () => navigate(infoUrl);
 

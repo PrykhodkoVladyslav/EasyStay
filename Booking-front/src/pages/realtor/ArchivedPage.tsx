@@ -5,12 +5,15 @@ import { useGetHotelsPageQuery } from "services/hotel.ts";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
 import showToast from "utils/toastShow.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 const ArchivedPage = () => {
+    useEffect(instantScrollToTop, []);
+
     const navigate = useNavigate();
     const [pageIndex, setPageIndex] = useState(0);
 
-    const { data: hotelsPageData, isLoading, error} = useGetHotelsPageQuery({
+    const { data: hotelsPageData, isLoading, error } = useGetHotelsPageQuery({
         onlyOwn: true,
         pageIndex: pageIndex,
         pageSize: 6,
@@ -35,9 +38,9 @@ const ArchivedPage = () => {
     const handlePaginationChange = (pageNumber: number) => {
         setPageIndex(pageNumber - 1);
 
-        const hotelsSection = document.getElementById('hotels');
+        const hotelsSection = document.getElementById("hotels");
         if (hotelsSection) {
-            hotelsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            hotelsSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
 
@@ -99,18 +102,24 @@ const ArchivedPage = () => {
                                 <button className="btn-delete">
                                     <img
                                         src={getPublicResourceUrl("account/trash.svg")}
-                                        alt=""/>
+                                        alt="" />
                                 </button>
 
                                 <div className="rooms-action">
-                                    <button className="btn-rooms" onClick={() => {navigate(`/realtor/rooms/${hotel.id}`)}}>Номери</button>
-                                    <button className="btn-edit" onClick={() => {navigate(`/realtor/hotel/edit:${hotel.id}`)}}>Редагувати</button>
+                                    <button className="btn-rooms" onClick={() => {
+                                        navigate(`/realtor/rooms/${hotel.id}`);
+                                    }}>Номери
+                                    </button>
+                                    <button className="btn-edit" onClick={() => {
+                                        navigate(`/realtor/hotel/edit:${hotel.id}`);
+                                    }}>Редагувати
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                <p className="isLoading-error">У вас немає готелів</p>
+                    <p className="isLoading-error">У вас немає готелів</p>
                 )}
             </div>
 
@@ -153,6 +162,6 @@ const ArchivedPage = () => {
             />
         </div>
     );
-}
+};
 
 export default ArchivedPage;

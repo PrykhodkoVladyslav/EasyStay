@@ -9,6 +9,7 @@ import {
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useNavigate } from "react-router-dom";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
 
 
 const HomePage: React.FC = () => {
@@ -18,6 +19,8 @@ const HomePage: React.FC = () => {
     }, []);
 
     const navigate = useNavigate();
+
+    useEffect(instantScrollToTop, []);
 
     const [city, setCity] = useState("");
     const [selectedDateFrom, setSelectedDateFrom] = useState<Date | null>(null);

@@ -16,7 +16,8 @@ const Footer = () => {
         <footer className="main-footer">
             <div className="footer-container">
                 <div className="footer-section side-section">
-                    <img src={getPublicResourceUrl("logo/Logo_white.svg")} alt="EasyStay Logo" />
+                    <img className="pointer" src={getPublicResourceUrl("logo/Logo_white.svg")} alt="EasyStay Logo"
+                         onClick={() => navigate(userLocation)} />
                     <h2>Найкращі пропозиції житла для комфортного відпочинку!</h2>
                 </div>
                 <div className="footer-section">

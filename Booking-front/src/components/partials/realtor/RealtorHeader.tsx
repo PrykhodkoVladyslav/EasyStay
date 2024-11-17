@@ -1,5 +1,4 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import Dropdown from "components/ui/design/SelectLanguageDropdown.tsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "components/partials/ProfileModal.tsx";
@@ -29,11 +28,6 @@ const RealtorHeader = () => {
         >{item.name}</button>
     ));
 
-    const languageOptions = [
-        { full: "English", abbr: "En" },
-        { full: "Українська", abbr: "Укр" },
-    ];
-
     const handleLogoClick = () => {
         setActivePage("home");
         navigate("/realtor");
@@ -41,11 +35,6 @@ const RealtorHeader = () => {
 
     const handleMessagesClick = () => {
         navigate("/realtor/chat");
-    };
-
-    const handleNotificationsClick = () => {
-        console.log("Notifications clicked");
-
     };
 
     const handleProfileClick = () => {
@@ -64,10 +53,6 @@ const RealtorHeader = () => {
             <div className="center-section"> {menuItems} </div>
 
             <div className="right-section">
-                <div>
-                    <Dropdown options={languageOptions} defaultOption="Українська" />
-                </div>
-
                 <div className="user-section">
                     <button
                         className="messages"
@@ -76,16 +61,6 @@ const RealtorHeader = () => {
                         <img
                             src={getPublicResourceUrl("account/header/messages.svg")}
                             alt="Messages"
-                        />
-                    </button>
-
-                    <button
-                        className="notifications"
-                        onClick={handleNotificationsClick}>
-
-                        <img
-                            src={getPublicResourceUrl("account/header/ring.svg")}
-                            alt="Notifications"
                         />
                     </button>
 

@@ -5,7 +5,6 @@ using EasyStay.Infrastructure.Options;
 using EasyStay.Infrastructure.Services;
 using EasyStay.Persistence;
 using EasyStay.Persistence.Services;
-using EasyStay.Services;
 using EasyStay.WebApi.Extensions;
 using EasyStay.WebApi.Hubs;
 using EasyStay.WebApi.Middleware;

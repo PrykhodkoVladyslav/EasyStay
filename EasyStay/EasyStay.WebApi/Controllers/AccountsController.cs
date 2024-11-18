@@ -1,6 +1,5 @@
 ﻿using EasyStay.Application.MediatR.Accounts.Commands.BlockUserById;
 using EasyStay.Application.MediatR.Accounts.Commands.CreateAdmin;
-using EasyStay.Application.MediatR.Accounts.Commands.GoogleSignIn;
 using EasyStay.Application.MediatR.Accounts.Commands.Registration;
 using EasyStay.Application.MediatR.Accounts.Commands.ResetPassword;
 using EasyStay.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
@@ -42,13 +41,6 @@ public class AccountsController : BaseApiController {
 		var id = await Mediator.Send(command);
 
 		return id;
-	}
-
-	[HttpPost]
-	public async Task<IActionResult> GoogleSignIn([FromForm] GoogleSignInCommand command) {
-		var token = await Mediator.Send(command);
-
-		return Ok(token);
 	}
 
 	[HttpGet]

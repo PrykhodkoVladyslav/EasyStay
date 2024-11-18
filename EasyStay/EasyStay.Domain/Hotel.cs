@@ -37,4 +37,6 @@ public class Hotel {
 	public ICollection<Room> Rooms { get; set; } = null!;
 
 	public ICollection<HotelPhoto> Photos { get; set; } = null!;
+
+	public ICollection<FavoriteHotel> FavoriteHotels { get; set; } = null!;
 }

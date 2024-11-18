@@ -139,4 +139,7 @@ public class ExistingEntityCheckerService(
 
 	public Task<bool> IsCorrectHotelReviewByBookingIdAsync(long bookingId, CancellationToken cancellationToken) =>
 		context.HotelReviews.AnyAsync(hr => hr.BookingId == bookingId, cancellationToken);
+
+	public Task<bool> IsCorrectFavoriteHotelIdOfCurrentUserAsync(long hotelId, CancellationToken cancellationToken) =>
+		context.FavoriteHotels.AnyAsync(fh => fh.HotelId == hotelId && fh.CustomerId == currentUserService.GetRequiredUserId(), cancellationToken);
 }

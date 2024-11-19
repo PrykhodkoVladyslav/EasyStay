@@ -44,6 +44,7 @@ const HotelPage = () => {
     useEffect(() => {
         if (hotelData) {
             const hotel = hotelData;
+
             setSelectedHotelAmenities(hotel.hotelAmenities.map((amenity) => amenity.id));
             if (hotel.breakfasts.length > 0) {
                 setIsBreakfast(true);
@@ -51,6 +52,15 @@ const HotelPage = () => {
             }
             setSelectedLanguages(hotel.languages.map(language => language.id));
             setSelectedArchived(hotel.isArchived);
+            if (hotel.address.city?.id) {
+                const cityId = hotel.address.city.id;
+                setValue("address.cityId", String(cityId));
+
+                const city = sortedCities.find(city => city.id === cityId);
+                if (city) {
+                    setSelectedCountryId(city.country.id);
+                }
+            }
 
             setValue("name", hotel.name);
             setValue("description", hotel.description);
@@ -62,8 +72,7 @@ const HotelPage = () => {
             setValue("address.street", hotel.address.street);
             setValue("address.houseNumber", hotel.address.houseNumber);
             setValue("address.floor", hotel.address.floor);
-            setValue("address.apartmentNumber", hotel.address.apartmentNumber);
-            setValue("address.cityId", hotel.address.city.id.toString());
+            setValue("address.apartmentNumber", (hotel.address.apartmentNumber) || '');
             setValue("categoryId", hotel.category.id.toString());
             setValue("hotelAmenityIds", hotel.hotelAmenities.map(hotelAmenity => hotelAmenity.id));
             setValue("breakfastIds", hotel.breakfasts.map(breakfast => breakfast.id));
@@ -105,6 +114,18 @@ const HotelPage = () => {
         }
     }, [selectedCountryId, sortedCities]);
 
+    useEffect(() => {
+        if (hotelData?.address?.city?.id) {
+            const cityId = hotelData.address.city.id;
+            setValue("address.cityId", String(cityId));
+
+            const city = sortedCities.find(city => city.id === cityId);
+            if (city) {
+                setSelectedCountryId(city.country.id);
+            }
+        }
+    }, [hotelData, sortedCities, setValue]);
+
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const countryId = Number(e.target.value);
         setSelectedCountryId(countryId);
@@ -112,8 +133,11 @@ const HotelPage = () => {
     };
 
     const handleBreakfastChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsBreakfast(e.target.value === "yes");
-        if (e.target.value === "no") {
+        const isBreakfastSelected = e.target.value === "yes";
+        setIsBreakfast(isBreakfastSelected);
+
+        if (!isBreakfastSelected) {
+            setSelectedBreakfasts([]);
             setValue("breakfastIds", []);
         }
     };
@@ -153,7 +177,7 @@ const HotelPage = () => {
             ...data,
             id: numericId || 0,
             hotelAmenityIds: selectedHotelAmenities,
-            breakfastIds: selectedBreakfasts,
+            breakfastIds: isBreakfast ? selectedBreakfasts : [],
             staffLanguageIds: selectedLanguages,
             photos: selectedPhotos,
             arrivalTimeUtcFrom: data.arrivalTimeUtcFrom || '',
@@ -163,17 +187,16 @@ const HotelPage = () => {
             categoryId: Number(data.categoryId) || 0,
             address: {
                 ...data.address,
-                floor: data.address.floor || 0,
+                floor: Number(data.address.floor) || 0,
+                apartmentNumber: data.address.apartmentNumber || '',
                 cityId: Number(data.address.cityId) || 0,
             },
             isArchived: selectedArchived || false,
         }
 
-        console.log("data", hoteldata);
-
         try {
             await updateHotel(hoteldata).unwrap();
-            navigate(`/realtor/hotels`);
+            navigate(`/realtor`);
             showToast(`Готель успішно відредаговано!`, "success");
         } catch (error) {
             showToast(`Помилка при редагуванні готелю!`, "error");
@@ -346,6 +369,7 @@ const HotelPage = () => {
                                             type="text"
                                             id="address.apartmentNumber"
                                             placeholder="Назва"
+                                            defaultValue={watch("address.apartmentNumber") ?? ""}
                                         />
                                         {errors?.address?.apartmentNumber && (
                                             <FormError className="text-red"
@@ -413,8 +437,8 @@ const HotelPage = () => {
                                                 id="no"
                                                 value="no"
                                                 name="breakfast"
+                                                checked={!isBreakfast}
                                                 onChange={handleBreakfastChange}
-                                                defaultChecked
                                             />
                                             Ні
                                         </label>
@@ -567,30 +591,36 @@ const HotelPage = () => {
 
                                 <div className="hotel-container-4">
                                     <div className="check-breakfast">
-                                        <label htmlFor="yes">
+                                        <label htmlFor="yesArchived">
                                             <input
                                                 {...register("isArchived")}
                                                 type="radio"
-                                                id="yes"
-                                                value="yes"
+                                                id="yesArchived"
+                                                value="true"
                                                 name="isArchived"
                                                 checked={selectedArchived === true}
                                                 onChange={() => setSelectedArchived(true)}
                                             />
                                             Так
                                         </label>
-                                        <label htmlFor="no">
+                                        <label htmlFor="noArchived">
                                             <input
                                                 {...register("isArchived")}
                                                 type="radio"
-                                                id="no"
-                                                value="no"
+                                                id="noArchived"
+                                                value="false"
                                                 name="isArchived"
                                                 checked={selectedArchived === false}
                                                 onChange={() => setSelectedArchived(false)}
                                             />
                                             Ні
                                         </label>
+                                        {errors?.isArchived && (
+                                            <FormError
+                                                className="text-red"
+                                                errorMessage={errors?.isArchived?.message as string}
+                                            />
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -642,11 +672,11 @@ const HotelPage = () => {
                                     ))}
                                 </div>
                             </div>
+                            {errors?.photos && (
+                                <FormError className="text-red flex justify-end"
+                                           errorMessage={errors?.photos?.message as string}/>
+                            )}
                         </div>
-                        {errors?.photos && (
-                            <FormError className="text-red flex justify-end"
-                                       errorMessage={errors?.photos?.message as string}/>
-                        )}
                     </div>
                 )}
 

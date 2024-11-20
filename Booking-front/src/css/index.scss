@@ -1265,299 +1265,6 @@
           font-weight: 600;
           line-height: 39px;
         }
-
-        .room-table {
-          width: 100%;
-          border-collapse: separate;
-          table-layout: fixed;
-          text-align: left;
-          border-spacing: 0 20px;
-
-          thead {
-            height: 66px;
-            clip-path: inset(0 round 18px);
-            background: rgb(240, 240, 240);
-
-            tr {
-              th {
-                text-align: center;
-                vertical-align: middle;
-                font-family: var(--font-nunito), system-ui;
-                font-size: 20px;
-                font-weight: 700;
-                line-height: 27px;
-                position: relative;
-                white-space: pre-wrap;
-
-                &::after {
-                  content: "";
-                  position: absolute;
-                  top: 7%;
-                  right: 0;
-                  width: 1px;
-                  height: 86%;
-                  background-color: rgba(225, 225, 225, 0.64);
-                }
-              }
-
-              th:last-child::after {
-                display: none;
-              }
-            }
-          }
-
-          th, td {
-            vertical-align: top;
-            overflow: hidden;
-          }
-
-          td:not(:last-child) {
-            border-right: 1px solid var(--color-secondary);
-          }
-
-          td .cols {
-            display: flex;
-            flex-direction: column;
-            padding: 17px;
-            width: 100%;
-            //height: fit-content;
-            min-height: 500px;
-            border-bottom: 1px solid var(--color-secondary);
-          }
-
-          @media (max-width: 1430px) {
-            td .cols {
-              min-height: 630px;
-            }
-          }
-
-          tr {
-            border-radius: 18px;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-          }
-
-          .room-type {
-            padding: 17px;
-
-            .title {
-              color: rgb(63, 82, 60);
-              font-family: var(--font-nunito), system-ui;
-              font-size: 20px;
-              font-weight: 700;
-              line-height: 27px;
-              margin-bottom: 14px;
-            }
-
-            .rooms-left {
-              color: rgb(249, 50, 50);
-              font-family: var(--font-montserrat), system-ui;
-              font-size: 10px;
-              font-weight: 500;
-              line-height: 12px;
-              margin-bottom: 34px;
-            }
-
-            .features {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 10px;
-
-              div {
-                display: flex;
-                align-items: center;
-                gap: 4px;
-                font-family: var(--font-montserrat), system-ui;
-                font-size: 12px;
-                font-weight: 500;
-                line-height: 15px;
-              }
-            }
-          }
-
-          .peoples .cols {
-
-            img {
-              width: 24px;
-            }
-
-            .child {
-              padding-top: 4px;
-              width: 18px;
-            }
-          }
-
-          .bed-type .cols {
-            .title {
-              padding-bottom: 21px;
-              font-family: var(--font-montserrat), system-ui;
-              font-size: 16px;
-              font-weight: 500;
-              line-height: 20px;
-            }
-
-            div.flex {
-              gap: 1vw;
-              padding-bottom: 6px;
-            }
-
-            input {
-              width: 24px;
-              min-width: 24px;
-              height: 24px;
-              appearance: none;
-              border: 2px solid var(--color-text);
-              border-radius: 4px;
-              cursor: pointer;
-
-              &:checked {
-                background-color: var(--color-primary);
-                border-color: var(--color-primary);
-              }
-            }
-
-            label {
-              color: rgb(55, 55, 55);
-              font-family: var(--font-nunito), system-ui;
-              font-size: 15px;
-              font-weight: 500;
-              line-height: 20px;
-            }
-
-            .title-svg {
-              display: flex;
-              flex-direction: column;
-              padding-top: 3px;
-            }
-
-            img {
-              margin-top: -5px;
-              width: 48px;
-            }
-
-            img:first-child {
-              margin-right: -10px;
-            }
-          }
-
-          .advantages .cols {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            font-family: var(--font-montserrat), system-ui;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 15px;
-
-            p {
-              color: var(--color-text);
-              //color: rgb(0, 130, 53);
-              padding-top: 3px;
-            }
-
-            span {
-              color: black;
-              font-weight: 600;
-            }
-
-            li {
-              padding-left: 8px;
-            }
-
-            img {
-              width: 24px;
-              height: 24px;
-              padding-right: 3px;
-            }
-
-            .rental-periods {
-              p {
-                color: black;
-              }
-
-              ul {
-                color: var(--color-text);
-                //color: rgb(0, 130, 53);
-              }
-
-            }
-          }
-
-          .price .cols {
-            div {
-              color: rgb(55, 55, 55);
-              font-family: var(--font-montserrat), system-ui;
-              padding-bottom: 8px;
-            }
-
-            .new-price {
-              font-size: 20px;
-              font-weight: 600;
-              line-height: 24px;
-            }
-
-            .old-price {
-              display: flex;
-              justify-content: end;
-              align-items: end;
-              text-decoration: line-through;
-              color: rgb(249, 50, 50);
-              font-size: 12px;
-              font-weight: 500;
-              line-height: 12px;
-            }
-
-            .description {
-              color: black;
-              font-size: 10px;
-              font-weight: 600;
-              line-height: 12px;
-            }
-          }
-
-          .select-options .cols {
-            select {
-              width: 100%;
-              max-width: 80px;
-              height: 28px;
-              padding: 0 0 2px 3px;
-              border: 1px solid rgb(165, 165, 165);
-              border-radius: 12px;
-              background: rgb(247, 247, 253);
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 24px;
-            }
-          }
-
-          .book {
-            padding: 17px;
-
-            .btn-book {
-              padding: 9px 18px;
-              margin-bottom: 12px;
-              border-radius: 12px;
-              color: white;
-              font-family: var(--font-montserrat), system-ui;
-              font-size: 12px;
-              font-weight: 600;
-              line-height: 15px;
-              background: var(--color-primary);
-              cursor: pointer;
-              transition: background-color 0.3s;
-
-              &:hover {
-                background-color: rgb(52, 68, 50);
-              }
-            }
-
-            p {
-              color: var(--color-text);
-              font-size: 12px;
-              font-weight: 500;
-              line-height: 15px;
-            }
-          }
-        }
       }
     }
 
@@ -2369,6 +2076,22 @@
         font-size: 16px;
         line-height: 22px;
       }
+    }
+  }
+
+  // Номери
+  .rooms-content {
+    .add-room-btn {
+      color: var(--color-primary);
+      font-family: var(--font-montserrat);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 24px;
+      box-sizing: border-box;
+      border: 1px solid rgb(63, 82, 60);
+      border-radius: 12px;
+      padding: 10px 24px;
+      margin: 28px 0 8px;
     }
   }
 
@@ -3917,18 +3640,17 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between; // Забезпечує простір між заголовком і кнопкою
-    flex-direction: row; // Вирівнювання по горизонталі
+    justify-content: space-between;
+    flex-direction: row;
     width: 100%;
     height: auto;
-    // Відступи для країв
 
     h1 {
       font-size: 32px;
       font-weight: 700;
 
       color: white;
-      width: 50%; // Ширина заголовка адаптивна
+      width: 50%;
       margin-right: 20px;
     }
 

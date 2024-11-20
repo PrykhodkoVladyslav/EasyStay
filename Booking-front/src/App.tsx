@@ -30,6 +30,7 @@ import RealtorDataPage from "pages/realtor/DataPage";
 import RealtorHotelsPage from "pages/realtor/HotelsPage";
 import RealtorReviewsPage from "pages/realtor/ReviewsPage";
 import RealtorArchivedPage from "pages/realtor/ArchivedPage";
+import RealtorRoomsPage from "pages/realtor/RoomsPage";
 import CategoriesListPage from "pages/realtor/add/CategoriesListPage";
 import AddHotelPage from "pages/realtor/add/HotelPage";
 import AddRoomPage from "pages/realtor/add/RoomPage";
@@ -88,6 +89,7 @@ function App() {
                 <Route path="hotels" element={<RealtorHotelsPage />} />
                 <Route path="reviews" element={<RealtorReviewsPage />} />
                 <Route path="archived" element={<RealtorArchivedPage />} />
+                <Route path="rooms/:id" element={<RealtorRoomsPage />} />
             </Route>
 
             <Route path="chat" element={<SignalRChatPage />} />
@@ -101,10 +103,6 @@ function App() {
             <Route path="edit">
                 <Route path="hotel/:id" element={<EditHotelPage />} />
                 {/*<Route path="room/:id" element={<RoomEditPage />} />*/}
-            </Route>
-
-            <Route path="hotels">
-                <Route path="list" element={<HotelsPage />} />
             </Route>
 
             <Route path="info" element={<InfoPage />} />

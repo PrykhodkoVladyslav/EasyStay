@@ -100,15 +100,15 @@ export const UpdateRealtorInformationSchema = z.object({
         }, {
             message: "Вам має бути 18 років або більше",
         }),
-    address: z
-        .string()
-        .min(1, "Адреса є обов'язковим полем"),
     citizenshipId: z.coerce
         .number()
         .min(1, "Громадянство є обов'язковим полем"),
     genderId: z.coerce
         .number()
         .min(1, "Стать є обов'язковим полем"),
+    address: z
+        .string()
+        .min(1, "Адреса є обов'язковим полем"),
     cityId: z.coerce
         .number()
         .min(1, "Місто є обов'язковим полем"),

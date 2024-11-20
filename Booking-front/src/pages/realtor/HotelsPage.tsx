@@ -1,7 +1,7 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { useGetHotelsPageQuery } from "services/hotel.ts";
+import { useDeleteHotelMutation, useGetHotelsPageQuery } from "services/hotel.ts";
 import Pagination from "rc-pagination";
 import { API_URL } from "utils/getEnvData.ts";
 import showToast from "utils/toastShow.ts";
@@ -21,6 +21,7 @@ const HotelsPage = () => {
     const navigate = useNavigate();
     const [pageIndex, setPageIndex] = useState(0);
 
+    const [deleteHotel] = useDeleteHotelMutation();
     const { data: hotelsPageData, isLoading, error } = useGetHotelsPageQuery({
         onlyOwn: true,
         pageIndex: pageIndex,
@@ -42,6 +43,16 @@ const HotelsPage = () => {
         if (pageIndex > 0 && pageIndex >= pagesAvailable)
             setPageIndex(Math.max(pagesAvailable - 1, 0));
     }, [pageIndex, pagesAvailable]);
+
+    const handleDelete = async (hotelId: number) => {
+        try {
+            await deleteHotel(hotelId).unwrap();
+            setHotels(hotels.filter((hotel) => hotel.id !== hotelId));
+            showToast("Готель успішно видалено", "success");
+        } catch (error) {
+            showToast("Помилка видалення готелю", "error");
+        }
+    };
 
     const handlePaginationChange = (pageNumber: number) => {
         setPageIndex(pageNumber - 1);
@@ -107,10 +118,11 @@ const HotelsPage = () => {
                             </div>
 
                             <div className="actions">
-                                <button className="btn-delete">
-                                    <img
-                                        src={getPublicResourceUrl("account/trash.svg")}
-                                        alt="" />
+                                <button
+                                    className="btn-delete"
+                                    onClick={() => handleDelete(hotel.id)}
+                                >
+                                    <img src={getPublicResourceUrl("account/trash.svg")} alt="" />
                                 </button>
 
                             <div className="rooms-action">

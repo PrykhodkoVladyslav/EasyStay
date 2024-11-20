@@ -555,11 +555,11 @@ const HotelPage = () => {
                                     ))}
                                 </div>
                             </div>
+                            {errors?.photos && (
+                                <FormError className="text-red flex justify-end"
+                                           errorMessage={errors?.photos?.message as string} />
+                            )}
                         </div>
-                        {errors?.photos && (
-                            <FormError className="text-red flex justify-end"
-                                       errorMessage={errors?.photos?.message as string} />
-                        )}
                     </div>
                 )}
 

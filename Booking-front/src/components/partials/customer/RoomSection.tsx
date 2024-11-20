@@ -1,5 +1,6 @@
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import RoomCard from "components/partials/customer/RoomCard.tsx";
+import "./../../../css/room-table.scss";
 
 interface IRoomSectionProps {
     rooms: IRoom[];

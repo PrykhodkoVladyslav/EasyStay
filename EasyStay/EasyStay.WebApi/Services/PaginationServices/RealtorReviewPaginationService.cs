@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
@@ -14,6 +15,24 @@ public class RealtorReviewPaginationService(
 	protected override IQueryable<RealtorReview> GetQuery() => context.RealtorReviews.OrderByDescending(r => r.CreatedAtUtc);
 
 	protected override IQueryable<RealtorReview> FilterQueryBeforeProjectTo(IQueryable<RealtorReview> query, GetRealtorReviewsPageQuery filter) {
+		if (filter.IsRandomItems == true) {
+			query = query.OrderBy(r => Guid.NewGuid());
+		}
+		else {
+			query = filter.OrderBy switch {
+				null => query.OrderBy(r => r.Id),
+				"ScoreDescending" => query
+					.OrderBy(r => r.Score == null)
+					.ThenByDescending(r => r.Score),
+				"ScoreAscending" => query
+					.OrderBy(r => r.Score == null)
+					.ThenBy(r => r.Score),
+				"NewestFirst" => query.OrderByDescending(r => r.CreatedAtUtc),
+				"OldestFirst" => query.OrderBy(r => r.CreatedAtUtc),
+				_ => throw new BadRequestException("Invalid order by parameter"),
+			};
+		}
+
 		if (filter.Description is not null)
 			query = query.Where(r => r.Description.ToLower().Contains(filter.Description.ToLower()));
 

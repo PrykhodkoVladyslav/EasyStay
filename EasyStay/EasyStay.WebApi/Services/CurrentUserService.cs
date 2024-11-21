@@ -7,13 +7,18 @@ public class CurrentUserService(
 	IHttpContextAccessor httpContextAccessor
 ) : ICurrentUserService {
 
-	public long GetRequiredUserId() {
+	public long? GetUserId() {
 		var id = httpContextAccessor.HttpContext?.User?
 			.FindFirstValue(ClaimTypes.NameIdentifier);
 
 		return string.IsNullOrEmpty(id)
-			? throw new Exception("User is not authorized")
+			? null
 			: Convert.ToInt64(id);
+	}
+
+	public long GetRequiredUserId() {
+		return GetUserId()
+			?? throw new Exception("User is not authorized");
 	}
 
 	public string GetRequiredUserEmail() {

@@ -9,6 +9,8 @@ import { instantScrollToTop } from "utils/scrollToTop.ts";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { hotelOrderOptions } from "utils/orderMethods/hotelOrderOptions.ts";
+import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
 
 const HotelsPage = () => {
     useEffect(instantScrollToTop, []);
@@ -21,12 +23,16 @@ const HotelsPage = () => {
     const navigate = useNavigate();
     const [pageIndex, setPageIndex] = useState(0);
 
+    const [orderIndex, setOrderIndex] = useState(0);
+    const nextOrder = () => setOrderIndex((orderIndex + 1 === hotelOrderOptions.length) ? 0 : orderIndex + 1);
+
     const [deleteHotel] = useDeleteHotelMutation();
     const { data: hotelsPageData, isLoading, error } = useGetHotelsPageQuery({
         onlyOwn: true,
         pageIndex: pageIndex,
         pageSize: 6,
         isArchived: false,
+        orderBy: hotelOrderOptions[orderIndex].key,
     });
 
     const [hotels, setHotels] = useState(hotelsPageData?.data ?? []);
@@ -73,24 +79,7 @@ const HotelsPage = () => {
         <div className="hotels-content" id="hotels">
             <div className="top">
                 <p className="global-title">Мої готелі</p>
-                <div className="filter">
-                    <button>
-                        <img
-                            src={getPublicResourceUrl("account/sort.svg")}
-                            alt="Sort"
-                        />
-
-                        <p>Сортувати за:</p>
-
-                        <p className="sort-active">
-                            Назвою
-                        </p>
-                    </button>
-
-                    <div className="list hidden">
-                        List
-                    </div>
-                </div>
+                <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
             </div>
 
             <div className="hotels">
@@ -125,12 +114,18 @@ const HotelsPage = () => {
                                     <img src={getPublicResourceUrl("account/trash.svg")} alt="" />
                                 </button>
 
-                            <div className="rooms-action">
-                                <button className="btn-rooms" onClick={() => {navigate(`/realtor/rooms/${hotel.id}`)}}>Номери</button>
-                                <button className="btn-edit" onClick={() => {navigate(`/realtor/edit/hotel/${hotel.id}`)}}>Редагувати</button>
+                                <div className="rooms-action">
+                                    <button className="btn-rooms" onClick={() => {
+                                        navigate(`/realtor/rooms/${hotel.id}`);
+                                    }}>Номери
+                                    </button>
+                                    <button className="btn-edit" onClick={() => {
+                                        navigate(`/realtor/edit/hotel/${hotel.id}`);
+                                    }}>Редагувати
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     ))
                 ) : (
                     <p className="isLoading-error">У вас немає готелів</p>

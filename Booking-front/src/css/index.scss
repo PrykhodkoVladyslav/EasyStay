@@ -2079,6 +2079,209 @@
     }
   }
 
+
+  .payment-conteiner{
+    width: 100%;
+    max-width: 850px;
+    .pre-title{
+      width: 850px;
+      height: 39px;
+      font-family: "Montserrat", system-ui;
+      font-size: 32px;
+      font-weight: 600;
+    }
+    .pre-info{
+      font-weight: 500;
+      font-size: 16px;
+      font-family: "Montserrat", system-ui;
+      line-height: 19.5px;
+      margin-top: 16px;
+      margin-bottom: 32px;
+      color: #515151;
+    }
+    .card-conteiner {
+      max-width: 850px;
+      .card-information {
+        border-top: 1.5px solid;
+        border-top-color: #F0F0F0;
+        border-bottom: 1.5px solid;
+        border-bottom-color: #F0F0F0;
+        height: 90px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .payment-card-p{
+          font-family: Nunito;
+          font-weight: 600;
+          font-size: 16px;
+        }
+        .delete-card-btn{
+          width: 117px;
+          height: 34px;
+          border-radius: 12px;
+          border: 1px solid;
+          border-color: #3F523C;
+          color:  #3F523C;
+          font-size: 14px;
+          font-family: Nunito;
+          font-weight: 700;
+        }
+        .card-num-cont {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap:10px;
+          .card-type-img{
+            border: 1px solid #F0F0F0;
+            border-radius: 5px;
+            width: 51px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .card-number {
+            font-weight: 500;
+            font-size: 14px;
+            font-family: Nunito;
+          }
+        }
+      }
+
+      .add-card-div {
+        border-bottom: 1.5px solid;
+        border-bottom-color: #F0F0F0;
+        height: 90px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .new-card-p{
+          font-weight: 500;
+          font-size:14px;
+          font-family: Nunito;
+          color: #515151;
+          margin-left: 200px;
+        }
+        .add-card-btn{
+          width: 145px;
+          height: 34px;
+          border-radius: 12px;
+          background: #3F523C;
+          color: white;
+        }
+      }
+    }
+
+    @media screen and (max-width: 1700px) {
+      width: 800px;
+    }
+    @media screen and (max-width: 1500px) {
+      width: 700px;
+    }
+    @media screen and (max-width: 1300px) {
+      width: 600px;
+    }
+  }
+
+  .hotel-reviews {
+    width: 100%;
+    display: flex;
+
+    flex-wrap: wrap;
+    gap: 23px;
+
+    .review {
+      cursor: pointer;
+    }
+
+    @media screen and (max-width: 1160px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      width: 500px;
+
+    }
+
+    @media screen and (max-width: 1000px) {
+      display: grid;
+      grid-template-columns: 1fr;
+
+
+    }
+
+
+  }
+  .favorites-component{
+    width: 100%;
+    max-width: 1700px;
+    .pre-title{
+      width: 850px;
+      height: 39px;
+      font-family: "Montserrat", system-ui;
+      font-size: 32px;
+      font-weight: 600;
+    }
+    .sort-date-div{
+      display: flex;
+
+      gap: 32px;
+      height: 56px;
+      position: relative;
+      margin-top:16px;
+      margin-bottom:32px;
+
+
+
+      .sort-btn{
+        font-size: 20px;
+        font-weight: 600;
+        font-family: "Montserrat", system-ui;
+        width: 277px;
+        height: 56px;
+        background-color: #F7F7FD;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        line-height: 20px;
+        padding: 20px;
+        .order-title {
+          color: rgb(0, 0, 0);
+          font-family: var(--font-montserrat), system-ui;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 20px;
+
+          .order-name {
+            font-family: var(--font-nunito), system-ui;
+            font-weight: 500;
+            line-height: 24px;
+          }
+        }
+      }
+
+      .date-btn{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 20px;
+        padding: 20px;
+        border-radius: 25px;
+        background-color: #F7F7FD;
+        height: 56px;
+        width: 175px;
+        .order-name {
+          font-family: var(--font-nunito), system-ui;
+          font-weight: 500;
+          line-height: 24px;
+        }
+      }
+
+    }
+  }
+
   // Номери
   .rooms-content {
     .add-room-btn {

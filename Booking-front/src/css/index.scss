@@ -2053,7 +2053,7 @@
   }
 
 
-  .payment-conteiner {
+  .payment-container {
     width: 100%;
     max-width: 850px;
 
@@ -2089,9 +2089,10 @@
         align-items: center;
 
         .payment-card-p {
-          font-family: Nunito;
+          font-family: var(--font-nunito), system-ui;
           font-weight: 600;
           font-size: 16px;
+          width: 200px;
         }
 
         .delete-card-btn {

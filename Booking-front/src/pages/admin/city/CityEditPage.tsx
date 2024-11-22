@@ -19,11 +19,10 @@ const CityEditPage: React.FC = () => {
     useEffect(instantScrollToTop, []);
 
     const { id } = useParams();
-    const { data: cityData, refetch } = useGetCityQuery(id as string);
+    const { data: cityData } = useGetCityQuery(id as string);
     const { data: countriesData } = useGetAllCountriesQuery();
     const [updateCity, { isLoading }] = useUpdateCityMutation();
 
-    // const [files, setFiles] = useState<(File | string)[]>([]);
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -54,11 +53,6 @@ const CityEditPage: React.FC = () => {
                         setFiles([fileFromApi]);
                     });
             }
-
-            // if (city.image) {
-            //     const fileUrl = `${API_URL}/images/1200_${city.image}`;
-            //     setFiles([fileUrl]);
-            // }
         }
     }, [cityData, setValue]);
 
@@ -129,7 +123,6 @@ const CityEditPage: React.FC = () => {
             }).unwrap();
 
             showToast(`Місто успішно оновлено!`, "success");
-            refetch();
             navigate("/admin/cities/list");
         } catch (err) {
             showToast(`Помилка при оновленні міста!`, "error");

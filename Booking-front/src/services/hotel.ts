@@ -3,7 +3,6 @@ import { createBaseQuery } from "utils/apiUtils.ts";
 import { IHotel } from "interfaces/hotel/IHotel.ts";
 import { IHotelCreate } from "interfaces/hotel/IHotelCreate.ts";
 import { IHotelUpdate } from "interfaces/hotel/IHotelUpdate.ts";
-// import { ISetArchiveStatusRequest } from "interfaces/hotel/ISetArchiveStatusRequest.ts";
 import IHotelDetails from "interfaces/hotel/IHotelDetails.ts";
 import IPage from "interfaces/page/IPage.ts";
 import IHotelsPageQuery, { toQueryFromIHotelsPageQuery } from "interfaces/hotel/IHotelsPageQuery.ts";

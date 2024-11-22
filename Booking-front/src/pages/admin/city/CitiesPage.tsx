@@ -5,6 +5,7 @@ import { API_URL } from "utils/getEnvData.ts";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import showToast from "utils/toastShow.ts";
 
 const CitiesPage: React.FC = () => {
     useEffect(instantScrollToTop, []);
@@ -23,7 +24,7 @@ const CitiesPage: React.FC = () => {
                 refetch();
             } catch (err) {
                 console.error("Помилка при видаленні міста:", err);
-                alert("Не вдалося видалити місто.");
+                showToast("Не вдалося видалити місто", "error");
             }
         }
     };

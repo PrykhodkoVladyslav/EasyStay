@@ -19,10 +19,9 @@ const CountryEditPage: React.FC = () => {
     useEffect(instantScrollToTop, []);
 
     const { id } = useParams();
-    const { data: countryData, refetch } = useGetCountryQuery(id as string);
+    const { data: countryData } = useGetCountryQuery(id as string);
     const [updateCountry, { isLoading }] = useUpdateCountryMutation();
 
-    // const [files, setFiles] = useState<(File | string)[]>([]);
     const [files, setFiles] = useState<File[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -50,14 +49,6 @@ const CountryEditPage: React.FC = () => {
                     });
             }
         }
-
-        // if (countryData) {
-        //     setValue("name", countryData.name);
-        //     if (countryData.image) {
-        //         const fileUrl = `${API_URL}/images/1200_${countryData.image}`;
-        //         setFiles([fileUrl]);
-        //     }
-        // }
     }, [countryData, setValue]);
 
     useEffect(() => {
@@ -124,10 +115,6 @@ const CountryEditPage: React.FC = () => {
         setFiles(files.filter((x: File) => x.name !== file.name));
     };
 
-    // const removeImage = (file: string) => {
-    //     setFiles([]);
-    // };
-
     const onSubmit = handleSubmit(async (data) => {
         try {
             await updateCountry({
@@ -137,7 +124,6 @@ const CountryEditPage: React.FC = () => {
             }).unwrap();
 
             showToast(`Країну успішно оновлено!`, "success");
-            refetch();
             navigate("/admin/countries/list");
         } catch (err) {
             showToast(`Помилка при оновленні країни!`, "error");

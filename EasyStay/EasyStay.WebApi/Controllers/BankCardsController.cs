@@ -21,7 +21,7 @@ public class BankCardsController : BaseApiController {
 		return Ok(id);
 	}
 
-	[HttpDelete]
+	[HttpDelete("{id}")]
 	[Authorize(Roles = "Customer")]
 	public async Task<IActionResult> DeleteAsync([FromRoute] int id) {
 		await Mediator.Send(new DeleteBankCardCommand { Id = id });

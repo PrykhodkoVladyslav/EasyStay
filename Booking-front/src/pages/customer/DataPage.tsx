@@ -1,12 +1,9 @@
-import FormError from "components/ui/FormError.tsx";
-import {City} from "interfaces/city";
-
 const DataPage = () => {
 
     return (
         <div className="data-content">
             <p className="global-title">Особисті дані</p>
-            <form >
+            <form>
 
                 <div className="data">
                     <div className="info">
@@ -85,6 +82,6 @@ const DataPage = () => {
             </form>
         </div>
     );
-}
+};
 
 export default DataPage;

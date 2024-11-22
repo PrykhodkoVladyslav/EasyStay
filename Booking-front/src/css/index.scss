@@ -2053,17 +2053,19 @@
   }
 
 
-  .payment-conteiner{
+  .payment-conteiner {
     width: 100%;
     max-width: 850px;
-    .pre-title{
+
+    .pre-title {
       width: 850px;
       height: 39px;
       font-family: "Montserrat", system-ui;
       font-size: 32px;
       font-weight: 600;
     }
-    .pre-info{
+
+    .pre-info {
       font-weight: 500;
       font-size: 16px;
       font-family: "Montserrat", system-ui;
@@ -2072,8 +2074,10 @@
       margin-bottom: 32px;
       color: #515151;
     }
+
     .card-conteiner {
       max-width: 850px;
+
       .card-information {
         border-top: 1.5px solid;
         border-top-color: #F0F0F0;
@@ -2084,28 +2088,31 @@
         justify-content: space-between;
         align-items: center;
 
-        .payment-card-p{
+        .payment-card-p {
           font-family: Nunito;
           font-weight: 600;
           font-size: 16px;
         }
-        .delete-card-btn{
+
+        .delete-card-btn {
           width: 117px;
           height: 34px;
           border-radius: 12px;
           border: 1px solid;
           border-color: #3F523C;
-          color:  #3F523C;
+          color: #3F523C;
           font-size: 14px;
           font-family: Nunito;
           font-weight: 700;
         }
+
         .card-num-cont {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          gap:10px;
-          .card-type-img{
+          gap: 10px;
+
+          .card-type-img {
             border: 1px solid #F0F0F0;
             border-radius: 5px;
             width: 51px;
@@ -2113,11 +2120,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
           }
+
           .card-number {
             font-weight: 500;
             font-size: 14px;
-            font-family: Nunito;
+            font-family: var(--font-nunito), system-ui;
           }
         }
       }
@@ -2129,14 +2143,16 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .new-card-p{
+
+        .new-card-p {
           font-weight: 500;
-          font-size:14px;
+          font-size: 14px;
           font-family: Nunito;
           color: #515151;
           margin-left: 200px;
         }
-        .add-card-btn{
+
+        .add-card-btn {
           width: 145px;
           height: 34px;
           border-radius: 12px;
@@ -2184,28 +2200,30 @@
 
 
   }
-  .favorites-component{
+
+  .favorites-component {
     width: 100%;
     max-width: 1700px;
-    .pre-title{
+
+    .pre-title {
       width: 850px;
       height: 39px;
       font-family: "Montserrat", system-ui;
       font-size: 32px;
       font-weight: 600;
     }
-    .sort-date-div{
+
+    .sort-date-div {
       display: flex;
 
       gap: 32px;
       height: 56px;
       position: relative;
-      margin-top:16px;
-      margin-bottom:32px;
+      margin-top: 16px;
+      margin-bottom: 32px;
 
 
-
-      .sort-btn{
+      .sort-btn {
         font-size: 20px;
         font-weight: 600;
         font-family: "Montserrat", system-ui;
@@ -2219,6 +2237,7 @@
         align-items: center;
         line-height: 20px;
         padding: 20px;
+
         .order-title {
           color: rgb(0, 0, 0);
           font-family: var(--font-montserrat), system-ui;
@@ -2234,7 +2253,7 @@
         }
       }
 
-      .date-btn{
+      .date-btn {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -2245,6 +2264,7 @@
         background-color: #F7F7FD;
         height: 56px;
         width: 175px;
+
         .order-name {
           font-family: var(--font-nunito), system-ui;
           font-weight: 500;

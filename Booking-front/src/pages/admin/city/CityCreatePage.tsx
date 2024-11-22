@@ -63,10 +63,6 @@ const CityCreatePage: React.FC = () => {
         setFiles(files.filter((x: File) => x.name !== file.name));
     };
 
-    // const removeImage = (file: string) => {
-    //     setFiles([]);
-    // };
-
     const onSubmit = handleSubmit(async (data) => {
         try {
             if (!countriesData) {
@@ -94,23 +90,6 @@ const CityCreatePage: React.FC = () => {
             showToast(`Помилка при створенні міста!`, "error");
         }
     });
-
-    // const onSubmit = handleSubmit(async (data) => {
-    //     try {
-    //         await addCity({
-    //             name: data.name,
-    //             latitude: Number(data.latitude),
-    //             longitude: Number(data.longitude),
-    //             country: data.countryId,
-    //             image: files[0],
-    //         }).unwrap();
-    //
-    //         showToast(`Місто успішно створено!`, "success");
-    //         onReset();
-    //     } catch (err) {
-    //         showToast(`Помилка при створенні міста!`, "error");
-    //     }
-    // });
 
     const onReset = () => {
         reset();

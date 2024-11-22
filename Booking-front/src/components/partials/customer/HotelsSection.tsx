@@ -5,13 +5,8 @@ import IHotelsPageQuery from "interfaces/hotel/IHotelsPageQuery.ts";
 import { useEffect, useState } from "react";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
-
-export const hotelOrderOptions = [
-    { key: "Rating", value: "рейтинг" },
-    { key: "Category", value: "категорія" },
-    { key: "City", value: "місто" },
-    { key: "RoomsCount", value: "кількість кімнат" },
-];
+import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
+import { hotelOrderOptions } from "utils/orderMethods/hotelOrderOptions.ts";
 
 const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
     const [pageIndex, setPageIndex] = useState(0);
@@ -59,11 +54,7 @@ const HotelsSection = (props: { filter: IHotelsPageQuery }) => {
             <div>
                 <p className="found-message">{foundMessage}</p>
                 <VerticalPad heightPx={16} />
-                <button className="order-by-button" onClick={nextOrder}>
-                    <img src={getPublicResourceUrl("icons/order.svg")} alt="order" />
-                    <p className="order-title">Сортувати за: <span
-                        className="order-name">{hotelOrderOptions[orderIndex].value}</span></p>
-                </button>
+                <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
             </div>
 
             <VerticalPad heightPx={36} />

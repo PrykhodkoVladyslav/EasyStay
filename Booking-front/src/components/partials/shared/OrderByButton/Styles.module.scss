@@ -1,0 +1,24 @@
+.OrderByButton {
+  border-radius: 22px;
+  background: rgb(247, 247, 253);
+  padding: 16px 18px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+
+  .OrderTitle {
+    color: rgb(0, 0, 0);
+    font-family: var(--font-montserrat), system-ui;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+
+    .OrderName {
+      font-family: var(--font-nunito), system-ui;
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+}

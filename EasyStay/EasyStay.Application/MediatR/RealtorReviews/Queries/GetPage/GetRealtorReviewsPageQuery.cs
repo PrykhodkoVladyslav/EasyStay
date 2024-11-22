@@ -22,4 +22,8 @@ public class GetRealtorReviewsPageQuery : PaginationFilterDto, IRequest<PageVm<R
 	public long? AuthorId { get; set; }
 
 	public long? RealtorId { get; set; }
+
+	public string? OrderBy { get; set; }
+
+	public bool? IsRandomItems { get; set; }
 }

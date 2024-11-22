@@ -1,9 +1,9 @@
 import { useGetHotelsPageQuery } from "services/hotel.ts";
 import { useEffect, useState } from "react";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
-import { hotelOrderOptions } from "components/partials/customer/HotelsSection.tsx";
-import { getIconUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
+import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
+import { hotelOrderOptions } from "utils/orderMethods/hotelOrderOptions.ts";
 
 const DiscountsComponent = () => {
     const [orderIndex, setOrderIndex] = useState(0);
@@ -25,20 +25,14 @@ const DiscountsComponent = () => {
     return (
         <div className="all-conteiner">
             <h1 className="first-discount">Знижки</h1>
-            <button className="order-by-button" onClick={nextOrder}>
-                <img src={getIconUrl("order.svg")} alt="order" />
-                <p className="order-title">Сортувати за: <span
-                    className="order-name">{hotelOrderOptions[orderIndex].value}</span></p>
-            </button>
+            <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
 
             <VerticalPad heightPx={24} />
 
             <div className="discount-hotels-container">
                 {hotels.map(item => <HotelCard key={item.id} item={item} />)}
             </div>
-
         </div>
-
     );
 };
 

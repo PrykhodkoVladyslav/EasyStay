@@ -22,10 +22,19 @@ export const bankCardApi = createApi({
             }),
             invalidatesTags: ["BankCards"],
         }),
+
+        deleteBankCard: build.mutation<void, number>({
+            query: (id) => ({
+                url: `delete/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["BankCards"],
+        }),
     }),
 });
 
 export const {
     useGetAllBankCardsQuery,
     useCreateBankCardMutation,
+    useDeleteBankCardMutation,
 } = bankCardApi;

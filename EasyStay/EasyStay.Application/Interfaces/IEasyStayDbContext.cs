@@ -48,4 +48,5 @@ public interface IEasyStayDbContext {
 	DbSet<BookingRoomVariant> BookingRoomVariants { get; set; }
 	DbSet<BookingBedSelection> BookingBedSelections { get; set; }
 	DbSet<HotelReview> HotelReviews { get; set; }
+	DbSet<FavoriteHotel> FavoriteHotels { get; set; }
 }

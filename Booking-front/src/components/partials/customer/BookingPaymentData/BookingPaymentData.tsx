@@ -3,6 +3,7 @@ import VerticalPad from "components/ui/VerticalPad.tsx";
 import { useEffect } from "react";
 import { addDays, differenceInCalendarDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
+import "./../../../../css/bank-card-info-container.scss";
 
 interface IBookingPaymentDataProps {
     dateFrom: Date;

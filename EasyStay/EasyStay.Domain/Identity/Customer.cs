@@ -21,4 +21,6 @@ public class Customer : User {
 	public ICollection<BankCard> BankCards { get; set; } = null!;
 
 	public ICollection<Booking> Bookings { get; set; } = null!;
+
+	public ICollection<FavoriteHotel> FavoriteHotels { get; set; } = null!;
 }

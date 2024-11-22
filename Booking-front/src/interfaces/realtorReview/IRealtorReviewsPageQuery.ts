@@ -13,6 +13,8 @@ export default interface IRealtorReviewsPageQuery extends IPaginationFilter {
     maxUpdatedAtUtc?: string;
     authorId?: number;
     realtorId?: number;
+    orderBy?: string;
+    isRandomItems?: boolean;
 }
 
 export function toQueryFromIRealtorReviewsPageQuery(query: IRealtorReviewsPageQuery): string {
@@ -32,6 +34,11 @@ export function toQueryFromIRealtorReviewsPageQuery(query: IRealtorReviewsPageQu
     if (query.maxUpdatedAtUtc) queryItems.push({ key: "maxUpdatedAtUtc", value: query.maxUpdatedAtUtc });
     if (query.authorId !== undefined) queryItems.push({ key: "authorId", value: query.authorId.toString() });
     if (query.realtorId !== undefined) queryItems.push({ key: "realtorId", value: query.realtorId.toString() });
+    if (query.orderBy) queryItems.push({ key: "orderBy", value: query.orderBy });
+    if (query.isRandomItems !== undefined) queryItems.push({
+        key: "isRandomItems",
+        value: query.isRandomItems.toString(),
+    });
 
     return queryItems.map(item => `${item.key}=${item.value}`).join("&");
 }

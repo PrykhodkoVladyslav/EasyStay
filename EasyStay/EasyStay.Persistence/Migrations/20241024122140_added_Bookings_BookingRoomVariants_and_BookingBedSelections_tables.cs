@@ -33,7 +33,8 @@ namespace EasyStay.Persistence.Migrations
                         name: "FK_Bookings_BankCards_BankCardId",
                         column: x => x.BankCardId,
                         principalTable: "BankCards",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Bookings_Customers_CustomerId",
                         column: x => x.CustomerId,

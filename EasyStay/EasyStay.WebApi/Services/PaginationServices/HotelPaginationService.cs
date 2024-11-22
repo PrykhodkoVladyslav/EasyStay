@@ -1,4 +1,5 @@
 using AutoMapper;
+using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Hotels.Queries.GetPage;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
@@ -22,6 +23,7 @@ public class HotelPaginationService(
 		}
 		else {
 			query = filter.OrderBy switch {
+				null => query.OrderBy(h => h.Id),
 				"Category" => query.OrderBy(h => h.HotelCategory.Name),
 				"Rating" => query.OrderByDescending(
 					h => h.Rooms
@@ -33,7 +35,7 @@ public class HotelPaginationService(
 				),
 				"City" => query.OrderBy(h => h.Address.City.Name),
 				"RoomsCount" => query.OrderBy(h => h.Rooms.Min(r => r.NumberOfRooms)),
-				_ => query.OrderBy(h => h.Id),
+				_ => throw new BadRequestException("Invalid order by parameter"),
 			};
 		}
 
@@ -202,8 +204,12 @@ public class HotelPaginationService(
 				h => h.Rooms.Any(r => r.RoomVariants.Any(rv => rv.DiscountPrice != null))
 			);
 
-		if (filter.OnlyOwn == true)
-			query = query.Where(h => h.RealtorId == currentUser.GetRequiredUserId());
+		if (filter.OnlyOwn == true) {
+			var id = currentUser.GetUserId()
+				?? throw new UnauthorizedException("User is not authorized");
+
+			query = query.Where(h => h.RealtorId == id);
+		}
 
 		if (filter.AllHotelAmenityIds is not null)
 			query = query.Where(

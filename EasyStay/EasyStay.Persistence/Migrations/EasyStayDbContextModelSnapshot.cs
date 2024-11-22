@@ -324,6 +324,19 @@ namespace EasyStay.Persistence.Migrations
                     b.ToTable("Countries", (string)null);
                 });
 
+            modelBuilder.Entity("EasyStay.Domain.FavoriteHotel", b =>
+                {
+                    b.Property<long>("HotelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("HotelId", "CustomerId");
+
+                    b.ToTable("FavoriteHotels", (string)null);
+                });
+
             modelBuilder.Entity("EasyStay.Domain.Gender", b =>
                 {
                     b.Property<long>("Id")
@@ -1534,8 +1547,7 @@ namespace EasyStay.Persistence.Migrations
 
             modelBuilder.Entity("EasyStay.Domain.Address", b =>
                 {
-                    b.Navigation("Hotel")
-                        .IsRequired();
+                    b.Navigation("Hotel");
                 });
 
             modelBuilder.Entity("EasyStay.Domain.BankCard", b =>

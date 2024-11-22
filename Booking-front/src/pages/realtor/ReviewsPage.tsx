@@ -13,6 +13,8 @@ import { instantScrollToTop } from "utils/scrollToTop.ts";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
+import { realtorReviewOrderOptions } from "utils/orderMethods/realtorReviewOrderOptions.ts";
 
 const ReviewsPage = () => {
     useEffect(instantScrollToTop, []);
@@ -27,11 +29,15 @@ const ReviewsPage = () => {
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
     const [pageIndex, setPageIndex] = useState(0);
 
+    const [orderIndex, setOrderIndex] = useState(0);
+    const nextOrder = () => setOrderIndex((orderIndex + 1 === realtorReviewOrderOptions.length) ? 0 : orderIndex + 1);
+
     const { data: realtorRating } = useGetRealtorsPersonalRatingQuery();
     const { data: realtorReviewsPageData, isLoading, error } = useGetRealtorReviewsPageQuery({
         pageIndex: pageIndex,
         pageSize: 9,
         realtorId: realtor,
+        orderBy: realtorReviewOrderOptions[orderIndex].key,
     });
 
     const [realtorReviews, setRealtorReviews] = useState(realtorReviewsPageData?.data ?? []);
@@ -79,24 +85,7 @@ const ReviewsPage = () => {
                         <p className="rating">{realtorRating?.toFixed(1) ?? "0"}</p>
                     </div>
                 </div>
-                <div className="filter">
-                    <button>
-                        <img
-                            src={getPublicResourceUrl("account/sort.svg")}
-                            alt="Sort"
-                        />
-
-                        <p>Сортувати за:</p>
-
-                        <p className="sort-active">
-                            Назвою
-                        </p>
-                    </button>
-
-                    <div className="list hidden">
-                        List
-                    </div>
-                </div>
+                <OrderByButton orderName={realtorReviewOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
             </div>
 
             <div className="reviews">
@@ -113,14 +102,14 @@ const ReviewsPage = () => {
                                     <p className="name" title={`${review.author.firstName} ${review.author.lastName}`}>
                                         {review.author.firstName}
                                     </p>
-                                    <div className="stars-container">
+                                    {review.score != null && <div className="stars-container">
                                         <img
                                             src={getPublicResourceUrl("account/star.svg")}
                                             alt=""
                                             className="star"
                                         />
                                         <p className="rating">{review.score}</p>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
 

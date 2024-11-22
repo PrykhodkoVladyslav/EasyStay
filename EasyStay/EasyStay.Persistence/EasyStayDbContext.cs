@@ -21,41 +21,42 @@ public class EasyStayDbContext(DbContextOptions<EasyStayDbContext> options)
 	>(options),
 	IEasyStayDbContext {
 
-	public DbSet<Customer> Customers { get; set; }
-	public DbSet<Realtor> Realtors { get; set; }
-	public DbSet<Admin> Admins { get; set; }
+	public DbSet<Customer> Customers { get; set; } = null!;
+	public DbSet<Realtor> Realtors { get; set; } = null!;
+	public DbSet<Admin> Admins { get; set; } = null!;
 
-	public DbSet<Country> Countries { get; set; }
-	public DbSet<City> Cities { get; set; }
-	public DbSet<Address> Addresses { get; set; }
-	public DbSet<Hotel> Hotels { get; set; }
-	public DbSet<HotelCategory> HotelCategories { get; set; }
-	public DbSet<HotelAmenity> HotelAmenities { get; set; }
-	public DbSet<HotelHotelAmenity> HotelHotelAmenities { get; set; }
-	public DbSet<Breakfast> Breakfasts { get; set; }
-	public DbSet<HotelBreakfast> HotelBreakfasts { get; set; }
-	public DbSet<Language> Languages { get; set; }
-	public DbSet<HotelStaffLanguage> HotelStaffLanguages { get; set; }
-	public DbSet<HotelPhoto> HotelPhotos { get; set; }
-	public DbSet<Room> Rooms { get; set; }
-	public DbSet<RoomType> RoomTypes { get; set; }
-	public DbSet<RentalPeriod> RentalPeriods { get; set; }
-	public DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; }
-	public DbSet<RoomAmenity> RoomAmenities { get; set; }
-	public DbSet<RoomRoomAmenity> RoomRoomAmenities { get; set; }
-	public DbSet<RoomVariant> RoomVariants { get; set; }
-	public DbSet<GuestInfo> GuestInfos { get; set; }
-	public DbSet<BedInfo> BedInfos { get; set; }
-	public DbSet<RealtorReview> RealtorReviews { get; set; }
-	public DbSet<Chat> Chats { get; set; }
-	public DbSet<Message> Messages { get; set; }
-	public DbSet<Citizenship> Citizenships { get; set; }
-	public DbSet<Gender> Genders { get; set; }
-	public DbSet<BankCard> BankCards { get; set; }
-	public DbSet<Booking> Bookings { get; set; }
-	public DbSet<BookingRoomVariant> BookingRoomVariants { get; set; }
-	public DbSet<BookingBedSelection> BookingBedSelections { get; set; }
-	public DbSet<HotelReview> HotelReviews { get; set; }
+	public DbSet<Country> Countries { get; set; } = null!;
+	public DbSet<City> Cities { get; set; } = null!;
+	public DbSet<Address> Addresses { get; set; } = null!;
+	public DbSet<Hotel> Hotels { get; set; } = null!;
+	public DbSet<HotelCategory> HotelCategories { get; set; } = null!;
+	public DbSet<HotelAmenity> HotelAmenities { get; set; } = null!;
+	public DbSet<HotelHotelAmenity> HotelHotelAmenities { get; set; } = null!;
+	public DbSet<Breakfast> Breakfasts { get; set; } = null!;
+	public DbSet<HotelBreakfast> HotelBreakfasts { get; set; } = null!;
+	public DbSet<Language> Languages { get; set; } = null!;
+	public DbSet<HotelStaffLanguage> HotelStaffLanguages { get; set; } = null!;
+	public DbSet<HotelPhoto> HotelPhotos { get; set; } = null!;
+	public DbSet<Room> Rooms { get; set; } = null!;
+	public DbSet<RoomType> RoomTypes { get; set; } = null!;
+	public DbSet<RentalPeriod> RentalPeriods { get; set; } = null!;
+	public DbSet<RoomRentalPeriod> RoomRentalPeriods { get; set; } = null!;
+	public DbSet<RoomAmenity> RoomAmenities { get; set; } = null!;
+	public DbSet<RoomRoomAmenity> RoomRoomAmenities { get; set; } = null!;
+	public DbSet<RoomVariant> RoomVariants { get; set; } = null!;
+	public DbSet<GuestInfo> GuestInfos { get; set; } = null!;
+	public DbSet<BedInfo> BedInfos { get; set; } = null!;
+	public DbSet<RealtorReview> RealtorReviews { get; set; } = null!;
+	public DbSet<Chat> Chats { get; set; } = null!;
+	public DbSet<Message> Messages { get; set; } = null!;
+	public DbSet<Citizenship> Citizenships { get; set; } = null!;
+	public DbSet<Gender> Genders { get; set; } = null!;
+	public DbSet<BankCard> BankCards { get; set; } = null!;
+	public DbSet<Booking> Bookings { get; set; } = null!;
+	public DbSet<BookingRoomVariant> BookingRoomVariants { get; set; } = null!;
+	public DbSet<BookingBedSelection> BookingBedSelections { get; set; } = null!;
+	public DbSet<HotelReview> HotelReviews { get; set; } = null!;
+	public DbSet<FavoriteHotel> FavoriteHotels { get; set; } = null!;
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);

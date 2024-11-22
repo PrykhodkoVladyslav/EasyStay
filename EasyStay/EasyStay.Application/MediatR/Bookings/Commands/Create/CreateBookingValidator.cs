@@ -96,13 +96,13 @@ public class CreateBookingValidator : AbstractValidator<CreateBookingCommand> {
 	private async Task<bool> IsValidRequestedNumberOfRoomsAsync(CreateBookingCommand b, CancellationToken cancellationToken) {
 		var anyRoomVariantId = b.BookingRoomVariants.First().RoomVariantId;
 
-		var roomQuantity = (await _context.Rooms
-			.AsNoTracking()
-			.FirstAsync(r => r.RoomVariants.Any(rv => rv.Id == anyRoomVariantId), cancellationToken)
-		).Quantity;
+		var roomQuantity = await _context.Rooms
+			.Where(r => r.RoomVariants.Any(rv => rv.Id == anyRoomVariantId))
+			.Select(r => r.Quantity)
+			.FirstAsync(cancellationToken);
 
 		var quantityOfRentedRooms = await _context.BookingRoomVariants
-			.AsNoTracking()
+			.Where(brv => b.BookingRoomVariants.Select(b => b.RoomVariantId).Contains(brv.RoomVariantId))
 			.Where(brv => (b.DateFrom <= brv.Booking.DateTo) && (b.DateTo >= brv.Booking.DateFrom))
 			.SumAsync(brv => brv.Quantity, cancellationToken);
 

@@ -18,6 +18,9 @@ import { bankCardApi } from "services/bankCard.ts";
 import { bookingApi } from "services/booking.ts";
 import { realtorReviewApi } from "services/realtorReview.ts";
 import { hotelReviewApi } from "services/hotelReview.ts";
+import { rentalPeriodApi } from "services/rentalPeriod.ts";
+import { roomTypeApi } from "services/roomType.ts";
+import {roomVariantApi} from "services/roomVariant.ts";
 
 export const store = configureStore({
     reducer: {
@@ -38,6 +41,9 @@ export const store = configureStore({
         [bookingApi.reducerPath]: bookingApi.reducer,
         [realtorReviewApi.reducerPath]: realtorReviewApi.reducer,
         [hotelReviewApi.reducerPath]: hotelReviewApi.reducer,
+        [rentalPeriodApi.reducerPath]: rentalPeriodApi.reducer,
+        [roomTypeApi.reducerPath]: roomTypeApi.reducer,
+        [roomVariantApi.reducerPath]: roomVariantApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -57,6 +63,9 @@ export const store = configureStore({
             bookingApi.middleware,
             realtorReviewApi.middleware,
             hotelReviewApi.middleware,
+            rentalPeriodApi.middleware,
+            roomTypeApi.middleware,
+            roomVariantApi.middleware,
         ),
 });
 

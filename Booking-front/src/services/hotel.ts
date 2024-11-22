@@ -35,11 +35,6 @@ export const hotelApi = createApi({
             providesTags: ["Hotels"],
         }),
 
-        // getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
-        //     query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
-        //     providesTags: ["Hotels"],
-        // }),
-
         createHotel: builder.mutation<number, IHotelCreate>({
             query: (hotel) => {
                 const hotelFormData = new FormData();
@@ -150,18 +145,6 @@ export const hotelApi = createApi({
             invalidatesTags: ["Hotels"],
         }),
 
-        // setArchiveStatusHotel: builder.mutation<void, ISetArchiveStatusRequest>({
-        //     query: ({ id, isArchived }) => ({
-        //         url: "SetArchiveStatus",
-        //         method: "PATCH",
-        //         body: {
-        //             id,
-        //             IsArchived: isArchived,
-        //         },
-        //     }),
-        //     invalidatesTags: ["Hotels"],
-        // }),
-
         getMaxHotelPrice: builder.query<number, void>({
             query: () => "GetMaxPrice",
             providesTags: ["Hotels"],
@@ -173,10 +156,8 @@ export const {
     useGetAllHotelsQuery,
     useGetHotelsPageQuery,
     useGetHotelQuery,
-    // useGetRealtorHotelsPageQuery,
     useCreateHotelMutation,
     useUpdateHotelMutation,
     useDeleteHotelMutation,
-    // useSetArchiveStatusHotelMutation,
     useGetMaxHotelPriceQuery,
 } = hotelApi;

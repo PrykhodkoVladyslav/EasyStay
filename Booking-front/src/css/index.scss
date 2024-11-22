@@ -2364,6 +2364,7 @@
 
             input[type="radio"] {
               width: 24px;
+              min-width: 24px;
               height: 24px;
               border: 1px solid rgb(81, 81, 81);
               border-radius: 4px;
@@ -2483,7 +2484,17 @@
 
           input[type="checkbox"] {
             width: 24px;
+            min-width: 24px;
             height: 24px;
+            appearance: none;
+            box-sizing: border-box;
+            border: 1px solid rgb(165, 165, 165);
+            border-radius: 4px;
+            cursor: pointer;
+          }
+
+          input[type="checkbox"]:checked {
+            background-color: #576e52;
           }
         }
 
@@ -2662,6 +2673,7 @@
 
             input[type="checkbox"] {
               width: 24px;
+              min-width: 24px;
               height: 24px;
               appearance: none;
               box-sizing: border-box;

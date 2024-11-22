@@ -1,46 +1,82 @@
-// import FormError from "components/ui/FormError.tsx";
-// import {City} from "interfaces/city";
+import FormError from "components/ui/FormError.tsx";
 import { useForm } from "react-hook-form";
-// import {HotelCreatePage1Schema, HotelCreateSchema, HotelCreateSchemaType} from "interfaces/zod/hotel.ts";
-// import {zodResolver} from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
-// import showToast from "utils/toastShow.ts";
+import { useGetAllRentalPeriodsQuery } from "services/rentalPeriod.ts";
+import { useGetAllRoomAmenitiesQuery } from "services/roomAmenity.ts";
+import { useGetAllRoomTypesQuery } from "services/roomType.ts";
+import { useCreateRoomMutation } from "services/room.ts";
+import showToast from "utils/toastShow.ts";
+import { RoomCreateSchema, RoomCreateSchemaType } from "interfaces/zod/room.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "react-router-dom";
+import RoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
 
 const RoomPage = () => {
     useEffect(instantScrollToTop, []);
-
+    const numericId = Number(useParams<{ id: string }>().id);
     const [modal, setModal] = useState(false);
 
     const {
-        // register,
+        register,
         handleSubmit,
-        // setValue,
-        // trigger,
-        // watch,
-        // formState: { errors },
-    } = useForm/*<HotelCreateSchemaType>*/({
-        // resolver: zodResolver(/*currentContainer === 1 ? HotelCreatePage1Schema : HotelCreateSchema*/),
+        setValue,
+        watch,
+        formState: { errors },
+    } = useForm<RoomCreateSchemaType>({
+        resolver: zodResolver(RoomCreateSchema),
         defaultValues: {
-            // hotelAmenityIds: [],
-            // staffLanguageIds: [],
+            rentalPeriodIds: [],
+            roomTypeId: "",
+            area: 0,
+            numberOfRooms: 0,
+            name: "",
+            quantity: 2,
+            roomAmenityIds: [],
         },
     });
 
-    const nextContainer = () => {
-        setModal(true);
+    const { data: rentalPeriodsData } = useGetAllRentalPeriodsQuery();
+    const { data: roomTypesData } = useGetAllRoomTypesQuery();
+    const { data: roomAmenitiesData } = useGetAllRoomAmenitiesQuery();
+    const [ createRoom/*, { isLoading }*/ ] = useCreateRoomMutation();
+
+    const [selectedRentalPeriods, setSelectedRentalPeriods] = useState<number[]>([]);
+    const [selectedRoomAmenities, setSelectedRoomAmenities] = useState<number[]>([]);
+    const [roomId, setRoomId] = useState<number | null>(null);
+
+    const handleQuantityChange = (delta: number) => {
+        const currentValue = watch("quantity");
+        const newValue = Math.min(10, Math.max(0, currentValue + delta));
+        setValue("quantity", newValue);
     };
 
-    useEffect(() => {
-        document.body.style.overflow = modal ? "hidden" : "auto";
-    }, [modal]);
+    // useEffect(() => {
+    //     document.body.style.overflow = modal ? "hidden" : "auto";
+    // }, [modal]);
 
-    const onSubmitRoom = async (/*data: HotelCreateSchemaType*/) => {
+    const onSubmitRoom = async (data: RoomCreateSchemaType) => {
+        // setModal(true);
 
-    };
+        const roomData = {
+            rentalPeriodIds: selectedRentalPeriods,
+            roomTypeId: Number(data.roomTypeId) || 0,
+            area: data.area,
+            numberOfRooms: data.numberOfRooms,
+            name: data.name,
+            quantity: Number(data.quantity) || 0,
+            hotelId: numericId,
+            roomAmenityIds: selectedRoomAmenities,
+        };
 
-    const onSubmitRoomVariants = async (/*data: HotelCreateSchemaType*/) => {
-
+        try {
+            const createdRoomId = await createRoom(roomData).unwrap();
+            setRoomId(createdRoomId);
+            showToast(`Номер успішно створено!`, "success");
+            setModal(true);
+        } catch (error) {
+            showToast(`Помилка при створенні номеру!`, "error");
+        }
     };
 
     return (
@@ -57,56 +93,25 @@ const RoomPage = () => {
 
                         <div className="room-containers-1-5">
                             <div className="data-1">
-                                <label className="con-1-checkbox">
-                                    <input
-                                        /*{...register("roomPeriod")}*/
-                                        type="checkbox"
-                                        id="roomPeriod"
-                                    />
-                                    <p>Погодино</p>
-                                </label>
-
-                                <label className="con-1-checkbox">
-                                    <input
-                                        /*{...register("roomPeriod")}*/
-                                        type="checkbox"
-                                        id="roomPeriod"
-                                    />
-                                    <p>Додобово</p>
-                                </label>
-
-                                <label className="con-1-checkbox">
-                                    <input
-                                        /*{...register("roomPeriod")}*/
-                                        type="checkbox"
-                                        id="roomPeriod"
-                                    />
-                                    <p>Довго тривала оренда</p>
-                                </label>
-                                {/*{roomAmenitiesData?.map((roomPeriod) => (*/}
-                                {/*    <label key={roomPeriod.id}>*/}
-                                {/*        <input*/}
-                                {/*            {...register("RentalPeriodIds")}*/}
-                                {/*            type="checkbox"*/}
-                                {/*            value={roomPeriod.id}*/}
-                                {/*            checked={selectedRoomPeriods.includes(roomPeriod.id)}*/}
-                                {/*            onChange={(e) => {*/}
-                                {/*                if (e.target.checked) {*/}
-                                {/*                    setSelectedRoomPeriods((prev) => [...prev, roomPeriod.id]);*/}
-                                {/*                } else {*/}
-                                {/*                    setSelectedRoomPeriods((prev) => prev.filter((id) => id !== roomPeriod.id));*/}
-                                {/*                }*/}
-                                {/*                setValue("RentalPeriodIds", selectedRoomPeriods);*/}
-                                {/*            }}*/}
-                                {/*        />*/}
-                                {/*        {roomPeriod.name}*/}
-                                {/*    </label>*/}
-                                {/*))}*/}
-
-                                {/*{errors?.rentalPeriodIds && (*/}
-                                {/*    <FormError className="text-red"*/}
-                                {/*               errorMessage={errors?.rentalPeriodIds?.message as string}/>*/}
-                                {/*)}*/}
+                                {rentalPeriodsData?.map((rentalPeriod) => (
+                                    <label key={rentalPeriod.id} className="con-1-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            {...register("rentalPeriodIds")}
+                                            value={rentalPeriod.id}
+                                            checked={selectedRentalPeriods.includes(rentalPeriod.id)}
+                                            onChange={(e) => {
+                                                if (e.target.checked) {
+                                                    setSelectedRentalPeriods((prev) => [...prev, rentalPeriod.id]);
+                                                } else {
+                                                    setSelectedRentalPeriods((prev) => prev.filter((id) => id !== rentalPeriod.id));
+                                                }
+                                                setValue("rentalPeriodIds", selectedRentalPeriods);
+                                            }}
+                                        />
+                                        <p>{rentalPeriod.name}</p>
+                                    </label>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -120,15 +125,15 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <input
-                                    /*{...register("name")}*/
+                                    {...register("name")}
                                     type="text"
                                     id="name"
                                     placeholder="Назва"
                                 />
-                                {/*{errors?.name && (*/}
-                                {/*    <FormError className="text-red"*/}
-                                {/*               errorMessage={errors?.name?.message as string}/>*/}
-                                {/*)}*/}
+                                {errors?.name && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.name?.message as string}/>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -142,23 +147,23 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <select
-                                    /*{...register("roomTypeId")}*/
+                                    {...register("roomTypeId")}
                                     id="roomTypeId"
-                                    // value={watch("roomTypeId") || ""}
+                                    value={watch("roomTypeId") || ""}
                                 >
                                     <option disabled value="">
                                         Вибрати
                                     </option>
-                                    {/*{roomTypesData?.map((type) => (*/}
-                                    {/*    <option key={type.id} value={type.id}>*/}
-                                    {/*        {type.name}*/}
-                                    {/*    </option>*/}
-                                    {/*))}*/}
+                                    {roomTypesData?.map((type) => (
+                                        <option key={type.id} value={type.id}>
+                                            {type.name}
+                                        </option>
+                                    ))}
                                 </select>
-                                {/*{errors?.roomTypeId && (*/}
-                                {/*    <FormError className="text-red"*/}
-                                {/*               errorMessage={errors?.roomTypeId?.message as string}/>*/}
-                                {/*)}*/}
+                                {errors?.roomTypeId && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.roomTypeId?.message as string}/>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -172,15 +177,15 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <input
-                                    /*{...register("area")}*/
+                                    {...register("area")}
                                     type="number"
                                     id="area"
                                     placeholder="Площа"
                                 />
-                                {/*{errors?.area && (*/}
-                                {/*    <FormError className="text-red"*/}
-                                {/*               errorMessage={errors?.area?.message as string}/>*/}
-                                {/*)}*/}
+                                {errors?.area && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.area?.message as string}/>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -194,23 +199,23 @@ const RoomPage = () => {
                         <div className="room-containers-1-5">
                             <div className="data">
                                 <select
-                                    /*{...register("numberOfRooms")}*/
+                                    {...register("numberOfRooms")}
                                     id="numberOfRooms"
-                                    // value={watch("numberOfRooms") || ""}
+                                    value={watch("numberOfRooms") || ""}
                                 >
                                     <option disabled value="">
                                         Вибрати
                                     </option>
-                                    {/*{hotelCategoriesData?.map((category) => (*/}
-                                    {/*    <option key={category.id} value={category.id}>*/}
-                                    {/*        {category.name}*/}
-                                    {/*    </option>*/}
-                                    {/*))}*/}
+                                    {Array.from({ length: 10 }, (_, i) => i + 1).map((roomCount) => (
+                                        <option key={roomCount} value={roomCount}>
+                                            {roomCount}
+                                        </option>
+                                    ))}
                                 </select>
-                                {/*{errors?.numberOfRooms && (*/}
-                                {/*    <FormError className="text-red"*/}
-                                {/*               errorMessage={errors?.numberOfRooms?.message as string}/>*/}
-                                {/*)}*/}
+                                {errors?.numberOfRooms && (
+                                    <FormError className="text-red"
+                                               errorMessage={errors?.numberOfRooms?.message as string}/>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -221,31 +226,26 @@ const RoomPage = () => {
                             <p className="title">Чим гості можуть користуватися у кімнаті?</p>
                         </div>
 
-                        <div className="container-3">
-                            {/*{roomAmenitiesData?.map((roomAmenity) => (*/}
-                            {/*    <label key={roomAmenity.id}>*/}
-                            {/*        <input*/}
-                            {/*            {...register("RoomAmenityIds")}*/}
-                            {/*            type="checkbox"*/}
-                            {/*            value={roomAmenity.id}*/}
-                            {/*            checked={selectedRoomAmenities.includes(roomAmenity.id)}*/}
-                            {/*            onChange={(e) => {*/}
-                            {/*                if (e.target.checked) {*/}
-                            {/*                    setSelectedRoomAmenities((prev) => [...prev, roomAmenity.id]);*/}
-                            {/*                } else {*/}
-                            {/*                    setSelectedRoomAmenities((prev) => prev.filter((id) => id !== roomAmenity.id));*/}
-                            {/*                }*/}
-                            {/*                setValue("RoomAmenityIds", selectedRoomAmenities);*/}
-                            {/*            }}*/}
-                            {/*        />*/}
-                            {/*        {roomAmenity.name}*/}
-                            {/*    </label>*/}
-                            {/*))}*/}
-
-                            {/*{errors?.RoomAmenityIds && (*/}
-                            {/*    <FormError className="text-red"*/}
-                            {/*               errorMessage={errors?.RoomAmenityIds?.message as string}/>*/}
-                            {/*)}*/}
+                        <div className="room-container-6">
+                            {roomAmenitiesData?.map((roomAmenity) => (
+                                <label key={roomAmenity.id}>
+                                    <input
+                                        {...register("roomAmenityIds")}
+                                        type="checkbox"
+                                        value={roomAmenity.id}
+                                        checked={selectedRoomAmenities.includes(roomAmenity.id)}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedRoomAmenities((prev) => [...prev, roomAmenity.id]);
+                                            } else {
+                                                setSelectedRoomAmenities((prev) => prev.filter((id) => id !== roomAmenity.id));
+                                            }
+                                            setValue("roomAmenityIds", selectedRoomAmenities);
+                                        }}
+                                    />
+                                    {roomAmenity.name}
+                                </label>
+                            ))}
                         </div>
                     </div>
 
@@ -255,21 +255,24 @@ const RoomPage = () => {
                             <p className="title">Кількість ідентичних номерів</p>
                         </div>
                         <div className="room-container-7">
-                            <button>﹘</button>
+                            <button onClick={() => handleQuantityChange(-1)} >﹘</button>
                             <div
-                                /*{...register("quantity")}*/
+                                {...register("quantity")}
                                 id="quantity"
                             >
-                                0
+                                {watch("quantity") || 0}
                             </div>
-                            <button>+</button>
+                            <button onClick={() => handleQuantityChange(1)}>+</button>
                         </div>
+                        {errors?.quantity && (
+                            <FormError className="text-red"
+                                       errorMessage={errors?.quantity?.message as string}/>
+                        )}
                     </div>
                 </div>
 
                 <button
                     className="main-button-2"
-                    onClick={nextContainer}
                     type="submit"
                 >
                     Додати варіації номеру
@@ -277,190 +280,7 @@ const RoomPage = () => {
             </form>
 
             {modal && (
-                <>
-                    <div className="modal-backdrop"></div>
-
-                    <form className="add-room-page-2-modal" onSubmit={handleSubmit(onSubmitRoomVariants)}>
-                        <p className="title">Додайте більше варіантів в ваш номер</p>
-                        <div className="data-containers">
-
-                            <div className="pre-container">
-                                <div className="top">
-                                    <div className="number">1</div>
-                                    <p className="title">Скільки гостей можуть зупинитися у кімнаті?</p>
-                                </div>
-
-                                <div className="room-container-1-3-4">
-                                    <div className="guests">
-                                        <div className="guest">
-                                            <p>Кількість дорослих</p>
-                                            <div className="stepper">
-                                                <button>﹘</button>
-                                                <div
-                                                    /*{...register("quantity")}*/
-                                                    id="quantity"
-                                                >
-                                                    0
-                                                </div>
-                                                <button>+</button>
-                                            </div>
-                                        </div>
-
-                                        <div className="guest">
-                                            <p>Кількість дітей</p>
-                                            <div className="stepper">
-                                                <button>﹘</button>
-                                                <div
-                                                    /*{...register("quantity")}*/
-                                                    id="quantity"
-                                                >
-                                                    0
-                                                </div>
-                                                <button>+</button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="pre-container">
-                                <div className="top">
-                                    <div className="number">2</div>
-                                    <p className="title">Скільки гостей можуть зупинитися у кімнаті?</p>
-                                </div>
-
-                                <div className="room-container-2">
-                                    <div className="beds">
-                                        <p>Одномісне ліжко</p>
-                                        <div className="stepper">
-                                            <button>﹘</button>
-                                            <div
-                                                /*{...register("quantity")}*/
-                                                id="quantity"
-                                            >
-                                                0
-                                            </div>
-                                            <button>+</button>
-                                        </div>
-                                    </div>
-
-                                    <div className="beds">
-                                        <p>Двомісне ліжко</p>
-                                        <div className="stepper">
-                                            <button>﹘</button>
-                                            <div
-                                                /*{...register("quantity")}*/
-                                                id="quantity"
-                                            >
-                                                0
-                                            </div>
-                                            <button>+</button>
-                                        </div>
-                                    </div>
-
-                                    <div className="beds">
-                                        <p>Додаткове ліжко</p>
-                                        <div className="stepper">
-                                            <button>﹘</button>
-                                            <div
-                                                /*{...register("quantity")}*/
-                                                id="quantity"
-                                            >
-                                                0
-                                            </div>
-                                            <button>+</button>
-                                        </div>
-                                    </div>
-
-                                    <div className="beds">
-                                        <p>Диван ліжко</p>
-                                        <div className="stepper">
-                                            <button>﹘</button>
-                                            <div
-                                                /*{...register("quantity")}*/
-                                                id="quantity"
-                                            >
-                                                0
-                                            </div>
-                                            <button>+</button>
-                                        </div>
-                                    </div>
-
-                                    <div className="beds">
-                                        <p>Кінгсайз</p>
-                                        <div className="stepper">
-                                            <button>﹘</button>
-                                            <div
-                                                /*{...register("quantity")}*/
-                                                id="quantity"
-                                            >
-                                                0
-                                            </div>
-                                            <button>+</button>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            <div className="pre-container">
-                                <div className="top">
-                                    <div className="number">3</div>
-                                    <p className="title">Скільки ви хочете отримувати за ніч?</p>
-                                </div>
-
-                                <div className="room-container-1-3-4">
-                                    <div className="price-discount">
-                                        <p>$</p>
-                                        <input
-                                            /*{...register("price")}*/
-                                            type="number"
-                                            id="price"
-                                            placeholder="0"
-                                        />
-                                        {/*{errors?.price && (*/}
-                                        {/*    <FormError className="text-red"*/}
-                                        {/*               errorMessage={errors?.price?.message as string}/>*/}
-                                        {/*)}*/}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="pre-container">
-                                <div className="top">
-                                    <div className="number">4</div>
-                                    <p className="title">Знижка</p>
-                                    <p className="optional">(за бажанням)</p>
-                                </div>
-
-                                <div className="room-container-1-3-4">
-                                    <div className="price-discount">
-                                        <p>$</p>
-                                        <input
-                                            /*{...register("discountPrice")}*/
-                                            type="number"
-                                            id="discountPrice"
-                                            placeholder="0"
-                                        />
-                                        {/*{errors?.discountPrice && (*/}
-                                        {/*    <FormError className="text-red"*/}
-                                        {/*               errorMessage={errors?.discountPrice?.message as string}/>*/}
-                                        {/*)}*/}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button
-                            className="main-button-2"
-                            type="submit"
-                        >
-                            Зберегти
-                        </button>
-                    </form>
-                </>
+                <RoomVariantPage roomId={roomId ?? 0} numericId={numericId}/>
             )}
         </div>
     );

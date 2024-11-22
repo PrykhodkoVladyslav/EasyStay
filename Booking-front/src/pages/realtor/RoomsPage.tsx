@@ -16,7 +16,6 @@ const RoomsPage = () => {
     const [deleteRoom] = useDeleteRoomMutation();
     const { data: hotelData } = useGetHotelQuery(numericId);
     const navigate = useNavigate();
-    const hotelName = hotelData?.name || "Готель";
 
     const handleDeleteRoom = async (roomId: number) => {
         try {
@@ -24,7 +23,6 @@ const RoomsPage = () => {
             showToast("Номер успішно видалено", "success");
         } catch (err) {
             showToast("Помилка при видаленні номера", "error");
-            console.log(err);
         }
     };
 
@@ -37,8 +35,12 @@ const RoomsPage = () => {
 
     return (
         <div className="rooms-content">
-            <p className="global-title">Номери готелю ,,{hotelName},,</p>
-            <button className="add-room-btn">Додати номер</button>
+            <p className="global-title">Номери готелю ,,{hotelData?.name},,</p>
+            <button
+                onClick={() => navigate(`/realtor/add/room/${numericId}`)}
+                className="add-room-btn"
+            >Додати номер</button>
+
             <div className="rooms-page">
                 <table className="room-table">
                     <thead>
@@ -184,7 +186,7 @@ const RoomsPage = () => {
                                                 <p className="new-price" title="Нова ціна">
                                                     {basePrice.toFixed(0) + "$"}
                                                 </p>
-                                                {variant.discountPrice != null && (
+                                                {variant.discountPrice != null || 0 && (
                                                     <p className="old-price" title="Стара ціна">
                                                         {discountPrice != null && discountPrice.toFixed(0) + "$"}
                                                     </p>

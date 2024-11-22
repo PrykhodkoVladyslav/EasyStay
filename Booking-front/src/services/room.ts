@@ -4,6 +4,7 @@ import IRoom, { RoomVariantsFreeRequest } from "interfaces/room/IRoom.ts";
 import { toQueryFromIRoomPageQuery } from "interfaces/room/IRoomPageQuery.ts";
 import IPage from "interfaces/page/IPage.ts";
 import IRoomPageQuery from "interfaces/room/IRoomPageQuery.ts";
+import { IRoomCreate } from "interfaces/room/IRoomCreate.ts";
 
 export const roomApi = createApi({
     reducerPath: "roomApi",
@@ -29,6 +30,18 @@ export const roomApi = createApi({
             providesTags: ["Rooms"],
         }),
 
+        createRoom: builder.mutation<number, IRoomCreate>({
+            query: (room) => ({
+                url: "create",
+                method: "POST",
+                body: room,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }),
+            invalidatesTags: ["Rooms"],
+        }),
+
         deleteRoom: builder.mutation({
             query: (id: number) => ({
                 url: `delete/${id}`,
@@ -50,6 +63,7 @@ export const roomApi = createApi({
 export const {
     useGetRoomQuery,
     useGetRoomsPageQuery,
+    useCreateRoomMutation,
     useDeleteRoomMutation,
     useGetRoomVariantsFreeQuantityQuery,
 } = roomApi;

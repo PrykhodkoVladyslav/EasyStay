@@ -3,7 +3,6 @@ import { createBaseQuery } from "utils/apiUtils.ts";
 import { IHotel } from "interfaces/hotel/IHotel.ts";
 import { IHotelCreate } from "interfaces/hotel/IHotelCreate.ts";
 import { IHotelUpdate } from "interfaces/hotel/IHotelUpdate.ts";
-// import { ISetArchiveStatusRequest } from "interfaces/hotel/ISetArchiveStatusRequest.ts";
 import IHotelDetails from "interfaces/hotel/IHotelDetails.ts";
 import IPage from "interfaces/page/IPage.ts";
 import IHotelsPageQuery, { toQueryFromIHotelsPageQuery } from "interfaces/hotel/IHotelsPageQuery.ts";
@@ -35,11 +34,6 @@ export const hotelApi = createApi({
             query: (id) => `getById/${id}`,
             providesTags: ["Hotels"],
         }),
-
-        // getRealtorHotelsPage: builder.query<IHotel[], { RealtorId?: string }>({
-        //     query: ({ RealtorId }) => `GetPage?${RealtorId ? `RealtorId=${RealtorId}` : ""}`,
-        //     providesTags: ["Hotels"],
-        // }),
 
         createHotel: builder.mutation<number, IHotelCreate>({
             query: (hotel) => {
@@ -151,18 +145,6 @@ export const hotelApi = createApi({
             invalidatesTags: ["Hotels"],
         }),
 
-        // setArchiveStatusHotel: builder.mutation<void, ISetArchiveStatusRequest>({
-        //     query: ({ id, isArchived }) => ({
-        //         url: "SetArchiveStatus",
-        //         method: "PATCH",
-        //         body: {
-        //             id,
-        //             IsArchived: isArchived,
-        //         },
-        //     }),
-        //     invalidatesTags: ["Hotels"],
-        // }),
-
         getMaxHotelPrice: builder.query<number, void>({
             query: () => "GetMaxPrice",
             providesTags: ["Hotels"],
@@ -174,10 +156,8 @@ export const {
     useGetAllHotelsQuery,
     useGetHotelsPageQuery,
     useGetHotelQuery,
-    // useGetRealtorHotelsPageQuery,
     useCreateHotelMutation,
     useUpdateHotelMutation,
     useDeleteHotelMutation,
-    // useSetArchiveStatusHotelMutation,
     useGetMaxHotelPriceQuery,
 } = hotelApi;

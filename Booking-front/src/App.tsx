@@ -97,7 +97,7 @@ function App() {
             <Route path="add">
                 <Route path="categories" element={<CategoriesListPage />} />
                 <Route path="hotel" element={<AddHotelPage />} />
-                <Route path="room" element={<AddRoomPage />} />
+                <Route path="room/:id" element={<AddRoomPage />} />
             </Route>
 
             <Route path="edit">

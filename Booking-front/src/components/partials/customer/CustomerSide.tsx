@@ -3,13 +3,22 @@ import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
 import { getUser } from "store/slice/userSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RealtorSide = () => {
     const user = useSelector(getUser);
     const navigate = useNavigate();
-    const [activePage, setActivePage] = useState<string | null>(null);
+    const [activePage, setActivePage] = useState<string | null>(() => {
+        const savedPage = localStorage.getItem("activePage");
+        return savedPage ? savedPage : null;
+    });
 
+    useEffect(() => {
+        if (activePage) {
+            localStorage.setItem("activePage", activePage);
+        }
+    }, [activePage]);
+    
     if (!user) {
         return null;
     }

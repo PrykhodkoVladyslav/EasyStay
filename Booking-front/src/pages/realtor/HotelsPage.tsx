@@ -76,7 +76,7 @@ const HotelsPage = () => {
     }
 
     return (
-        <div className="hotels-content" id="hotels">
+        <div className="hotels-container" id="hotels">
             <div className="top">
                 <p className="global-title">Мої готелі</p>
                 <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
@@ -128,7 +128,7 @@ const HotelsPage = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="isLoading-error">У вас немає готелів</p>
+                    <p className="isLoading-error pt-20 pb-20">У вас немає готелів</p>
                 )}
             </div>
 

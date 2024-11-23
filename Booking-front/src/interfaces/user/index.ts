@@ -67,6 +67,18 @@ export interface IResetPasswordRequest {
     newPassword: string;
 }
 
+export interface ICustomerInformation {
+    fullName: string;
+    email: string;
+    phoneNumber?: string;
+    dateOfBirth?: Date;
+    address?: string;
+    citizenship?: ICitizenship;
+    gender?: IGender;
+    country?: IRealtorInformationCountry;
+    city?: IRealtorInformationCity;
+}
+
 export interface IRealtorInformation {
     fullName: string;
     email: string;
@@ -78,6 +90,15 @@ export interface IRealtorInformation {
     gender?: IGender;
     country?: IRealtorInformationCountry;
     city?: IRealtorInformationCity;
+}
+
+export interface IUpdateCustomerInformation {
+    phoneNumber: string;
+    dateOfBirth: string;
+    citizenshipId: number;
+    genderId: number;
+    address: string;
+    cityId: number;
 }
 
 export interface IUpdateRealtorInformation {

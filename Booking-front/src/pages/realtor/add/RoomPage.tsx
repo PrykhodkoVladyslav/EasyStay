@@ -51,13 +51,12 @@ const RoomPage = () => {
         setValue("quantity", newValue);
     };
 
+    // TODO: якщо потрібно забрати скролл в body
     // useEffect(() => {
     //     document.body.style.overflow = modal ? "hidden" : "auto";
     // }, [modal]);
 
     const onSubmitRoom = async (data: RoomCreateSchemaType) => {
-        // setModal(true);
-
         const roomData = {
             rentalPeriodIds: selectedRentalPeriods,
             roomTypeId: Number(data.roomTypeId) || 0,

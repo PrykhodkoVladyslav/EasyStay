@@ -16,7 +16,7 @@ const ProfileModal = ({ onClose }: { onClose: () => void }) => {
 
         switch (role) {
             case "Customer":
-                return "/customer";
+                return "/customer/personal-data";
             case "Realtor":
                 return "/realtor";
             case "Admin":

@@ -16,7 +16,7 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div className="home-content">
+        <div className="home-container">
             <AddHotel />
             <div className="hotels-reviews">
                 <MyHotels />

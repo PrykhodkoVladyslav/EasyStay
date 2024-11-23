@@ -22,7 +22,7 @@ const RealtorPage = () => {
     }
 
     return (
-        <div className="all-conteiner-realtor">
+        <div className="realtor-page-container">
             <div className="realtor-card">
                 <div className="realtor-card-info">
                     <div className="nameConteiner">

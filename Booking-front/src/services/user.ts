@@ -12,6 +12,8 @@ import {
     IRealtorInformation,
     IUpdateRealtorInformation,
     IRealtorDetails,
+    ICustomerInformation,
+    IUpdateCustomerInformation,
 } from "interfaces/user";
 import ICustomer from "interfaces/user/ICustomer.ts";
 import IPage from "interfaces/page/IPage.ts";
@@ -35,6 +37,11 @@ export const userApi = createApi({
 
         getRealtorDetails: builder.query<IRealtorDetails, string>({
             query: (id) => `GetRealtorDatails/${id}`,
+            providesTags: ["User"],
+        }),
+
+        getCustomersInformation: builder.query<ICustomerInformation, void>({
+            query: () => "GetCustomersInformation",
             providesTags: ["User"],
         }),
 
@@ -140,6 +147,16 @@ export const userApi = createApi({
             }),
         }),
 
+        updateCustomersInformation: builder.mutation<void, IUpdateCustomerInformation>({
+            query: (data) => {
+                return {
+                    url: "updateCustomersInformation",
+                    method: "PATCH",
+                    body: data,
+                };
+            },
+        }),
+
         updateRealtorsInformation: builder.mutation<void, IUpdateRealtorInformation>({
             query: (data) => {
                 return {
@@ -149,13 +166,13 @@ export const userApi = createApi({
                 };
             },
         }),
-
     }),
 });
 
 export const {
     useGetAllCustomersQuery,
     useGetAllRealtorsQuery,
+    useGetCustomersInformationQuery,
     useGetRealtorsInformationQuery,
     useGetRealtorDetailsQuery,
     useGetRealtorsPersonalRatingQuery,
@@ -166,5 +183,6 @@ export const {
     useUnlockUserMutation,
     useSendResetPasswordEmailMutation,
     useResetPasswordMutation,
+    useUpdateCustomersInformationMutation,
     useUpdateRealtorsInformationMutation,
 } = userApi;

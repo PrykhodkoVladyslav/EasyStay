@@ -27,8 +27,10 @@ const ReviewsPage = () => {
     const token = useSelector((state: RootState) => getToken(state));
     const payload = token ? JSON.parse(atob(token.split(".")[1])) : null;
     const realtor = payload ? payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : null;
-    const [pageIndex, setPageIndex] = useState(0);
 
+    const [itemAvailable, setItemsAvailable] = useState(0);
+    const [pagesAvailable, setPagesAvailable] = useState(0);
+    const [pageIndex, setPageIndex] = useState(0);
     const [orderIndex, setOrderIndex] = useState(0);
     const nextOrder = () => setOrderIndex((orderIndex + 1 === realtorReviewOrderOptions.length) ? 0 : orderIndex + 1);
 
@@ -39,10 +41,7 @@ const ReviewsPage = () => {
         realtorId: realtor,
         orderBy: realtorReviewOrderOptions[orderIndex].key,
     });
-
     const [realtorReviews, setRealtorReviews] = useState(realtorReviewsPageData?.data ?? []);
-    const [itemAvailable, setItemsAvailable] = useState(0);
-    const [pagesAvailable, setPagesAvailable] = useState(0);
 
     useEffect(() => {
         setRealtorReviews(realtorReviewsPageData?.data ?? []);
@@ -71,7 +70,7 @@ const ReviewsPage = () => {
     }
 
     return (
-        <div className="reviews-content">
+        <div className="reviews-container">
             <div className="top">
                 <p className="global-title">Відгуки</p>
                 <div className="rating">
@@ -117,7 +116,7 @@ const ReviewsPage = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="isLoading-error">У вас немає Відгуків</p>
+                    <p className="isLoading-error pt-20 pb-20">У вас немає Відгуків</p>
                 )}
             </div>
 

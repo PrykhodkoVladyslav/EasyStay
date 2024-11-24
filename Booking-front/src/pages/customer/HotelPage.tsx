@@ -14,6 +14,11 @@ import { useSelector } from "react-redux";
 import { getToken } from "store/slice/userSlice.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    useCreateFavoriteHotelMutation,
+    useDeleteFavoriteHotelMutation,
+    useIsFavoriteHotelQuery
+} from "services/favoriteHotel.ts";
 
 const HotelPage = () => {
     useEffect(instantScrollToTop, []);
@@ -24,6 +29,9 @@ const HotelPage = () => {
     const token = useSelector(getToken);
 
     const { data: hotelData, isLoading, error } = useGetHotelQuery(hotelId);
+    const { data: isFavorite, refetch } = useIsFavoriteHotelQuery(hotelId);
+    const [favorite, { isLoading: isFavoriteLoading }] = useCreateFavoriteHotelMutation();
+    const [unFavorite, { isLoading: isUnFavoriteLoading }] = useDeleteFavoriteHotelMutation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [freePeriod, setFreePeriod] = useState<IFreePeriod | null>(null);
     const [rooms, setRooms] = useState<IRoom[]>([]);
@@ -72,6 +80,24 @@ const HotelPage = () => {
         return "погано";
     };
 
+    const handleFavorite = async () => {
+        try {
+            await favorite({ hotelId: hotelId }).unwrap();
+            refetch();
+        } catch (err) {
+            showToast("Не вдалося додати до улюблених", "error");
+        }
+    };
+
+    const handleUnFavorite = async () => {
+        try {
+            await unFavorite(hotelId).unwrap();
+            refetch();
+        } catch (err) {
+            showToast("Не вдалося видалити з улюблених", "error");
+        }
+    };
+
     const onSearch = () => {
         const fromDate = selectedDateFrom ? new Date(selectedDateFrom) : new Date();
         const toDate = selectedDateTo ? new Date(selectedDateTo) : new Date();
@@ -91,7 +117,7 @@ const HotelPage = () => {
         setFreePeriod(freePeriod);
 
         const filteredRooms = hotelData?.rooms?.map(room => {
-            const filteredVariants = room.variants.filter(variant => variant.guestInfo.adultCount === adultGuests);
+            const filteredVariants = room.variants.filter(variant => variant.guestInfo.adultCount >= adultGuests);
 
             if (filteredVariants.length > 0) {
                 return { ...room, variants: filteredVariants };
@@ -137,12 +163,31 @@ const HotelPage = () => {
                                     </div>
                                 </div>
 
-                                <button className="btn-favorite">
-                                    <img
-                                        src={getPublicResourceUrl("icons/heart.svg")}
-                                        alt=""
-                                    />
-                                </button>
+                                {
+                                    isFavorite ? (
+                                        <button
+                                            className="btn-favorite"
+                                            onClick={handleUnFavorite}
+                                            disabled={isFavoriteLoading || isUnFavoriteLoading}
+                                        >
+                                            <img
+                                                src={getPublicResourceUrl("icons/heart-favorite.svg")}
+                                                alt="Favorite"
+                                            />
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="btn-favorite"
+                                            onClick={handleFavorite}
+                                            disabled={isFavoriteLoading || isUnFavoriteLoading}
+                                        >
+                                            <img
+                                                src={getPublicResourceUrl("icons/heart.svg")}
+                                                alt="Not Favorite"
+                                            />
+                                        </button>
+                                    )
+                                }
                             </div>
 
                             <div className="location">

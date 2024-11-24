@@ -155,6 +155,7 @@ export const userApi = createApi({
                     body: data,
                 };
             },
+            invalidatesTags: ["User"],
         }),
 
         updateRealtorsInformation: builder.mutation<void, IUpdateRealtorInformation>({
@@ -165,6 +166,7 @@ export const userApi = createApi({
                     body: data,
                 };
             },
+            invalidatesTags: ["User"],
         }),
     }),
 });

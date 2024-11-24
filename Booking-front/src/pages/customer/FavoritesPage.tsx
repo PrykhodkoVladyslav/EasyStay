@@ -14,7 +14,7 @@ const FavoritesPage = () => {
     const [orderIndex, setOrderIndex] = useState(0);
     const nextOrder = () => setOrderIndex((orderIndex + 1 === hotelOrderOptions.length) ? 0 : orderIndex + 1);
 
-    const { data: favoriteHotelsPageData, isLoading, error } = useGetHotelsPageQuery({
+    const { data: favoriteHotelsPageData, isLoading, error, refetch } = useGetHotelsPageQuery({
         pageIndex: pageIndex,
         pageSize: 6,
         isFavorite: true,
@@ -26,6 +26,7 @@ const FavoritesPage = () => {
         setFavoriteHotels(favoriteHotelsPageData?.data ?? []);
         setItemsAvailable(favoriteHotelsPageData?.itemsAvailable ?? 0);
         setPagesAvailable(favoriteHotelsPageData?.pagesAvailable ?? 0);
+        refetch();
     }, [favoriteHotelsPageData]);
 
     useEffect(() => {

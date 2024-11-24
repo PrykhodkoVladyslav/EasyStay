@@ -31,7 +31,7 @@ const RoomPage = () => {
             area: 0,
             numberOfRooms: 0,
             name: "",
-            quantity: 2,
+            quantity: 0,
             roomAmenityIds: [],
         },
     });

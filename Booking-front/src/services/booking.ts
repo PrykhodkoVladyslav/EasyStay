@@ -3,7 +3,7 @@ import { createBaseQuery } from "utils/apiUtils.ts";
 import ICreateBookingRequest from "interfaces/booking/ICreateBookingRequest.ts";
 import { format } from "date-fns";
 import IPage from "interfaces/page/IPage.ts";
-import { IBooking}  from "interfaces/booking/IBooking.ts";
+import { IBooking } from "interfaces/booking/IBooking.ts";
 import IBookingsPageQuery, { toQueryFromIBookingsPageQuery } from "interfaces/booking/IBookingsPageQuery.ts";
 
 export const bookingApi = createApi({

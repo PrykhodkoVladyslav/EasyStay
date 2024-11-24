@@ -33,6 +33,5 @@ export const roomVariantApi = createApi({
 
 export const {
     useCreateRoomVariantMutation,
-    // useUpdateRoomVariantMutation,
     useDeleteRoomVariantMutation,
 } = roomVariantApi;

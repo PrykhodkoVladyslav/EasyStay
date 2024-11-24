@@ -1,10 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-// import { Country, GetCountryPageRequest } from "interfaces/country";
 import { Country } from "interfaces/country";
-// import { GetPageResponse } from "interfaces/hotel.ts";
 import { createBaseQuery } from "utils/apiUtils.ts";
-// import {City} from "interfaces/city";
-// import { createQueryString } from "utils/createQueryString.ts";
 
 export const countryApi = createApi({
     reducerPath: "countryApi",
@@ -21,13 +17,6 @@ export const countryApi = createApi({
             query: () => "getAll",
             providesTags: ["Countries"],
         }),
-
-        // getPageCountries: builder.query<GetPageResponse<City>, GetCountryPageRequest>({
-        //     query: (params) => {
-        //         const queryString = createQueryString(params as Record<string, any>);
-        //         return `getPage?${queryString}`;
-        //     },
-        // }),
 
         addCountry: builder.mutation({
             query: (country: { name: string; image: File }) => {
@@ -80,5 +69,4 @@ export const {
     useAddCountryMutation,
     useUpdateCountryMutation,
     useDeleteCountryMutation,
-    // useGetPageCountriesQuery
 } = countryApi;

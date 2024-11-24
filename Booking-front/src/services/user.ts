@@ -22,37 +22,37 @@ import IRealtor from "interfaces/user/IRealtor.ts";
 export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: createBaseQuery("accounts"),
-    tagTypes: ["User"],
+    tagTypes: ["Users"],
 
     endpoints: (builder) => ({
         getAllCustomers: builder.query<IPage<ICustomer>, void>({
             query: () => "GetCustomerPage",
-            providesTags: ["User"],
+            providesTags: ["Users"],
         }),
 
         getAllRealtors: builder.query<IPage<IRealtor>, void>({
             query: () => "GetRealtorPage",
-            providesTags: ["User"],
+            providesTags: ["Users"],
         }),
 
         getRealtorDetails: builder.query<IRealtorDetails, string>({
             query: (id) => `GetRealtorDatails/${id}`,
-            providesTags: ["User"],
+            providesTags: ["Users"],
         }),
 
         getCustomersInformation: builder.query<ICustomerInformation, void>({
             query: () => "GetCustomersInformation",
-            providesTags: ["User"],
+            providesTags: ["Users"],
         }),
 
         getRealtorsInformation: builder.query<IRealtorInformation, void>({
             query: () => "GetRealtorsInformation",
-            providesTags: ["User"],
+            providesTags: ["Users"],
         }),
 
         getRealtorsPersonalRating: builder.query<number, void>({
             query: () => "GetRealtorsPersonalRating",
-            providesTags: ["User"],
+            providesTags: ["Users"],
         }),
 
         signIn: builder.mutation<SignInResponse, SignInRequest>({
@@ -67,6 +67,7 @@ export const userApi = createApi({
                     body: formData,
                 };
             },
+            invalidatesTags: ["Users"],
         }),
 
         registration: builder.mutation<SignInResponse, Registration>({
@@ -88,6 +89,7 @@ export const userApi = createApi({
                     body: formData,
                 };
             },
+            invalidatesTags: ["Users"],
         }),
 
         createAdmin: builder.mutation<void, CreateAdmin>({
@@ -108,7 +110,7 @@ export const userApi = createApi({
                     body: formData,
                 };
             },
-            invalidatesTags: ["User"],
+            invalidatesTags: ["Users"],
         }),
 
         blockUser: builder.mutation<void, BlockUserRequest>({
@@ -120,7 +122,7 @@ export const userApi = createApi({
                     lockoutEndUtc: lockoutEndUtc,
                 },
             }),
-            invalidatesTags: ["User"],
+            invalidatesTags: ["Users"],
         }),
 
         unlockUser: builder.mutation<void, UnlockUserRequest>({
@@ -128,7 +130,7 @@ export const userApi = createApi({
                 url: `unlockUserById/${request.id}`,
                 method: "PATCH",
             }),
-            invalidatesTags: ["User"],
+            invalidatesTags: ["Users"],
         }),
 
         sendResetPasswordEmail: builder.mutation<void, ISendResetPasswordEmailRequest>({
@@ -137,6 +139,7 @@ export const userApi = createApi({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags: ["Users"],
         }),
 
         resetPassword: builder.mutation<void, IResetPasswordRequest>({
@@ -145,6 +148,7 @@ export const userApi = createApi({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags: ["Users"],
         }),
 
         updateCustomersInformation: builder.mutation<void, IUpdateCustomerInformation>({
@@ -155,7 +159,7 @@ export const userApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["User"],
+            invalidatesTags: ["Users"],
         }),
 
         updateRealtorsInformation: builder.mutation<void, IUpdateRealtorInformation>({
@@ -166,7 +170,7 @@ export const userApi = createApi({
                     body: data,
                 };
             },
-            invalidatesTags: ["User"],
+            invalidatesTags: ["Users"],
         }),
     }),
 });

@@ -1,7 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
 import IPage from "interfaces/page/IPage.ts";
-import IRealtorReviewsPageQuery, { toQueryFromIRealtorReviewsPageQuery } from "interfaces/realtorReview/IRealtorReviewsPageQuery.ts";
+import IRealtorReviewsPageQuery, {
+    toQueryFromIRealtorReviewsPageQuery,
+} from "interfaces/realtorReview/IRealtorReviewsPageQuery.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
 
 export const realtorReviewApi = createApi({

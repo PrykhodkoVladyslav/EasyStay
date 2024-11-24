@@ -1,7 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
 import IPage from "interfaces/page/IPage.ts";
-import IHotelReviewsPageQuery, { toQueryFromIHotelReviewsPageQuery } from "interfaces/hotelReview/IHotelReviewsPageQuery.ts";
+import IHotelReviewsPageQuery, {
+    toQueryFromIHotelReviewsPageQuery,
+} from "interfaces/hotelReview/IHotelReviewsPageQuery.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
 
 export const hotelReviewApi = createApi({

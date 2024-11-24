@@ -1,9 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { createBaseQuery } from 'utils/apiUtils';
 import { IFavoriteHotel } from 'interfaces/favoriteHotel/IFavoriteHotel';
-import { IHotel } from "interfaces/hotel/IHotel.ts";
-import IPage from "interfaces/page/IPage.ts";
-import IHotelsPageQuery, { toQueryFromIHotelsPageQuery } from "interfaces/hotel/IHotelsPageQuery.ts";
 
 export const favoriteHotelApi = createApi({
     reducerPath: 'favoriteHotelApi',
@@ -39,7 +36,6 @@ export const favoriteHotelApi = createApi({
 });
 
 export const {
-    useGetFavoriteHotelsPageQuery,
     useIsFavoriteHotelQuery,
     useCreateFavoriteHotelMutation,
     useDeleteFavoriteHotelMutation,

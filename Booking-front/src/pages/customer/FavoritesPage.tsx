@@ -1,7 +1,7 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useEffect, useState } from "react";
 import { hotelOrderOptions } from "utils/orderMethods/hotelOrderOptions.ts";
-import { useGetFavoriteHotelsPageQuery } from "services/favoriteHotel.ts";
+import { useGetHotelsPageQuery } from "services/hotel.ts";
 import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
@@ -13,9 +13,10 @@ const FavoritesPage = () => {
     const [orderIndex, setOrderIndex] = useState(0);
     const nextOrder = () => setOrderIndex((orderIndex + 1 === hotelOrderOptions.length) ? 0 : orderIndex + 1);
 
-    const { data: favoriteHotelsPageData } = useGetFavoriteHotelsPageQuery({
+    const { data: favoriteHotelsPageData } = useGetHotelsPageQuery({
         pageIndex: pageIndex,
         pageSize: 6,
+        isFavorite: true,
         orderBy: hotelOrderOptions[orderIndex].key,
     });
     const [favoriteHotels, setFavoriteHotels] = useState(favoriteHotelsPageData?.data ?? []);

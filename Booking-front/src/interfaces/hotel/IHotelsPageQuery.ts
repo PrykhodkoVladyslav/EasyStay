@@ -47,9 +47,11 @@ export default interface IHotelsPageQuery extends IPaginationFilter {
 
     hasDiscount?: boolean;
 
-    orderBy?: string;
-
     onlyOwn?: boolean;
+
+    isFavorite?: boolean;
+
+    orderBy?: string;
 
     isRandomItems?: boolean;
 
@@ -200,12 +202,15 @@ export function toQueryFromIHotelsPageQuery(query: IHotelsPageQuery) {
 
     if (query.hasDiscount)
         queryItems.push({ key: "hasDiscount", value: query.hasDiscount.toString() });
-    
-    if (query.orderBy)
-        queryItems.push({ key: "orderBy", value: query.orderBy });
 
     if (query.onlyOwn != undefined)
         queryItems.push({ key: "onlyOwn", value: query.onlyOwn.toString() });
+
+    if (query.isFavorite != undefined)
+        queryItems.push({ key: "isFavorite", value: query.isFavorite.toString() });
+
+    if (query.orderBy)
+        queryItems.push({ key: "orderBy", value: query.orderBy });
 
     if (query.isRandomItems != undefined)
         queryItems.push({ key: "isRandomItems", value: query.isRandomItems.toString() });

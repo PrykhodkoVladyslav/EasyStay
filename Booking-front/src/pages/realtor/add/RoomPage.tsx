@@ -254,14 +254,18 @@ const RoomPage = () => {
                             <p className="title">Кількість ідентичних номерів</p>
                         </div>
                         <div className="room-container-7">
-                            <button onClick={() => handleQuantityChange(-1)} >﹘</button>
+                            <button
+                                type="button"
+                                onClick={() => handleQuantityChange(-1)} >﹘</button>
                             <div
                                 {...register("quantity")}
                                 id="quantity"
                             >
                                 {watch("quantity") || 0}
                             </div>
-                            <button onClick={() => handleQuantityChange(1)}>+</button>
+                            <button
+                                type="button"
+                                onClick={() => handleQuantityChange(1)}>+</button>
                         </div>
                         {errors?.quantity && (
                             <FormError className="text-red"

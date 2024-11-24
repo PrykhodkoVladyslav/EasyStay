@@ -5,6 +5,7 @@ import { useGetHotelsPageQuery } from "services/hotel.ts";
 import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
+import showToast from "utils/toastShow.ts";
 
 const FavoritesPage = () => {
     const [itemAvailable, setItemsAvailable] = useState(0);
@@ -13,7 +14,7 @@ const FavoritesPage = () => {
     const [orderIndex, setOrderIndex] = useState(0);
     const nextOrder = () => setOrderIndex((orderIndex + 1 === hotelOrderOptions.length) ? 0 : orderIndex + 1);
 
-    const { data: favoriteHotelsPageData } = useGetHotelsPageQuery({
+    const { data: favoriteHotelsPageData, isLoading, error } = useGetHotelsPageQuery({
         pageIndex: pageIndex,
         pageSize: 6,
         isFavorite: true,
@@ -40,6 +41,12 @@ const FavoritesPage = () => {
             realtorReviewsSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
+
+    if (isLoading) return <p className="isLoading-error pt-20 pb-20">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
         <div className="favorites-history-container">

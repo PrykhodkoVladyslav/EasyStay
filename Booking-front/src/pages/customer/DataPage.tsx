@@ -72,9 +72,9 @@ const DataPage = () => {
             setValue("phoneNumber", customerInfo.phoneNumber || "");
             setValue("dateOfBirth", customerInfo?.dateOfBirth ? new Date(customerInfo.dateOfBirth).toISOString().split("T")[0] : "");
             setValue("address", customerInfo.address || "");
-            setValue("citizenshipId", customerInfo?.citizenship?.id as number || undefined);
-            setValue("genderId", customerInfo?.gender?.id as number || undefined);
-            setValue("cityId", customerInfo?.city?.id as number || undefined);
+            setValue("citizenshipId", customerInfo?.citizenship?.id as number);
+            setValue("genderId", customerInfo?.gender?.id as number);
+            setValue("cityId", customerInfo?.city?.id as number);
         }
     }, [customerInfo, setValue]);
 

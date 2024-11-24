@@ -1,10 +1,12 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useEffect, useState } from "react";
 import { bookingOrderOptions } from "utils/orderMethods/bookingOrderOptions.ts";
-import { useGetBookingHotelsPageQuery } from "services/booking.ts";
+import { useGetBookingsPageQuery } from "services/booking.ts";
 import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
+import showToast from "utils/toastShow.ts";
+import { IBooking } from "interfaces/booking/IBooking.ts";
 
 const BookingHistoryPage = () => {
     const [itemAvailable, setItemsAvailable] = useState(0);
@@ -13,18 +15,18 @@ const BookingHistoryPage = () => {
     const [orderIndex, setOrderIndex] = useState(0);
     const nextOrder = () => setOrderIndex((orderIndex + 1 === bookingOrderOptions.length) ? 0 : orderIndex + 1);
 
-    const { data: bookingHotelsPageData } = useGetBookingHotelsPageQuery({
+    const { data: bookingsPageData, isLoading, error } = useGetBookingsPageQuery({
         pageIndex: pageIndex,
         pageSize: 6,
         orderBy: bookingOrderOptions[orderIndex].key,
     });
-    const [bookingHotels, setBookingHotels] = useState(bookingHotelsPageData?.data ?? []);
+    const [bookings, setBookings] = useState(bookingsPageData?.data ?? []);
 
     useEffect(() => {
-        setBookingHotels(bookingHotelsPageData?.data ?? []);
-        setItemsAvailable(bookingHotelsPageData?.itemsAvailable ?? 0);
-        setPagesAvailable(bookingHotelsPageData?.pagesAvailable ?? 0);
-    }, [bookingHotelsPageData]);
+        setBookings(bookingsPageData?.data ?? []);
+        setItemsAvailable(bookingsPageData?.itemsAvailable ?? 0);
+        setPagesAvailable(bookingsPageData?.pagesAvailable ?? 0);
+    }, [bookingsPageData]);
 
     useEffect(() => {
         if (pageIndex > 0 && pageIndex >= pagesAvailable)
@@ -39,6 +41,12 @@ const BookingHistoryPage = () => {
             realtorReviewsSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
+
+    if (isLoading) return <p className="isLoading-error pt-20 pb-20">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
 
     return (
         <div className="favorites-history-container">
@@ -59,10 +67,10 @@ const BookingHistoryPage = () => {
                 <OrderByButton orderName={bookingOrderOptions[orderIndex].value} onNextOrder={nextOrder}/>
             </div>
 
-            {bookingHotels.length > 0 ? (
+            {bookings.length > 0 ? (
                 <div className="hotels-and-reviews">
-                    {bookingHotels.map((item) => (
-                        <HotelCard key={item.id} item={item}/>
+                    {bookings.map((booking: IBooking) => (
+                        <HotelCard key={booking.id} item={booking.hotel} />
                     ))}
                 </div>
             ) : (

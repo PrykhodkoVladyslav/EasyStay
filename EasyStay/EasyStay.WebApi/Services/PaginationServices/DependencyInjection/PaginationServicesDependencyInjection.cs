@@ -1,6 +1,7 @@
 ﻿using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
 using EasyStay.Application.MediatR.Accounts.Queries.GetRealtorPage;
+using EasyStay.Application.MediatR.Bookings.Queries.GetPage;
 using EasyStay.Application.MediatR.Breakfasts.Queries.GetPage;
 using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
 using EasyStay.Application.MediatR.Cities.Queries.GetAdvertisingPage;
@@ -52,6 +53,7 @@ public static class PaginationServicesDependencyInjection {
 		services.AddScoped<IPaginationService<RealtorReviewVm, GetRealtorReviewsPageQuery>, RealtorReviewPaginationService>();
 		services.AddScoped<IPaginationService<CitizenshipVm, GetCitizenshipsPageQuery>, CitizenshipPaginationService>();
 		services.AddScoped<IPaginationService<HotelReviewVm, GetHotelReviewsPageQuery>, HotelReviewPaginationService>();
+		services.AddScoped<IPaginationService<BookingVm, GetBookingsPageQuery>, BookingPaginationService>();
 
 		return services;
 	}

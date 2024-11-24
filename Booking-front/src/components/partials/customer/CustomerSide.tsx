@@ -1,37 +1,32 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import { API_URL } from "utils/getEnvData.ts";
 import { useSelector } from "react-redux";
 import { getUser } from "store/slice/userSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 
 const RealtorSide = () => {
     const user = useSelector(getUser);
     const navigate = useNavigate();
-    const [activePage, setActivePage] = useState<string | null>(() => {
-        const savedPage = localStorage.getItem("activePage");
-        return savedPage ? savedPage : null;
-    });
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    const activePage = activeMenuItemContext?.activePage;
 
-    useEffect(() => {
-        if (activePage) {
-            localStorage.setItem("activePage", activePage);
-        }
-    }, [activePage]);
-    
     if (!user) {
         return null;
     }
 
     const buttons = [
-        { name: "Особисті дані", path: "customer/personal-data" },
-        { name: "Збережене", path: "customer/favorites" },
-        { name: "Платіжні дані", path: "customer/payment-data" },
-        { name: "Історія бронювань", path: "customer/booking-history" },
+        { key: "personal-data", name: "Особисті дані", path: "customer/personal-data" },
+        { key: "favorites", name: "Збережене", path: "customer/favorites" },
+        { key: "payment", name: "Платіжні дані", path: "customer/payment-data" },
+        { key: "bookings", name: "Історія бронювань", path: "customer/booking-history" },
     ];
 
     const handleButtonClick = (buttonKey: string, buttonPath: string) => {
-        setActivePage(buttonKey);
+        activeMenuItemContext?.setActivePage(buttonKey);
         navigate(`/${buttonPath}`);
     };
 
@@ -41,7 +36,7 @@ const RealtorSide = () => {
                 <div className="head">
                     {user.photo ? (
                         <img
-                            src={API_URL + `/images/800_${user.photo}`}
+                            src={getApiImageUrl(user.photo, 800)}
                             alt=""
                         />
                     ) : (
@@ -61,12 +56,12 @@ const RealtorSide = () => {
                     <div className="items">
                         {buttons.map((button) => (
                             <button
-                                key={button.name}
+                                key={button.key}
                                 className="item"
-                                onClick={() => handleButtonClick(button.name, button.path)}
+                                onClick={() => handleButtonClick(button.key, button.path)}
                                 style={{
-                                    background: activePage === button.name ? "rgb(63, 82, 60)" : "none",
-                                    color: activePage === button.name ? "white" : "black",
+                                    background: activePage === button.key ? "rgb(63, 82, 60)" : "none",
+                                    color: activePage === button.key ? "white" : "black",
                                 }}
                             >
                                 {button.name}

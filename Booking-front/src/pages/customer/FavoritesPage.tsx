@@ -1,13 +1,24 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { hotelOrderOptions } from "utils/orderMethods/hotelOrderOptions.ts";
 import { useGetHotelsPageQuery } from "services/hotel.ts";
 import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
 import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
 import showToast from "utils/toastShow.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const FavoritesPage = () => {
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("favorites");
+    }, []);
+
     const [itemAvailable, setItemsAvailable] = useState(0);
     const [pagesAvailable, setPagesAvailable] = useState(0);
     const [pageIndex, setPageIndex] = useState(0);
@@ -63,13 +74,13 @@ const FavoritesPage = () => {
                 {/*        <img src={getIconUrl("calendarV2.svg")} alt="order" />*/}
                 {/*    </button>*/}
                 {/*</div>*/}
-                <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder}/>
+                <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
             </div>
 
             {favoriteHotels.length > 0 ? (
                 <div className="hotels-and-reviews">
                     {favoriteHotels.map((item) => (
-                        <HotelCard key={item.id} item={item}/>
+                        <HotelCard key={item.id} item={item} />
                     ))}
                 </div>
             ) : (

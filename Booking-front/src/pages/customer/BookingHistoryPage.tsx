@@ -1,5 +1,5 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { bookingOrderOptions } from "utils/orderMethods/bookingOrderOptions.ts";
 import { useGetBookingsPageQuery } from "services/booking.ts";
 import OrderByButton from "components/partials/shared/OrderByButton/OrderByButton.tsx";
@@ -7,8 +7,19 @@ import HotelCard from "components/partials/customer/HotelCard.tsx";
 import Pagination from "rc-pagination";
 import showToast from "utils/toastShow.ts";
 import { IBooking } from "interfaces/booking/IBooking.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const BookingHistoryPage = () => {
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("bookings");
+    }, []);
+
     const [itemAvailable, setItemsAvailable] = useState(0);
     const [pagesAvailable, setPagesAvailable] = useState(0);
     const [pageIndex, setPageIndex] = useState(0);
@@ -64,7 +75,7 @@ const BookingHistoryPage = () => {
                 {/*    </button>*/}
                 {/*</div>*/}
 
-                <OrderByButton orderName={bookingOrderOptions[orderIndex].value} onNextOrder={nextOrder}/>
+                <OrderByButton orderName={bookingOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
             </div>
 
             {bookings.length > 0 ? (

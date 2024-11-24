@@ -2,10 +2,14 @@ import { getIconUrl } from "utils/publicAccessor.ts";
 import { useCreateBankCardMutation, useDeleteBankCardMutation, useGetAllBankCardsQuery } from "services/bankCard.ts";
 import { format } from "date-fns";
 import showToast from "utils/toastShow.ts";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./../../css/bank-card-info-container.scss";
 import ICreateBankCardRequest from "interfaces/bankCard/ICreateBankCardRequest.ts";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const modalStyles = {
     content: {
@@ -21,6 +25,13 @@ const modalStyles = {
 };
 
 const PaymentDataPage = () => {
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("payment");
+    }, []);
+
     const [isOpenAddCardModal, setIsOpenAddCardModal] = useState(false);
 
     const { data: bankCardsData } = useGetAllBankCardsQuery();

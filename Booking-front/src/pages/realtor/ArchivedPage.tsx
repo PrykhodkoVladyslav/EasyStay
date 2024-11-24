@@ -76,7 +76,7 @@ const ArchivedPage = () => {
     }
 
     return (
-        <div className="hotels-content" id="hotels">
+        <div className="hotels-container" id="hotels">
             <div className="top">
                 <p className="global-title">Архів оголошень</p>
                 <OrderByButton orderName={hotelOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
@@ -128,7 +128,7 @@ const ArchivedPage = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="isLoading-error">У вас немає архівованих готелів</p>
+                    <p className="isLoading-error pt-20 pb-20">У вас немає архівованих готелів</p>
                 )}
             </div>
 

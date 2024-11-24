@@ -34,7 +34,7 @@ const RoomsPage = () => {
     }
 
     return (
-        <div className="rooms-content">
+        <div className="rooms-container">
             <p className="global-title">Номери готелю ,,{hotelData?.name},,</p>
             <button
                 onClick={() => navigate(`/realtor/add/room/${numericId}`)}
@@ -55,159 +55,163 @@ const RoomsPage = () => {
                     </thead>
 
                     <tbody>
-                    {rooms.map((room) => (
-                        <tr key={room.id}>
-                            <td className="room-type">
-                                <p className="title">{room.name}</p>
-                                <div className="features">
-                                    {room.amenities.map((amenity: IRoomAmenity) => (
-                                        <div key={amenity.id}>
-                                            <img src={getPublicResourceUrl("icons/check.svg")} alt=""/>
-                                            <p>{amenity.name}</p>
+                    {rooms.length > 0 ? (
+                        rooms.map((room) => (
+                            <tr key={room.id}>
+                                <td className="room-type">
+                                    <p className="title">{room.name}</p>
+                                    <div className="features">
+                                        {room.amenities.map((amenity: IRoomAmenity) => (
+                                            <div key={amenity.id}>
+                                                <img src={getPublicResourceUrl("icons/check.svg")} alt=""/>
+                                                <p>{amenity.name}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </td>
+
+                                <td className="peoples">
+                                    {room.variants.map((variant: IRoomVariant) => (
+                                        <div className="cols" key={variant.id}>
+                                            <div className="flex flex-wrap">
+                                                {Array.from({length: variant.guestInfo.adultCount}).map((_, idx) => (
+                                                    <img
+                                                        key={`adult-${idx}`}
+                                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
+                                                        alt="Adult"
+                                                        title="Дорослий"
+                                                    />
+                                                ))}
+                                                {Array.from({length: variant.guestInfo.childCount}).map((_, idx) => (
+                                                    <img
+                                                        key={`child-${idx}`}
+                                                        src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
+                                                        alt="Child"
+                                                        title="Дитина"
+                                                        className="child"
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
                                     ))}
-                                </div>
-                            </td>
+                                </td>
 
-                            <td className="peoples">
-                                {room.variants.map((variant: IRoomVariant) => (
-                                    <div className="cols" key={variant.id}>
-                                        <div className="flex flex-wrap">
-                                            {Array.from({length: variant.guestInfo.adultCount}).map((_, idx) => (
-                                                <img
-                                                    key={`adult-${idx}`}
-                                                    src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                                    alt="Adult"
-                                                    title="Дорослий"
-                                                />
-                                            ))}
-                                            {Array.from({length: variant.guestInfo.childCount}).map((_, idx) => (
-                                                <img
-                                                    key={`child-${idx}`}
-                                                    src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
-                                                    alt="Child"
-                                                    title="Дитина"
-                                                    className="child"
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </td>
-
-                            <td className="bed-type">
-                                {room.variants.map((variant: IRoomVariant) => (
-                                    <div className="cols" key={variant.id}>
-                                        <p className="title">Оберіть тип ліжка</p>
-
-                                        {variant.bedInfo.doubleBedCount > 0 && (
-                                            <div className="flex">
-                                                <label htmlFor={`double-bed_${variant.id}`}>
-                                                    <p>двоспальне ліжко</p>
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/bed/double-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                </label>
-                                            </div>
-                                        )}
-
-                                        {variant.bedInfo.singleBedCount > 0 && (
-                                            <div className="flex">
-                                                <label htmlFor={`single-bed_${variant.id}`}>
-                                                    <p>односпальне ліжко</p>
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/bed/single-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                </label>
-                                            </div>
-                                        )}
-
-                                        {variant.bedInfo.extraBedCount > 0 && (
-                                            <div className="flex">
-                                                <label htmlFor={`extra-bed_${variant.id}`}>
-                                                    <p>додаткове ліжко</p>
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/bed/additional-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                </label>
-                                            </div>
-                                        )}
-
-                                        {variant.bedInfo.sofaCount > 0 && (
-                                            <div className="flex">
-                                                <label htmlFor={`sofa-bed_${variant.id}`}>
-                                                    <p>софа</p>
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/bed/sofa-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                </label>
-                                            </div>
-                                        )}
-
-                                        {variant.bedInfo.kingsizeBedCount > 0 && (
-                                            <div className="flex">
-                                                <label htmlFor={`bed_kingsize_${variant.id}`}>
-                                                    <p>Кінгсайз</p>
-                                                    <img
-                                                        src={getPublicResourceUrl("icons/bed/kingsize-bed.svg")}
-                                                        alt=""
-                                                    />
-                                                </label>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </td>
-
-                            <td className="advantages">
-                                {room.variants.map((variant: IRoomVariant) => (
-                                    <div className="cols" key={variant.id}>
-                                        <p><span>Тип кімнати:</span> {room.roomType.name}</p>
-
-                                        <p><span>Площа:</span> {room.area.toFixed(1)} м²</p>
-
-                                        <p><span>Кількість кімнат:</span> {room.numberOfRooms}</p>
-                                    </div>
-                                ))}
-                            </td>
-
-                            <td className="price">
-                                {room.variants.map((variant: IRoomVariant) => {
-                                    const discountPrice = variant.price != null ? variant.price : variant.discountPrice;
-                                    const basePrice = variant.discountPrice != null ? variant.discountPrice : variant.price;
-
-                                    return (
+                                <td className="bed-type">
+                                    {room.variants.map((variant: IRoomVariant) => (
                                         <div className="cols" key={variant.id}>
-                                            <div className="flex flex-row gap-2 flex-wrap">
-                                                <p className="new-price" title="Нова ціна">
-                                                    {basePrice.toFixed(0) + "$"}
-                                                </p>
-                                                {variant.discountPrice != null || 0 && (
-                                                    <p className="old-price" title="Стара ціна">
-                                                        {discountPrice != null && discountPrice.toFixed(0) + "$"}
-                                                    </p>
-                                                )}
-                                                <p className="description">Включає податки та збори</p>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </td>
+                                            <p className="title">Оберіть тип ліжка</p>
 
-                            <td className="book items">
-                                <button className="btn-book" onClick={() => navigate(`/realtor/edit/room/${room.id}`)}>
-                                    Редагувати
-                                </button>
-                                <button className="trash" onClick={() => handleDeleteRoom(room.id)}>
-                                    <img src={getPublicResourceUrl("account/trash.svg")} alt=""/>
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                            {variant.bedInfo.doubleBedCount > 0 && (
+                                                <div className="flex">
+                                                    <label htmlFor={`double-bed_${variant.id}`}>
+                                                        <p>двоспальне ліжко</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/bed/double-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
+                                                </div>
+                                            )}
+
+                                            {variant.bedInfo.singleBedCount > 0 && (
+                                                <div className="flex">
+                                                    <label htmlFor={`single-bed_${variant.id}`}>
+                                                        <p>односпальне ліжко</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/bed/single-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
+                                                </div>
+                                            )}
+
+                                            {variant.bedInfo.extraBedCount > 0 && (
+                                                <div className="flex">
+                                                    <label htmlFor={`extra-bed_${variant.id}`}>
+                                                        <p>додаткове ліжко</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/bed/additional-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
+                                                </div>
+                                            )}
+
+                                            {variant.bedInfo.sofaCount > 0 && (
+                                                <div className="flex">
+                                                    <label htmlFor={`sofa-bed_${variant.id}`}>
+                                                        <p>софа</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/bed/sofa-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
+                                                </div>
+                                            )}
+
+                                            {variant.bedInfo.kingsizeBedCount > 0 && (
+                                                <div className="flex">
+                                                    <label htmlFor={`bed_kingsize_${variant.id}`}>
+                                                        <p>Кінгсайз</p>
+                                                        <img
+                                                            src={getPublicResourceUrl("icons/bed/kingsize-bed.svg")}
+                                                            alt=""
+                                                        />
+                                                    </label>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </td>
+
+                                <td className="advantages">
+                                    {room.variants.map((variant: IRoomVariant) => (
+                                        <div className="cols" key={variant.id}>
+                                            <p><span>Тип кімнати:</span> {room.roomType.name}</p>
+
+                                            <p><span>Площа:</span> {room.area.toFixed(1)} м²</p>
+
+                                            <p><span>Кількість кімнат:</span> {room.numberOfRooms}</p>
+                                        </div>
+                                    ))}
+                                </td>
+
+                                <td className="price">
+                                    {room.variants.map((variant: IRoomVariant) => {
+                                        const discountPrice = variant.price != null ? variant.price : variant.discountPrice;
+                                        const basePrice = variant.discountPrice != null ? variant.discountPrice : variant.price;
+
+                                        return (
+                                            <div className="cols" key={variant.id}>
+                                                <div className="flex flex-row gap-2 flex-wrap">
+                                                    <p className="new-price" title="Нова ціна">
+                                                        {basePrice.toFixed(0) + "$"}
+                                                    </p>
+                                                    {variant.discountPrice != null || 0 && (
+                                                        <p className="old-price" title="Стара ціна">
+                                                            {discountPrice != null && discountPrice.toFixed(0) + "$"}
+                                                        </p>
+                                                    )}
+                                                    <p className="description">Включає податки та збори</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </td>
+
+                                <td className="book items">
+                                    <button className="btn-book" onClick={() => navigate(`/realtor/edit/room/${room.id}`)}>
+                                        Редагувати
+                                    </button>
+                                    <button className="trash" onClick={() => handleDeleteRoom(room.id)}>
+                                        <img src={getPublicResourceUrl("account/trash.svg")} alt=""/>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <p className="isLoading-error pt-20 pb-20">У цього готелю немає Номерів</p>
+                    )}
                     </tbody>
                 </table>
             </div>

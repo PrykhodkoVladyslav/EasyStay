@@ -1601,7 +1601,7 @@
 
 
   // Головна
-  .home-content {
+  .home-container {
     display: flex;
     flex-direction: column;
 
@@ -1713,7 +1713,7 @@
   }
 
   // Особисті дані
-  .data-content {
+  .data-container {
     width: 100%;
     max-width: 850px;
     display: flex;
@@ -1858,7 +1858,7 @@
   }
 
   // Мої готелі/архів
-  .hotels-content {
+  .hotels-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -1995,7 +1995,7 @@
   }
 
   // Відгуки
-  .reviews-content {
+  .reviews-container {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -2052,7 +2052,7 @@
     }
   }
 
-
+  // Платіжні дані
   .payment-container {
     width: 100%;
     max-width: 850px;
@@ -2202,49 +2202,64 @@
 
   }
 
-  .favorites-component {
+  .favorites-history-container {
     width: 100%;
     max-width: 1700px;
 
-    .pre-title {
-      width: 850px;
-      height: 39px;
-      font-family: "Montserrat", system-ui;
-      font-size: 32px;
-      font-weight: 600;
-    }
-
-    .sort-date-div {
+    .top {
       display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 20px;
 
-      gap: 32px;
-      height: 56px;
-      position: relative;
-      margin-top: 16px;
-      margin-bottom: 32px;
-
-
-      .sort-btn {
-        font-size: 20px;
-        font-weight: 600;
-        font-family: "Montserrat", system-ui;
-        width: 277px;
-        height: 56px;
-        background-color: #F7F7FD;
-        border-radius: 25px;
+      .sort-date-div {
         display: flex;
-        flex-direction: row;
-        justify-content: left;
-        align-items: center;
-        line-height: 20px;
-        padding: 20px;
+        gap: 32px;
+        height: 56px;
+        position: relative;
+        margin-bottom: 32px;
 
-        .order-title {
-          color: rgb(0, 0, 0);
-          font-family: var(--font-montserrat), system-ui;
+        .sort-btn {
           font-size: 20px;
           font-weight: 600;
+          font-family: "Montserrat", system-ui;
+          width: 277px;
+          height: 56px;
+          background-color: #F7F7FD;
+          border-radius: 25px;
+          display: flex;
+          flex-direction: row;
+          justify-content: left;
+          align-items: center;
           line-height: 20px;
+          padding: 20px;
+
+          .order-title {
+            color: rgb(0, 0, 0);
+            font-family: var(--font-montserrat), system-ui;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 20px;
+
+            .order-name {
+              font-family: var(--font-nunito), system-ui;
+              font-weight: 500;
+              line-height: 24px;
+            }
+          }
+        }
+
+        .date-btn {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          line-height: 20px;
+          padding: 20px;
+          border-radius: 25px;
+          background-color: #F7F7FD;
+          height: 56px;
+          width: 175px;
 
           .order-name {
             font-family: var(--font-nunito), system-ui;
@@ -2253,31 +2268,42 @@
           }
         }
       }
+    }
 
-      .date-btn {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        line-height: 20px;
-        padding: 20px;
-        border-radius: 25px;
-        background-color: #F7F7FD;
-        height: 56px;
-        width: 175px;
+    .hotels-and-reviews {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 50px 0 50px;
+      gap: 23px;
 
-        .order-name {
-          font-family: var(--font-nunito), system-ui;
-          font-weight: 500;
-          line-height: 24px;
-        }
+      @media screen and (max-width: 1310px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
       }
 
+      @media screen and (max-width: 960px) {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .hotel-item,
+      .review {
+        flex: 1 1 calc(33.3333% - 24px);
+        //max-width: none;
+
+        @media screen and (max-width: 1310px) {
+          flex: none;
+          max-width: none;
+          width: 100%;
+        }
+      }
     }
   }
 
   // Номери
-  .rooms-content {
+  .rooms-container {
     .add-room-btn {
       color: var(--color-primary);
       font-family: var(--font-montserrat), system-ui;
@@ -4318,7 +4344,7 @@
 
 
 //////////СТОРІНКА РІЕЛТОРА ДЛЯ КОРИСТУВАЧА
-.all-conteiner-realtor {
+.realtor-page-container {
   margin-top: 70px;
 
   .realtor-card {

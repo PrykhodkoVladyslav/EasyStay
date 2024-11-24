@@ -2,6 +2,9 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "utils/apiUtils.ts";
 import ICreateBookingRequest from "interfaces/booking/ICreateBookingRequest.ts";
 import { format } from "date-fns";
+import IPage from "interfaces/page/IPage.ts";
+import { IBooking}  from "interfaces/booking/IBooking.ts";
+import IBookingsPageQuery, { toQueryFromIBookingsPageQuery } from "interfaces/booking/IBookingsPageQuery.ts";
 
 export const bookingApi = createApi({
     reducerPath: "bookingApi",
@@ -9,6 +12,18 @@ export const bookingApi = createApi({
     tagTypes: ["Bookings"],
 
     endpoints: (build) => ({
+        getBookingsPage: build.query<IPage<IBooking>, IBookingsPageQuery | undefined>({
+            query: (query) => {
+                const baseQuery = "GetPage";
+
+                if (!query)
+                    return baseQuery;
+
+                return `${baseQuery}?${toQueryFromIBookingsPageQuery(query)}`;
+            },
+            providesTags: ["Bookings"],
+        }),
+
         createBooking: build.mutation<number, ICreateBookingRequest>({
             query: (booking) => ({
                 url: "create",
@@ -29,5 +44,6 @@ export const bookingApi = createApi({
 });
 
 export const {
+    useGetBookingsPageQuery,
     useCreateBookingMutation,
 } = bookingApi;

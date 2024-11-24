@@ -25,10 +25,6 @@ const MyHotels = () => {
 
     const hasMoreHotels = (hotelsData?.itemsAvailable ?? 0) > pageSize;
 
-    const handleHotelClick = () => {
-        navigate("/realtor/hotels");
-    };
-
     if (isLoading) return <p className="isLoading-error">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");
@@ -39,13 +35,13 @@ const MyHotels = () => {
         <>
             <p className="pre-title">Мої готелі</p>
             {hotels.length > 0 ? (
-                <div className="hotels-and-reviews" onClick={handleHotelClick}>
+                <div className="hotels-and-reviews" onClick={() => navigate("/realtor/hotels")}>
                     {hotels.map((item) => (
                         <HotelCard key={item.id} item={item} />
                     ))}
                 </div>
             ) : (
-                <p className="isLoading-error">У вас немає готелів</p>
+                <p className="isLoading-error pt-20 pb-20">У вас немає готелів</p>
             )}
 
             {hasMoreHotels && (

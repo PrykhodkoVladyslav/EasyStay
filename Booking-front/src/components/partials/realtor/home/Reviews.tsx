@@ -52,7 +52,7 @@ const Reviews = () => {
                     ))}
                 </div>
             ) : (
-                <p className="isLoading-error">У вас немає відгуків</p>
+                <p className="isLoading-error pt-20 pb-20">У вас немає відгуків</p>
             )}
 
             {hasMoreReviews && (

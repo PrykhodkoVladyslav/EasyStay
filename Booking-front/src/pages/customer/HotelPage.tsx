@@ -104,7 +104,7 @@ const HotelPage = () => {
         setHasSearched(true);
     };
 
-    if (isLoading || !hotelData) return <p className="isLoading-error pt-20">Завантаження...</p>;
+    if (isLoading || !hotelData) return <p className="isLoading-error pt-20 pb-20">Завантаження...</p>;
     if (error) {
         showToast("Помилка завантаження даних", "error");
         return null;

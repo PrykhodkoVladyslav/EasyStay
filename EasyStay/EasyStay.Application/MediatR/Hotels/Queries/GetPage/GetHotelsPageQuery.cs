@@ -52,6 +52,8 @@ public class GetHotelsPageQuery : PaginationFilterDto, IRequest<PageVm<HotelVm>>
 
 	public bool? OnlyOwn { get; set; }
 
+	public bool? IsFavorite { get; set; }
+
 	public string? OrderBy { get; set; }
 
 	public bool? IsRandomItems { get; set; }

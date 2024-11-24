@@ -205,10 +205,20 @@ public class HotelPaginationService(
 			);
 
 		if (filter.OnlyOwn == true) {
-			var id = currentUser.GetUserId()
+			var userId = currentUser.GetUserId()
 				?? throw new UnauthorizedException("User is not authorized");
 
-			query = query.Where(h => h.RealtorId == id);
+			query = query.Where(h => h.RealtorId == userId);
+		}
+
+		if (filter.IsFavorite is not null) {
+			var userId = currentUser.GetUserId()
+				?? throw new UnauthorizedException("User is not authorized");
+
+			query = query.Where(
+				h => h.FavoriteHotels
+					.Any(fh => fh.HotelId == h.Id && fh.CustomerId == userId) == filter.IsFavorite
+			);
 		}
 
 		if (filter.AllHotelAmenityIds is not null)

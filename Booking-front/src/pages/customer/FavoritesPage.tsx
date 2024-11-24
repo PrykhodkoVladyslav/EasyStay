@@ -19,7 +19,6 @@ const FavoritesPage = () => {
         orderBy: hotelOrderOptions[orderIndex].key,
     });
     const [favoriteHotels, setFavoriteHotels] = useState(favoriteHotelsPageData?.data ?? []);
-    // console.log("улюб", favoriteHotelsPageData);
 
     useEffect(() => {
         setFavoriteHotels(favoriteHotelsPageData?.data ?? []);

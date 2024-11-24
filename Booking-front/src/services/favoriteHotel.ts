@@ -11,23 +11,6 @@ export const favoriteHotelApi = createApi({
     tagTypes: ['FavoriteHotels'],
 
     endpoints: (builder) => ({
-        getAllFavoriteHotels: builder.query<IHotel[], void>({
-            query: () => "getAll",
-            providesTags: ['FavoriteHotels'],
-        }),
-
-        getFavoriteHotelsPage: builder.query<IPage<IHotel>, IHotelsPageQuery | undefined>({
-            query: (query) => {
-                const baseQuery = "GetPage";
-
-                if (!query)
-                    return baseQuery;
-
-                return `${baseQuery}?${toQueryFromIHotelsPageQuery(query)}`;
-            },
-            providesTags: ["FavoriteHotels"],
-        }),
-
         isFavoriteHotel: builder.query<boolean, { hotelId: number }>({
             query: (hotelId) => ({
                 url: `isFavoriteHotel/${hotelId}`,
@@ -56,7 +39,6 @@ export const favoriteHotelApi = createApi({
 });
 
 export const {
-    useGetAllFavoriteHotelsQuery,
     useGetFavoriteHotelsPageQuery,
     useIsFavoriteHotelQuery,
     useCreateFavoriteHotelMutation,

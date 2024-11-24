@@ -1,6 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { createBaseQuery } from 'utils/apiUtils';
-import { IFavoriteHotel } from 'interfaces/favoriteHotel/IFavoriteHotel';
 
 export const favoriteHotelApi = createApi({
     reducerPath: 'favoriteHotelApi',
@@ -8,7 +7,7 @@ export const favoriteHotelApi = createApi({
     tagTypes: ['FavoriteHotels'],
 
     endpoints: (builder) => ({
-        isFavoriteHotel: builder.query<boolean, { hotelId: number }>({
+        isFavoriteHotel: builder.query<boolean, number>({
             query: (hotelId) => ({
                 url: `isFavoriteHotel/${hotelId}`,
                 method: 'GET',
@@ -16,11 +15,11 @@ export const favoriteHotelApi = createApi({
             providesTags: ['FavoriteHotels'],
         }),
 
-        createFavoriteHotel: builder.mutation<void, IFavoriteHotel>({
-            query: (favoriteHotel) => ({
+        createFavoriteHotel: builder.mutation<void, { hotelId: number }>({
+            query: (hotelId) => ({
                 url: "create",
                 method: 'POST',
-                body: favoriteHotel,
+                body: hotelId,
             }),
             invalidatesTags: ['FavoriteHotels'],
         }),

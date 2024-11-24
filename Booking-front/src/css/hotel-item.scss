@@ -1,4 +1,5 @@
 .hotel-item {
+  position: relative;
   flex: 1 1 calc(33.333% - 24px);
   max-width: calc(33.333% - 24px);
   min-width: 250px;
@@ -11,6 +12,29 @@
 
   @media screen and (min-width: 2440px) {
     flex: 1 1 calc(25% - 24px);
+  }
+
+  .btn-favorite {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 100;
+
+    img {
+      width: 24px;
+      min-width: 24px;
+      height: 24px;
+      transition: all 0.3s ease;
+    }
+  }
+
+  .btn-favorite:hover {
+    img {
+      width: 30px;
+      min-width: 30px;
+      height: 30px;
+    }
+
   }
 
   .photo-slider {

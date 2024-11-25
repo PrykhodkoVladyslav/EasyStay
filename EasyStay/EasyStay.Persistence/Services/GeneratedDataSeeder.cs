@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using EasyStay.Application.Interfaces;
+using EasyStay.Application.MediatR.Bookings.Queries.GetPage;
 using EasyStay.Domain;
 using EasyStay.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,9 @@ public class GeneratedDataSeeder(
 
 		if (!await context.Bookings.AnyAsync(cancellationToken))
 			await SeedBookingsAsync(cancellationToken);
+
+		if (!await context.HotelReviews.AnyAsync(cancellationToken))
+			await SeedHotelReviewsAsync(cancellationToken);
 	}
 
 	private async Task SeedAddressesAsync(CancellationToken cancellationToken) {
@@ -301,6 +305,31 @@ public class GeneratedDataSeeder(
 
 			await context.Bookings.AddAsync(booking, cancellationToken);
 		}
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedHotelReviewsAsync(CancellationToken cancellationToken) {
+		var bookings = await context.Bookings.ToArrayAsync(cancellationToken);
+
+		var faker = new Faker<HotelReview>()
+			.RuleFor(hr => hr.Description, faker => faker.Lorem.Sentences(3))
+			.RuleFor(hr => hr.Score, faker => {
+				if (faker.Random.Bool(0.2F))
+					return null;
+
+				return faker.Random.Int(1, 10);
+			})
+			.RuleFor(hr => hr.CreatedAtUtc, faker => DateTime.UtcNow.AddHours(faker.Random.Int(-24, 24)));
+
+		var reviews = bookings
+			.Select(b => {
+				var review = faker.Generate();
+				review.BookingId = b.Id;
+				return review;
+			});
+
+		await context.HotelReviews.AddRangeAsync(reviews, cancellationToken);
 
 		await context.SaveChangesAsync(cancellationToken);
 	}

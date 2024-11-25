@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using EasyStay.Application.Interfaces;
-using EasyStay.Application.MediatR.RoomVariants.Queries.Shared;
 using EasyStay.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +13,6 @@ public class GeneratedDataSeeder(
 	public async Task SeedAsync(CancellationToken cancellationToken = default) {
 		if (!await context.Addresses.AnyAsync(cancellationToken))
 			await SeedAddressesAsync(cancellationToken);
-
-		if (!await context.HotelCategories.AnyAsync(cancellationToken))
-			await SeedHotelCategoriesAsync(cancellationToken);
 
 		if (!await context.Hotels.AnyAsync(cancellationToken))
 			await SeedHotelsAsync(cancellationToken);
@@ -71,23 +67,6 @@ public class GeneratedDataSeeder(
 			};
 
 			await context.Addresses.AddAsync(address, cancellationToken);
-		}
-
-		await context.SaveChangesAsync(cancellationToken);
-	}
-
-	private async Task SeedHotelCategoriesAsync(CancellationToken cancellationToken) {
-		Faker faker = new Faker();
-		var uniqueNames = new HashSet<string>();
-
-		while (uniqueNames.Count < 10) {
-			var newHotelTypeName = faker.Commerce.Department();
-
-			if (uniqueNames.Add(newHotelTypeName)) {
-				var hotelCategory = new HotelCategory { Name = newHotelTypeName };
-
-				await context.HotelCategories.AddAsync(hotelCategory, cancellationToken);
-			}
 		}
 
 		await context.SaveChangesAsync(cancellationToken);

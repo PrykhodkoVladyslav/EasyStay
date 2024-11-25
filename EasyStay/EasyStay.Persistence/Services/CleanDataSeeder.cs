@@ -28,6 +28,9 @@ public class CleanDataSeeder(
 		if (!await context.RentalPeriods.AnyAsync(cancellationToken))
 			await SeedRentalPeriodsAsync(cancellationToken);
 
+		if (!await context.HotelCategories.AnyAsync(cancellationToken))
+			await SeedHotelCategoriesAsync(cancellationToken);
+
 		if (!await context.HotelAmenities.AnyAsync(cancellationToken))
 			await SeedHotelAmenitiesAsync(cancellationToken);
 
@@ -652,6 +655,31 @@ public class CleanDataSeeder(
 			},
 			new() {
 				Name = "Довготривала оренда"
+			}
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedHotelCategoriesAsync(CancellationToken cancellationToken) {
+		await context.HotelCategories.AddRangeAsync([
+			new() {
+				Name = "Люкс"
+			},
+			new() {
+				Name = "Бізнес"
+			},
+			new() {
+				Name = "Економ"
+			},
+			new() {
+				Name = "Сімейний"
+			},
+			new() {
+				Name = "Для відпочинку"
+			},
+			new() {
+				Name = "Оздоровчий"
 			}
 		], cancellationToken);
 

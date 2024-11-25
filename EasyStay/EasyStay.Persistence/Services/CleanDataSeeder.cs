@@ -45,6 +45,9 @@ public class CleanDataSeeder(
 
 		if (!await context.Breakfasts.AnyAsync(cancellationToken))
 			await SeedBreakfastsAsync(cancellationToken);
+
+		if (!await context.RoomTypes.AnyAsync(cancellationToken))
+			await SeedRoomTypesAsync(cancellationToken);
 	}
 
 	private async Task SeedGendersAsync(CancellationToken cancellationToken) {
@@ -848,6 +851,31 @@ public class CleanDataSeeder(
 			new() {
 				Name = "Вегетаріанський сніданок"
 			},
+		], cancellationToken);
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+	private async Task SeedRoomTypesAsync(CancellationToken cancellationToken) {
+		await context.RoomTypes.AddRangeAsync([
+			new() {
+				Name = "Люкс"
+			},
+			new() {
+				Name = "Напівлюкс"
+			},
+			new() {
+				Name = "Сімейний"
+			},
+			new() {
+				Name = "Студія"
+			},
+			new() {
+				Name = "Бюджетний"
+			},
+			new() {
+				Name = "Президентський"
+			}
 		], cancellationToken);
 
 		await context.SaveChangesAsync(cancellationToken);

@@ -23,9 +23,6 @@ public class GeneratedDataSeeder(
 		if (!await context.RealtorReviews.AnyAsync(cancellationToken))
 			await SeedRealtorReviewsAsync(cancellationToken);
 
-		if (!await context.RoomTypes.AnyAsync(cancellationToken))
-			await SeedRoomTypesAsync(cancellationToken);
-
 		if (!await context.Rooms.AnyAsync(cancellationToken))
 			await SeedRoomsAsync(cancellationToken);
 
@@ -160,15 +157,6 @@ public class GeneratedDataSeeder(
 
 			await context.RealtorReviews.AddAsync(realtorReview, cancellationToken);
 		}
-
-		await context.SaveChangesAsync(cancellationToken);
-	}
-
-	private async Task SeedRoomTypesAsync(CancellationToken cancellationToken) {
-		var faker = new Faker<RoomType>()
-			.RuleFor(rt => rt.Name, faker => faker.Commerce.ProductName());
-
-		await context.RoomTypes.AddRangeAsync(faker.Generate(5), cancellationToken);
 
 		await context.SaveChangesAsync(cancellationToken);
 	}

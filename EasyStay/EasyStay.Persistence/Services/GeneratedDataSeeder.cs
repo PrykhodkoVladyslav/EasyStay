@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using EasyStay.Application.Interfaces;
 using EasyStay.Domain;
+using EasyStay.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyStay.Persistence.Services;
@@ -34,6 +35,9 @@ public class GeneratedDataSeeder(
 
 		if (!await context.RoomVariants.AnyAsync(cancellationToken))
 			await SeedRoomVariantsAsync(cancellationToken);
+
+		if (!await context.Bookings.AnyAsync(cancellationToken))
+			await SeedBookingsAsync(cancellationToken);
 	}
 
 	private async Task SeedAddressesAsync(CancellationToken cancellationToken) {
@@ -239,7 +243,7 @@ public class GeneratedDataSeeder(
 			.RuleFor(bi => bi.KingsizeBedCount, faker => faker.Random.Int(0, 1));
 
 		var rvFaker = new Faker<RoomVariant>()
-			.RuleFor(rv => rv.Price, faker => faker.Random.Decimal(0, 10000))
+			.RuleFor(rv => rv.Price, faker => Math.Round(faker.Random.Decimal(0, 5000), 2))
 			.RuleFor(
 				rv => rv.DiscountPrice,
 				(faker, rv) => faker.Random.Bool(0.75F)
@@ -277,7 +281,85 @@ public class GeneratedDataSeeder(
 		await context.SaveChangesAsync(cancellationToken);
 	}
 
+	private async Task SeedBookingsAsync(CancellationToken cancellationToken) {
+		var faker = new Faker();
+		var random = new Random();
 
+		var rooms = await context.Rooms
+			.Include(r => r.RoomVariants)
+			.ThenInclude(rv => rv.BedInfo)
+			.ToArrayAsync(cancellationToken);
+
+		var customers = await context.Customers
+			.ToArrayAsync(cancellationToken);
+
+		foreach (var room in rooms) {
+			var booking = TryCreateBooking(faker, room, random, customers);
+
+			if (booking is null)
+				continue;
+
+			await context.Bookings.AddAsync(booking, cancellationToken);
+		}
+
+		await context.SaveChangesAsync(cancellationToken);
+	}
+
+
+
+	private static Booking? TryCreateBooking(Faker faker, Room room, Random random, Customer[] customers) {
+		var bookingRoomVariants = new List<BookingRoomVariant>();
+		int occupiedQuantity = 0;
+		decimal totalPrice = 0;
+
+		foreach (var roomVariant in room.RoomVariants) {
+			if (random.Next(0, 3) == 0)
+				continue;
+
+			var quantity = random.Next(1, 4);
+			if (room.Quantity < occupiedQuantity + quantity)
+				continue;
+
+			var bookingBedSelection = new BookingBedSelection {
+				IsSingleBed = roomVariant.BedInfo.SingleBedCount > 0,
+				IsDoubleBed = roomVariant.BedInfo.DoubleBedCount > 0,
+				IsExtraBed = roomVariant.BedInfo.ExtraBedCount > 0,
+				IsSofa = roomVariant.BedInfo.SofaCount > 0,
+				IsKingsizeBed = roomVariant.BedInfo.KingsizeBedCount > 0
+			};
+
+			var bookingRoomVariant = new BookingRoomVariant {
+				Quantity = quantity,
+				RoomVariantId = roomVariant.Id,
+				BookingBedSelection = bookingBedSelection
+			};
+
+			occupiedQuantity += quantity;
+			totalPrice += quantity * roomVariant.Price;
+
+			bookingRoomVariants.Add(bookingRoomVariant);
+		}
+
+		if (bookingRoomVariants.Count == 0)
+			return null;
+
+		var dateFrom = DateTime.Now.AddDays(random.Next(0, 6));
+		var dateTo = dateFrom.AddDays(random.Next(0, 6));
+
+		var daysOccupied = (dateTo - dateFrom).Days + 1;
+
+		var booking = new Booking {
+			DateFrom = DateOnly.FromDateTime(dateFrom),
+			DateTo = DateOnly.FromDateTime(dateTo),
+			PersonalWishes = null,
+			EstimatedTimeOfArrivalUtc = GetRandomTimeUtc(faker),
+			AmountToPay = totalPrice * daysOccupied,
+			CustomerId = faker.PickRandom(customers).Id,
+			BookingRoomVariants = bookingRoomVariants
+		};
+
+		return booking;
+	}
 
 	private static Task<byte[]> GetImageAsBytesAsync(HttpClient httpClient, string imageUrl)
 		=> httpClient.GetByteArrayAsync(imageUrl);

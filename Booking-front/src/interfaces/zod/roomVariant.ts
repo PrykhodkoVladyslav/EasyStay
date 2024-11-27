@@ -13,7 +13,18 @@ export const BedInfoSchema = z.object({
     extraBedCount: z.number(),
     sofaCount: z.number(),
     kingsizeBedCount: z.number(),
-});
+}).refine(
+    (data) =>
+        data.singleBedCount > 0 ||
+        data.doubleBedCount > 0 ||
+        data.extraBedCount > 0 ||
+        data.sofaCount > 0 ||
+        data.kingsizeBedCount > 0,
+    {
+        message: "Ви повинні вказати хоча б один тип ліжка",
+        path: [],
+    }
+);
 
 export const RoomVariantCreateSchema = z.object({
     // id: z.number().optional(),

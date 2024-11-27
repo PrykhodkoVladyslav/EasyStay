@@ -140,7 +140,7 @@ const DataPage = () => {
                                    placeholder="Введіть Номер телефону"
                             />
                             {errors?.phoneNumber && (
-                                <FormError className="text-red" errorMessage={errors?.phoneNumber?.message as string} />
+                                <FormError className="text-red-500" errorMessage={errors?.phoneNumber?.message as string} />
                             )}
                         </div>
 
@@ -156,7 +156,7 @@ const DataPage = () => {
                                 max="9999-12-31"
                             />
                             {errors?.dateOfBirth && (
-                                <FormError className="text-red" errorMessage={errors?.dateOfBirth?.message as string} />
+                                <FormError className="text-red-500" errorMessage={errors?.dateOfBirth?.message as string} />
                             )}
                         </div>
 
@@ -178,7 +178,7 @@ const DataPage = () => {
                                 ))}
                             </select>
                             {errors?.citizenshipId && (
-                                <FormError className="text-red"
+                                <FormError className="text-red-500"
                                            errorMessage={errors?.citizenshipId?.message as string} />
                             )}
 
@@ -201,7 +201,7 @@ const DataPage = () => {
                                 ))}
                             </select>
                             {errors?.genderId && (
-                                <FormError className="text-red" errorMessage={errors?.genderId?.message as string} />
+                                <FormError className="text-red-500" errorMessage={errors?.genderId?.message as string} />
                             )}
                         </div>
 
@@ -216,7 +216,7 @@ const DataPage = () => {
                                 placeholder="Введіть адресу"
                             />
                             {errors?.address && (
-                                <FormError className="text-red" errorMessage={errors?.address?.message as string} />
+                                <FormError className="text-red-500" errorMessage={errors?.address?.message as string} />
                             )}
                         </div>
 
@@ -257,7 +257,7 @@ const DataPage = () => {
                                     </select>
                                     {errors?.cityId && (
                                         <FormError
-                                            className="text-red"
+                                            className="text-red-500"
                                             errorMessage={errors?.cityId?.message as string}
                                         />
                                     )}

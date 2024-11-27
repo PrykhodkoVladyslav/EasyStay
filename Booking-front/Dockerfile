@@ -8,7 +8,7 @@ RUN npm install --force
 
 COPY . .
 
-RUN npm run build
+RUN npm run build -- --mode docker
 
 EXPOSE 5173
 

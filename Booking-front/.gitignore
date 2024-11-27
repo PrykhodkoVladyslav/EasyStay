@@ -26,5 +26,6 @@ dist-ssr
 *storybook.log
 
 .env
+.env.docker
 
 *~

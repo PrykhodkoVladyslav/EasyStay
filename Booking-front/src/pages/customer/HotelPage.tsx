@@ -4,7 +4,7 @@ import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useGetHotelQuery } from "services/hotel.ts";
 import { getApiImageUrl } from "utils/apiImageAccessor.ts";
 import { useEffect, useState } from "react";
-import { differenceInCalendarDays, format } from "date-fns";
+import { addMinutes, differenceInCalendarDays, format } from "date-fns";
 import RoomSection from "components/partials/customer/RoomSection.tsx";
 import IRoom, { IFreePeriod } from "interfaces/room/IRoom.ts";
 import showToast from "utils/toastShow.ts";
@@ -56,9 +56,15 @@ const HotelPage = () => {
     const hasMoreReviews = allReviews.length > pageSize;
 
     const formatTime = (timeString: string) => {
-        if (!timeString) return "Невірний час";
-        const [hours, minutes] = timeString.split(":");
-        return `${hours}:${minutes}:00`;
+
+        const [hours, minutes] = timeString.split(":").map(Number);
+        const localTime = new Date(0, 0, 0, hours, minutes, 0, 0);
+        const utcTime = addMinutes(localTime, -localTime.getTimezoneOffset());
+
+        const formattedHours = String(utcTime.getHours()).padStart(2, "0");
+        const formattedMinutes = String(utcTime.getMinutes()).padStart(2, "0");
+
+        return `${formattedHours}:${formattedMinutes}:00`;
     };
 
     const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({
@@ -163,31 +169,31 @@ const HotelPage = () => {
                                     </div>
                                 </div>
 
-                                {
-                                    isFavorite ? (
-                                        <button
-                                            className="btn-favorite"
-                                            onClick={handleUnFavorite}
-                                            disabled={isFavoriteLoading || isUnFavoriteLoading}
-                                        >
-                                            <img
-                                                src={getPublicResourceUrl("icons/heart-favorite.svg")}
-                                                alt="Favorite"
-                                            />
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="btn-favorite"
-                                            onClick={handleFavorite}
-                                            disabled={isFavoriteLoading || isUnFavoriteLoading}
-                                        >
-                                            <img
-                                                src={getPublicResourceUrl("icons/heart.svg")}
-                                                alt="Not Favorite"
-                                            />
-                                        </button>
-                                    )
-                                }
+                                { !isFavorite ? (
+                                    <button
+                                        className="btn-favorite"
+                                        title="Додати до улюблених"
+                                        onClick={handleFavorite}
+                                        disabled={isFavoriteLoading || isUnFavoriteLoading}
+                                    >
+                                        <img
+                                            src={getPublicResourceUrl("icons/heart.svg")}
+                                            alt="Favorite"
+                                        />
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="btn-favorite"
+                                        title="Видалити з улюблених"
+                                        onClick={handleUnFavorite}
+                                        disabled={isFavoriteLoading || isUnFavoriteLoading}
+                                    >
+                                        <img
+                                            src={getPublicResourceUrl("icons/heart-favorite.svg")}
+                                            alt="Unavorite"
+                                        />
+                                    </button>
+                                )}
                             </div>
 
                             <div className="location">
@@ -347,6 +353,7 @@ const HotelPage = () => {
 
             <div className="search-rooms">
                 <div className="search" id="search">
+                    <p className="global-title">Пошук номерів</p>
                     <SearchHotelSection
                         city={city}
                         setCity={setCity}
@@ -361,26 +368,23 @@ const HotelPage = () => {
                     />
                 </div>
 
-                {hasSearched ? (
-                    rooms.length > 0 ? (
-                        freePeriod && (
-                            <div className="rooms">
-                                <p className="global-title">Номери</p>
-                                <RoomSection
-                                    rooms={rooms}
-                                    freePeriod={freePeriod}
-                                    hotelBreakfast={hotelData.breakfasts.length > 0}
-                                    selectedDays={selectedDays}
-                                    hotelId={hotelId}
-                                />
-                            </div>
-                        )
-                    ) : (
-                        <p className="isLoading-error pt-20">Немає номерів на вибрані варіанти пошуку</p>
+                {rooms.length > 0 || !hasSearched ? (
+                    freePeriod && (
+                        <div className="rooms">
+                            <p className="global-title">Номери</p>
+                            <RoomSection
+                                rooms={rooms}
+                                freePeriod={freePeriod}
+                                hotelBreakfast={hotelData.breakfasts.length > 0}
+                                selectedDays={selectedDays}
+                                hotelId={hotelId}
+                            />
+                        </div>
                     )
                 ) : (
-                    <p className="isLoading-error pt-20">Оберіть варіанти пошуку</p>
+                    <p className="isLoading-error pt-20">Немає номерів на вибрані варіанти пошуку</p>
                 )}
+
             </div>
 
             <div className="reviews-content" id="reviews">

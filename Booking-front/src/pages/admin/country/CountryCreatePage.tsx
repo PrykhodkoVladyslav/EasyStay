@@ -109,7 +109,7 @@ const CountryCreatePage: React.FC = () => {
                             className="w-full"
                         />
                         {errors?.name && (
-                            <FormError className="text-red" errorMessage={errors?.name?.message as string} />
+                            <FormError className="text-red-500" errorMessage={errors?.name?.message as string} />
                         )}
                     </div>
 
@@ -132,7 +132,7 @@ const CountryCreatePage: React.FC = () => {
                         </ImageUpload>
                         {errors?.image && (
                             <FormError
-                                className="text-red"
+                                className="text-red-500"
                                 errorMessage={errors?.image?.message as string}
                             />
                         )}

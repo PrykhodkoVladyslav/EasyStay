@@ -39,7 +39,7 @@ const RoomPage = () => {
     const { data: rentalPeriodsData } = useGetAllRentalPeriodsQuery();
     const { data: roomTypesData } = useGetAllRoomTypesQuery();
     const { data: roomAmenitiesData } = useGetAllRoomAmenitiesQuery();
-    const [ createRoom/*, { isLoading }*/ ] = useCreateRoomMutation();
+    const [ createRoom, { isLoading: isCreating }] = useCreateRoomMutation();
 
     const [selectedRentalPeriods, setSelectedRentalPeriods] = useState<number[]>([]);
     const [selectedRoomAmenities, setSelectedRoomAmenities] = useState<number[]>([]);
@@ -130,7 +130,7 @@ const RoomPage = () => {
                                     placeholder="Назва"
                                 />
                                 {errors?.name && (
-                                    <FormError className="text-red"
+                                    <FormError className="text-red-500"
                                                errorMessage={errors?.name?.message as string}/>
                                 )}
                             </div>
@@ -160,7 +160,7 @@ const RoomPage = () => {
                                     ))}
                                 </select>
                                 {errors?.roomTypeId && (
-                                    <FormError className="text-red"
+                                    <FormError className="text-red-500"
                                                errorMessage={errors?.roomTypeId?.message as string}/>
                                 )}
                             </div>
@@ -182,7 +182,7 @@ const RoomPage = () => {
                                     placeholder="Площа"
                                 />
                                 {errors?.area && (
-                                    <FormError className="text-red"
+                                    <FormError className="text-red-500"
                                                errorMessage={errors?.area?.message as string}/>
                                 )}
                             </div>
@@ -212,7 +212,7 @@ const RoomPage = () => {
                                     ))}
                                 </select>
                                 {errors?.numberOfRooms && (
-                                    <FormError className="text-red"
+                                    <FormError className="text-red-500"
                                                errorMessage={errors?.numberOfRooms?.message as string}/>
                                 )}
                             </div>
@@ -268,7 +268,7 @@ const RoomPage = () => {
                                 onClick={() => handleQuantityChange(1)}>+</button>
                         </div>
                         {errors?.quantity && (
-                            <FormError className="text-red"
+                            <FormError className="text-red-500"
                                        errorMessage={errors?.quantity?.message as string}/>
                         )}
                     </div>
@@ -277,6 +277,7 @@ const RoomPage = () => {
                 <button
                     className="main-button-2"
                     type="submit"
+                    disabled={isCreating}
                 >
                     Додати варіації номеру
                 </button>

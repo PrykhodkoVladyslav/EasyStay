@@ -93,7 +93,7 @@ const AdminCreatePage: React.FC = () => {
                             />
                             {errors[id as keyof typeof errors] && (
                                 <FormError
-                                    className="text-red"
+                                    className="text-red-500"
                                     errorMessage={errors[id as keyof typeof errors]?.message || ""}
                                 />
                             )}

@@ -8,7 +8,7 @@ import showToast from "utils/toastShow.ts";
 
 const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
     const navigate = useNavigate();
-    const [ createRoomVariant ] = useCreateRoomVariantMutation();
+    const [ createRoomVariant, { isLoading: isCreating }] = useCreateRoomVariantMutation();
 
     const {
         roomId,
@@ -95,7 +95,7 @@ const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
                                             onClick={() => handleCountChange("guest.adultCount", 1)}>+</button>
                                     </div>
                                     {errors?.guest?.adultCount && (
-                                        <FormError className="text-red"
+                                        <FormError className="text-red-500"
                                                    errorMessage={errors?.guest?.adultCount?.message as string}/>
                                     )}
                                 </div>
@@ -112,7 +112,7 @@ const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
                                             onClick={() => handleCountChange("guest.childCount", 1)}>+</button>
                                     </div>
                                     {errors?.guest?.childCount && (
-                                        <FormError className="text-red"
+                                        <FormError className="text-red-500"
                                                    errorMessage={errors?.guest?.childCount?.message as string}/>
                                     )}
                                 </div>
@@ -191,6 +191,9 @@ const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
                                         onClick={() => handleCountChange("bedInfo.kingsizeBedCount", 1)}>+</button>
                                 </div>
                             </div>
+                            {errors?.bedInfo && (
+                                <FormError className="text-red-500" errorMessage={errors?.bedInfo?.message as string} />
+                            )}
                         </div>
                     </div>
 
@@ -211,7 +214,7 @@ const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
                                     onWheel={(e) => e.currentTarget.blur()}
                                 />
                                 {errors?.discountPrice && (
-                                    <FormError className="text-red"
+                                    <FormError className="text-red-500"
                                                errorMessage={errors?.discountPrice?.message as string}/>
                                 )}
                             </div>
@@ -236,7 +239,7 @@ const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
                                     onWheel={(e) => e.currentTarget.blur()}
                                 />
                                 {errors?.price && (
-                                    <FormError className="text-red"
+                                    <FormError className="text-red-500"
                                                errorMessage={errors?.discountPrice?.message as string}/>
                                 )}
                             </div>
@@ -247,6 +250,7 @@ const RoomVariantPage = (props: {roomId: number, numericId: number}) => {
                 <button
                     className="main-button-2"
                     type="submit"
+                    disabled={isCreating}
                 >
                     Зберегти
                 </button>

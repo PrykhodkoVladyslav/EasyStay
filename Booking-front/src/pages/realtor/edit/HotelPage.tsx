@@ -233,7 +233,7 @@ const HotelPage = () => {
                                             placeholder="Назва"
                                         />
                                         {errors?.name && (
-                                            <FormError className="text-red"
+                                            <FormError className="text-red-500"
                                                        errorMessage={errors?.name?.message as string}/>
                                         )}
                                     </div>
@@ -254,7 +254,7 @@ const HotelPage = () => {
                                             ))}
                                         </select>
                                         {errors?.categoryId && (
-                                            <FormError className="text-red"
+                                            <FormError className="text-red-500"
                                                        errorMessage={errors?.categoryId?.message as string}/>
                                         )}
                                     </div>
@@ -267,7 +267,7 @@ const HotelPage = () => {
                                             maxLength={4000}
                                         ></textarea>
                                             {errors?.description && (
-                                                <FormError className="text-red"
+                                                <FormError className="text-red-500"
                                                            errorMessage={errors?.description?.message as string}/>
                                             )}
                                             <p className="counter">{watch("description")?.length || 0}/4000</p>
@@ -318,7 +318,7 @@ const HotelPage = () => {
                                         </select>
                                         {errors?.address?.cityId && (
                                             <FormError
-                                                className="text-red"
+                                                className="text-red-500"
                                                 errorMessage={errors?.address?.cityId?.message as string}
                                             />
                                         )}
@@ -332,7 +332,7 @@ const HotelPage = () => {
                                             placeholder="Вулиця"
                                         />
                                         {errors?.address?.street && (
-                                            <FormError className="text-red"
+                                            <FormError className="text-red-500"
                                                        errorMessage={errors?.address?.street?.message as string}/>
                                         )}
                                     </div>
@@ -345,7 +345,7 @@ const HotelPage = () => {
                                             placeholder="Номер будинку"
                                         />
                                         {errors?.address?.houseNumber && (
-                                            <FormError className="text-red"
+                                            <FormError className="text-red-500"
                                                        errorMessage={errors?.address?.houseNumber?.message as string}/>
                                         )}
                                     </div>
@@ -358,7 +358,7 @@ const HotelPage = () => {
                                             placeholder="Поверх"
                                         />
                                         {errors?.address?.floor && (
-                                            <FormError className="text-red"
+                                            <FormError className="text-red-500"
                                                        errorMessage={errors?.address?.floor?.message as string}/>
                                         )}
                                     </div>
@@ -372,7 +372,7 @@ const HotelPage = () => {
                                             defaultValue={watch("address.apartmentNumber") ?? ""}
                                         />
                                         {errors?.address?.apartmentNumber && (
-                                            <FormError className="text-red"
+                                            <FormError className="text-red-500"
                                                        errorMessage={errors?.address?.apartmentNumber?.message as string}/>
                                         )}
                                     </div>
@@ -406,7 +406,7 @@ const HotelPage = () => {
                                         </label>
                                     ))}
                                     {errors?.hotelAmenityIds && (
-                                        <FormError className="text-red"
+                                        <FormError className="text-red-500"
                                                    errorMessage={errors?.hotelAmenityIds?.message as string}/>
                                     )}
                                 </div>
@@ -466,7 +466,7 @@ const HotelPage = () => {
                                                 </label>
                                             ))}
                                             {errors?.breakfastIds && (
-                                                <FormError className="text-red"
+                                                <FormError className="text-red-500"
                                                            errorMessage={errors?.breakfastIds?.message as string}/>
                                             )}
                                         </div>
@@ -500,7 +500,7 @@ const HotelPage = () => {
                                         </label>
                                     ))}
                                     {errors?.staffLanguageIds && (
-                                        <FormError className="text-red"
+                                        <FormError className="text-red-500"
                                                    errorMessage={errors?.staffLanguageIds?.message as string}/>
                                     )}
                                 </div>
@@ -525,7 +525,7 @@ const HotelPage = () => {
                                                 />
                                                 {errors?.arrivalTimeUtcFrom && (
                                                     <FormError
-                                                        className="text-red"
+                                                        className="text-red-500"
                                                         errorMessage={errors?.arrivalTimeUtcFrom?.message as string}
                                                     />
                                                 )}
@@ -539,7 +539,7 @@ const HotelPage = () => {
                                                 />
                                                 {errors?.arrivalTimeUtcTo && (
                                                     <FormError
-                                                        className="text-red"
+                                                        className="text-red-500"
                                                         errorMessage={errors?.arrivalTimeUtcTo?.message as string}
                                                     />
                                                 )}
@@ -559,7 +559,7 @@ const HotelPage = () => {
                                                 />
                                                 {errors?.departureTimeUtcFrom && (
                                                     <FormError
-                                                        className="text-red"
+                                                        className="text-red-500"
                                                         errorMessage={errors?.departureTimeUtcFrom?.message as string}
                                                     />
                                                 )}
@@ -573,7 +573,7 @@ const HotelPage = () => {
                                                 />
                                                 {errors?.departureTimeUtcTo && (
                                                     <FormError
-                                                        className="text-red"
+                                                        className="text-red-500"
                                                         errorMessage={errors?.departureTimeUtcTo?.message as string}
                                                     />
                                                 )}
@@ -617,7 +617,7 @@ const HotelPage = () => {
                                         </label>
                                         {errors?.isArchived && (
                                             <FormError
-                                                className="text-red"
+                                                className="text-red-500"
                                                 errorMessage={errors?.isArchived?.message as string}
                                             />
                                         )}
@@ -673,7 +673,7 @@ const HotelPage = () => {
                                 </div>
                             </div>
                             {errors?.photos && (
-                                <FormError className="text-red flex justify-end"
+                                <FormError className="text-red-500 flex justify-end"
                                            errorMessage={errors?.photos?.message as string}/>
                             )}
                         </div>

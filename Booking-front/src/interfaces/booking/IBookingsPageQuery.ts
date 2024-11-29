@@ -8,6 +8,8 @@ export function toQueryFromIBookingsPageQuery(query: IBookingsPageQuery) {
     const queryItems: { key: string, value: string }[] = [];
     const queryArrayItems: string[] = [];
 
+    if (query.pageIndex !== undefined) queryItems.push({ key: "pageIndex", value: query.pageIndex.toString() });
+    if (query.pageSize !== undefined) queryItems.push({ key: "pageSize", value: query.pageSize.toString() });
     if (query.orderBy)
         queryItems.push({ key: "orderBy", value: query.orderBy });
 

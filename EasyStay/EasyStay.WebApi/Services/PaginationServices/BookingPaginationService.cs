@@ -9,12 +9,14 @@ namespace EasyStay.WebApi.Services.PaginationServices;
 
 public class BookingPaginationService(
 	IEasyStayDbContext context,
-	IMapper mapper
+	IMapper mapper,
+	ICurrentUserService currentUserService
 ) : BasePaginationService<Booking, BookingVm, GetBookingsPageQuery>(mapper) {
 
 	protected override IQueryable<Booking> GetQuery() => context.Bookings
 		.AsNoTracking()
-		.AsSplitQuery();
+		.AsSplitQuery()
+		.Where(b => b.CustomerId == currentUserService.GetRequiredUserId());
 
 	protected override IQueryable<Booking> FilterQueryBeforeProjectTo(IQueryable<Booking> query, GetBookingsPageQuery filter) {
 		query = filter.OrderBy switch {

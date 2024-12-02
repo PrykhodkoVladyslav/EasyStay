@@ -157,11 +157,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                     </div>
 
                     <div className="input-container">
-                        <div className="on-sides">
-                            <p className="input-title">CVC - код <sup>*</sup></p>
-                            <img className="pointer" src={getPublicResourceUrl("icons/question/gray-question.svg")}
-                                 alt="question" />
-                        </div>
+                        <p className="input-title">CVC - код <sup>*</sup></p>
                         <input className="input-input"
                                placeholder="000"
                                type="text"

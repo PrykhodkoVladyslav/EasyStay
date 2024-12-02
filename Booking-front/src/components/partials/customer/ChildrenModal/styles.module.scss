@@ -1,0 +1,32 @@
+.childrenModal {
+  width: 500px;
+
+  color: rgb(0, 0, 0);
+  font-family: var(--font-montserrat), system-ui;
+
+  .modalHeader {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  .childrenRules {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  .description {
+    color: rgb(55, 55, 55);
+    font-family: var(--font-nunito), system-ui;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .childrenBedsRules {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+}

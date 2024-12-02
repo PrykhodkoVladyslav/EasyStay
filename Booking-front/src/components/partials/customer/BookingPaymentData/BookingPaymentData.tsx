@@ -1,9 +1,10 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addDays, differenceInCalendarDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 import "./../../../../css/bank-card-info-container.scss";
+import WithoutBankCardModal from "components/partials/customer/WithoutBankCardModal/WithoutBankCardModal.tsx";
 
 interface IBookingPaymentDataProps {
     dateFrom: Date;
@@ -61,12 +62,16 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
     const threeDaysBefore = addDays(dateFrom, -3);
     const formattedThreeDaysBefore = format(threeDaysBefore, "d MMM yyyy", { locale: uk });
 
+    const [isOpenWithoutBankCardModal, setIsOpenWithoutBankCardModal] = useState(false);
+
     return <div className="payment-data-container">
+        <WithoutBankCardModal isOpen={isOpenWithoutBankCardModal} setIsOpen={setIsOpenWithoutBankCardModal} />
+
         <div className="payment-method-container">
             <div className="payment-title-container">
                 <h3 className="payment-title">Коли ви хочете оплатити?</h3>
 
-                <div className="payment-question-container pointer">
+                <div className="payment-question-container pointer" onClick={() => setIsOpenWithoutBankCardModal(true)}>
                     <img src={getPublicResourceUrl("icons/question/gray-question.svg")} alt="question" />
                     <p>Немає картки?</p>
                 </div>

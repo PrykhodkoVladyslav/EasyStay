@@ -23,6 +23,8 @@ interface IBookingPersonalDataProps {
 
     arrivalTime: string;
 
+    openRulesModal?: () => void;
+
     onNext: () => void;
 }
 
@@ -35,6 +37,7 @@ const BookingPersonalData = (props: IBookingPersonalDataProps) => {
         selectedTime,
         setSelectedTime,
         arrivalTime,
+        openRulesModal,
         onNext,
     } = props;
 
@@ -105,7 +108,7 @@ const BookingPersonalData = (props: IBookingPersonalDataProps) => {
             </div>
             <div className="submit-section">
                 <button className="submit-button" onClick={onNext}>Далі: останні дані</button>
-                <p className="booking-conditions pointer">Які умови мого бронювання?</p>
+                <p className="booking-conditions pointer" onClick={openRulesModal}>Які умови мого бронювання?</p>
             </div>
         </div>
     </div>;

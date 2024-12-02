@@ -22,6 +22,8 @@ interface IBookingPaymentDataProps {
     isAppliedAgreements: boolean;
     setIsAppliedAgreements: (value: boolean) => void;
 
+    openRulesModal?: () => void;
+
     onNext: () => void;
 }
 
@@ -42,6 +44,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
         setIsSaveCard,
         isAppliedAgreements,
         setIsAppliedAgreements,
+        openRulesModal,
         onNext,
     } = props;
 
@@ -204,7 +207,8 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
             <div className="submit-container">
                 <button className="payment-submit-button" onClick={onNext}>Забронювати з зобовʼязанням оплатити</button>
 
-                <p className="booking-conditions-description pointer">Які умови мого бронювання?</p>
+                <p className="booking-conditions-description pointer" onClick={openRulesModal}>Які умови мого
+                    бронювання?</p>
             </div>
         </div>
     </div>;

@@ -1,0 +1,59 @@
+.paymentModal {
+  width: 440px;
+  padding-top: 14px;
+
+  color: rgb(0, 0, 0);
+  font-family: var(--font-montserrat), system-ui;
+
+  .modalHeader {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  .returnContainer {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .returnItem {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      gap: 14px;
+
+      .dot {
+        width: 6px;
+        height: 6px;
+      }
+
+      .returnText {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 15px;
+      }
+    }
+
+    .returnDescription {
+      color: rgb(55, 55, 55);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 15px;
+    }
+  }
+
+  .prepayment {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  .prepaymentDescription {
+    color: rgb(55, 55, 55);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+  }
+}

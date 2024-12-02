@@ -28,11 +28,11 @@ const BookingSidePanel = (props: IBookingSidePanelProps) => {
     const stayDays = differenceInDays(props.dateTo, props.dateFrom) + 1;
 
     const sumDiscountPrice = props.selectedRoomVariants
-        .map(r => r.roomVariant.discountPrice ?? r.roomVariant.price)
+        .map(r => (r.roomVariant.discountPrice ?? r.roomVariant.price) * r.quantity)
         .reduce((a, b) => a + b, 0) * stayDays;
 
     const sumPrice = props.selectedRoomVariants
-        .map(r => r.roomVariant.price)
+        .map(r => r.roomVariant.price * r.quantity)
         .reduce((a, b) => a + b, 0) * stayDays;
 
     const dayBeforeBooking = addDays(props.dateFrom, -1);

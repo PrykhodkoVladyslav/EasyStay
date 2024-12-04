@@ -25,7 +25,7 @@ public class RealtorReviewsController : BaseApiController {
 
 	[HttpPost]
 	[Authorize(Roles = "Customer")]
-	public async Task<IActionResult> Create([FromForm] CreateRealtorReviewCommand command) {
+	public async Task<IActionResult> Create([FromBody] CreateRealtorReviewCommand command) {
 		var id = await Mediator.Send(command);
 
 		return Ok(id);
@@ -33,7 +33,7 @@ public class RealtorReviewsController : BaseApiController {
 
 	[HttpPut]
 	[Authorize(Roles = "Customer")]
-	public async Task<IActionResult> Update([FromForm] UpdateRealtorReviewCommand command) {
+	public async Task<IActionResult> Update([FromBody] UpdateRealtorReviewCommand command) {
 		await Mediator.Send(command);
 
 		return NoContent();

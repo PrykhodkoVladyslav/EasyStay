@@ -4,16 +4,20 @@ import RealtorReviews from "components/partials/customer/RealtorReviews.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetRealtorDetailsQuery } from "services/user.ts";
 import showToast from "utils/toastShow.ts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
-import {API_URL} from "utils/getEnvData.ts";
+import { API_URL } from "utils/getEnvData.ts";
+import RealtorReviewModal from "components/partials/customer/RealtorReviewModal/RealtorReviewModal.tsx";
 
 const RealtorPage = () => {
     useEffect(instantScrollToTop, []);
 
-    const { id } = useParams();
+    const { id: stringId } = useParams();
+    const id = Number(stringId);
+
     const navigate = useNavigate();
-    const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(id as string);
+    const { data: realtorDetails, error, isLoading } = useGetRealtorDetailsQuery(stringId!);
+    const [isOpenRealtorReviewModal, setIsOpenRealtorReviewModal] = useState(false);
 
     if (isLoading || !realtorDetails) return <p className="isLoading-error pt-20">Завантаження...</p>;
     if (error) {
@@ -23,6 +27,9 @@ const RealtorPage = () => {
 
     return (
         <div className="realtor-page-container">
+            <RealtorReviewModal isOpen={isOpenRealtorReviewModal} setIsOpen={setIsOpenRealtorReviewModal}
+                                realtorId={id} />
+
             <div className="realtor-card">
                 <div className="realtor-card-info">
                     <div className="nameConteiner">
@@ -74,15 +81,17 @@ const RealtorPage = () => {
 
                     <div className="center">
                         <button
-                            // onClick={() => }
+                            onClick={() => setIsOpenRealtorReviewModal(true)}
                             className="realtor-card-feedback-btn"
-                        >Написати відгук
+                        >
+                            Написати відгук
                         </button>
 
                         <button
-                            onClick={() => navigate(`/chat?interlocutorIdParam=${id}&avatarParam=${realtorDetails.photo}&fullNameParam=${realtorDetails.firstName}`)}
+                            onClick={() => navigate(`/chat?interlocutorIdParam=${stringId}&avatarParam=${realtorDetails.photo}&fullNameParam=${realtorDetails.firstName}`)}
                             className="realtor-card-feedback-btn"
-                        >Написати в чат
+                        >
+                            Написати в чат
                         </button>
                     </div>
                 </div>

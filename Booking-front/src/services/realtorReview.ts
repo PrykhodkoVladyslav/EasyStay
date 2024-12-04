@@ -5,6 +5,7 @@ import IRealtorReviewsPageQuery, {
     toQueryFromIRealtorReviewsPageQuery,
 } from "interfaces/realtorReview/IRealtorReviewsPageQuery.ts";
 import { IRealtorReview } from "interfaces/realtorReview/IRealtorReview.ts";
+import ICreateRealtorReview from "interfaces/realtorReview/ICreateRealtorReview.ts";
 
 export const realtorReviewApi = createApi({
     reducerPath: "realtorReviewApi",
@@ -23,9 +24,19 @@ export const realtorReviewApi = createApi({
             },
             providesTags: ["RealtorReviews"],
         }),
+
+        createRealtorReview: builder.mutation<number, ICreateRealtorReview>({
+            query: (args) => ({
+                url: "create",
+                method: "POST",
+                body: args,
+            }),
+            invalidatesTags: ["RealtorReviews"],
+        }),
     }),
 });
 
 export const {
     useGetRealtorReviewsPageQuery,
+    useCreateRealtorReviewMutation,
 } = realtorReviewApi;

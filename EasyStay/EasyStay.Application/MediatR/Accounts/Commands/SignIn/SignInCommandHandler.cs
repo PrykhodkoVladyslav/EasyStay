@@ -18,6 +18,9 @@ public class SignInCommandHandler(
 		if (user is null || !await userManager.CheckPasswordAsync(user, request.Password))
 			throw new UnauthorizedException("Wrong authentication data");
 
+		if (user.LockoutEnd > DateTime.UtcNow)
+			throw new ForbiddenException($"Account is locked until {user.LockoutEnd} UTC");
+
 		return new JwtTokenVm {
 			Token = await jwtTokenService.CreateTokenAsync(user)
 		};

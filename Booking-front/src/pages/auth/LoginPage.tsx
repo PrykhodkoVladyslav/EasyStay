@@ -35,6 +35,8 @@ const LoginPage: React.FC = () => {
             if ("status" in response.error && response.error.status === 400 ||
                 "status" in response.error && response.error.status === 401) {
                 setError("Не вірна пошта або пароль");
+            } else if ("status" in response.error && response.error.status === 403) {
+                setError("Акаунт заблоковано");
             } else {
                 setError("Невідома помилка");
             }

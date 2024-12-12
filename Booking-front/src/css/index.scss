@@ -2903,6 +2903,91 @@
             border-color: #748f6e;
           }
         }
+
+        .room-variant {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 30px;
+          width: 100%;
+          min-width: 360px;
+          max-width: 1000px;
+          padding: 24px 22px;
+          margin-bottom: 8px;
+          border-radius: 22px;
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+          background: rgb(255, 255, 255);
+          overflow: hidden;
+
+          .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+
+            .variant-data {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              .variant-title {
+                font-family: var(--font-montserrat), system-ui;
+                font-size: 20px;
+                font-weight: 600;
+                line-height: 24px;
+                padding-bottom: 8px;
+              }
+
+              .data {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+
+                p {
+                  font-family: var(--font-nunito), system-ui;
+                  font-size: 16px;
+                  font-weight: 400;
+                  line-height: 24px;
+                }
+                span {
+                  width: fit-content;
+                  font-family: var(--font-nunito), system-ui;
+                  font-size: 20px;
+                  font-weight: 600;
+                  border-radius: 10px;
+                  box-shadow: 0 0 2.4px 0 rgba(0, 0, 0, 0.13);
+                  background: rgb(255, 255, 255);
+                  color: rgb(55, 55, 55);
+                  padding: 10px 18px;
+                }
+              }
+            }
+          }
+
+          .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+
+            .btn-delete {
+              width: 24px;
+              height: 24px;
+            }
+
+            .btn-edit {
+              width: 122px;
+              padding: 10px 24px;
+              border-radius: 14px;
+              color: white;
+              font-family: var(--font-montserrat), system-ui;
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 15px;
+              background: var(--color-primary);
+            }
+          }
+        }
       }
     }
   }
@@ -3055,6 +3140,33 @@
   }
 
 
+  .add-variant-btn {
+    width: fit-content;
+    padding: 15px 14px;
+    border-radius: 18px;
+    background: rgb(55, 55, 55);
+    color: white;
+    font-family: var(--font-nunito), system-ui;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27px;
+    white-space: pre-wrap;
+  }
+
+  .btn-edit-room {
+    min-width: 120px;
+    height: 70px;
+    max-width: 213px;
+    padding: 15px 14px;
+    border-radius: 18px;
+    background: rgb(63, 82, 60);
+    color: white;
+    font-family: var(--font-nunito), system-ui;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27px;
+  }
+
   .main-button {
     height: 57px;
     display: flex;
@@ -3107,6 +3219,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 20;
   overflow-y: auto;
+  transition: ease 1s;
 
   .title {
     color: rgb(55, 55, 55);
@@ -3310,6 +3423,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 10;
   backdrop-filter: blur(10px);
+  transition: ease 1s;
 }
 
 .profile-modal {

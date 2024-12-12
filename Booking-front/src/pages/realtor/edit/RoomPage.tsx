@@ -1,21 +1,27 @@
 import FormError from "components/ui/FormError.tsx";
+import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
 import { useGetAllRentalPeriodsQuery } from "services/rentalPeriod.ts";
 import { useGetAllRoomAmenitiesQuery } from "services/roomAmenity.ts";
 import { useGetAllRoomTypesQuery } from "services/roomType.ts";
-import { useCreateRoomMutation } from "services/room.ts";
-import showToast from "utils/toastShow.ts";
-import { RoomCreateSchema, RoomCreateSchemaType } from "interfaces/zod/room.ts";
+import { useGetRoomQuery, useUpdateRoomMutation } from "services/room.ts";
+import { RoomEditSchema, RoomEditSchemaType } from "interfaces/zod/room.ts";
+import { useDeleteRoomVariantMutation } from "services/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "react-router-dom";
-import RoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
+import showToast from "utils/toastShow.ts";
+import AddRoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
+import UpdateRoomVariantPage from "pages/realtor/edit/RoomVariantPage.tsx";
+import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
 const RoomPage = () => {
     useEffect(instantScrollToTop, []);
     const numericId = Number(useParams<{ id: string }>().id);
-    const [modal, setModal] = useState(false);
+    const [createModal, setCreateModal] = useState(false);
+    const [updateModal, setUpdateModal] = useState(false);
+    const [selectedRoomVariant, setSelectedRoomVariant] = useState<IRoomVariant | null>(null);
 
     const {
         register,
@@ -23,8 +29,8 @@ const RoomPage = () => {
         setValue,
         watch,
         formState: { errors },
-    } = useForm<RoomCreateSchemaType>({
-        resolver: zodResolver(RoomCreateSchema),
+    } = useForm<RoomEditSchemaType>({
+        resolver: zodResolver(RoomEditSchema),
         defaultValues: {
             rentalPeriodIds: [],
             roomTypeId: "",
@@ -36,14 +42,35 @@ const RoomPage = () => {
         },
     });
 
+    const { data: roomData, isLoading, error, refetch } = useGetRoomQuery(numericId as number);
     const { data: rentalPeriodsData } = useGetAllRentalPeriodsQuery();
     const { data: roomTypesData } = useGetAllRoomTypesQuery();
     const { data: roomAmenitiesData } = useGetAllRoomAmenitiesQuery();
-    const [ createRoom, { isLoading: isCreating }] = useCreateRoomMutation();
+    const [updateRoom, { isLoading: isCreating }] = useUpdateRoomMutation();
+    const [deleteRoomVariant] = useDeleteRoomVariantMutation();
+
+    useEffect(() => {
+        if (roomData) {
+            const room = roomData;
+
+            setSelectedRentalPeriods(room.rentalPeriods.map((amenity) => amenity.id));
+            setSelectedRoomAmenities(room.amenities.map(language => language.id));
+
+            setValue("name", room.name);
+            setValue("area", Math.round(room.area));
+            setValue("numberOfRooms", room.numberOfRooms);
+            setValue("quantity", room.quantity);
+            setValue("roomTypeId", room.roomType.id);
+            setValue("rentalPeriodIds", room.rentalPeriods.map(rentalPeriod => rentalPeriod.id));
+            setValue("roomAmenityIds", room.amenities.map(amenity => amenity.id));
+            setValue("variants", room.amenities.map(variant => variant.id));
+        }
+    }, [roomData, setValue]);
+
+    console.log(roomData);
 
     const [selectedRentalPeriods, setSelectedRentalPeriods] = useState<number[]>([]);
     const [selectedRoomAmenities, setSelectedRoomAmenities] = useState<number[]>([]);
-    const [roomId, setRoomId] = useState<number | null>(null);
 
     const handleQuantityChange = (delta: number) => {
         const currentValue = watch("quantity");
@@ -51,37 +78,52 @@ const RoomPage = () => {
         setValue("quantity", newValue);
     };
 
-    // TODO: якщо потрібно забрати скролл в body
-    // useEffect(() => {
-    //     document.body.style.overflow = modal ? "hidden" : "auto";
-    // }, [modal]);
-
-    const onSubmitRoom = async (data: RoomCreateSchemaType) => {
+    const onSubmitRoom = async (data: RoomEditSchemaType) => {
         const roomData = {
+            id: numericId,
             rentalPeriodIds: selectedRentalPeriods,
             roomTypeId: Number(data.roomTypeId) || 0,
             area: data.area,
             numberOfRooms: data.numberOfRooms,
             name: data.name,
             quantity: Number(data.quantity) || 0,
-            hotelId: numericId,
             roomAmenityIds: selectedRoomAmenities,
         };
 
         try {
-            const createdRoomId = await createRoom(roomData).unwrap();
-            setRoomId(createdRoomId);
-            showToast(`Номер успішно створено!`, "success");
-            setModal(true);
+            await updateRoom(roomData).unwrap();
+            showToast("Номер успішно оновлено", "success");
+            refetch();
         } catch (error) {
-            showToast(`Помилка при створенні номеру!`, "error");
+            showToast("Помилка при оновлені номеру", "error");
         }
     };
 
+    const handleDelete = async (roomVariantId: number) => {
+        try {
+            await deleteRoomVariant(roomVariantId).unwrap();
+            showToast("Варіант успішно видалено", "success");
+            refetch();
+        } catch (error) {
+            showToast("Помилка видалення варіанту", "error");
+        }
+    };
+
+    const handleEditVariant = (variant: IRoomVariant) => {
+        setSelectedRoomVariant(variant);
+        setUpdateModal(true);
+    };
+
+    if (isLoading || !roomData) return <p className="isLoading-error pt-20 pb-20">Завантаження...</p>;
+    if (error) {
+        showToast("Помилка завантаження даних", "error");
+        return null;
+    }
+
     return (
-        <div className={`add-hotel-room ${modal ? "overflow-hidden" : ""}`}>
+        <div className={`add-hotel-room`}> {/*${modal ? "overflow-hidden" : ""} */}
             <form className="add-page-1" onSubmit={handleSubmit(onSubmitRoom)}>
-                <p className="title">Інформація про кімнату</p>
+                <p className="title">Редагування інформації про кімнату</p>
                 <div className="data-containers">
 
                     <div className="pre-container">
@@ -206,7 +248,7 @@ const RoomPage = () => {
                                     <option disabled value="">
                                         Вибрати
                                     </option>
-                                    {Array.from({ length: 10 }, (_, i) => i + 1).map((roomCount) => (
+                                    {Array.from({length: 10}, (_, i) => i + 1).map((roomCount) => (
                                         <option key={roomCount} value={roomCount}>
                                             {roomCount}
                                         </option>
@@ -257,7 +299,8 @@ const RoomPage = () => {
                         <div className="room-container-7">
                             <button
                                 type="button"
-                                onClick={() => handleQuantityChange(-1)} >﹘</button>
+                                onClick={() => handleQuantityChange(-1)}>﹘
+                            </button>
                             <div
                                 {...register("quantity")}
                                 id="quantity"
@@ -266,26 +309,120 @@ const RoomPage = () => {
                             </div>
                             <button
                                 type="button"
-                                onClick={() => handleQuantityChange(1)}>+</button>
+                                onClick={() => handleQuantityChange(1)}>+
+                            </button>
                         </div>
                         {errors?.quantity && (
                             <FormError className="text-red-500"
                                        errorMessage={errors?.quantity?.message as string}/>
                         )}
                     </div>
+
+                    <div className="pre-container">
+                        {roomData?.variants.map((variant) => (
+                            <div key={variant.id} className="room-variant">
+                                <div className="container">
+                                    <div className="variant-data">
+                                        <p className="variant-title">Кількість гостей</p>
+
+                                        <div className="data">
+                                            <p>Кількість дорослих</p>
+                                            <span>{variant.guestInfo.adultCount}</span>
+                                        </div>
+
+                                        <div className="data">
+                                            <p>Кількість дітей</p>
+                                            <span>{variant.guestInfo.childCount}</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="variant-data">
+                                        <p className="variant-title">Ліжка</p>
+
+                                        <div className="data">
+                                            <p>Одномісне ліжко</p>
+                                            <span>{variant.bedInfo.singleBedCount}</span>
+                                        </div>
+
+                                        <div className="data">
+                                            <p>Двомісне ліжко</p>
+                                            <span>{variant.bedInfo.doubleBedCount}</span>
+                                        </div>
+
+                                        <div className="data">
+                                            <p>Додаткове ліжко</p>
+                                            <span>{variant.bedInfo.extraBedCount}</span>
+                                        </div>
+
+                                        <div className="data">
+                                            <p>Диван ліжко</p>
+                                            <span>{variant.bedInfo.sofaCount}</span>
+                                        </div>
+
+                                        <div className="data">
+                                            <p>Кінгсайз</p>
+                                            <span>{variant.bedInfo.kingsizeBedCount}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="variant-data">
+                                        <p className="variant-title">Ціна за ніч</p>
+
+                                        <div className="data">
+                                            <p>Оригінальна ціна</p>
+                                            <span>{variant.price.toFixed()}$</span>
+                                        </div>
+                                        <div className="data">
+                                            <p>Ціна зі знижкою</p>
+                                            <span>{variant.discountPrice.toFixed()}$</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="actions">
+                                    <button
+                                        className="btn-delete"
+                                        type="button"
+                                        onClick={() => handleDelete(variant.id)}
+                                    >
+                                        <img src={getPublicResourceUrl("account/trash.svg")} alt=""/>
+                                    </button>
+
+                                    <button
+                                        className="btn-edit"
+                                        type="button"
+                                        onClick={() => handleEditVariant(variant)}
+                                    >
+                                        Редагувати
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+
+                        <button
+                            className="add-variant-btn"
+                            type="button"
+                            onClick={() => setCreateModal(true)}
+                        >
+                            Додати варіації номеру
+                        </button>
+                    </div>
                 </div>
 
                 <button
-                    className="main-button-2"
+                    className="btn-edit-room"
                     type="submit"
                     disabled={isCreating}
                 >
-                    Додати варіації номеру
+                    Зберегти
                 </button>
             </form>
-
-            {modal && (
-                <RoomVariantPage roomId={roomId ?? 0} numericId={numericId} navigateToRooms={true} modal={modal} setModal={setModal}/>
+            {updateModal && (
+                <UpdateRoomVariantPage className="border-2" roomVariantData={selectedRoomVariant} modal={updateModal} setModal={setUpdateModal} refetch={refetch}/>
+            )}
+            {createModal && (
+                <AddRoomVariantPage className="border-2" roomId={numericId ?? 0} modal={createModal} setModal={setCreateModal} refetch={refetch}/>
             )}
         </div>
     );

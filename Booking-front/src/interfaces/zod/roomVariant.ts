@@ -27,11 +27,10 @@ export const BedInfoSchema = z.object({
 );
 
 export const RoomVariantCreateSchema = z.object({
-    // id: z.number().optional(),
-    discountPrice: z.preprocess((val) => (val ? Number(val) : 0),
+    price: z.preprocess((val) => (val ? Number(val) : 0),
         z.number().min(1, "Ціна повинна бути більше 0"),
         z.number().max(1000000, "Ціна не повинна перевищувати 1000000")),
-    price: z.preprocess((val) => (val ? Number(val) : 0),
+    discountPrice: z.preprocess((val) => (val ? Number(val) : 0),
         z.number().max(1000000, "Знижка не повинна перевищувати 1000000"))
         .optional(),
     guest: GuestSchema,

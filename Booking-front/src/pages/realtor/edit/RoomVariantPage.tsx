@@ -1,32 +1,19 @@
 import FormError from "components/ui/FormError.tsx";
 import { useForm } from "react-hook-form";
 import { RoomVariantCreateSchema, RoomVariantCreateSchemaType } from "interfaces/zod/roomVariant.ts";
-import { useCreateRoomVariantMutation } from "services/roomVariant.ts";
+import { useUpdateRoomVariantMutation } from "services/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import { useEffect } from "react";
 
-interface IRoomVariantPageProps {
-    roomId: number;
-    numericId?: number;
-    modal?: boolean;
-    setModal?: boolean;
-    navigateToRooms?: boolean;
-    refetch?: boolean;
-}
-
-const RoomVariantPage = (props: IRoomVariantPageProps) => {
-    const navigate = useNavigate();
-    const [createRoomVariant, { isLoading: isCreating }] = useCreateRoomVariantMutation();
+const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal: boolean, refetch: boolean }) => {
+    const [updateRoomVariant, { isLoading: isCreating }] = useUpdateRoomVariantMutation();
 
     const {
-        roomId,
-        numericId,
-        navigateToRooms,
+        roomVariantData,
         modal,
         setModal,
-        refetch,
+        refetch
     } = props;
 
     const {
@@ -53,6 +40,20 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
             },
         },
     });
+
+    useEffect(() => {
+        if (roomVariantData) {
+            setValue("guest.adultCount", roomVariantData.guestInfo.adultCount);
+            setValue("guest.childCount", roomVariantData.guestInfo.childCount);
+            setValue("bedInfo.singleBedCount", roomVariantData.bedInfo.singleBedCount);
+            setValue("bedInfo.doubleBedCount", roomVariantData.bedInfo.doubleBedCount);
+            setValue("bedInfo.extraBedCount", roomVariantData.bedInfo.extraBedCount);
+            setValue("bedInfo.sofaCount", roomVariantData.bedInfo.sofaCount);
+            setValue("bedInfo.kingsizeBedCount", roomVariantData.bedInfo.kingsizeBedCount);
+            setValue("price", Math.round(roomVariantData.price));
+            setValue("discountPrice", Math.round(roomVariantData.discountPrice));
+        }
+    }, [roomVariantData, setValue]);
 
     useEffect(() => {
         const handleOutsideClick = (e: MouseEvent) => {
@@ -83,24 +84,19 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
     };
 
     const onSubmitRoomVariants = async (data: RoomVariantCreateSchemaType) => {
-        const roomVariantData = {
+        const roomVariant = {
+            id: roomVariantData.id,
             ...data,
-            roomId: roomId,
             price: data.price ?? 0,
         };
 
         try {
-            await createRoomVariant(roomVariantData).unwrap();
-            showToast(`Варіант номеру успішно створено`, "success");
-            if (navigateToRooms) {
-                navigate(`/realtor/rooms/${numericId}`);
-            }
-            if (modal) {
-                setModal(false);
-                refetch();
-            }
+            await updateRoomVariant(roomVariant).unwrap();
+            showToast(`Варіант номеру успішно створено!`, "success");
+            setModal(false);
+            refetch();
         } catch (error) {
-            showToast(`Помилка при створенні варіанту номера`, "error");
+            showToast(`Помилка при створенні варіанту номера!`, "error");
         }
     };
 

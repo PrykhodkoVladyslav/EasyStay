@@ -5,6 +5,7 @@ import { toQueryFromIRoomPageQuery } from "interfaces/room/IRoomPageQuery.ts";
 import IPage from "interfaces/page/IPage.ts";
 import IRoomPageQuery from "interfaces/room/IRoomPageQuery.ts";
 import { IRoomCreate } from "interfaces/room/IRoomCreate.ts";
+import { IRoomUpdate } from "interfaces/room/IRoomUpdate.ts";
 
 export const roomApi = createApi({
     reducerPath: "roomApi",
@@ -12,11 +13,6 @@ export const roomApi = createApi({
     tagTypes: ["Rooms"],
 
     endpoints: (builder) => ({
-
-        getRoom: builder.query<IRoom, number>({
-            query: (id) => `getById/${id}`,
-            providesTags: ["Rooms"],
-        }),
 
         getRoomsPage: builder.query<IPage<IRoom>, IRoomPageQuery | undefined>({
             query: (query) => {
@@ -30,10 +26,27 @@ export const roomApi = createApi({
             providesTags: ["Rooms"],
         }),
 
+        getRoom: builder.query<IRoom, number>({
+            query: (id) => `getById/${id}`,
+            providesTags: ["Rooms"],
+        }),
+
         createRoom: builder.mutation<number, IRoomCreate>({
             query: (room) => ({
                 url: "create",
                 method: "POST",
+                body: room,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }),
+            invalidatesTags: ["Rooms"],
+        }),
+
+        updateRoom: builder.mutation({
+            query: (room: IRoomUpdate) => ({
+                url: "update",
+                method: "PUT",
                 body: room,
                 headers: {
                     "Content-Type": "application/json",
@@ -61,9 +74,10 @@ export const roomApi = createApi({
 });
 
 export const {
-    useGetRoomQuery,
     useGetRoomsPageQuery,
+    useGetRoomQuery,
     useCreateRoomMutation,
+    useUpdateRoomMutation,
     useDeleteRoomMutation,
     useGetRoomVariantsFreeQuantityQuery,
 } = roomApi;

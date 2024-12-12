@@ -1,8 +1,8 @@
-import React from 'react';
-import Modal from 'react-modal';
-import DateTimePicker from 'react-datetime';
-import 'react-datetime/css/react-datetime.css';
-import moment from 'moment';
+import React from "react";
+import Modal from "react-modal";
+import DateTimePicker from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+import moment from "moment";
 
 interface ModalComponentProps {
     isOpen: boolean;
@@ -20,10 +20,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onClose, onConf
             if (selectedDate < now) {
                 setError("Дата та час повинні бути після поточного моменту.");
             } else {
-                // Convert selectedDate to UTC
-                const utcDate = new Date(selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000);
-                // console.log("UTC date:", utcDate.toISOString());
-                onConfirm(utcDate);
+                onConfirm(selectedDate);
                 setError(null);
                 onClose();
             }
@@ -42,17 +39,17 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onClose, onConf
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-lg font-semibold mb-4">Виберіть дату та час блокування</h2>
                 <DateTimePicker
-                    value={selectedDate ? moment(selectedDate) : undefined} // Convert Date to Moment if needed
+                    value={selectedDate ? moment(selectedDate) : undefined}
                     onChange={(date) => {
                         if (moment.isMoment(date) && date.isValid()) {
-                            setSelectedDate(date.toDate()); // Convert Moment to Date
+                            setSelectedDate(date.toDate());
                         } else {
                             console.error("Вибрано невірну дату:", date);
                         }
                     }}
                     dateFormat="YYYY/MM/DD"
                     timeFormat="HH:mm"
-                    inputProps={{ className: 'border border-gray-300 rounded-lg p-2 w-full' }}
+                    inputProps={{ className: "border border-gray-300 rounded-lg p-2 w-full" }}
                 />
                 {error && <p className="text-red-500 mt-2">{error}</p>}
                 <div className="mt-4 flex justify-end space-x-2">

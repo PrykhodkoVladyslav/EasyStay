@@ -26,8 +26,7 @@ const RealtorsListPage: React.FC = () => {
     const handleBlockUser = async (date: Date) => {
         if (selectedUserId) {
             try {
-                const utcDate = new Date(date.toISOString());
-                await blockUser({ id: selectedUserId, lockoutEndUtc: utcDate }).unwrap();
+                await blockUser({ id: selectedUserId, lockoutEndUtc: date }).unwrap();
                 showToast("Користувача заблоковано", "success");
                 refetch();
             } catch (err) {
@@ -87,8 +86,6 @@ const RealtorsListPage: React.FC = () => {
                                 {user.isLocked ? (
                                     <button
                                         onClick={() => handleUnlockUser(user.id)}
-                                        // variant="icon"
-                                        // size="iconmd"
                                         title="Розблокувати"
                                         disabled={isUnblockLoading}
                                     >
@@ -97,8 +94,6 @@ const RealtorsListPage: React.FC = () => {
                                 ) : (
                                     <button
                                         onClick={() => handleBlockUserClick(user.id)}
-                                        // variant="icon"
-                                        // size="iconmd"
                                         title="Заблокувати"
                                         disabled={isBlockLoading}
                                     >

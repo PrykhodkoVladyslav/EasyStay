@@ -6,13 +6,19 @@ import {
     useIsFavoriteHotelQuery,
 } from "services/favoriteHotel.ts";
 import styles from "./styles.module.scss";
+import { useState } from "react";
+import { differenceInMilliseconds } from "date-fns";
 
 const FavoriteHotelButton = (props: { hotelId: number }) => {
     const { hotelId } = props;
 
+    const changeIntervalMilliseconds = 250;
+
     const { data: isFavorite, refetch, isLoading: isFavoriteLoading } = useIsFavoriteHotelQuery(hotelId);
     const [favorite, { isLoading: isSetFavoriteLoading }] = useCreateFavoriteHotelMutation();
     const [unFavorite, { isLoading: isUnsetFavoriteLoading }] = useDeleteFavoriteHotelMutation();
+
+    const [lastClickTime, setLastClickTime] = useState<Date | null>(null);
 
     const handleFavoriteAsync = async () => {
         try {
@@ -33,7 +39,12 @@ const FavoriteHotelButton = (props: { hotelId: number }) => {
     };
 
     const switchIsFavoriteAsync = async () => {
+        if (lastClickTime !== null && differenceInMilliseconds(new Date(), lastClickTime) < changeIntervalMilliseconds)
+            return;
+
         await (isFavorite ? handleUnFavoriteAsync() : handleFavoriteAsync());
+
+        setLastClickTime(new Date());
     };
 
     return (

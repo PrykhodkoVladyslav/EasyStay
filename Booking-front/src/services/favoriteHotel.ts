@@ -1,35 +1,35 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { createBaseQuery } from 'utils/apiUtils';
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQuery } from "utils/apiUtils";
 
 export const favoriteHotelApi = createApi({
-    reducerPath: 'favoriteHotelApi',
-    baseQuery: createBaseQuery('favoriteHotels'),
-    tagTypes: ['FavoriteHotels'],
+    reducerPath: "favoriteHotelApi",
+    baseQuery: createBaseQuery("favoriteHotels"),
+    tagTypes: ["FavoriteHotels"],
 
     endpoints: (builder) => ({
         isFavoriteHotel: builder.query<boolean, number>({
             query: (hotelId) => ({
                 url: `isFavoriteHotel/${hotelId}`,
-                method: 'GET',
+                method: "GET",
             }),
-            providesTags: ['FavoriteHotels'],
+            providesTags: ["FavoriteHotels"],
         }),
 
-        createFavoriteHotel: builder.mutation<void, { hotelId: number }>({
+        createFavoriteHotel: builder.mutation<void, number>({
             query: (hotelId) => ({
                 url: "create",
-                method: 'POST',
-                body: hotelId,
+                method: "POST",
+                body: { hotelId },
             }),
-            invalidatesTags: ['FavoriteHotels'],
+            invalidatesTags: ["FavoriteHotels"],
         }),
 
         deleteFavoriteHotel: builder.mutation({
             query: (id: number) => ({
                 url: `delete/${id}`,
-                method: 'DELETE',
+                method: "DELETE",
             }),
-            invalidatesTags: ['FavoriteHotels'],
+            invalidatesTags: ["FavoriteHotels"],
         }),
     }),
 });

@@ -1,0 +1,16 @@
+.FavoriteButton {
+  &:hover {
+    img {
+      width: 30px;
+      min-width: 30px;
+      height: 30px;
+    }
+  }
+
+  img {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+  }
+}

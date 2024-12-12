@@ -11,7 +11,7 @@ import showToast from "utils/toastShow.ts";
 import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
 import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 import { useSelector } from "react-redux";
-import { getToken } from "store/slice/userSlice.ts";
+import { getUser } from "store/slice/userSlice.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
 import FavoriteHotelButton from "components/partials/customer/FavoriteHotelButton/FavoriteHotelButton.tsx";
@@ -22,7 +22,8 @@ const HotelPage = () => {
     const { id } = useParams();
     const [hotelId] = useState(Number(id));
     const navigate = useNavigate();
-    const token = useSelector(getToken);
+    const user = useSelector(getUser);
+    const role = user ? user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : undefined;
 
     const { data: hotelData, isLoading, error } = useGetHotelQuery(hotelId);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -142,9 +143,9 @@ const HotelPage = () => {
                                     </div>
                                 </div>
 
-                                <div className="hotel-favorite-button-container">
+                                {role === "Customer" && <div className="hotel-favorite-button-container">
                                     <FavoriteHotelButton hotelId={hotelId} />
-                                </div>
+                                </div>}
                             </div>
 
                             <div className="location">
@@ -228,7 +229,7 @@ const HotelPage = () => {
                             </div>
                             <p className="description">{hotelData.realtor.description}</p>
 
-                            {token && (
+                            {user && (
                                 <button
                                     onClick={() => navigate(`/realtorPage/${hotelData.realtor.id}`)}
                                     className="realtor-btn"

@@ -880,7 +880,12 @@
               }
 
               .hotel-favorite-button-container {
-                flex-shrink: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width: 30px;
+                height: 30px;
               }
             }
 

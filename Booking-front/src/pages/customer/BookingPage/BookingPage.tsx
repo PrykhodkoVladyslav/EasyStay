@@ -235,7 +235,7 @@ const BookingPage = () => {
         try {
             await createBooking(createBookingRequest).unwrap();
 
-            navigate("/");
+            navigate("/customer/booking-history");
         } catch (error) {
             const e = error as IValidationError;
             if (e.data[0].PropertyName === "BankCard") {

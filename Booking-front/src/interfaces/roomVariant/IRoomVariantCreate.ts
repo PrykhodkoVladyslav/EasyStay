@@ -5,6 +5,6 @@ export default interface IRoomVariantCreate {
     price: number;
     discountPrice?: number;
     roomId: number;
-    guest: IGuestInfo;
+    guestInfo: IGuestInfo;
     bedInfo: IBedInfo;
 }

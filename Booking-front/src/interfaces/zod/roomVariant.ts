@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const GuestSchema = z.object({
+export const GuestInfoSchema = z.object({
     adultCount: z
         .number()
         .min(1, "Мінімум 1 дорослий"),
@@ -33,7 +33,7 @@ export const RoomVariantCreateSchema = z.object({
     discountPrice: z.preprocess((val) => (val ? Number(val) : 0),
         z.number().max(1000000, "Знижка не повинна перевищувати 1000000"))
         .optional(),
-    guest: GuestSchema,
+    guestInfo: GuestInfoSchema,
     bedInfo: BedInfoSchema,
 });
 

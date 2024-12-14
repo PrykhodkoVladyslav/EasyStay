@@ -26,7 +26,7 @@ public class CreateRoomVariantCommandHandler(
 		try {
 			await context.SaveChangesAsync(cancellationToken);
 
-			var guestCommand = mapper.Map<CreateGuestInfoCommand>(request.Guest);
+			var guestCommand = mapper.Map<CreateGuestInfoCommand>(request.GuestInfo);
 			guestCommand.RoomVariantId = entity.Id;
 			await mediator.Send(guestCommand, cancellationToken);
 

@@ -6,14 +6,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import showToast from "utils/toastShow.ts";
 import { useEffect } from "react";
 
-const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal: boolean, refetch: boolean }) => {
+interface IRoomVariantPageProps {
+    roomVariantData: any;
+    setModal?: (bool: boolean) => void;
+    refetch?: () => void;
+}
+
+const RoomVariantPage = (props: IRoomVariantPageProps) => {
     const [updateRoomVariant, { isLoading: isCreating }] = useUpdateRoomVariantMutation();
 
     const {
         roomVariantData,
-        modal,
         setModal,
-        refetch
+        refetch,
     } = props;
 
     const {
@@ -27,7 +32,7 @@ const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal
         defaultValues: {
             price: 0,
             discountPrice: 0,
-            guest: {
+            guestInfo: {
                 adultCount: 0,
                 childCount: 0
             },
@@ -43,8 +48,8 @@ const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal
 
     useEffect(() => {
         if (roomVariantData) {
-            setValue("guest.adultCount", roomVariantData.guestInfo.adultCount);
-            setValue("guest.childCount", roomVariantData.guestInfo.childCount);
+            setValue("guestInfo.adultCount", roomVariantData.guestInfo.adultCount);
+            setValue("guestInfo.childCount", roomVariantData.guestInfo.childCount);
             setValue("bedInfo.singleBedCount", roomVariantData.bedInfo.singleBedCount);
             setValue("bedInfo.doubleBedCount", roomVariantData.bedInfo.doubleBedCount);
             setValue("bedInfo.extraBedCount", roomVariantData.bedInfo.extraBedCount);
@@ -73,7 +78,7 @@ const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal
     }, [setModal]);
 
     const handleCountChange = (
-        field: keyof RoomVariantCreateSchemaType | "guest.adultCount" | "guest.childCount" | "bedInfo.singleBedCount" | "bedInfo.doubleBedCount" | "bedInfo.extraBedCount" | "bedInfo.sofaCount" | "bedInfo.kingsizeBedCount",
+        field: keyof RoomVariantCreateSchemaType | "guestInfo.adultCount" | "guestInfo.childCount" | "bedInfo.singleBedCount" | "bedInfo.doubleBedCount" | "bedInfo.extraBedCount" | "bedInfo.sofaCount" | "bedInfo.kingsizeBedCount",
         delta: number,
         min = 0,
         max = 10
@@ -92,11 +97,11 @@ const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal
 
         try {
             await updateRoomVariant(roomVariant).unwrap();
-            showToast(`Варіант номеру успішно створено!`, "success");
-            setModal(false);
-            refetch();
+            // showToast(`Варіант номеру успішно оновлено`, "success");
+            if (setModal) setModal(false);
+            if (refetch) refetch();
         } catch (error) {
-            showToast(`Помилка при створенні варіанту номера!`, "error");
+            showToast(`Помилка при оновленні варіанту номера`, "error");
         }
     };
 
@@ -121,15 +126,15 @@ const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal
                                     <div className="stepper">
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guest.adultCount", -1)}>﹘</button>
-                                        <div id="guest.adultCount">{watch("guest.adultCount") || 0}</div>
+                                            onClick={() => handleCountChange("guestInfo.adultCount", -1)}>﹘</button>
+                                        <div id="guestInfo.adultCount">{watch("guestInfo.adultCount") || 0}</div>
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guest.adultCount", 1)}>+</button>
+                                            onClick={() => handleCountChange("guestInfo.adultCount", 1)}>+</button>
                                     </div>
-                                    {errors?.guest?.adultCount && (
+                                    {errors?.guestInfo?.adultCount && (
                                         <FormError className="text-red-500"
-                                                   errorMessage={errors?.guest?.adultCount?.message as string}/>
+                                                   errorMessage={errors?.guestInfo?.adultCount?.message as string}/>
                                     )}
                                 </div>
 
@@ -138,15 +143,15 @@ const RoomVariantPage = (props: { roomVariantData: any, modal: boolean, setModal
                                     <div className="stepper">
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guest.childCount", -1)}>﹘</button>
-                                        <div id="guest.childCount">{watch("guest.childCount") || 0}</div>
+                                            onClick={() => handleCountChange("guestInfo.childCount", -1)}>﹘</button>
+                                        <div id="guestInfo.childCount">{watch("guestInfo.childCount") || 0}</div>
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guest.childCount", 1)}>+</button>
+                                            onClick={() => handleCountChange("guestInfo.childCount", 1)}>+</button>
                                     </div>
-                                    {errors?.guest?.childCount && (
+                                    {errors?.guestInfo?.childCount && (
                                         <FormError className="text-red-500"
-                                                   errorMessage={errors?.guest?.childCount?.message as string}/>
+                                                   errorMessage={errors?.guestInfo?.childCount?.message as string}/>
                                     )}
                                 </div>
                             </div>

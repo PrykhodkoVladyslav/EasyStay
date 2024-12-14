@@ -1,25 +1,23 @@
 import FormError from "components/ui/FormError.tsx";
 import { useForm } from "react-hook-form";
 import { RoomVariantCreateSchema, RoomVariantCreateSchemaType } from "interfaces/zod/roomVariant.ts";
-import { useCreateRoomVariantMutation } from "services/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import showToast from "utils/toastShow.ts";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
 interface IRoomVariantPageProps {
-    roomId: number;
-    setModal?: (bool: boolean) => void;
-    refetch?: () => void;
+    roomVariant: any;
+    onSave: (updatedVariant: IRoomVariant) => void;
+    setModal?: Dispatch<SetStateAction<boolean>>;
 }
 
 const RoomVariantPage = (props: IRoomVariantPageProps) => {
-    const [createRoomVariant, { isLoading: isCreating }] = useCreateRoomVariantMutation();
-
     const {
-        roomId,
+        roomVariant,
+        onSave,
         setModal,
-        refetch,
-    } = props;
+        } = props;
 
     const {
         register,
@@ -75,17 +73,15 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
     };
 
     const onSubmitRoomVariants = async (data: RoomVariantCreateSchemaType) => {
-        const roomVariantData = {
-            ...data,
-            roomId: roomId,
-            price: data.price ?? 0,
-        };
-
         try {
-            await createRoomVariant(roomVariantData).unwrap();
-            // showToast(`Варіант номеру успішно створено`, "success");
+            const newVariant = {
+                ...data,
+                id: roomVariant?.id || Date.now(),
+                roomId: roomVariant?.roomId || 0,
+            };
+            onSave(newVariant);
             if (setModal) setModal(false);
-            if (refetch) refetch();
+            // showToast(`Варіант номеру успішно створено`, "success");
         } catch (error) {
             showToast(`Помилка при створенні варіанту номера`, "error");
         }
@@ -274,7 +270,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                 <button
                     className="main-button-2"
                     type="submit"
-                    disabled={isCreating}
+                    // disabled={!roomVariant}
                 >
                     Зберегти
                 </button>

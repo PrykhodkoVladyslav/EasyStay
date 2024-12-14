@@ -5,7 +5,6 @@ export interface IRoomVariantUpdate {
     id: number;
     price: number;
     discountPrice?: number;
-    roomId: number;
-    guest: IGuestInfo;
+    guestInfo: IGuestInfo;
     bedInfo: IBedInfo;
 }

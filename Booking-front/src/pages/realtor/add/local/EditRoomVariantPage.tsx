@@ -1,24 +1,22 @@
 import FormError from "components/ui/FormError.tsx";
 import { useForm } from "react-hook-form";
 import { RoomVariantCreateSchema, RoomVariantCreateSchemaType } from "interfaces/zod/roomVariant.ts";
-import { useCreateRoomVariantMutation } from "services/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import showToast from "utils/toastShow.ts";
-import { useEffect } from "react";
+import {Dispatch, SetStateAction, useEffect} from "react";
+import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
 interface IRoomVariantPageProps {
-    roomId: number;
-    setModal?: (bool: boolean) => void;
-    refetch?: () => void;
+    roomVariant: any;
+    onSave: (updatedVariant: IRoomVariant) => void;
+    setModal?: Dispatch<SetStateAction<boolean>>;
 }
 
 const RoomVariantPage = (props: IRoomVariantPageProps) => {
-    const [createRoomVariant, { isLoading: isCreating }] = useCreateRoomVariantMutation();
-
     const {
-        roomId,
+        roomVariant,
+        onSave,
         setModal,
-        refetch,
     } = props;
 
     const {
@@ -45,6 +43,20 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
             },
         },
     });
+
+    useEffect(() => {
+        if (roomVariant) {
+            setValue("guestInfo.adultCount", roomVariant.guestInfo.adultCount);
+            setValue("guestInfo.childCount", roomVariant.guestInfo.childCount);
+            setValue("bedInfo.singleBedCount", roomVariant.bedInfo.singleBedCount);
+            setValue("bedInfo.doubleBedCount", roomVariant.bedInfo.doubleBedCount);
+            setValue("bedInfo.extraBedCount", roomVariant.bedInfo.extraBedCount);
+            setValue("bedInfo.sofaCount", roomVariant.bedInfo.sofaCount);
+            setValue("bedInfo.kingsizeBedCount", roomVariant.bedInfo.kingsizeBedCount);
+            setValue("price", Math.round(roomVariant.price));
+            setValue("discountPrice", Math.round(roomVariant.discountPrice));
+        }
+    }, [roomVariant, setValue]);
 
     useEffect(() => {
         const handleOutsideClick = (e: MouseEvent) => {
@@ -75,19 +87,17 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
     };
 
     const onSubmitRoomVariants = async (data: RoomVariantCreateSchemaType) => {
-        const roomVariantData = {
-            ...data,
-            roomId: roomId,
-            price: data.price ?? 0,
-        };
-
         try {
-            await createRoomVariant(roomVariantData).unwrap();
-            // showToast(`Варіант номеру успішно створено`, "success");
+            const updatedVariant = {
+                ...data,
+                id: roomVariant?.id || Date.now(),
+                roomId: roomVariant?.roomId || 0,
+            };
+            onSave(updatedVariant);
             if (setModal) setModal(false);
-            if (refetch) refetch();
+            // showToast(`Варіант номеру успішно оновлено`, "success");
         } catch (error) {
-            showToast(`Помилка при створенні варіанту номера`, "error");
+            showToast(`Помилка при оновленні варіанту номера`, "error");
         }
     };
 
@@ -274,7 +284,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                 <button
                     className="main-button-2"
                     type="submit"
-                    disabled={isCreating}
+                    // disabled={!roomVariant}
                 >
                     Зберегти
                 </button>

@@ -10,7 +10,7 @@ import { useGetRoomQuery, useUpdateRoomMutation } from "services/room.ts";
 import { RoomEditSchema, RoomEditSchemaType } from "interfaces/zod/room.ts";
 import { useDeleteRoomVariantMutation } from "services/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
 import AddRoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
 import UpdateRoomVariantPage from "pages/realtor/edit/RoomVariantPage.tsx";
@@ -18,6 +18,7 @@ import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
 const RoomPage = () => {
     useEffect(instantScrollToTop, []);
+    const navigate = useNavigate();
     const numericId = Number(useParams<{ id: string }>().id);
     const [createModal, setCreateModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
@@ -33,7 +34,7 @@ const RoomPage = () => {
         resolver: zodResolver(RoomEditSchema),
         defaultValues: {
             rentalPeriodIds: [],
-            roomTypeId: "",
+            roomTypeId: 0,
             area: 0,
             numberOfRooms: 0,
             name: "",
@@ -63,7 +64,6 @@ const RoomPage = () => {
             setValue("roomTypeId", room.roomType.id);
             setValue("rentalPeriodIds", room.rentalPeriods.map(rentalPeriod => rentalPeriod.id));
             setValue("roomAmenityIds", room.amenities.map(amenity => amenity.id));
-            setValue("variants", room.amenities.map(variant => variant.id));
         }
     }, [roomData, setValue]);
 
@@ -92,6 +92,7 @@ const RoomPage = () => {
 
         try {
             await updateRoom(roomData).unwrap();
+            navigate(`/realtor/rooms/${numericId}`);
             showToast("Номер успішно оновлено", "success");
             refetch();
         } catch (error) {
@@ -375,7 +376,7 @@ const RoomPage = () => {
                                         </div>
                                         <div className="data">
                                             <p>Ціна зі знижкою</p>
-                                            <span>{variant.discountPrice.toFixed()}$</span>
+                                            <span>{variant?.discountPrice?.toFixed()}$</span>
                                         </div>
                                     </div>
                                 </div>
@@ -418,11 +419,17 @@ const RoomPage = () => {
                     Зберегти
                 </button>
             </form>
-            {updateModal && (
-                <UpdateRoomVariantPage className="border-2" roomVariantData={selectedRoomVariant} modal={updateModal} setModal={setUpdateModal} refetch={refetch}/>
-            )}
             {createModal && (
-                <AddRoomVariantPage className="border-2" roomId={numericId ?? 0} modal={createModal} setModal={setCreateModal} refetch={refetch}/>
+                <AddRoomVariantPage
+                    roomId={numericId ?? 0}
+                    setModal={setCreateModal}
+                    refetch={refetch}/>
+            )}
+            {updateModal && (
+                <UpdateRoomVariantPage
+                    roomVariantData={selectedRoomVariant}
+                    setModal={setUpdateModal}
+                    refetch={refetch}/>
             )}
         </div>
     );

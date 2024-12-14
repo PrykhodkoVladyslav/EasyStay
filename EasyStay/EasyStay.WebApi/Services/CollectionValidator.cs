@@ -4,10 +4,10 @@ namespace EasyStay.WebApi.Services;
 
 public class CollectionValidator : ICollectionValidator {
 	public bool IsDistinct<T>(IEnumerable<T> collaction) {
-		HashSet<T> uniqueIds = [];
+		HashSet<T> uniqueItems = [];
 
 		foreach (var item in collaction) {
-			if (!uniqueIds.Add(item))
+			if (!uniqueItems.Add(item))
 				return false;
 		}
 		return true;
@@ -17,6 +17,6 @@ public class CollectionValidator : ICollectionValidator {
 		if (collaction is null)
 			return true;
 
-		return IsDistinct(collaction.Where(i => i is not null));
+		return IsDistinct(collaction.Where(x => x is not null));
 	}
 }

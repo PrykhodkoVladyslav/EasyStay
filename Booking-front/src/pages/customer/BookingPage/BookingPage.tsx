@@ -17,6 +17,7 @@ import ICreateBookingRequest from "interfaces/booking/ICreateBookingRequest.ts";
 import { useCreateBookingMutation } from "services/booking.ts";
 import IValidationError from "interfaces/error/IValidationError.ts";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import BookingRulesModal from "components/partials/customer/BookingRulesModal/BookingRulesModal.tsx";
 
 export interface IBookingBedSelection {
     isSingleBed?: boolean;
@@ -234,7 +235,7 @@ const BookingPage = () => {
         try {
             await createBooking(createBookingRequest).unwrap();
 
-            navigate("/");
+            navigate("/customer/booking-history");
         } catch (error) {
             const e = error as IValidationError;
             if (e.data[0].PropertyName === "BankCard") {
@@ -254,7 +255,13 @@ const BookingPage = () => {
         }
     };
 
+    const [isOpenRulesModal, setIsOpenRulesModal] = useState(false);
+
+    const openRulesModal = () => setIsOpenRulesModal(true);
+
     return <div className="booking-page-main-container">
+        <BookingRulesModal isOpen={isOpenRulesModal} setIsOpen={setIsOpenRulesModal} />
+
         <StageIndicator options={["Ваш вибір", "Ваші дані", "Завершальний крок"]} currentOptionIndex={bodyIndex} />
 
         <VerticalPad heightPx={46} />
@@ -281,6 +288,7 @@ const BookingPage = () => {
                         selectedTime={selectedTime}
                         setSelectedTime={setSelectedTime}
                         arrivalTime={formatTime(hotel.arrivalTimeUtcFrom)}
+                        openRulesModal={openRulesModal}
                         onNext={onNext}
                     />
                     : bodyIndex === 2
@@ -300,6 +308,7 @@ const BookingPage = () => {
                             setIsSaveCard={setIsSaveCard}
                             isAppliedAgreements={isAppliedAgreements}
                             setIsAppliedAgreements={setIsAppliedAgreements}
+                            openRulesModal={openRulesModal}
                             onNext={onNext}
                         />
                         : null}

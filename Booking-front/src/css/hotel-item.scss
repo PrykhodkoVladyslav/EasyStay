@@ -14,27 +14,18 @@
     flex: 1 1 calc(25% - 24px);
   }
 
-  .btn-favorite {
+  .favorite-button-container {
     position: absolute;
     top: 14px;
     right: 14px;
     z-index: 10;
 
-    img {
-      width: 24px;
-      min-width: 24px;
-      height: 24px;
-      transition: all 0.3s ease;
-    }
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  .btn-favorite:hover {
-    img {
-      width: 30px;
-      min-width: 30px;
-      height: 30px;
-    }
-
+    width: 30px;
+    height: 30px;
   }
 
   .photo-slider {

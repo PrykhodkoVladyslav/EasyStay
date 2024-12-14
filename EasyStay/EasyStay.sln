@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.WebApi", "EasyStay
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyStay.Infrastructure", "EasyStay.Infrastructure\EasyStay.Infrastructure.csproj", "{9DDE607E-1981-40CE-9EC9-062BF69B6BF0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6D30AC21-BAC0-4701-B4AD-C411031A100B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyStay.WebApi.Tests", "EasyStay.WebApi.Tests\EasyStay.WebApi.Tests.csproj", "{0857E33D-7D15-48CD-B21A-5E9F32657370}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{9DDE607E-1981-40CE-9EC9-062BF69B6BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DDE607E-1981-40CE-9EC9-062BF69B6BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DDE607E-1981-40CE-9EC9-062BF69B6BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0857E33D-7D15-48CD-B21A-5E9F32657370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0857E33D-7D15-48CD-B21A-5E9F32657370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0857E33D-7D15-48CD-B21A-5E9F32657370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0857E33D-7D15-48CD-B21A-5E9F32657370}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{C8081998-DDBB-4EAA-84E2-7F5B6EC94E93} = {9C8577C5-51F9-4AF9-9BB8-3207D4C46C95}
 		{7D101622-C0D4-47A0-AF6C-4CB7B1764294} = {AAC9A677-F62A-4B01-B250-B1C853A035EA}
 		{9DDE607E-1981-40CE-9EC9-062BF69B6BF0} = {9C8577C5-51F9-4AF9-9BB8-3207D4C46C95}
+		{0857E33D-7D15-48CD-B21A-5E9F32657370} = {6D30AC21-BAC0-4701-B4AD-C411031A100B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C15A466A-CF0B-463F-BB8E-40B89EF41B9D}

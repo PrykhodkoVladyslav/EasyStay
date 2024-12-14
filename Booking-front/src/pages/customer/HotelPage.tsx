@@ -11,14 +11,10 @@ import showToast from "utils/toastShow.ts";
 import { useGetHotelReviewsPageQuery } from "services/hotelReview.ts";
 import ReviewCard from "components/partials/customer/ReviewCard.tsx";
 import { useSelector } from "react-redux";
-import { getToken } from "store/slice/userSlice.ts";
+import { getUser } from "store/slice/userSlice.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
-import {
-    useCreateFavoriteHotelMutation,
-    useDeleteFavoriteHotelMutation,
-    useIsFavoriteHotelQuery
-} from "services/favoriteHotel.ts";
+import FavoriteHotelButton from "components/partials/customer/FavoriteHotelButton/FavoriteHotelButton.tsx";
 
 const HotelPage = () => {
     useEffect(instantScrollToTop, []);
@@ -26,12 +22,10 @@ const HotelPage = () => {
     const { id } = useParams();
     const [hotelId] = useState(Number(id));
     const navigate = useNavigate();
-    const token = useSelector(getToken);
+    const user = useSelector(getUser);
+    const role = user ? user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] : undefined;
 
     const { data: hotelData, isLoading, error } = useGetHotelQuery(hotelId);
-    const { data: isFavorite, refetch } = useIsFavoriteHotelQuery(hotelId);
-    const [favorite, { isLoading: isFavoriteLoading }] = useCreateFavoriteHotelMutation();
-    const [unFavorite, { isLoading: isUnFavoriteLoading }] = useDeleteFavoriteHotelMutation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [freePeriod, setFreePeriod] = useState<IFreePeriod | null>(null);
     const [rooms, setRooms] = useState<IRoom[]>([]);
@@ -68,8 +62,6 @@ const HotelPage = () => {
     };
 
     const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({
-        pageIndex: 0,
-        pageSize: 1000,
         hotelId,
     });
 
@@ -84,24 +76,6 @@ const HotelPage = () => {
         if (rating >= 6) return "добре";
         if (rating >= 4) return "задовільно";
         return "погано";
-    };
-
-    const handleFavorite = async () => {
-        try {
-            await favorite({ hotelId: hotelId }).unwrap();
-            refetch();
-        } catch (err) {
-            showToast("Не вдалося додати до улюблених", "error");
-        }
-    };
-
-    const handleUnFavorite = async () => {
-        try {
-            await unFavorite(hotelId).unwrap();
-            refetch();
-        } catch (err) {
-            showToast("Не вдалося видалити з улюблених", "error");
-        }
     };
 
     const onSearch = () => {
@@ -169,31 +143,9 @@ const HotelPage = () => {
                                     </div>
                                 </div>
 
-                                { !isFavorite ? (
-                                    <button
-                                        className="btn-favorite"
-                                        title="Додати до улюблених"
-                                        onClick={handleFavorite}
-                                        disabled={isFavoriteLoading || isUnFavoriteLoading}
-                                    >
-                                        <img
-                                            src={getPublicResourceUrl("icons/heart.svg")}
-                                            alt="Favorite"
-                                        />
-                                    </button>
-                                ) : (
-                                    <button
-                                        className="btn-favorite"
-                                        title="Видалити з улюблених"
-                                        onClick={handleUnFavorite}
-                                        disabled={isFavoriteLoading || isUnFavoriteLoading}
-                                    >
-                                        <img
-                                            src={getPublicResourceUrl("icons/heart-favorite.svg")}
-                                            alt="Unavorite"
-                                        />
-                                    </button>
-                                )}
+                                {role === "Customer" && <div className="hotel-favorite-button-container">
+                                    <FavoriteHotelButton hotelId={hotelId} />
+                                </div>}
                             </div>
 
                             <div className="location">
@@ -277,7 +229,7 @@ const HotelPage = () => {
                             </div>
                             <p className="description">{hotelData.realtor.description}</p>
 
-                            {token && (
+                            {user && (
                                 <button
                                     onClick={() => navigate(`/realtorPage/${hotelData.realtor.id}`)}
                                     className="realtor-btn"

@@ -879,12 +879,13 @@
                 }
               }
 
-              .btn-favorite {
-                flex-shrink: 0;
+              .hotel-favorite-button-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-                img {
-                  object-fit: cover;
-                }
+                width: 30px;
+                height: 30px;
               }
             }
 

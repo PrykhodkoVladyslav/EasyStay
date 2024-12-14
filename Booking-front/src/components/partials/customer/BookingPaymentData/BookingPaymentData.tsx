@@ -1,9 +1,10 @@
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import VerticalPad from "components/ui/VerticalPad.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addDays, differenceInCalendarDays, format } from "date-fns";
 import { uk } from "date-fns/locale";
 import "./../../../../css/bank-card-info-container.scss";
+import WithoutBankCardModal from "components/partials/customer/WithoutBankCardModal/WithoutBankCardModal.tsx";
 
 interface IBookingPaymentDataProps {
     dateFrom: Date;
@@ -21,6 +22,8 @@ interface IBookingPaymentDataProps {
     setIsSaveCard: (value: boolean) => void;
     isAppliedAgreements: boolean;
     setIsAppliedAgreements: (value: boolean) => void;
+
+    openRulesModal?: () => void;
 
     onNext: () => void;
 }
@@ -42,6 +45,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
         setIsSaveCard,
         isAppliedAgreements,
         setIsAppliedAgreements,
+        openRulesModal,
         onNext,
     } = props;
 
@@ -58,12 +62,16 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
     const threeDaysBefore = addDays(dateFrom, -3);
     const formattedThreeDaysBefore = format(threeDaysBefore, "d MMM yyyy", { locale: uk });
 
+    const [isOpenWithoutBankCardModal, setIsOpenWithoutBankCardModal] = useState(false);
+
     return <div className="payment-data-container">
+        <WithoutBankCardModal isOpen={isOpenWithoutBankCardModal} setIsOpen={setIsOpenWithoutBankCardModal} />
+
         <div className="payment-method-container">
             <div className="payment-title-container">
                 <h3 className="payment-title">Коли ви хочете оплатити?</h3>
 
-                <div className="payment-question-container pointer">
+                <div className="payment-question-container pointer" onClick={() => setIsOpenWithoutBankCardModal(true)}>
                     <img src={getPublicResourceUrl("icons/question/gray-question.svg")} alt="question" />
                     <p>Немає картки?</p>
                 </div>
@@ -149,11 +157,7 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
                     </div>
 
                     <div className="input-container">
-                        <div className="on-sides">
-                            <p className="input-title">CVC - код <sup>*</sup></p>
-                            <img className="pointer" src={getPublicResourceUrl("icons/question/gray-question.svg")}
-                                 alt="question" />
-                        </div>
+                        <p className="input-title">CVC - код <sup>*</sup></p>
                         <input className="input-input"
                                placeholder="000"
                                type="text"
@@ -204,7 +208,8 @@ const BookingPaymentData = (props: IBookingPaymentDataProps) => {
             <div className="submit-container">
                 <button className="payment-submit-button" onClick={onNext}>Забронювати з зобовʼязанням оплатити</button>
 
-                <p className="booking-conditions-description pointer">Які умови мого бронювання?</p>
+                <p className="booking-conditions-description pointer" onClick={openRulesModal}>Які умови мого
+                    бронювання?</p>
             </div>
         </div>
     </div>;

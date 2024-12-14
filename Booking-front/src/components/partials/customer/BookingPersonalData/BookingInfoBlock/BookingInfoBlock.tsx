@@ -8,6 +8,8 @@ import { User } from "interfaces/user";
 import { useEffect, useState } from "react";
 import BedInfoBlock
     from "components/partials/customer/BookingPersonalData/BookingInfoBlock/BedInfoBlock/BedInfoBlock.tsx";
+import PaymentModal from "components/partials/customer/PaymentModal/PaymentModal.tsx";
+import ChildrenModal from "components/partials/customer/ChildrenModal/ChildrenModal.tsx";
 
 interface IBookingInfoBlockProps {
     roomName: string;
@@ -48,14 +50,21 @@ const BookingInfoBlock = (props: IBookingInfoBlockProps) => {
         setSelectedBeds(result);
     }, [props.roomVariantInfos]);
 
+    const [isOpenPaymentModal, setIsOpenPaymentModal] = useState(false);
+    const [isOpenChildrenModal, setIsOpenChildrenModal] = useState(false);
+
     return <div className="booking-data-block">
+        <PaymentModal isOpen={isOpenPaymentModal} setIsOpen={setIsOpenPaymentModal} />
+        <ChildrenModal isOpen={isOpenChildrenModal} setIsOpen={setIsOpenChildrenModal} />
+
         <h3 className="room-name">{props.roomName}</h3>
 
         <div className="info-block">
             <div className="info-item">
                 <img src={getPublicResourceUrl("icons/dot/dot.svg")} alt="question" />
                 <p className="info-item-message">Вартість не повертаться</p>
-                <img src={getPublicResourceUrl("icons/question/question.svg")} alt="question" />
+                <img src={getPublicResourceUrl("icons/question/question.svg")} alt="question" className="pointer"
+                     onClick={() => setIsOpenPaymentModal(true)} />
             </div>
 
             <div className="guess-info">
@@ -63,7 +72,8 @@ const BookingInfoBlock = (props: IBookingInfoBlockProps) => {
                 <p className="info-item-message">
                     <span>Гості:</span>{guessInfo}
                 </p>
-                <img src={getPublicResourceUrl("icons/question/question.svg")} alt="question" />
+                <img src={getPublicResourceUrl("icons/question/question.svg")} alt="question" className="pointer"
+                     onClick={() => setIsOpenChildrenModal(true)} />
             </div>
         </div>
 

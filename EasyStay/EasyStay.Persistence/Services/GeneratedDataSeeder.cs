@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using EasyStay.Application.Interfaces;
-using EasyStay.Application.MediatR.Bookings.Queries.GetPage;
 using EasyStay.Domain;
 using EasyStay.Domain.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -4,7 +4,7 @@ namespace EasyStay.WebApi.Tests.Services;
 
 public class TimeConverterTests {
 	[Fact]
-	public void ToDateTimeOffsetFromUtcTimeOnly_8Hours_returnsSameTime() {
+	public void ToDateTimeOffsetFromUtcTimeOnly_8Hours_ReturnsSameTime() {
 		// Arrange
 		var timeConverter = new TimeConverter();
 
@@ -16,7 +16,7 @@ public class TimeConverterTests {
 	}
 
 	[Fact]
-	public void ToDateTimeOffsetFromUtcTimeOnly_15Hours25Minutes44Seconds_returnsSameTime() {
+	public void ToDateTimeOffsetFromUtcTimeOnly_15Hours25Minutes44Seconds_ReturnsSameTime() {
 		// Arrange
 		var timeConverter = new TimeConverter();
 
@@ -28,7 +28,7 @@ public class TimeConverterTests {
 	}
 
 	[Fact]
-	public void ToDateTimeOffsetFromUtcTimeOnly_8Hours_returnsZeroOffset() {
+	public void ToDateTimeOffsetFromUtcTimeOnly_8Hours_ReturnsZeroOffset() {
 		// Arrange
 		var timeConverter = new TimeConverter();
 

@@ -31,14 +31,15 @@ public class JwtTokenService(
 		var jwt = new JwtSecurityToken(
 			signingCredentials: signinCredential,
 			expires: DateTime.Now.AddDays(tokenLifetimeInDays),
-			claims: await GetClaimsAsync(user));
+			claims: await GetClaimsAsync(user)
+		);
 
 		return new JwtSecurityTokenHandler().WriteToken(jwt);
 	}
 
 	private async Task<List<Claim>> GetClaimsAsync(User user) {
 		string userEmail = user.Email
-			?? throw new NullReferenceException($"User.Email");
+			?? throw new NullReferenceException("User.Email");
 
 		var userRoles = await userManager.GetRolesAsync(user);
 

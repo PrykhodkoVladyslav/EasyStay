@@ -8,7 +8,11 @@ import { useGetAllRoomAmenitiesQuery } from "services/roomAmenity.ts";
 import { useGetAllRoomTypesQuery } from "services/roomType.ts";
 import { useGetRoomQuery, useUpdateRoomMutation } from "services/room.ts";
 import { RoomEditSchema, RoomEditSchemaType } from "interfaces/zod/room.ts";
-import { useDeleteRoomVariantMutation } from "services/roomVariant.ts";
+import {
+    useCreateRoomVariantMutation,
+    useUpdateRoomVariantMutation,
+    useDeleteRoomVariantMutation,
+} from "services/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import showToast from "utils/toastShow.ts";
@@ -16,12 +20,20 @@ import AddRoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
 import UpdateRoomVariantPage from "pages/realtor/edit/RoomVariantPage.tsx";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
+interface IRoomVariantExtended extends IRoomVariant {
+    isNew: boolean;
+    isUpdated: boolean;
+    isDeleted: boolean;
+}
+
 const RoomPage = () => {
     useEffect(instantScrollToTop, []);
     const navigate = useNavigate();
     const numericId = Number(useParams<{ id: string }>().id);
     const [createModal, setCreateModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
+    const [selectedRentalPeriods, setSelectedRentalPeriods] = useState<number[]>([]);
+    const [selectedRoomAmenities, setSelectedRoomAmenities] = useState<number[]>([]);
     const [selectedRoomVariant, setSelectedRoomVariant] = useState<IRoomVariant | null>(null);
 
     const {
@@ -48,34 +60,73 @@ const RoomPage = () => {
     const { data: roomTypesData } = useGetAllRoomTypesQuery();
     const { data: roomAmenitiesData } = useGetAllRoomAmenitiesQuery();
     const [updateRoom, { isLoading: isCreating }] = useUpdateRoomMutation();
+    const [createRoomVariant] = useCreateRoomVariantMutation();
+    const [updateRoomVariant] = useUpdateRoomVariantMutation();
     const [deleteRoomVariant] = useDeleteRoomVariantMutation();
+    const [roomVariants, setRoomVariants] = useState<IRoomVariantExtended[]>(() => {
+        return roomData?.variants.map((variant) => ({
+            ...variant,
+            isNew: false,
+            isUpdated: false,
+            isDeleted: false,
+        })) || [];
+    });
+    const HotelId = roomData?.hotelId || 0;
 
     useEffect(() => {
         if (roomData) {
-            const room = roomData;
+            setRoomVariants(
+                roomData.variants.map((variant) => ({
+                    ...variant,
+                    isNew: false,
+                    isUpdated: false,
+                    isDeleted: false,
+                }))
+            );
+            setSelectedRentalPeriods(roomData.rentalPeriods.map((amenity) => amenity.id));
+            setSelectedRoomAmenities(roomData.amenities.map(language => language.id));
 
-            setSelectedRentalPeriods(room.rentalPeriods.map((amenity) => amenity.id));
-            setSelectedRoomAmenities(room.amenities.map(language => language.id));
-
-            setValue("name", room.name);
-            setValue("area", Math.round(room.area));
-            setValue("numberOfRooms", room.numberOfRooms);
-            setValue("quantity", room.quantity);
-            setValue("roomTypeId", room.roomType.id);
-            setValue("rentalPeriodIds", room.rentalPeriods.map(rentalPeriod => rentalPeriod.id));
-            setValue("roomAmenityIds", room.amenities.map(amenity => amenity.id));
+            setValue("name", roomData.name);
+            setValue("area", Math.round(roomData.area));
+            setValue("numberOfRooms", roomData.numberOfRooms);
+            setValue("quantity", roomData.quantity);
+            setValue("roomTypeId", roomData.roomType.id);
+            setValue("rentalPeriodIds", roomData.rentalPeriods.map(rentalPeriod => rentalPeriod.id));
+            setValue("roomAmenityIds", roomData.amenities.map(amenity => amenity.id));
         }
     }, [roomData, setValue]);
-
-    console.log(roomData);
-
-    const [selectedRentalPeriods, setSelectedRentalPeriods] = useState<number[]>([]);
-    const [selectedRoomAmenities, setSelectedRoomAmenities] = useState<number[]>([]);
 
     const handleQuantityChange = (delta: number) => {
         const currentValue = watch("quantity");
         const newValue = Math.min(10, Math.max(0, currentValue + delta));
         setValue("quantity", newValue);
+    };
+
+    const handleAddRoomVariant = (variant: IRoomVariant) => {
+        setRoomVariants((prev) => [
+            ...prev,
+            { ...variant, isNew: true, isUpdated: false, isDeleted: false },
+        ]);
+    };
+
+    const handleUpdateRoomVariant = (updatedVariant: IRoomVariant) => {
+        setRoomVariants((prev) =>
+            prev.map((variant) =>
+                variant.id === updatedVariant.id
+                    ? { ...updatedVariant, isNew: variant.isNew, isUpdated: true, isDeleted: false }
+                    : variant
+            )
+        );
+    };
+
+    const handleDeleteRoomVariant = (variantId: number) => {
+        setRoomVariants((prev) =>
+            prev.map((variant) =>
+                variant.id === variantId
+                    ? { ...variant, isNew: false, isUpdated: false, isDeleted: true }
+                    : variant
+            )
+        );
     };
 
     const onSubmitRoom = async (data: RoomEditSchemaType) => {
@@ -92,27 +143,44 @@ const RoomPage = () => {
 
         try {
             await updateRoom(roomData).unwrap();
-            navigate(`/realtor/rooms/${numericId}`);
-            showToast("Номер успішно оновлено", "success");
-            refetch();
-        } catch (error) {
-            showToast("Помилка при оновлені номеру", "error");
-        }
-    };
 
-    const handleDelete = async (roomVariantId: number) => {
-        try {
-            await deleteRoomVariant(roomVariantId).unwrap();
-            showToast("Варіант успішно видалено", "success");
-            refetch();
-        } catch (error) {
-            showToast("Помилка видалення варіанту", "error");
-        }
-    };
+            await Promise.all(
+                roomVariants
+                    .filter((variant) => variant.isNew && !variant.isDeleted)
+                    .map((variant) =>
+                        createRoomVariant({
+                            ...variant,
+                            roomId: numericId,
+                            price: variant.price ?? 0, // ?
+                        }).unwrap()
+                    )
+            );
 
-    const handleEditVariant = (variant: IRoomVariant) => {
-        setSelectedRoomVariant(variant);
-        setUpdateModal(true);
+            await Promise.all(
+                roomVariants
+                    .filter((variant) => variant.isUpdated && !variant.isNew && !variant.isDeleted)
+                    .map((variant) =>
+                        updateRoomVariant({
+                            ...variant,
+                            price: variant.price ?? 0,
+                        }).unwrap()
+                    )
+            );
+
+            await Promise.all(
+                roomVariants
+                    .filter((variant) => variant.isDeleted && !variant.isNew)
+                    .map((variant) =>
+                        deleteRoomVariant(variant.id).unwrap()
+                    )
+            );
+
+            navigate(`/realtor/rooms/${HotelId}`);
+            refetch();
+            showToast(`Номер успішно оновлено`, "success");
+        } catch (error) {
+            showToast(`Помилка при оновленні номеру`, "error");
+        }
     };
 
     if (isLoading || !roomData) return <p className="isLoading-error pt-20 pb-20">Завантаження...</p>;
@@ -320,7 +388,9 @@ const RoomPage = () => {
                     </div>
 
                     <div className="pre-container">
-                        {roomData?.variants.map((variant) => (
+                        {roomVariants
+                            .filter((variant) => !variant.isDeleted)
+                            .map((variant) => (
                             <div key={variant.id} className="room-variant">
                                 <div className="container">
                                     <div className="variant-data">
@@ -385,7 +455,7 @@ const RoomPage = () => {
                                     <button
                                         className="btn-delete"
                                         type="button"
-                                        onClick={() => handleDelete(variant.id)}
+                                        onClick={() => handleDeleteRoomVariant(variant.id)}
                                     >
                                         <img src={getPublicResourceUrl("account/trash.svg")} alt=""/>
                                     </button>
@@ -393,7 +463,10 @@ const RoomPage = () => {
                                     <button
                                         className="btn-edit"
                                         type="button"
-                                        onClick={() => handleEditVariant(variant)}
+                                        onClick={() => {
+                                            setSelectedRoomVariant(variant);
+                                            setUpdateModal(true);
+                                        }}
                                     >
                                         Редагувати
                                     </button>
@@ -421,15 +494,17 @@ const RoomPage = () => {
             </form>
             {createModal && (
                 <AddRoomVariantPage
-                    roomId={numericId ?? 0}
+                    roomVariant={roomVariants}
+                    onSave={handleAddRoomVariant}
                     setModal={setCreateModal}
-                    refetch={refetch}/>
+                />
             )}
-            {updateModal && (
+            {updateModal && selectedRoomVariant && (
                 <UpdateRoomVariantPage
-                    roomVariantData={selectedRoomVariant}
+                    roomVariant={selectedRoomVariant}
+                    onSave={handleUpdateRoomVariant}
                     setModal={setUpdateModal}
-                    refetch={refetch}/>
+                />
             )}
         </div>
     );

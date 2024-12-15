@@ -10,11 +10,10 @@ import showToast from "utils/toastShow.ts";
 import { RoomCreateSchema, RoomCreateSchemaType } from "interfaces/zod/room.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
-// import RoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
-import UpdateLocalRoomVariantPage from "pages/realtor/add/local/EditRoomVariantPage.tsx";
-import AddLocalRoomVariantPage from "pages/realtor/add/local/AddRoomVariantPage.tsx";
+import AddRoomVariantPage from "pages/realtor/add/RoomVariantPage.tsx";
+import UpdateRoomVariantPage from "pages/realtor/edit/RoomVariantPage.tsx";
 import { useCreateRoomVariantMutation } from "services/roomVariant.ts";
 
 const RoomPage = () => {
@@ -61,9 +60,7 @@ const RoomPage = () => {
     };
 
     const addRoomVariant = (variant: IRoomVariant) => {
-        console.log(variant)
         setRoomVariants((prev) => [...prev, variant]);
-        console.log(variant)
     };
 
     const updateRoomVariant = (updatedVariant: IRoomVariant) => {
@@ -412,14 +409,14 @@ const RoomPage = () => {
                 </button>
             </form>
             {createModal && (
-                <AddLocalRoomVariantPage
+                <AddRoomVariantPage
                     roomVariant={roomVariants}
                     onSave={addRoomVariant}
                     setModal={setCreateModal}
                 />
             )}
             {updateModal && selectedVariant && (
-                <UpdateLocalRoomVariantPage
+                <UpdateRoomVariantPage
                     roomVariant={selectedVariant}
                     onSave={updateRoomVariant}
                     setModal={setUpdateModal}/>

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { RoomVariantCreateSchema, RoomVariantCreateSchemaType } from "interfaces/zod/roomVariant.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import showToast from "utils/toastShow.ts";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import {Dispatch, SetStateAction, useEffect} from "react";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
 
 interface IRoomVariantPageProps {
@@ -45,6 +45,20 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
     });
 
     useEffect(() => {
+        if (roomVariant) {
+            setValue("guestInfo.adultCount", roomVariant.guestInfo.adultCount);
+            setValue("guestInfo.childCount", roomVariant.guestInfo.childCount);
+            setValue("bedInfo.singleBedCount", roomVariant.bedInfo.singleBedCount);
+            setValue("bedInfo.doubleBedCount", roomVariant.bedInfo.doubleBedCount);
+            setValue("bedInfo.extraBedCount", roomVariant.bedInfo.extraBedCount);
+            setValue("bedInfo.sofaCount", roomVariant.bedInfo.sofaCount);
+            setValue("bedInfo.kingsizeBedCount", roomVariant.bedInfo.kingsizeBedCount);
+            setValue("price", Math.round(roomVariant.price));
+            setValue("discountPrice", Math.round(roomVariant.discountPrice));
+        }
+    }, [roomVariant, setValue]);
+
+    useEffect(() => {
         const handleOutsideClick = (e: MouseEvent) => {
             const modalElement = document.querySelector(".add-room-page-2-modal");
             const backdropElement = document.querySelector(".modal-backdrop");
@@ -74,16 +88,16 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
 
     const onSubmitRoomVariants = async (data: RoomVariantCreateSchemaType) => {
         try {
-            const newVariant = {
+            const updatedVariant = {
                 ...data,
                 id: roomVariant?.id || Date.now(),
                 roomId: roomVariant?.roomId || 0,
             };
-            onSave(newVariant);
+            onSave(updatedVariant);
             if (setModal) setModal(false);
-            // showToast(`Варіант номеру успішно створено`, "success");
+            // showToast(`Варіант номеру успішно оновлено`, "success");
         } catch (error) {
-            showToast(`Помилка при створенні варіанту номера`, "error");
+            showToast(`Помилка при оновленні варіанту номера`, "error");
         }
     };
 

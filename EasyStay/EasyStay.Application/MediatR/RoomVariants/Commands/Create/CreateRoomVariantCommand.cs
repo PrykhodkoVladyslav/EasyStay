@@ -11,7 +11,7 @@ public class CreateRoomVariantCommand : IRequest<long> {
 
 	public long RoomId { get; set; }
 
-	public CreateUpdateGuestInfoDto Guest { get; set; } = null!;
+	public CreateUpdateGuestInfoDto GuestInfo { get; set; } = null!;
 
 	public CreateUpdateBedInfoDto BedInfo { get; set; } = null!;
 }

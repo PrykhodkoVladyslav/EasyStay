@@ -35,7 +35,7 @@ import CategoriesListPage from "pages/realtor/add/CategoriesListPage";
 import AddHotelPage from "pages/realtor/add/HotelPage";
 import AddRoomPage from "pages/realtor/add/RoomPage";
 import EditHotelPage from "pages/realtor/edit/HotelPage";
-// import EditRoomPage from "pages/realtor/edit/RoomPage";
+import EditRoomPage from "pages/realtor/edit/RoomPage";
 
 import AdminLayout from "components/layouts/AdminLayout";
 import HotelsListPage from "pages/admin/hotel/HotelsListPage";
@@ -101,7 +101,7 @@ function App() {
 
             <Route path="edit">
                 <Route path="hotel/:id" element={<EditHotelPage />} />
-                {/*<Route path="room/:id" element={<RoomEditPage />} />*/}
+                <Route path="room/:id" element={<EditRoomPage />} />
             </Route>
 
             <Route path="info" element={<InfoPage />} />

@@ -178,17 +178,17 @@ const RoomsPage = () => {
 
                                 <td className="price">
                                     {room.variants.map((variant: IRoomVariant) => {
-                                        const discountPrice = variant.price != null ? variant.price : variant.discountPrice;
-                                        const basePrice = variant.discountPrice != null ? variant.discountPrice : variant.price;
+                                        const discountPrice = variant.discountPrice != null ? variant.discountPrice : variant.price;
+                                        const basePrice = variant.price != null ? variant.price : variant.discountPrice;
 
                                         return (
                                             <div className="cols" key={variant.id}>
                                                 <div className="flex flex-row gap-2 flex-wrap">
-                                                    <p className="new-price" title="Нова ціна">
-                                                        {basePrice.toFixed(0) + "$"}
+                                                    <p className="new-price" title="Оригінальна ціна">
+                                                        {basePrice?.toFixed(0) + "$"}
                                                     </p>
                                                     {variant.discountPrice != null || 0 && (
-                                                        <p className="old-price" title="Стара ціна">
+                                                        <p className="old-price" title="Ціна зі знижкою">
                                                             {discountPrice != null && discountPrice.toFixed(0) + "$"}
                                                         </p>
                                                     )}

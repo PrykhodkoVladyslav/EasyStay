@@ -63,18 +63,6 @@ const BookingHistoryPage = () => {
         <div className="favorites-history-container">
             <div className="top">
                 <p className="global-title">Історія бронювань</p>
-                {/*<div className="sort-date-div">*/}
-                {/*    <button className="sort-btn">*/}
-                {/*        <img src={getIconUrl("order.svg")} alt="order"/>*/}
-                {/*        <p className="order-title">Сортувати за: <span*/}
-                {/*            className="order-name"></span></p>*/}
-                {/*    </button>*/}
-                {/*    <button className="date-btn">*/}
-                {/*        <p><span className="order-name">13.09</span></p>*/}
-                {/*        <img src={getIconUrl("calendarV2.svg")} alt="order"/>*/}
-                {/*    </button>*/}
-                {/*</div>*/}
-
                 <OrderByButton orderName={bookingOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
             </div>
 

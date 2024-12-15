@@ -26,13 +26,13 @@ public class CreateRoomVariantCommandHandler(
 		try {
 			await context.SaveChangesAsync(cancellationToken);
 
-			var guestCommand = mapper.Map<CreateGuestInfoCommand>(request.GuestInfo);
-			guestCommand.RoomVariantId = entity.Id;
-			await mediator.Send(guestCommand, cancellationToken);
+			var guestInfoCommand = mapper.Map<CreateGuestInfoCommand>(request.GuestInfo);
+			guestInfoCommand.RoomVariantId = entity.Id;
+			await mediator.Send(guestInfoCommand, cancellationToken);
 
-			var bedInfo = mapper.Map<CreateBedInfoCommand>(request.BedInfo);
-			bedInfo.RoomVariantId = entity.Id;
-			await mediator.Send(bedInfo, cancellationToken);
+			var bedInfoCommand = mapper.Map<CreateBedInfoCommand>(request.BedInfo);
+			bedInfoCommand.RoomVariantId = entity.Id;
+			await mediator.Send(bedInfoCommand, cancellationToken);
 
 			await transaction.CommitAsync(cancellationToken);
 		}

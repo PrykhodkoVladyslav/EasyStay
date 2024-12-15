@@ -10,6 +10,7 @@ COPY EasyStay.Application/*.csproj ./EasyStay.Application/
 COPY EasyStay.Persistence/*.csproj ./EasyStay.Persistence/
 COPY EasyStay.Infrastructure/*.csproj ./EasyStay.Infrastructure/
 COPY EasyStay.WebApi/*.csproj ./EasyStay.WebApi/
+COPY EasyStay.WebApi.Tests/*.csproj ./EasyStay.WebApi.Tests/
 RUN dotnet restore
 
 # copy everything else and build app

@@ -2197,8 +2197,6 @@
 
 
     }
-
-
   }
 
   .favorites-history-container {
@@ -2272,14 +2270,13 @@
     .hotels-and-reviews {
       width: 100%;
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
       padding: 50px 0 50px;
       gap: 23px;
 
       @media screen and (max-width: 1310px) {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        //grid-template-columns: repeat(2, 1fr);
       }
 
       @media screen and (max-width: 960px) {
@@ -2290,13 +2287,31 @@
       .hotel-item,
       .review {
         flex: 1 1 calc(33.3333% - 24px);
-        //max-width: none;
+        max-width: none;
+        padding-bottom: 30px;
 
         @media screen and (max-width: 1310px) {
           flex: none;
           max-width: none;
           width: 100%;
         }
+      }
+    }
+    .hotel-card-wrapper {
+      position: relative;
+      width: calc(33.3333% - 24px);
+
+      .leave-review-button {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 10;
+        background-color: var(--color-primary);
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 13px;
+        cursor: pointer;
       }
     }
   }
@@ -4494,8 +4509,10 @@
           }
 
           .rating {
+            font-family: var(--font-nunito), system-ui;
             font-size: 16px;
             line-height: 22px;
+            font-weight: 600;
           }
         }
       }

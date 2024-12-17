@@ -14,7 +14,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
             <div className="author">
                 <img
                     src={review.author.photo ? getApiImageUrl(review.author.photo, 400) : getPublicResourceUrl("account/no_user_photo.png")}
-                    alt="Author"
+                    alt=""
                     className="author-image"
                 />
                 <div className="container9">
@@ -24,7 +24,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
                     {review.score != null && <div className="stars-container">
                         <img
                             src={getPublicResourceUrl("account/star.svg")}
-                            alt="Rating star"
+                            alt=""
                             className="star"
                         />
                         <p className="rating">{(review.score ?? 0).toFixed(0)}</p>

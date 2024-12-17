@@ -5,6 +5,7 @@ import IHotelReviewsPageQuery, {
     toQueryFromIHotelReviewsPageQuery,
 } from "interfaces/hotelReview/IHotelReviewsPageQuery.ts";
 import { IHotelReview } from "interfaces/hotelReview/IHotelReview.ts";
+import { IHotelReviewCreate } from "interfaces/hotelReview/IHotelReviewCreate.ts";
 
 export const hotelReviewApi = createApi({
     reducerPath: "hotelReviewApi",
@@ -23,9 +24,28 @@ export const hotelReviewApi = createApi({
             },
             providesTags: ["HotelReviews"],
         }),
+
+        createHotelReview: builder.mutation<number, IHotelReviewCreate>({
+            query: (hotelReview) => {
+                const hotelReviewFormData = new FormData();
+
+                hotelReviewFormData.append("Description", hotelReview.description);
+                if(hotelReview.score != undefined)
+                    hotelReviewFormData.append("Score", String(hotelReview.score));
+                hotelReviewFormData.append("BookingId", String(hotelReview.bookingId));
+
+                return {
+                    url: "create",
+                    method: "POST",
+                    body: hotelReviewFormData,
+                };
+            },
+            invalidatesTags: ["HotelReviews"],
+        }),
     }),
 });
 
 export const {
     useGetHotelReviewsPageQuery,
+    useCreateHotelReviewMutation,
 } = hotelReviewApi;

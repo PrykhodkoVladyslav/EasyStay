@@ -11,9 +11,12 @@ import { instantScrollToTop } from "utils/scrollToTop.ts";
 import {
     ActivePageOnHeaderContext,
 } from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
+import RealtorReviewModal from "components/partials/customer/RealtorReviewModal/RealtorReviewModal.tsx";
 
 const BookingHistoryPage = () => {
     useEffect(instantScrollToTop, []);
+    const [isOpenRealtorReviewModal, setIsOpenRealtorReviewModal] = useState(false);
+    const [bookingId, setBookingId] = useState(0);
 
     const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
     useEffect(() => {
@@ -61,6 +64,9 @@ const BookingHistoryPage = () => {
 
     return (
         <div className="favorites-history-container">
+            <RealtorReviewModal isOpen={isOpenRealtorReviewModal} setIsOpen={setIsOpenRealtorReviewModal}
+                                bookingId={bookingId} />
+
             <div className="top">
                 <p className="global-title">Історія бронювань</p>
                 <OrderByButton orderName={bookingOrderOptions[orderIndex].value} onNextOrder={nextOrder} />
@@ -69,7 +75,13 @@ const BookingHistoryPage = () => {
             {bookings.length > 0 ? (
                 <div className="hotels-and-reviews">
                     {bookings.map((booking: IBooking) => (
-                        <HotelCard key={booking.id} item={booking.hotel} />
+                        <div className="hotel-card-wrapper" key={booking.id}>
+                            <HotelCard key={booking.id} item={booking.hotel} />
+                            <button
+                                onClick={() => { setBookingId(booking.id); setIsOpenRealtorReviewModal(true); }}
+                                className="leave-review-button"
+                            >Залишити Відгук</button>
+                        </div>
                     ))}
                 </div>
             ) : (

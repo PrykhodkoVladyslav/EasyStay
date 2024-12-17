@@ -5,6 +5,7 @@ import { useState } from "react";
 import { getIconUrl } from "utils/publicAccessor.ts";
 import showToast from "utils/toastShow.ts";
 import { useCreateRealtorReviewMutation } from "services/realtorReview.ts";
+import {useCreateHotelReviewMutation} from "services/hotelReview.ts";
 
 const modalStyles = {
     content: {
@@ -29,17 +30,19 @@ interface IRealtorReviewModalProps {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
 
-    realtorId: number;
+    bookingId?: number;
+    realtorId?: number;
 }
 
 const RealtorReviewModal = (props: IRealtorReviewModalProps) => {
-    const { isOpen, setIsOpen, realtorId } = props;
+    const { isOpen, setIsOpen, bookingId, realtorId } = props;
 
     const close = () => setIsOpen(false);
 
     const [stars, setStars] = useState<number | undefined>(undefined);
     const [description, setDescription] = useState<string>("");
-    const [createRealtorReview, { isLoading }] = useCreateRealtorReviewMutation();
+    const [createRealtorReview, { isLoading: isLoadingRealtorReview }] = useCreateRealtorReviewMutation();
+    const [createHotelReview, { isLoading: isLoadingHotelReview }] = useCreateHotelReviewMutation();
 
     const setStarByIndex = (index: number) => {
         const newStars = index + 1;
@@ -54,11 +57,21 @@ const RealtorReviewModal = (props: IRealtorReviewModalProps) => {
         }
 
         try {
-            await createRealtorReview({
-                description,
-                score: stars,
-                realtorId,
-            }).unwrap();
+            if (realtorId) {
+                await createRealtorReview({
+                    description,
+                    score: stars,
+                    realtorId,
+                }).unwrap();
+            }
+
+            if (bookingId) {
+                await createHotelReview({
+                    description,
+                    score: stars,
+                    bookingId,
+                }).unwrap();
+            }
 
             showToast("Відгук успішно надіслано", "success");
 
@@ -66,8 +79,14 @@ const RealtorReviewModal = (props: IRealtorReviewModalProps) => {
             setDescription("");
 
             setIsOpen(false);
-        } catch (error) {
-            showToast("Помилка відправки відгуку", "error");
+        } catch (error: any) {
+            console.error("Error submitting review:", error);
+
+            if (error?.data?.[0]?.ErrorMessage) {
+                showToast("Для цього бронювання у вас вже є відгук про готель", "error");
+            } else {
+                showToast("Помилка відправки відгуку", "error");
+            }
         }
     };
 
@@ -105,7 +124,7 @@ const RealtorReviewModal = (props: IRealtorReviewModalProps) => {
 
                 <VerticalPad heightPx={16} />
 
-                <button className={styles.submitButton} onClick={submit} disabled={isLoading}>Надіслати відгук</button>
+                <button className={styles.submitButton} onClick={submit} disabled={isLoadingRealtorReview || isLoadingHotelReview}>Надіслати відгук</button>
             </div>
         </Modal>
     );

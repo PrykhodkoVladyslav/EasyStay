@@ -6,7 +6,7 @@
   border-radius: 22px;
   box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
   background: rgb(255, 255, 255);
-  font-family: var(--font-primary), system-ui;
+  font-family: var(--font-nunito), system-ui;
   font-weight: 600;
   overflow: hidden;
 
@@ -55,12 +55,15 @@
 
         .star {
           width: 13px;
+          min-width: 13px;
           height: 13px;
+          min-height: 13px;
         }
 
         .rating {
           font-size: 16px;
           line-height: 22px;
+          font-weight: 600;
         }
       }
     }

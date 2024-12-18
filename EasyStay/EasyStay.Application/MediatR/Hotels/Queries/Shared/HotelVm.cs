@@ -92,6 +92,14 @@ public class HotelVm : IMapWith<Hotel> {
 						.Select(hha => hha.HotelAmenity)
 						.ToArray()
 				)
+			)
+			.ForMember(
+				dest => dest.Photos,
+				opt => opt.MapFrom(
+					src => src.Photos
+						.OrderBy(p => p.Priority)
+						.ToArray()
+				)
 			);
 	}
 }

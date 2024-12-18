@@ -8,7 +8,7 @@ public class ScopeCoveredDbInicializer(
 ) : IScopeCoveredDbInicializer {
 
 	public async Task InitializeAsync(CancellationToken cancellationToken = default) {
-		using var scope = serviceScopeFactory.CreateScope();
+		await using var scope = serviceScopeFactory.CreateAsyncScope();
 		var serviceProvider = scope.ServiceProvider;
 
 		await serviceProvider.GetRequiredService<IDbInicializer>().InitializeAsync(cancellationToken);

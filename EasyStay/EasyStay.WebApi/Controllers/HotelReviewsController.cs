@@ -17,7 +17,7 @@ public class HotelReviewsController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetById(long id) {
+	public async Task<IActionResult> GetById([FromRoute] long id) {
 		var entity = await Mediator.Send(new GetHotelReviewDetalisQuery() { Id = id });
 
 		return Ok(entity);
@@ -41,7 +41,7 @@ public class HotelReviewsController : BaseApiController {
 
 	[HttpDelete("{id}")]
 	[Authorize(Roles = "Customer")]
-	public async Task<IActionResult> Delete(long id) {
+	public async Task<IActionResult> Delete([FromRoute] long id) {
 		await Mediator.Send(new DeleteHotelReviewCommand { Id = id });
 
 		return NoContent();

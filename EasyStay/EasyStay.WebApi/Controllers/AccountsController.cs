@@ -76,6 +76,7 @@ public class AccountsController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
+	[Authorize(Roles = "Customer")]
 	public async Task<IActionResult> GetRealtorDatails([FromRoute] long id) {
 		var realtor = await Mediator.Send(new GetRealtorDatailsCommand { Id = id });
 

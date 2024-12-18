@@ -4,6 +4,7 @@ using EasyStay.Application.MediatR.Breakfasts.Commands.Update;
 using EasyStay.Application.MediatR.Breakfasts.Queries.GetAll;
 using EasyStay.Application.MediatR.Breakfasts.Queries.GetDetails;
 using EasyStay.Application.MediatR.Breakfasts.Queries.GetPage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyStay.WebApi.Controllers;
@@ -23,28 +24,31 @@ public class BreakfastsController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetById(long id) {
+	public async Task<IActionResult> GetById([FromRoute] long id) {
 		var entity = await Mediator.Send(new GetBreakfastDetailsQuery() { Id = id });
 
 		return Ok(entity);
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> Create([FromForm] CreateBreakfastCommand command) {
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> Create([FromBody] CreateBreakfastCommand command) {
 		var id = await Mediator.Send(command);
 
 		return Ok(id);
 	}
 
 	[HttpPut]
-	public async Task<IActionResult> Update([FromForm] UpdateBreakfastCommand command) {
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> Update([FromBody] UpdateBreakfastCommand command) {
 		await Mediator.Send(command);
 
 		return NoContent();
 	}
 
 	[HttpDelete("{id}")]
-	public async Task<IActionResult> Delete(long id) {
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> Delete([FromRoute] long id) {
 		await Mediator.Send(new DeleteBreakfastCommand { Id = id });
 
 		return NoContent();

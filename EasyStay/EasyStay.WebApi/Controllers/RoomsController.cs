@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasyStay.WebApi.Controllers;
 
-#pragma warning disable ASP0023 // Route conflict detected between controller actions
+[Route("api/[controller]/[action]")]
 public class RoomsController : BaseApiController {
 	[HttpGet]
 	public async Task<IActionResult> GetAll() {
@@ -72,4 +72,3 @@ public class RoomsController : BaseApiController {
 		return NoContent();
 	}
 }
-#pragma warning restore ASP0023 // Route conflict detected between controller actions

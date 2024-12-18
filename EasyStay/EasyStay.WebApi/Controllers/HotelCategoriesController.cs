@@ -4,6 +4,7 @@ using EasyStay.Application.MediatR.HotelCategories.Commands.Update;
 using EasyStay.Application.MediatR.HotelCategories.Queries.GetAll;
 using EasyStay.Application.MediatR.HotelCategories.Queries.GetDetails;
 using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyStay.WebApi.Controllers;
@@ -24,13 +25,14 @@ public class HotelCategoriesController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetById(long id) {
+	public async Task<IActionResult> GetById([FromRoute] long id) {
 		var entity = await Mediator.Send(new GetHotelCategoryDetailsQuery() { Id = id });
 
 		return Ok(entity);
 	}
 
 	[HttpPost]
+	[Authorize(Roles = "Admin")]
 	public async Task<IActionResult> Create([FromForm] CreateHotelCategoryCommand command) {
 		var id = await Mediator.Send(command);
 
@@ -38,6 +40,7 @@ public class HotelCategoriesController : BaseApiController {
 	}
 
 	[HttpPut]
+	[Authorize(Roles = "Admin")]
 	public async Task<IActionResult> Update([FromForm] UpdateHotelCategoryCommand command) {
 		await Mediator.Send(command);
 
@@ -45,7 +48,8 @@ public class HotelCategoriesController : BaseApiController {
 	}
 
 	[HttpDelete("{id}")]
-	public async Task<IActionResult> Delete(long id) {
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> Delete([FromRoute] long id) {
 		await Mediator.Send(new DeleteHotelCategoryCommand { Id = id });
 
 		return NoContent();

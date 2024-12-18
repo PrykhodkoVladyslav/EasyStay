@@ -4,6 +4,7 @@ using EasyStay.Application.MediatR.Citizenships.Commands.Update;
 using EasyStay.Application.MediatR.Citizenships.Queries.GetAll;
 using EasyStay.Application.MediatR.Citizenships.Queries.GetDetails;
 using EasyStay.Application.MediatR.Citizenships.Queries.GetPage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyStay.WebApi.Controllers;
@@ -23,13 +24,14 @@ public class CitizenshipsController : BaseApiController {
 	}
 
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetById(long id) {
+	public async Task<IActionResult> GetById([FromRoute] long id) {
 		var entity = await Mediator.Send(new GetCitizenshipDetailsQuery() { Id = id });
 
 		return Ok(entity);
 	}
 
 	[HttpPost]
+	[Authorize(Roles = "Admin")]
 	public async Task<IActionResult> Create([FromBody] CreateCitizenshipCommand command) {
 		var id = await Mediator.Send(command);
 
@@ -37,6 +39,7 @@ public class CitizenshipsController : BaseApiController {
 	}
 
 	[HttpPut]
+	[Authorize(Roles = "Admin")]
 	public async Task<IActionResult> Update([FromBody] UpdateCitizenshipCommand command) {
 		await Mediator.Send(command);
 
@@ -44,7 +47,8 @@ public class CitizenshipsController : BaseApiController {
 	}
 
 	[HttpDelete("{id}")]
-	public async Task<IActionResult> Delete(long id) {
+	[Authorize(Roles = "Admin")]
+	public async Task<IActionResult> Delete([FromRoute] long id) {
 		await Mediator.Send(new DeleteCitizenshipCommand { Id = id });
 
 		return NoContent();

@@ -51,14 +51,15 @@ const HotelPage = () => {
 
     const formatTime = (timeString: string) => {
 
-        const [hours, minutes] = timeString.split(":").map(Number);
-        const localTime = new Date(0, 0, 0, hours, minutes, 0, 0);
+        const [hours, minutes, seconds] = timeString.split(":").map(Number);
+        const localTime = new Date(0, 0, 0, hours, minutes, seconds, 0);
         const utcTime = addMinutes(localTime, -localTime.getTimezoneOffset());
 
         const formattedHours = String(utcTime.getHours()).padStart(2, "0");
         const formattedMinutes = String(utcTime.getMinutes()).padStart(2, "0");
+        const formattedSeconds = String(utcTime.getSeconds()).padStart(2, "0");
 
-        return `${formattedHours}:${formattedMinutes}:00`;
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     };
 
     const { data: hotelReviewsPageData } = useGetHotelReviewsPageQuery({

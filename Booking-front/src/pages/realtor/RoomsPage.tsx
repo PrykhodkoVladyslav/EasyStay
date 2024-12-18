@@ -1,20 +1,34 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {useDeleteRoomMutation, useGetRoomsPageQuery} from "services/room.ts";
+import { useDeleteRoomMutation, useGetRoomsPageQuery } from "services/room.ts";
 import showToast from "utils/toastShow.ts";
 import IRoomAmenity from "interfaces/roomAmenity/IRoomAmenity.ts";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import IRoomVariant from "interfaces/roomVariant/IRoomVariant.ts";
-import "./../../css/room-table.scss"
+import "./../../css/room-table.scss";
 import { useGetHotelQuery } from "services/hotel.ts";
+import { useContext, useEffect } from "react";
+import { instantScrollToTop } from "utils/scrollToTop.ts";
+import {
+    ActivePageOnHeaderContext,
+} from "components/contexts/ActivePageOnHeaderProvider/ActivePageOnHeaderProvider.tsx";
 
 const RoomsPage = () => {
-    const numericId = Number(useParams<{ id: string }>().id);
-    const { data: roomsData, isLoading, error} = useGetRoomsPageQuery({
+    useEffect(instantScrollToTop, []);
+
+    const activeMenuItemContext = useContext(ActivePageOnHeaderContext);
+    useEffect(() => {
+        activeMenuItemContext?.setActivePage("hotels");
+    }, []);
+
+    const currentHotelStringId = useParams<{ id: string }>().id;
+    const hotelId = Number(currentHotelStringId);
+
+    const { data: roomsData, isLoading, error } = useGetRoomsPageQuery({
         pageIndex: 0,
-        hotelId: numericId,
+        hotelId: hotelId,
     });
     const [deleteRoom] = useDeleteRoomMutation();
-    const { data: hotelData } = useGetHotelQuery(numericId);
+    const { data: hotelData } = useGetHotelQuery(hotelId);
     const navigate = useNavigate();
 
     const handleDeleteRoom = async (roomId: number) => {
@@ -37,33 +51,34 @@ const RoomsPage = () => {
         <div className="rooms-container">
             <p className="global-title">Номери готелю ,,{hotelData?.name},,</p>
             <button
-                onClick={() => navigate(`/realtor/add/room/${numericId}`)}
+                onClick={() => navigate(`/realtor/add/room/${hotelId}`)}
                 className="add-room-btn"
-            >Додати номер</button>
+            >Додати номер
+            </button>
 
             <div className="rooms-page">
-                <table className="room-table">
-                    <thead>
-                    <tr>
-                        <th>Тип номера</th>
-                        <th>Кількість гостей</th>
-                        <th>Тип ліжка</th>
-                        <th>Додаткова інформація</th>
-                        <th>Ціна</th>
-                        <th></th>
-                    </tr>
-                    </thead>
+                {rooms.length > 0 ? (
+                    rooms.map((room) => (
+                        <table key={room.id} className="room-table">
+                            <thead>
+                            <tr>
+                                <th>Тип номера</th>
+                                <th>Кількість гостей</th>
+                                <th>Тип ліжка</th>
+                                <th>Додаткова інформація</th>
+                                <th>Ціна</th>
+                                <th></th>
+                            </tr>
+                            </thead>
 
-                    <tbody>
-                    {rooms.length > 0 ? (
-                        rooms.map((room) => (
+                            <tbody>
                             <tr key={room.id}>
                                 <td className="room-type">
                                     <p className="title">{room.name}</p>
                                     <div className="features">
                                         {room.amenities.map((amenity: IRoomAmenity) => (
                                             <div key={amenity.id}>
-                                                <img src={getPublicResourceUrl("icons/check.svg")} alt=""/>
+                                                <img src={getPublicResourceUrl("icons/check.svg")} alt="" />
                                                 <p>{amenity.name}</p>
                                             </div>
                                         ))}
@@ -74,7 +89,7 @@ const RoomsPage = () => {
                                     {room.variants.map((variant: IRoomVariant) => (
                                         <div className="cols" key={variant.id}>
                                             <div className="flex flex-wrap">
-                                                {Array.from({length: variant.guestInfo.adultCount}).map((_, idx) => (
+                                                {Array.from({ length: variant.guestInfo.adultCount }).map((_, idx) => (
                                                     <img
                                                         key={`adult-${idx}`}
                                                         src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
@@ -82,7 +97,7 @@ const RoomsPage = () => {
                                                         title="Дорослий"
                                                     />
                                                 ))}
-                                                {Array.from({length: variant.guestInfo.childCount}).map((_, idx) => (
+                                                {Array.from({ length: variant.guestInfo.childCount }).map((_, idx) => (
                                                     <img
                                                         key={`child-${idx}`}
                                                         src={getPublicResourceUrl("icons/homepageSvg/people.svg")}
@@ -200,20 +215,21 @@ const RoomsPage = () => {
                                 </td>
 
                                 <td className="book items">
-                                    <button className="btn-book" onClick={() => navigate(`/realtor/edit/room/${room.id}`)}>
+                                    <button className="btn-book"
+                                            onClick={() => navigate(`/realtor/edit/room/${room.id}`)}>
                                         Редагувати
                                     </button>
                                     <button className="trash" onClick={() => handleDeleteRoom(room.id)}>
-                                        <img src={getPublicResourceUrl("account/trash.svg")} alt=""/>
+                                        <img src={getPublicResourceUrl("account/trash.svg")} alt="" />
                                     </button>
                                 </td>
                             </tr>
-                        ))
-                    ) : (
-                        <p className="isLoading-error pt-20 pb-20">У цього готелю немає Номерів</p>
-                    )}
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    ))
+                ) : (
+                    <p className="isLoading-error pt-20 pb-20">У цього готелю немає Номерів</p>
+                )}
             </div>
         </div>
     );

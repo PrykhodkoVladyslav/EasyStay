@@ -65,13 +65,13 @@ const RoomPage = () => {
 
     const updateRoomVariant = (updatedVariant: IRoomVariant) => {
         setRoomVariants((prev) =>
-            prev.map((variant) => (variant.id === updatedVariant.id ? updatedVariant : variant))
+            prev.map((variant) => (variant.id === updatedVariant.id ? updatedVariant : variant)),
         );
     };
 
     const deleteRoomVariant = (variantId: number) => {
         setRoomVariants((prev) =>
-            prev.filter((variant) => variant.id !== variantId)
+            prev.filter((variant) => variant.id !== variantId),
         );
     };
 
@@ -96,8 +96,8 @@ const RoomPage = () => {
                         ...variant,
                         roomId: createdRoomId,
                         price: variant.price ?? 0, // ?
-                    }).unwrap()
-                )
+                    }).unwrap(),
+                ),
             );
             navigate(`/realtor/rooms/${numericId}`);
             // refetch();
@@ -160,7 +160,7 @@ const RoomPage = () => {
                                 />
                                 {errors?.name && (
                                     <FormError className="text-red-500"
-                                               errorMessage={errors?.name?.message as string}/>
+                                               errorMessage={errors?.name?.message as string} />
                                 )}
                             </div>
                         </div>
@@ -190,7 +190,7 @@ const RoomPage = () => {
                                 </select>
                                 {errors?.roomTypeId && (
                                     <FormError className="text-red-500"
-                                               errorMessage={errors?.roomTypeId?.message as string}/>
+                                               errorMessage={errors?.roomTypeId?.message as string} />
                                 )}
                             </div>
                         </div>
@@ -213,7 +213,7 @@ const RoomPage = () => {
                                 />
                                 {errors?.area && (
                                     <FormError className="text-red-500"
-                                               errorMessage={errors?.area?.message as string}/>
+                                               errorMessage={errors?.area?.message as string} />
                                 )}
                             </div>
                         </div>
@@ -235,7 +235,7 @@ const RoomPage = () => {
                                     <option disabled value="">
                                         Вибрати
                                     </option>
-                                    {Array.from({length: 10}, (_, i) => i + 1).map((roomCount) => (
+                                    {Array.from({ length: 10 }, (_, i) => i + 1).map((roomCount) => (
                                         <option key={roomCount} value={roomCount}>
                                             {roomCount}
                                         </option>
@@ -243,7 +243,7 @@ const RoomPage = () => {
                                 </select>
                                 {errors?.numberOfRooms && (
                                     <FormError className="text-red-500"
-                                               errorMessage={errors?.numberOfRooms?.message as string}/>
+                                               errorMessage={errors?.numberOfRooms?.message as string} />
                                 )}
                             </div>
                         </div>
@@ -301,7 +301,7 @@ const RoomPage = () => {
                         </div>
                         {errors?.quantity && (
                             <FormError className="text-red-500"
-                                       errorMessage={errors?.quantity?.message as string}/>
+                                       errorMessage={errors?.quantity?.message as string} />
                         )}
                     </div>
 
@@ -373,7 +373,7 @@ const RoomPage = () => {
                                         type="button"
                                         onClick={() => deleteRoomVariant(variant.id)}
                                     >
-                                        <img src={getPublicResourceUrl("account/trash.svg")} alt=""/>
+                                        <img src={getPublicResourceUrl("account/trash.svg")} alt="" />
                                     </button>
 
                                     <button
@@ -419,7 +419,7 @@ const RoomPage = () => {
                 <UpdateRoomVariantPage
                     roomVariant={selectedVariant}
                     onSave={updateRoomVariant}
-                    setModal={setUpdateModal}/>
+                    setModal={setUpdateModal} />
             )}
         </div>
     );

@@ -29,10 +29,10 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
         resolver: zodResolver(RoomVariantCreateSchema),
         defaultValues: {
             price: 0,
-            discountPrice: 0,
+            discountPrice: undefined,
             guestInfo: {
                 adultCount: 0,
-                childCount: 0
+                childCount: 0,
             },
             bedInfo: {
                 singleBedCount: 0,
@@ -65,7 +65,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
         field: keyof RoomVariantCreateSchemaType | "guestInfo.adultCount" | "guestInfo.childCount" | "bedInfo.singleBedCount" | "bedInfo.doubleBedCount" | "bedInfo.extraBedCount" | "bedInfo.sofaCount" | "bedInfo.kingsizeBedCount",
         delta: number,
         min = 0,
-        max = 10
+        max = 10,
     ) => {
         const currentValue = watch(field as any) || 0;
         const newValue = Math.min(max, Math.max(min, currentValue + delta));
@@ -108,15 +108,17 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                     <div className="stepper">
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guestInfo.adultCount", -1)}>﹘</button>
+                                            onClick={() => handleCountChange("guestInfo.adultCount", -1)}>﹘
+                                        </button>
                                         <div id="guestInfo.adultCount">{watch("guestInfo.adultCount") || 0}</div>
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guestInfo.adultCount", 1)}>+</button>
+                                            onClick={() => handleCountChange("guestInfo.adultCount", 1)}>+
+                                        </button>
                                     </div>
                                     {errors?.guestInfo?.adultCount && (
                                         <FormError className="text-red-500"
-                                                   errorMessage={errors?.guestInfo?.adultCount?.message as string}/>
+                                                   errorMessage={errors?.guestInfo?.adultCount?.message as string} />
                                     )}
                                 </div>
 
@@ -125,15 +127,17 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                     <div className="stepper">
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guestInfo.childCount", -1)}>﹘</button>
+                                            onClick={() => handleCountChange("guestInfo.childCount", -1)}>﹘
+                                        </button>
                                         <div id="guestInfo.childCount">{watch("guestInfo.childCount") || 0}</div>
                                         <button
                                             type="button"
-                                            onClick={() => handleCountChange("guestInfo.childCount", 1)}>+</button>
+                                            onClick={() => handleCountChange("guestInfo.childCount", 1)}>+
+                                        </button>
                                     </div>
                                     {errors?.guestInfo?.childCount && (
                                         <FormError className="text-red-500"
-                                                   errorMessage={errors?.guestInfo?.childCount?.message as string}/>
+                                                   errorMessage={errors?.guestInfo?.childCount?.message as string} />
                                     )}
                                 </div>
                             </div>
@@ -152,11 +156,13 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 <div className="stepper">
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.singleBedCount", -1)}>﹘</button>
+                                        onClick={() => handleCountChange("bedInfo.singleBedCount", -1)}>﹘
+                                    </button>
                                     <div id="bedInfo.singleBedCount">{watch("bedInfo.singleBedCount") || 0}</div>
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.singleBedCount", 1)}>+</button>
+                                        onClick={() => handleCountChange("bedInfo.singleBedCount", 1)}>+
+                                    </button>
                                 </div>
                             </div>
 
@@ -165,11 +171,13 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 <div className="stepper">
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.doubleBedCount", -1)}>﹘</button>
+                                        onClick={() => handleCountChange("bedInfo.doubleBedCount", -1)}>﹘
+                                    </button>
                                     <div id="bedInfo.doubleBedCount">{watch("bedInfo.doubleBedCount") || 0}</div>
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.doubleBedCount", 1)}>+</button>
+                                        onClick={() => handleCountChange("bedInfo.doubleBedCount", 1)}>+
+                                    </button>
                                 </div>
                             </div>
 
@@ -178,11 +186,13 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 <div className="stepper">
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.extraBedCount", -1)}>﹘</button>
+                                        onClick={() => handleCountChange("bedInfo.extraBedCount", -1)}>﹘
+                                    </button>
                                     <div id="bedInfo.extraBedCount">{watch("bedInfo.extraBedCount") || 0}</div>
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.extraBedCount", 1)}>+</button>
+                                        onClick={() => handleCountChange("bedInfo.extraBedCount", 1)}>+
+                                    </button>
                                 </div>
                             </div>
 
@@ -191,11 +201,13 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 <div className="stepper">
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.sofaCount", -1)}>﹘</button>
+                                        onClick={() => handleCountChange("bedInfo.sofaCount", -1)}>﹘
+                                    </button>
                                     <div id="bedInfo.sofaCount">{watch("bedInfo.sofaCount") || 0}</div>
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.sofaCount", 1)}>+</button>
+                                        onClick={() => handleCountChange("bedInfo.sofaCount", 1)}>+
+                                    </button>
                                 </div>
                             </div>
 
@@ -204,11 +216,13 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 <div className="stepper">
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.kingsizeBedCount", -1)}>﹘</button>
+                                        onClick={() => handleCountChange("bedInfo.kingsizeBedCount", -1)}>﹘
+                                    </button>
                                     <div id="bedInfo.kingsizeBedCount">{watch("bedInfo.kingsizeBedCount") || 0}</div>
                                     <button
                                         type="button"
-                                        onClick={() => handleCountChange("bedInfo.kingsizeBedCount", 1)}>+</button>
+                                        onClick={() => handleCountChange("bedInfo.kingsizeBedCount", 1)}>+
+                                    </button>
                                 </div>
                             </div>
                             {errors?.bedInfo && (
@@ -235,7 +249,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 />
                                 {errors?.price && (
                                     <FormError className="text-red-500"
-                                               errorMessage={errors?.price?.message as string}/>
+                                               errorMessage={errors?.price?.message as string} />
                                 )}
                             </div>
                         </div>
@@ -260,7 +274,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 />
                                 {errors?.discountPrice && (
                                     <FormError className="text-red-500"
-                                               errorMessage={errors?.discountPrice?.message as string}/>
+                                               errorMessage={errors?.discountPrice?.message as string} />
                                 )}
                             </div>
                         </div>
@@ -276,7 +290,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                 </button>
             </form>
         </>
-    )
-}
+    );
+};
 
 export default RoomVariantPage;

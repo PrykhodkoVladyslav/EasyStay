@@ -48,8 +48,10 @@ export const hotelApi = createApi({
                 hotelFormData.append("IsArchived", String(hotel.isArchived));
                 hotelFormData.append("CategoryId", String(hotel.categoryId));
                 hotelFormData.append("Address.street", hotel.address.street);
-                hotelFormData.append("Address.houseNumber", hotel.address.houseNumber);
-                hotelFormData.append("Address.floor", String(hotel.address.floor));
+                if (hotel.address.houseNumber != undefined)
+                    hotelFormData.append("Address.houseNumber", hotel.address.houseNumber);
+                if (hotel.address.floor != undefined)
+                    hotelFormData.append("Address.floor", String(hotel.address.floor));
                 hotelFormData.append("Address.apartmentNumber", String(hotel.address.apartmentNumber));
                 hotelFormData.append("Address.cityId", String(hotel.address.cityId));
 
@@ -100,8 +102,10 @@ export const hotelApi = createApi({
                 hotelFormData.append("CategoryId", String(hotel.categoryId));
                 hotelFormData.append("Address.street", hotel.address.street);
                 hotelFormData.append("Address.houseNumber", hotel.address.houseNumber);
-                hotelFormData.append("Address.floor", String(hotel.address.floor));
-                hotelFormData.append("Address.apartmentNumber", String(hotel.address.apartmentNumber));
+                if (hotel.address.floor != undefined)
+                    hotelFormData.append("Address.floor", String(hotel.address.floor));
+                if (hotel.address.apartmentNumber != undefined)
+                    hotelFormData.append("Address.apartmentNumber", hotel.address.apartmentNumber);
                 hotelFormData.append("Address.cityId", String(hotel.address.cityId));
 
                 if (hotel.hotelAmenityIds) {

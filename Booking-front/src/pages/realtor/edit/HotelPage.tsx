@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from "react";
 import { getPublicResourceUrl } from "utils/publicAccessor.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +14,8 @@ import { useGetAllLanguagesQuery } from "services/language.ts";
 import { useGetHotelQuery, useUpdateHotelMutation } from "services/hotel.ts";
 import { HotelCreatePage1Schema, HotelCreateSchemaType, HotelCreateSchema } from "interfaces/zod/hotel.ts";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "utils/getEnvData.ts";
+import { getApiImageUrl } from "utils/apiImageAccessor.ts";
+import { addMinutes, format } from "date-fns";
 
 const HotelPage = () => {
     const [currentContainer, setCurrentContainer] = useState(1);
@@ -32,7 +33,7 @@ const HotelPage = () => {
     });
 
     const numericId = Number(useParams<{ id: string }>().id);
-    const { data: hotelData, isLoading, error } = useGetHotelQuery(numericId as number);
+    const { data: hotelData, isLoading, error } = useGetHotelQuery(Number(numericId));
     const { data: hotelCategoriesData } = useGetAllHotelCategoriesQuery();
     const { data: citiesData } = useGetAllCitiesQuery();
     const { data: countriesData } = useGetAllCountriesQuery();
@@ -64,15 +65,15 @@ const HotelPage = () => {
 
             setValue("name", hotel.name);
             setValue("description", hotel.description);
-            setValue("arrivalTimeUtcFrom", formatTime(hotel.arrivalTimeUtcFrom));
-            setValue("arrivalTimeUtcTo", formatTime(hotel.arrivalTimeUtcTo));
-            setValue("departureTimeUtcFrom", formatTime(hotel.departureTimeUtcFrom));
-            setValue("departureTimeUtcTo", formatTime(hotel.departureTimeUtcTo));
+            setValue("arrivalTimeUtcFrom", toLocalTime(hotel.arrivalTimeUtcFrom));
+            setValue("arrivalTimeUtcTo", toLocalTime(hotel.arrivalTimeUtcTo));
+            setValue("departureTimeUtcFrom", toLocalTime(hotel.departureTimeUtcFrom));
+            setValue("departureTimeUtcTo", toLocalTime(hotel.departureTimeUtcTo));
             setValue("isArchived", hotel.isArchived);
             setValue("address.street", hotel.address.street);
             setValue("address.houseNumber", hotel.address.houseNumber);
             setValue("address.floor", hotel.address.floor);
-            setValue("address.apartmentNumber", (hotel.address.apartmentNumber) || '');
+            setValue("address.apartmentNumber", hotel.address.apartmentNumber);
             setValue("categoryId", hotel.category.id.toString());
             setValue("hotelAmenityIds", hotel.hotelAmenities.map(hotelAmenity => hotelAmenity.id));
             setValue("breakfastIds", hotel.breakfasts.map(breakfast => breakfast.id));
@@ -80,7 +81,7 @@ const HotelPage = () => {
 
             if (hotel.photos) {
                 const filePromises = hotel.photos.map(async (photo) => {
-                    const response = await fetch(`${API_URL}/images/1200_${photo.name}`);
+                    const response = await fetch(getApiImageUrl(photo.name, 1200));
                     const blob = await response.blob();
                     return new File([blob], photo.name, { type: blob.type });
                 });
@@ -142,12 +143,22 @@ const HotelPage = () => {
         }
     };
 
-    const formatTime = (timeString: string): string => {
-        const date = new Date(`1970-01-01T${timeString}Z`);
-        const hours = String(date.getUTCHours()).padStart(2, '0');
-        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-        const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-        return `${hours}:${minutes}:${seconds}`;
+    const toLocalTime = (timeString: string): string => {
+        const [hours, minutes, seconds] = timeString.split(":");
+
+        const localTime = new Date(0, 0, 0, parseInt(hours), parseInt(minutes), parseInt(seconds), 0);
+        const utcTime = addMinutes(localTime, -localTime.getTimezoneOffset());
+
+        return format(utcTime, "HH:mm:ss");
+    };
+
+    const convertToUtcTime = (selectedTime: string): string => {
+        const [hours, minutes, seconds] = selectedTime.split(":");
+
+        const localTime = new Date(0, 0, 0, parseInt(hours), parseInt(minutes), parseInt(seconds), 0);
+        const utcTime = addMinutes(localTime, localTime.getTimezoneOffset());
+
+        return format(utcTime, "HH:mm:ss");
     };
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,19 +191,18 @@ const HotelPage = () => {
             breakfastIds: isBreakfast ? selectedBreakfasts : [],
             staffLanguageIds: selectedLanguages,
             photos: selectedPhotos,
-            arrivalTimeUtcFrom: data.arrivalTimeUtcFrom || '',
-            arrivalTimeUtcTo: data.arrivalTimeUtcTo || '',
-            departureTimeUtcFrom: data.departureTimeUtcFrom || '',
-            departureTimeUtcTo: data.departureTimeUtcTo || '',
+            arrivalTimeUtcFrom: data.arrivalTimeUtcFrom ? convertToUtcTime(data.arrivalTimeUtcFrom) : "",
+            arrivalTimeUtcTo: data.arrivalTimeUtcTo ? convertToUtcTime(data.arrivalTimeUtcTo) : "",
+            departureTimeUtcFrom: data.departureTimeUtcFrom ? convertToUtcTime(data.departureTimeUtcFrom) : "",
+            departureTimeUtcTo: data.departureTimeUtcTo ? convertToUtcTime(data.departureTimeUtcTo) : "",
             categoryId: Number(data.categoryId) || 0,
             address: {
                 ...data.address,
-                floor: Number(data.address.floor) || 0,
-                apartmentNumber: data.address.apartmentNumber || '',
+                apartmentNumber: data.address.apartmentNumber ?? undefined,
                 cityId: Number(data.address.cityId) || 0,
             },
             isArchived: selectedArchived || false,
-        }
+        };
 
         try {
             await updateHotel(hoteldata).unwrap();
@@ -234,7 +244,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.name && (
                                             <FormError className="text-red-500"
-                                                       errorMessage={errors?.name?.message as string}/>
+                                                       errorMessage={errors?.name?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -255,7 +265,7 @@ const HotelPage = () => {
                                         </select>
                                         {errors?.categoryId && (
                                             <FormError className="text-red-500"
-                                                       errorMessage={errors?.categoryId?.message as string}/>
+                                                       errorMessage={errors?.categoryId?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -268,7 +278,7 @@ const HotelPage = () => {
                                         ></textarea>
                                             {errors?.description && (
                                                 <FormError className="text-red-500"
-                                                           errorMessage={errors?.description?.message as string}/>
+                                                           errorMessage={errors?.description?.message as string} />
                                             )}
                                             <p className="counter">{watch("description")?.length || 0}/4000</p>
                                         </div>
@@ -333,7 +343,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.street && (
                                             <FormError className="text-red-500"
-                                                       errorMessage={errors?.address?.street?.message as string}/>
+                                                       errorMessage={errors?.address?.street?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -346,7 +356,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.houseNumber && (
                                             <FormError className="text-red-500"
-                                                       errorMessage={errors?.address?.houseNumber?.message as string}/>
+                                                       errorMessage={errors?.address?.houseNumber?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -359,7 +369,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.floor && (
                                             <FormError className="text-red-500"
-                                                       errorMessage={errors?.address?.floor?.message as string}/>
+                                                       errorMessage={errors?.address?.floor?.message as string} />
                                         )}
                                     </div>
                                     <div className="data">
@@ -373,7 +383,7 @@ const HotelPage = () => {
                                         />
                                         {errors?.address?.apartmentNumber && (
                                             <FormError className="text-red-500"
-                                                       errorMessage={errors?.address?.apartmentNumber?.message as string}/>
+                                                       errorMessage={errors?.address?.apartmentNumber?.message as string} />
                                         )}
                                     </div>
                                 </div>
@@ -407,7 +417,7 @@ const HotelPage = () => {
                                     ))}
                                     {errors?.hotelAmenityIds && (
                                         <FormError className="text-red-500"
-                                                   errorMessage={errors?.hotelAmenityIds?.message as string}/>
+                                                   errorMessage={errors?.hotelAmenityIds?.message as string} />
                                     )}
                                 </div>
                             </div>
@@ -458,7 +468,7 @@ const HotelPage = () => {
                                                         onChange={(e) => {
                                                             const id = Number(e.target.value);
                                                             setSelectedBreakfasts((prev) =>
-                                                                e.target.checked ? [...prev, id] : prev.filter((bid) => bid !== id)
+                                                                e.target.checked ? [...prev, id] : prev.filter((bid) => bid !== id),
                                                             );
                                                         }}
                                                     />
@@ -467,7 +477,7 @@ const HotelPage = () => {
                                             ))}
                                             {errors?.breakfastIds && (
                                                 <FormError className="text-red-500"
-                                                           errorMessage={errors?.breakfastIds?.message as string}/>
+                                                           errorMessage={errors?.breakfastIds?.message as string} />
                                             )}
                                         </div>
                                     </div>
@@ -501,7 +511,7 @@ const HotelPage = () => {
                                     ))}
                                     {errors?.staffLanguageIds && (
                                         <FormError className="text-red-500"
-                                                   errorMessage={errors?.staffLanguageIds?.message as string}/>
+                                                   errorMessage={errors?.staffLanguageIds?.message as string} />
                                     )}
                                 </div>
                             </div>
@@ -643,7 +653,7 @@ const HotelPage = () => {
                         <div className="photo-container">
                             <label className="add-photo" htmlFor="photos">
                                 <div className="inner">
-                                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото"/>
+                                    <img src={getPublicResourceUrl("account/add-photo.svg")} alt="Додати фото" />
                                     <input
                                         {...register("photos")}
                                         id="photos"
@@ -661,7 +671,7 @@ const HotelPage = () => {
                                 <div className="photos">
                                     {selectedPhotos.map((photo, index) => (
                                         <div key={index} className="photo">
-                                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`}/>
+                                            <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`} />
                                             <button className="btn-delete" onClick={() => handleDeletePhoto(index)}>
                                                 <img
                                                     src={getPublicResourceUrl("account/trash.svg")}
@@ -674,7 +684,7 @@ const HotelPage = () => {
                             </div>
                             {errors?.photos && (
                                 <FormError className="text-red-500 flex justify-end"
-                                           errorMessage={errors?.photos?.message as string}/>
+                                           errorMessage={errors?.photos?.message as string} />
                             )}
                         </div>
                     </div>
@@ -690,6 +700,6 @@ const HotelPage = () => {
             </form>
         </div>
     );
-}
+};
 
 export default HotelPage;

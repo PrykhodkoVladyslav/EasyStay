@@ -130,6 +130,7 @@ const PaymentDataPage = () => {
                 style={modalStyles}
                 isOpen={isOpenAddCardModal}
                 onRequestClose={() => setIsOpenAddCardModal(false)}
+                ariaHideApp={false}
             >
                 <div className="bank-card-info-container">
                     <div className="input-container">

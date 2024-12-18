@@ -190,7 +190,7 @@ const RoomPage = () => {
     }
 
     return (
-        <div className={`add-hotel-room`}> {/*${modal ? "overflow-hidden" : ""} */}
+        <div className={`add-hotel-room`}>
             <form className="add-page-1" onSubmit={handleSubmit(onSubmitRoom)}>
                 <p className="title">Редагування інформації про кімнату</p>
                 <div className="data-containers">

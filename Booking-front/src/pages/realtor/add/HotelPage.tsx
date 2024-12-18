@@ -15,6 +15,7 @@ import { useCreateHotelMutation } from "services/hotel.ts";
 import { HotelCreatePage1Schema, HotelCreateSchemaType, HotelCreateSchema } from "interfaces/zod/hotel.ts";
 import { useNavigate } from "react-router-dom";
 import { instantScrollToTop } from "utils/scrollToTop.ts";
+import { addMinutes, format } from "date-fns";
 
 const HotelPage = () => {
     useEffect(instantScrollToTop, []);
@@ -47,7 +48,7 @@ const HotelPage = () => {
     const { data: hotelAmenitiesData } = useGetAllHotelAmenitiesQuery();
     const { data: breakfastsData } = useGetAllBreakfastsQuery();
     const { data: languagesData } = useGetAllLanguagesQuery();
-    const [ createHotel, { isLoading: isCreating }] = useCreateHotelMutation();
+    const [createHotel, { isLoading: isCreating }] = useCreateHotelMutation();
 
     const [selectedCountryId, setSelectedCountryId] = useState<number>();
     const [filteredCities, setFilteredCities] = useState<City[]>([]);
@@ -109,10 +110,12 @@ const HotelPage = () => {
     };
 
     const convertToUtcTime = (selectedTime: string): string => {
-        const [hours, minutes] = selectedTime.split(":");
-        const localTime = new Date(0, 0, 0, parseInt(hours), parseInt(minutes), 0, 0);
-        const utcTime = new Date(localTime.getTime() - localTime.getTimezoneOffset() * 60000);
-        return utcTime.toISOString().split("T")[1].slice(0, 8);
+        const [hours, minutes, seconds] = selectedTime.split(":");
+
+        const localTime = new Date(0, 0, 0, parseInt(hours), parseInt(minutes), parseInt(seconds), 0);
+        const utcTime = addMinutes(localTime, localTime.getTimezoneOffset());
+
+        return format(utcTime, "HH:mm:ss");
     };
 
     const onSubmit = async (data: HotelCreateSchemaType) => {
@@ -130,7 +133,7 @@ const HotelPage = () => {
             categoryId: Number(data.categoryId) || 0,
             address: {
                 ...data.address,
-                floor: data.address.floor || 0,
+                apartmentNumber: data.address.apartmentNumber ?? undefined,
                 cityId: Number(data.address.cityId) || 0,
             },
         };

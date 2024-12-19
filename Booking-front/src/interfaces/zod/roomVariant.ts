@@ -28,13 +28,24 @@ export const BedInfoSchema = z.object({
 
 export const RoomVariantCreateSchema = z.object({
     price: z.preprocess((val) => (val ? Number(val) : 0),
-        z.number().min(1, "Ціна повинна бути більше 0"),
-        z.number().max(1000000, "Ціна не повинна перевищувати 1000000")),
-    discountPrice: z.preprocess((val) => (val ? Number(val) : 0),
-        z.number().max(1000000, "Знижка не повинна перевищувати 1000000"))
-        .optional(),
+        z.number()
+            .min(1, "Ціна повинна бути більше 0")
+            .max(1000000, "Ціна не повинна перевищувати 1000000")),
+    discountPrice: z.preprocess(
+        (val) => (val === "" || val == null ? undefined : Number(val)),
+        z.number()
+            .max(1000000, "Знижка не повинна перевищувати 1000000")
+            .optional()
+    ),
     guestInfo: GuestInfoSchema,
     bedInfo: BedInfoSchema,
-});
+}).refine(
+    (data) =>
+        !data.discountPrice || data.discountPrice < data.price,
+    {
+        message: "Ціна зі знижкою повинна бути меншою за основну ціну",
+        path: ["discountPrice"],
+    }
+);
 
 export type RoomVariantCreateSchemaType = z.infer<typeof RoomVariantCreateSchema>;

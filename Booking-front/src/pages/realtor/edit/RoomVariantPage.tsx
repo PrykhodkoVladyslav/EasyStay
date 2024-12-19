@@ -129,7 +129,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                             onClick={() => handleCountChange("guestInfo.adultCount", 1)}>+</button>
                                     </div>
                                     {errors?.guestInfo?.adultCount && (
-                                        <FormError className="text-red-500"
+                                        <FormError className="text-red-500 text-lg"
                                                    errorMessage={errors?.guestInfo?.adultCount?.message as string}/>
                                     )}
                                 </div>
@@ -146,7 +146,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                             onClick={() => handleCountChange("guestInfo.childCount", 1)}>+</button>
                                     </div>
                                     {errors?.guestInfo?.childCount && (
-                                        <FormError className="text-red-500"
+                                        <FormError className="text-red-500 text-lg"
                                                    errorMessage={errors?.guestInfo?.childCount?.message as string}/>
                                     )}
                                 </div>
@@ -226,7 +226,7 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                 </div>
                             </div>
                             {errors?.bedInfo && (
-                                <FormError className="text-red-500" errorMessage={errors?.bedInfo?.message as string} />
+                                <FormError className="text-red-500 text-lg" errorMessage={errors?.bedInfo?.message as string} />
                             )}
                         </div>
                     </div>
@@ -247,11 +247,11 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                     placeholder="0"
                                     onWheel={(e) => e.currentTarget.blur()}
                                 />
-                                {errors?.price && (
-                                    <FormError className="text-red-500"
-                                               errorMessage={errors?.price?.message as string}/>
-                                )}
                             </div>
+                            {errors?.price && (
+                                <FormError className="text-red-500 text-lg"
+                                           errorMessage={errors?.price?.message as string}/>
+                            )}
                         </div>
                     </div>
 
@@ -272,11 +272,11 @@ const RoomVariantPage = (props: IRoomVariantPageProps) => {
                                     placeholder="0"
                                     onWheel={(e) => e.currentTarget.blur()}
                                 />
-                                {errors?.discountPrice && (
-                                    <FormError className="text-red-500"
-                                               errorMessage={errors?.discountPrice?.message as string}/>
-                                )}
                             </div>
+                            {errors?.discountPrice && (
+                                <FormError className="text-red-500 text-lg"
+                                           errorMessage={errors?.discountPrice?.message as string}/>
+                            )}
                         </div>
                     </div>
                 </div>

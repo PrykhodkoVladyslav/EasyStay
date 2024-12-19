@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace EasyStay.Application.MediatR.Accounts.Commands.Update;
+namespace EasyStay.Application.MediatR.Accounts.Commands.UpdateUserInfo;
 
-public class UpdateCommand : IRequest<JwtTokenVm> {
+public class UpdateUserInfoCommand : IRequest<JwtTokenVm> {
 	public string Email { get; set; } = null!;
 
 	public string FirstName { get; set; } = null!;

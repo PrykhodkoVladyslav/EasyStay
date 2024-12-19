@@ -9,5 +9,5 @@ public class GetCustomerPageCommandHandler(
 ) : IRequestHandler<GetCustomerPageCommand, PageVm<CustomerItemVm>> {
 
 	public Task<PageVm<CustomerItemVm>> Handle(GetCustomerPageCommand request, CancellationToken cancellationToken) =>
-		paginationService.GetPageAsync(request);
+		paginationService.GetPageAsync(request, cancellationToken);
 }

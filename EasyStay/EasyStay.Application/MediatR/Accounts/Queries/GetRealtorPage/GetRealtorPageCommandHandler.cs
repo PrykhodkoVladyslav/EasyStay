@@ -9,5 +9,5 @@ public class GetRealtorPageCommandHandler(
 ) : IRequestHandler<GetRealtorPageCommand, PageVm<RealtorItemVm>> {
 
 	public Task<PageVm<RealtorItemVm>> Handle(GetRealtorPageCommand request, CancellationToken cancellationToken) =>
-		paginationService.GetPageAsync(request);
+		paginationService.GetPageAsync(request, cancellationToken);
 }

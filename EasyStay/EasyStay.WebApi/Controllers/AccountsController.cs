@@ -6,7 +6,7 @@ using EasyStay.Application.MediatR.Accounts.Commands.SendResetPasswordEmail;
 using EasyStay.Application.MediatR.Accounts.Commands.SetPhoto;
 using EasyStay.Application.MediatR.Accounts.Commands.SignIn;
 using EasyStay.Application.MediatR.Accounts.Commands.UnlockUserById;
-using EasyStay.Application.MediatR.Accounts.Commands.Update;
+using EasyStay.Application.MediatR.Accounts.Commands.UpdateUserInfo;
 using EasyStay.Application.MediatR.Accounts.Commands.UpdateCustomersInformation;
 using EasyStay.Application.MediatR.Accounts.Commands.UpdateRealtorsInformation;
 using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
@@ -99,7 +99,7 @@ public class AccountsController : BaseApiController {
 
 	[HttpPatch]
 	[Authorize(Roles = "Customer,Realtor,Admin")]
-	public async Task<IActionResult> UpdateInfo([FromForm] UpdateCommand command) {
+	public async Task<IActionResult> UpdateInfo([FromForm] UpdateUserInfoCommand command) {
 		var token = await Mediator.Send(command);
 
 		return Ok(token);

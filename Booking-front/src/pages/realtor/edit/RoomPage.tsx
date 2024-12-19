@@ -444,7 +444,7 @@ const RoomPage = () => {
                                             <p>Оригінальна ціна</p>
                                             <span>{variant.price.toFixed()}$</span>
                                         </div>
-                                        {variant.discountPrice != null && (
+                                        {variant.discountPrice != null || 0 && (
                                             <div className="data">
                                                 <p>Ціна зі знижкою</p>
                                                 <span>{variant?.discountPrice?.toFixed()}$</span>

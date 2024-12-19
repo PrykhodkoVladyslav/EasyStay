@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EasyStay.Application.MediatR.Accounts.Commands.ResetPassword;
 
-public class SendResetPasswordEmailCommandHandler(
+public class ResetPasswordCommandHandler(
 	UserManager<User> userManager
 ) : IRequestHandler<ResetPasswordCommand> {
 

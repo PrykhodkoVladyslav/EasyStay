@@ -1,10 +1,10 @@
 ﻿using EasyStay.Application.Interfaces;
 using FluentValidation;
 
-namespace EasyStay.Application.MediatR.Accounts.Commands.Update;
+namespace EasyStay.Application.MediatR.Accounts.Commands.UpdateUserInfo;
 
-public class UpdateValidator : AbstractValidator<UpdateCommand> {
-	public UpdateValidator(IIdentityValidator identityValidator, IImageValidator imageValidator) {
+public class UpdateUserInfoValidator : AbstractValidator<UpdateUserInfoCommand> {
+	public UpdateUserInfoValidator(IIdentityValidator identityValidator, IImageValidator imageValidator) {
 		RuleFor(u => u.Email)
 			.NotEmpty()
 				.WithMessage("Email is empty or null")

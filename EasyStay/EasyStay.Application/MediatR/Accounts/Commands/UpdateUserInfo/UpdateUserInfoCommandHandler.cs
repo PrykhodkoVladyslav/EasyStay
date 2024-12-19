@@ -5,16 +5,16 @@ using EasyStay.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace EasyStay.Application.MediatR.Accounts.Commands.Update;
+namespace EasyStay.Application.MediatR.Accounts.Commands.UpdateUserInfo;
 
-public class UpdateCommandHandler(
+public class UpdateUserInfoCommandHandler(
 	UserManager<User> userManager,
 	IJwtTokenService jwtTokenService,
 	ICurrentUserService currentUserService,
 	IImageService imageService
-) : IRequestHandler<UpdateCommand, JwtTokenVm> {
+) : IRequestHandler<UpdateUserInfoCommand, JwtTokenVm> {
 
-	public async Task<JwtTokenVm> Handle(UpdateCommand request, CancellationToken cancellationToken) {
+	public async Task<JwtTokenVm> Handle(UpdateUserInfoCommand request, CancellationToken cancellationToken) {
 		var user = await userManager.FindByIdAsync(currentUserService.GetRequiredUserId().ToString())
 			?? throw new Exception("User not found");
 

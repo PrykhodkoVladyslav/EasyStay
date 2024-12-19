@@ -444,10 +444,12 @@ const RoomPage = () => {
                                             <p>Оригінальна ціна</p>
                                             <span>{variant.price.toFixed()}$</span>
                                         </div>
-                                        <div className="data">
-                                            <p>Ціна зі знижкою</p>
-                                            <span>{variant?.discountPrice?.toFixed()}$</span>
-                                        </div>
+                                        {variant.discountPrice != null && (
+                                            <div className="data">
+                                                <p>Ціна зі знижкою</p>
+                                                <span>{variant?.discountPrice?.toFixed()}$</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 

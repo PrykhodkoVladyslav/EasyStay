@@ -677,7 +677,7 @@ const HotelPage = () => {
                                     {selectedPhotos.map((photo, index) => (
                                         <div key={index} className="photo">
                                             <img src={URL.createObjectURL(photo)} alt={`Зображення ${index + 1}`} />
-                                            <button className="btn-delete" onClick={() => handleDeletePhoto(index)}>
+                                            <button className="btn-delete" type="button" onClick={() => handleDeletePhoto(index)}>
                                                 <img
                                                     src={getPublicResourceUrl("account/trash.svg")}
                                                     alt="Видалити фото"

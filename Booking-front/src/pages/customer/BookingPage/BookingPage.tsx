@@ -236,6 +236,7 @@ const BookingPage = () => {
             await createBooking(createBookingRequest).unwrap();
 
             navigate("/customer/booking-history");
+            showToast("Бронювання пройшло успішно!", "success");
         } catch (error) {
             const e = error as IValidationError;
             if (e.data[0].PropertyName === "BankCard") {

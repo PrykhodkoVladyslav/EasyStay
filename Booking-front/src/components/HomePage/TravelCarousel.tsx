@@ -58,14 +58,12 @@ const TravelCarousel = () => {
                 </div>
 
                 <div className="div-btn">
-                    <button className="arrow-btn left-arrow">
-                        <img className="arrow-icon" src={getIconUrl("homepageSvg/rightArr.svg")} alt="right-arrow"
-                             onClick={prevPage} />
+                    <button className="arrow-btn left-arrow" onClick={prevPage}>
+                        <img className="arrow-icon" src={getIconUrl("homepageSvg/rightArr.svg")} alt="right-arrow" />
                     </button>
 
-                    <button className="arrow-btn right-arrow">
-                        <img className="arrow-icon" src={getIconUrl("homepageSvg/rightArr.svg")} alt="right-arrow"
-                             onClick={nextPage} />
+                    <button className="arrow-btn right-arrow" onClick={nextPage}>
+                        <img className="arrow-icon" src={getIconUrl("homepageSvg/rightArr.svg")} alt="right-arrow" />
                     </button>
                 </div>
             </div>

@@ -184,6 +184,11 @@ const HotelPage = () => {
     };
 
     const onSubmit = async (data: HotelCreateSchemaType) => {
+        if (!selectedPhotos || selectedPhotos.length === 0) {
+            showToast(`Додайте хоча б одне фото готелю`, "error");
+            return;
+        }
+
         const hoteldata = {
             ...data,
             id: numericId || 0,
@@ -206,7 +211,7 @@ const HotelPage = () => {
 
         try {
             await updateHotel(hoteldata).unwrap();
-            navigate(`/realtor`);
+            navigate(`/realtor/hotels`);
             showToast(`Готель успішно відредаговано!`, "success");
         } catch (error) {
             showToast(`Помилка при редагуванні готелю!`, "error");

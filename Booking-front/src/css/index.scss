@@ -4147,9 +4147,8 @@
 
   .details-link:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
-
-
 }
 
 /*Carousel!!!!!!!!!*/
@@ -4354,7 +4353,7 @@
 
   .Carousel-item button:hover {
     display: flex;
-    background: rgba(255, 255, 255);
+    background: rgba(255, 255, 255, 0.7);
     transition: 0.2s;
   }
 
@@ -4447,7 +4446,7 @@
   }
 
   .left-arrow:hover {
-    background-color: #f1f1f1;
+    background-color: #445235;
     fill: #3F523C;
   }
 
@@ -4459,8 +4458,7 @@
   }
 
   .right-arrow:hover {
-    background-color: #f1f1f1;
-
+    background-color: #445235;
   }
 
 

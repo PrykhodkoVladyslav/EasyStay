@@ -68,7 +68,7 @@ const FavoritesPage = () => {
             </div>
 
             {favoriteHotels.length > 0 ? (
-                <div className="hotels-and-reviews">
+                <div className="favorites">
                     {favoriteHotels.map((item) => (
                         <HotelCard key={item.id} item={item} />
                     ))}

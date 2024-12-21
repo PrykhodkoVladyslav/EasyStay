@@ -73,7 +73,7 @@ const BookingHistoryPage = () => {
             </div>
 
             {bookings.length > 0 ? (
-                <div className="hotels-and-reviews">
+                <div className="booking-history">
                     {bookings.map((booking: IBooking) => (
                         <div className="hotel-card-wrapper" key={booking.id}>
                             <HotelCard key={booking.id} item={booking.hotel} />

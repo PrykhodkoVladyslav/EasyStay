@@ -2267,7 +2267,36 @@
       }
     }
 
-    .hotels-and-reviews {
+    .favorites {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 50px 0 50px;
+      gap: 23px;
+
+      @media screen and (max-width: 1310px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media screen and (max-width: 960px) {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .hotel-item,
+      .review {
+        flex: 1 1 calc(33.3333% - 24px);
+
+        @media screen and (max-width: 1310px) {
+          flex: none;
+          max-width: none;
+          width: 100%;
+        }
+      }
+    }
+
+    .booking-history {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
@@ -2297,6 +2326,7 @@
         }
       }
     }
+
     .hotel-card-wrapper {
       position: relative;
       width: calc(33.3333% - 24px);

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Messages.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.Chats.Queries.Shared;
 

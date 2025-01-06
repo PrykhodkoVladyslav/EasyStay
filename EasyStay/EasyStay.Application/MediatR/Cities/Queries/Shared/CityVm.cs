@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Countries.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.Cities.Queries.Shared;
 

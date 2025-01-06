@@ -1,5 +1,5 @@
 ﻿using EasyStay.Application.Common.Exceptions;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

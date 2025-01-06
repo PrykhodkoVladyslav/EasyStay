@@ -2,7 +2,7 @@
 using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Bookings.Queries.GetPage;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyStay.WebApi.Services.PaginationServices;

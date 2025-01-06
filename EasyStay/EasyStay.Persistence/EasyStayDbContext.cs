@@ -1,6 +1,6 @@
 ﻿using EasyStay.Application.Interfaces;
-using EasyStay.Domain;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities;
+using EasyStay.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

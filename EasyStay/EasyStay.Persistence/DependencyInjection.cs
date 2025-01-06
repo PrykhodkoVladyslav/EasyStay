@@ -1,5 +1,5 @@
 ﻿using EasyStay.Application.Interfaces;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

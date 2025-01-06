@@ -7,7 +7,7 @@ using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
 using EasyStay.Application.MediatR.Hotels.Queries.Shared;
 using EasyStay.Application.MediatR.Languages.Queries.Shared;
 using EasyStay.Application.MediatR.Rooms.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.GetDetails;
 

@@ -3,7 +3,7 @@ using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.GetPage;
 using EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.WebApi.Services.PaginationServices;
 

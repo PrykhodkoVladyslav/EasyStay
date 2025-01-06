@@ -2,7 +2,7 @@
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Breakfasts.Queries.GetPage;
 using EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyStay.WebApi.Services.PaginationServices;

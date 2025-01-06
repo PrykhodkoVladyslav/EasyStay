@@ -1,5 +1,5 @@
-﻿using EasyStay.Domain;
-using EasyStay.Domain.Identity;
+﻿using EasyStay.Domain.Entities;
+using EasyStay.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 

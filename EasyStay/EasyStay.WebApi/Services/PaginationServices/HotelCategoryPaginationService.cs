@@ -2,7 +2,7 @@
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.HotelCategories.Queries.GetPage;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.WebApi.Services.PaginationServices;
 

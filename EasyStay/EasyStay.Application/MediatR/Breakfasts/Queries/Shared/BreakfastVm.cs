@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyStay.Application.Common.Mappings;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.Breakfasts.Queries.Shared;
 

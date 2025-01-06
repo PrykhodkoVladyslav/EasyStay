@@ -1,5 +1,5 @@
 ﻿using EasyStay.Application.Interfaces;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 using MediatR;
 
 namespace EasyStay.Application.MediatR.HotelCategories.Commands.Create;

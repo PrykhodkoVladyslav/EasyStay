@@ -2,7 +2,7 @@
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.Models.Accounts;
 using EasyStay.Domain.Constants;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 

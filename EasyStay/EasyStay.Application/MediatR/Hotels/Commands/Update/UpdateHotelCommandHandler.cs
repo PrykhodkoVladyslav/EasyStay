@@ -2,7 +2,8 @@
 using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Addresses.Commands.Update;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
+using EasyStay.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

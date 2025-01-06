@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.Languages.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

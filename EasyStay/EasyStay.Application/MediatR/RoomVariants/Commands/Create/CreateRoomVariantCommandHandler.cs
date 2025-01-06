@@ -2,7 +2,7 @@
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.BedInfos.Commands.Create;
 using EasyStay.Application.MediatR.GuestInfos.Commands.Create;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 using MediatR;
 
 namespace EasyStay.Application.MediatR.RoomVariants.Commands.Create;

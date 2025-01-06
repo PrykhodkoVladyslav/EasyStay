@@ -4,7 +4,7 @@ using EasyStay.Application.MediatR.RentalPeriods.Queries.Shared;
 using EasyStay.Application.MediatR.RoomAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.RoomTypes.Queries.Shared;
 using EasyStay.Application.MediatR.RoomVariants.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.Rooms.Queries.Shared;
 

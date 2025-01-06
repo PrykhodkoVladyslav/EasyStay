@@ -3,7 +3,7 @@ using EasyStay.Application.Common.Exceptions;
 using EasyStay.Application.Interfaces;
 using EasyStay.Application.MediatR.BedInfos.Commands.Update;
 using EasyStay.Application.MediatR.GuestInfos.Commands.Update;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

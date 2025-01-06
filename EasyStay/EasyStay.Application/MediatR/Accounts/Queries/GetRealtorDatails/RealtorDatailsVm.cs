@@ -3,7 +3,7 @@ using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Cities.Queries.Shared;
 using EasyStay.Application.MediatR.Citizenships.Queries.Shared;
 using EasyStay.Application.MediatR.Genders.Queries.Shared;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 
 namespace EasyStay.Application.MediatR.Accounts.Queries.GetRealtorDatails;
 

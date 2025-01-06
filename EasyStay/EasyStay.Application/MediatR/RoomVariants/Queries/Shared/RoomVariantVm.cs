@@ -1,7 +1,7 @@
 ﻿using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.BedInfos.Queries.Shared;
 using EasyStay.Application.MediatR.GuestInfos.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.RoomVariants.Queries.Shared;
 

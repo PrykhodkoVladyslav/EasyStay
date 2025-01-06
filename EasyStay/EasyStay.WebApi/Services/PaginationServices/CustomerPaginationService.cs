@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyStay.Application.MediatR.Accounts.Queries.GetCustomerPage;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace EasyStay.WebApi.Services.PaginationServices;

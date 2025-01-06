@@ -1,5 +1,5 @@
 ﻿using EasyStay.Application.Common.Mappings;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 
 namespace EasyStay.Application.MediatR.RealtorReviews.Queries.Shared;
 

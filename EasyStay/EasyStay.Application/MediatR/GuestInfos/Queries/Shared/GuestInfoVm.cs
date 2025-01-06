@@ -1,5 +1,5 @@
 ﻿using EasyStay.Application.Common.Mappings;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.GuestInfos.Queries.Shared;
 

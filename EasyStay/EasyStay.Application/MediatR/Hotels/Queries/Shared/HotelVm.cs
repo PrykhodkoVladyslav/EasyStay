@@ -3,7 +3,7 @@ using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.MediatR.Addresses.Queries.Shared;
 using EasyStay.Application.MediatR.HotelAmenities.Queries.Shared;
 using EasyStay.Application.MediatR.HotelCategories.Queries.Shared;
-using EasyStay.Domain;
+using EasyStay.Domain.Entities;
 
 namespace EasyStay.Application.MediatR.Hotels.Queries.Shared;
 

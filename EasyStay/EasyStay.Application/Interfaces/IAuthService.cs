@@ -1,6 +1,6 @@
 ﻿using EasyStay.Application.Models.Accounts;
 using EasyStay.Domain.Constants;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 
 namespace EasyStay.Application.Interfaces;
 

@@ -1,6 +1,6 @@
 ﻿using EasyStay.Application.Interfaces;
 using EasyStay.Application.Models.Email;
-using EasyStay.Domain.Identity;
+using EasyStay.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

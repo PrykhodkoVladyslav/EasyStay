@@ -1,4 +1,4 @@
-﻿using EasyStay.Domain.Identity;
+﻿using EasyStay.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

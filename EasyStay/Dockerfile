@@ -7,7 +7,6 @@ COPY EasyStay.sln ./
 
 COPY EasyStay.Domain/*.csproj ./EasyStay.Domain/
 COPY EasyStay.Application/*.csproj ./EasyStay.Application/
-COPY EasyStay.Persistence/*.csproj ./EasyStay.Persistence/
 COPY EasyStay.Infrastructure/*.csproj ./EasyStay.Infrastructure/
 COPY EasyStay.WebApi/*.csproj ./EasyStay.WebApi/
 COPY EasyStay.WebApi.Tests/*.csproj ./EasyStay.WebApi.Tests/

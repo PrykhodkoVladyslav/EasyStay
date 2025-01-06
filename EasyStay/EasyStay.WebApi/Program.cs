@@ -1,10 +1,7 @@
 using EasyStay.Application;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.Interfaces;
-using EasyStay.Infrastructure.Options;
-using EasyStay.Infrastructure.Services;
-using EasyStay.Persistence;
-using EasyStay.Persistence.Services;
+using EasyStay.Infrastructure;
 using EasyStay.WebApi.Extensions;
 using EasyStay.WebApi.Hubs;
 using EasyStay.WebApi.Middleware;
@@ -23,7 +20,7 @@ builder.Services.AddAutoMapper(
 );
 
 builder.Services.AddApplication();
-builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
@@ -54,27 +51,17 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddTransient<IDbInicializer, DbInitializer>();
-builder.Services.AddTransient<IScopeCoveredDbInicializer, ScopeCoveredDbInicializer>();
-builder.Services.AddTransient<ICleanDataSeeder, CleanDataSeeder>();
-builder.Services.AddTransient<IGeneratedDataSeeder, GeneratedDataSeeder>();
-builder.Services.AddTransient<IAggregateSeeder, AggregateSeeder>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddScoped<IIdentityValidator, IdentityValidator>();
 builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
-builder.Services.AddSingleton<IEmailService, GmailEmailService>();
 builder.Services.AddSingleton<ITimeConverter, TimeConverter>();
 builder.Services.AddSingleton<IDateConverter, DateConverter>();
 
-
 builder.Services.AddPaginationServices();
-
-builder.Services.Configure<GmailSmtpOptions>(builder.Configuration.GetRequiredSection("GmailSmtp"));
 
 builder.Services.AddCors(options => options.AddPolicy("SignalRCors", configuration => {
 	configuration

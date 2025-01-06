@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EasyStay.Application\EasyStay.Application.csproj" />
     <ProjectReference Include="..\EasyStay.Infrastructure\EasyStay.Infrastructure.csproj" />
-    <ProjectReference Include="..\EasyStay.Persistence\EasyStay.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,11 @@
 ﻿using EasyStay.Application.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.Processing;
 
-namespace EasyStay.WebApi.Services;
+namespace EasyStay.Infrastructure.Services;
 
 public class ImageService(
 	IConfiguration configuration

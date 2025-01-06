@@ -23,6 +23,7 @@ public static class DependencyInjection {
 		});
 
 		services.AddScoped<IEasyStayDbContext, EasyStayDbContext>();
+		services.AddSingleton<IImageService, ImageService>();
 		services.AddSingleton<IEmailService, GmailEmailService>();
 		services.AddTransient<IDbInicializer, DbInitializer>();
 		services.AddTransient<IScopeCoveredDbInicializer, ScopeCoveredDbInicializer>();

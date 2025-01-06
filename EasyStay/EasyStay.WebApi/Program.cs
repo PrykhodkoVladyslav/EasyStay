@@ -53,7 +53,6 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
-builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddScoped<IIdentityValidator, IdentityValidator>();
 builder.Services.AddScoped<ICollectionValidator, CollectionValidator>();
 builder.Services.AddSingleton<IImageValidator, ImageValidator>();

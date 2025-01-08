@@ -10,7 +10,7 @@ public class AggregateSeeder(
 ) : IAggregateSeeder {
 
 	public async Task SeedAsync(CancellationToken cancellationToken = default) {
-		using var scope = serviceScopeFactory.CreateScope();
+		await using var scope = serviceScopeFactory.CreateAsyncScope();
 		var serviceProvider = scope.ServiceProvider;
 
 		if (configuration.GetValue<bool>("SeedCleanData"))

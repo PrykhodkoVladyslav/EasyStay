@@ -2,6 +2,7 @@ using EasyStay.Application;
 using EasyStay.Application.Common.Mappings;
 using EasyStay.Application.Interfaces;
 using EasyStay.Infrastructure;
+using EasyStay.Infrastructure.Services;
 using EasyStay.WebApi.Extensions;
 using EasyStay.WebApi.Hubs;
 using EasyStay.WebApi.Middleware;
@@ -59,6 +60,7 @@ builder.Services.AddSingleton<IImageValidator, ImageValidator>();
 builder.Services.AddScoped<IExistingEntityCheckerService, ExistingEntityCheckerService>();
 builder.Services.AddSingleton<ITimeConverter, TimeConverter>();
 builder.Services.AddSingleton<IDateConverter, DateConverter>();
+builder.Services.AddSingleton<IImageSeeder, LoremPicsumImageSeeder>();
 
 builder.Services.AddPaginationServices();
 

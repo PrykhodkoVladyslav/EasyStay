@@ -7,7 +7,7 @@
 ### Back-End:
 - **ASP.NET Core**
 - **Entity Framework Core**
-- **ASP.Net Core Identity**
+- **ASP.NET Core Identity**
 - **SignalR**
 
 ### Front-End:

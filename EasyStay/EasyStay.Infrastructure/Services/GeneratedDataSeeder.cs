@@ -8,7 +8,8 @@ namespace EasyStay.Infrastructure.Services;
 
 public class GeneratedDataSeeder(
 	IEasyStayDbContext context,
-	IImageService imageService
+	IImageService imageService,
+	IImageSeeder imageSeeder
 ) : IGeneratedDataSeeder {
 
 	public async Task SeedAsync(CancellationToken cancellationToken = default) {
@@ -120,16 +121,13 @@ public class GeneratedDataSeeder(
 	private async Task SeedHotelPhotosAsync(CancellationToken cancellationToken) {
 		Faker faker = new Faker();
 
-		using var httpClient = new HttpClient();
+		var hotelIds = await context.Hotels.Select(h => h.Id).ToListAsync(cancellationToken);
 
-		var hotelsId = await context.Hotels.Select(c => c.Id).ToListAsync(cancellationToken);
-
-		foreach (var hotel in hotelsId) {
+		foreach (var hotel in hotelIds) {
 			var photoCount = faker.Random.Int(1, 5);
 
 			for (int i = 0; i < photoCount; i++) {
-				var imageUrl = faker.Image.LoremFlickrUrl(keywords: "hotel");
-				var imageBytes = await GetImageAsBytesAsync(httpClient, imageUrl);
+				var imageBytes = await imageSeeder.GetImageBytesAsync(800, 500);
 
 				var hotelPhoto = new HotelPhoto {
 					Name = await imageService.SaveImageAsync(imageBytes),
@@ -177,12 +175,12 @@ public class GeneratedDataSeeder(
 
 		foreach (var hotelId in hotelsId) {
 			var faker = new Faker<Room>()
-			.RuleFor(r => r.Name, faker => faker.Commerce.ProductName())
-			.RuleFor(r => r.Area, faker => faker.Random.Double(10, 100))
-			.RuleFor(r => r.NumberOfRooms, faker => faker.Random.Int(1, 5))
-			.RuleFor(r => r.Quantity, faker => faker.Random.Int(1, 10))
-			.RuleFor(r => r.HotelId, _ => hotelId)
-			.RuleFor(r => r.RoomTypeId, faker => faker.PickRandom(roomTypes).Id);
+				.RuleFor(r => r.Name, faker => faker.Commerce.ProductName())
+				.RuleFor(r => r.Area, faker => faker.Random.Double(10, 100))
+				.RuleFor(r => r.NumberOfRooms, faker => faker.Random.Int(1, 5))
+				.RuleFor(r => r.Quantity, faker => faker.Random.Int(1, 10))
+				.RuleFor(r => r.HotelId, _ => hotelId)
+				.RuleFor(r => r.RoomTypeId, faker => faker.PickRandom(roomTypes).Id);
 
 			var rooms = faker.GenerateBetween(1, 4);
 			await context.Rooms.AddRangeAsync(rooms, cancellationToken);
@@ -388,9 +386,6 @@ public class GeneratedDataSeeder(
 
 		return booking;
 	}
-
-	private static Task<byte[]> GetImageAsBytesAsync(HttpClient httpClient, string imageUrl)
-		=> httpClient.GetByteArrayAsync(imageUrl);
 
 	private static DateTimeOffset GetRandomTimeUtc(Faker faker) {
 		var ticks = faker.Date.BetweenTimeOnly(new TimeOnly(2, 0), new TimeOnly(15, 0)).ToTimeSpan().Ticks;
